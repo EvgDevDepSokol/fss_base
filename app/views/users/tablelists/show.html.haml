@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Table:
+  = @tablelist.table
+%p
+  %b Title:
+  = @tablelist.title
+%p
+  %b Desc:
+  = @tablelist.Desc
+%p
+  %b Blobobj:
+  = @tablelist.BlobObj
+%p
+  %b Number:
+  = @tablelist.number
+
+= link_to 'Edit', edit_tablelist_path(@tablelist)
+\|
+= link_to 'Back', tablelists_path

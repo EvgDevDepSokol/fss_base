@@ -1,0 +1,31 @@
+'use strict';
+
+var React = require('react');
+
+
+module.exports = React.createClass({
+  displayName: 'FieldWrapper',
+
+  propTypes: {
+    errors: React.PropTypes.array,
+    classes: React.PropTypes.array,
+    key: React.PropTypes.string,
+    title: React.PropTypes.string
+  },
+
+  render:function() {
+    var errors = (this.props.errors || []).join('\n');
+    var classes = [].concat(errors? 'error' : [],
+      'form-element',
+      this.props.classes || []);
+
+    classes.push('pure-control-group');
+
+    return (
+      React.createElement("div", {className: classes.join(' '), key: this.props.key},
+        React.createElement("label", {htmlFor: this.props.key}, this.props.title),
+        this.props.children
+      )
+    );
+  }
+});

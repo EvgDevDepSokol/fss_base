@@ -1,0 +1,79 @@
+= form_for @hw_wirelist do |f|
+  - if @hw_wirelist.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@hw_wirelist.errors.count, "error")} prohibited this hw_wirelist from being saved:"
+      %ul
+        - @hw_wirelist.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :from
+    = f.text_field :from
+  .field
+    = f.label :to
+    = f.text_field :to
+  .field
+    = f.label :wc
+    = f.text_field :wc
+  .field
+    = f.label :nc
+    = f.text_field :nc
+  .field
+    = f.label :io
+    = f.text_field :io
+  .field
+    = f.label :m
+    = f.number_field :m
+  .field
+    = f.label :s
+    = f.number_field :s
+  .field
+    = f.label :word
+    = f.number_field :word
+  .field
+    = f.label :bit
+    = f.text_field :bit
+  .field
+    = f.label :power
+    = f.text_field :power
+  .field
+    = f.label :origin
+    = f.text_field :origin
+  .field
+    = f.label :net
+    = f.text_field :net
+  .field
+    = f.label :ped
+    = f.number_field :ped
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :rev
+    = f.text_field :rev
+  .field
+    = f.label :Unit
+    = f.number_field :Unit
+  .field
+    = f.label :step
+    = f.number_field :step
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :IC
+    = f.number_field :IC
+  .field
+    = f.label :remarks
+    = f.text_field :remarks
+  .field
+    = f.label :io_signalID
+    = f.number_field :io_signalID
+  .field
+    = f.label :panel
+    = f.text_field :panel
+  .field
+    = f.label :pds_mark
+    = f.text_field :pds_mark
+  .actions
+    = f.submit 'Save'

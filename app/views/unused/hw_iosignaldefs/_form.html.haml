@@ -1,0 +1,19 @@
+= form_for @hw_iosignaldef do |f|
+  - if @hw_iosignaldef.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@hw_iosignaldef.errors.count, "error")} prohibited this hw_iosignaldef from being saved:"
+      %ul
+        - @hw_iosignaldef.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :ioname
+    = f.text_field :ioname
+  .field
+    = f.label :memtype
+    = f.text_field :memtype
+  .field
+    = f.label :rem
+    = f.text_field :rem
+  .actions
+    = f.submit 'Save'

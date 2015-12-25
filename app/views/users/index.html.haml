@@ -1,0 +1,31 @@
+%h1 Список Пользователей
+
+.row
+  .col-md-12
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
+        %tr
+          %th Имя
+          %th Email
+          %th Cheifdirector
+          %th Login
+          %th Enabled
+          %th
+
+      %tbody
+        - @users.each do |user|
+          %tr
+            %td= user.name
+            %td= user.EMail
+            %td= user.CheifDirector
+            %td= user.login
+            %td= user.enabled
+            %td
+              = link_to 'Посмотреть', user_path(user), class: 'btn btn-default btn-xs'
+              = link_to 'Изменить', edit_user_path(user), class: 'btn btn-default btn-xs'
+              = link_to 'Удалить', user_path(user), :method => :delete,
+              :data => { :confirm => 'Are you sure?' }, class: 'btn btn-default btn-xs'
+
+%br
+
+= link_to 'New Pds engineer', new_pds_engineer_path

@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Ic:
+  = @pds_meters_channel.IC
+%p
+  %b Sys:
+  = @pds_meters_channel.sys
+%p
+  %b Project:
+  = @pds_meters_channel.Project
+%p
+  %b Ctrl power:
+  = @pds_meters_channel.ctrl_power
+%p
+  %b T:
+  = @pds_meters_channel.t
+
+= link_to 'Edit', edit_pds_meters_channel_path(@pds_meters_channel)
+\|
+= link_to 'Back', pds_meters_channels_path

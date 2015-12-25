@@ -1,0 +1,25 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  //{"property":"ID","header":"ID"},
+  //{"property":"Project","header":"Project"},
+  {"property":"pedID","header":"pedID", editor: "stringEditor"},
+  {"property":"signID","header":"signID", editor: "stringEditor"},
+  {"property":"wirecode","header":"wirecode", editor: "stringEditor"},
+  {"property":"contact","header":"contact", editor: "stringEditor"},
+  {"property":"sw_pref","header":"sw_pref", editor: "stringEditor"},
+  {"property":"sw_suff","header":"sw_suff", editor: "stringEditor"},
+  {"property":"hw_suff","header":"hw_suff", editor: "stringEditor"},
+  {"property":"comment","header":"comment", editor: "stringEditor"},
+  {"property":"contactnum","header":"contactnum", editor: "stringEditor"},
+  {"property":"description","header":"description", editor: "stringEditor"},
+  {"property":"diapason","header":"diapason", editor: "stringEditor"},
+  {"property":"limits","header":"limits", editor: "stringEditor"},
+  //{"property":"t","header":"t"},
+  {"property":"temp","header":"temp", editor: "stringEditor"}
+  ];

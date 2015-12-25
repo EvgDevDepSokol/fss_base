@@ -1,0 +1,57 @@
+%p#notice= notice
+
+%p
+  %b Project number:
+  = @pds_project.project_number
+%p
+  %b Project name:
+  = @pds_project.project_name
+%p
+  %b Project name en:
+  = @pds_project.project_name_EN
+%p
+  %b Contractor:
+  = @pds_project.Contractor
+%p
+  %b Companyid:
+  = @pds_project.companyID
+%p
+  %b Contract number:
+  = @pds_project.contract_number
+%p
+  %b Contract date:
+  = @pds_project.contract_date
+%p
+  %b Projectmanager:
+  = @pds_project.ProjectManager
+%p
+  %b Swmanager:
+  = @pds_project.SWManager
+%p
+  %b Hwmanager:
+  = @pds_project.HWManager
+%p
+  %b Factor:
+  = @pds_project.Factor
+%p
+  %b Description:
+  = @pds_project.Description
+%p
+  %b Description en:
+  = @pds_project.Description_EN
+%p
+  %b Notes:
+  = @pds_project.Notes
+%p
+  %b Blobobj:
+  = @pds_project.BlobObj
+%p
+  %b T:
+  = @pds_project.t
+%p
+  %b Contract end date:
+  = @pds_project.contract_end_date
+
+= link_to 'Edit', edit_pds_project_path(@pds_project)
+\|
+= link_to 'Back', pds_projects_path

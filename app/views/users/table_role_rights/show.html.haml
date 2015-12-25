@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Tableid:
+  = @table_role_right.tableID
+%p
+  %b Roleid:
+  = @table_role_right.roleID
+%p
+  %b Value:
+  = @table_role_right.value
+
+= link_to 'Edit', edit_table_role_right_path(@table_role_right)
+\|
+= link_to 'Back', table_role_rights_path

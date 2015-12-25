@@ -1,0 +1,28 @@
+= form_for @pds_sys_description do |f|
+  - if @pds_sys_description.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_sys_description.errors.count, "error")} prohibited this pds_sys_description from being saved:"
+      %ul
+        - @pds_sys_description.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Description
+    = f.text_area :Description
+  .field
+    = f.label :Description_EN
+    = f.text_area :Description_EN
+  .field
+    = f.label :shortDesc
+    = f.text_area :shortDesc
+  .field
+    = f.label :shortDesc_EN
+    = f.text_area :shortDesc_EN
+  .actions
+    = f.submit 'Save'

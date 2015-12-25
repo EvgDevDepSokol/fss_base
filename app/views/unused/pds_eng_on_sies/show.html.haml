@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Sys:
+  = @pds_eng_on_sy.sys
+%p
+  %b Project:
+  = @pds_eng_on_sy.Project
+%p
+  %b Engineer n:
+  = @pds_eng_on_sy.engineer_N
+%p
+  %b T:
+  = @pds_eng_on_sy.t
+%p
+  %b Testoperator n:
+  = @pds_eng_on_sy.TestOperator_N
+
+= link_to 'Edit', edit_pds_eng_on_sy_path(@pds_eng_on_sy)
+\|
+= link_to 'Back', pds_eng_on_sies_path

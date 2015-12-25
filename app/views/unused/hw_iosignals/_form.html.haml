@@ -1,0 +1,55 @@
+= form_for @hw_iosignal do |f|
+  - if @hw_iosignal.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@hw_iosignal.errors.count, "error")} prohibited this hw_iosignal from being saved:"
+      %ul
+        - @hw_iosignal.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :pedID
+    = f.number_field :pedID
+  .field
+    = f.label :signID
+    = f.number_field :signID
+  .field
+    = f.label :wirecode
+    = f.number_field :wirecode
+  .field
+    = f.label :contact
+    = f.text_field :contact
+  .field
+    = f.label :sw_pref
+    = f.text_field :sw_pref
+  .field
+    = f.label :sw_suff
+    = f.text_field :sw_suff
+  .field
+    = f.label :hw_suff
+    = f.text_field :hw_suff
+  .field
+    = f.label :comment
+    = f.text_field :comment
+  .field
+    = f.label :contactnum
+    = f.number_field :contactnum
+  .field
+    = f.label :description
+    = f.text_field :description
+  .field
+    = f.label :diapason
+    = f.text_field :diapason
+  .field
+    = f.label :limits
+    = f.text_field :limits
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :temp
+    = f.number_field :temp
+  .actions
+    = f.submit 'Save'

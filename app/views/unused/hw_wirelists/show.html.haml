@@ -1,0 +1,75 @@
+%p#notice= notice
+
+%p
+  %b From:
+  = @hw_wirelist.from
+%p
+  %b To:
+  = @hw_wirelist.to
+%p
+  %b Wc:
+  = @hw_wirelist.wc
+%p
+  %b Nc:
+  = @hw_wirelist.nc
+%p
+  %b Io:
+  = @hw_wirelist.io
+%p
+  %b M:
+  = @hw_wirelist.m
+%p
+  %b S:
+  = @hw_wirelist.s
+%p
+  %b Word:
+  = @hw_wirelist.word
+%p
+  %b Bit:
+  = @hw_wirelist.bit
+%p
+  %b Power:
+  = @hw_wirelist.power
+%p
+  %b Origin:
+  = @hw_wirelist.origin
+%p
+  %b Net:
+  = @hw_wirelist.net
+%p
+  %b Ped:
+  = @hw_wirelist.ped
+%p
+  %b Project:
+  = @hw_wirelist.Project
+%p
+  %b Rev:
+  = @hw_wirelist.rev
+%p
+  %b Unit:
+  = @hw_wirelist.Unit
+%p
+  %b Step:
+  = @hw_wirelist.step
+%p
+  %b T:
+  = @hw_wirelist.t
+%p
+  %b Ic:
+  = @hw_wirelist.IC
+%p
+  %b Remarks:
+  = @hw_wirelist.remarks
+%p
+  %b Io signalid:
+  = @hw_wirelist.io_signalID
+%p
+  %b Panel:
+  = @hw_wirelist.panel
+%p
+  %b Pds mark:
+  = @hw_wirelist.pds_mark
+
+= link_to 'Edit', edit_hw_wirelist_path(@hw_wirelist)
+\|
+= link_to 'Back', hw_wirelists_path

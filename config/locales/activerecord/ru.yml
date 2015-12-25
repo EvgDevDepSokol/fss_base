@@ -1,0 +1,40 @@
+ru:
+  activerecord:
+    attributes:
+      hw_ic:
+        ref: ref
+        pds_syslist: Система
+        hw_ped: ped
+        scaleMin: Шкала Мин
+        scaleMax: Шкала Макс
+        Unit: Ед. измер.
+        rev: rev
+        tag_no: tag_no
+        UniquePTAG: Уникальный PTAG
+        un: un
+        bv: bv
+        panel: панель
+        Description: Описание
+        Description_EN: Описание (EN)
+        t: Модификация
+        mark: Отметка
+        Type: Type
+        suffix: suffix
+        version: version
+        coord: coord
+
+      pds_lamp:
+        IC: IC
+        pds_syslist: Система
+        Project: Project
+        ctrl_power: ctrl_power
+        t: Модификация
+      pds_mnemos:
+        Code: Тренажерный код
+        Marker: Маркировка
+        TechCode: Технический код
+        Type: Тип мнемосхемы
+        Opened: 'Вкл/Откр'
+        Closed: 'Откл/Закр'
+        Control: Управление
+        AutoDist: ''

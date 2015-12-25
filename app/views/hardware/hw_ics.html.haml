@@ -1,0 +1,34 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  {"property":"icID","header":"icID"},
+  //{"property":"Project","header":"Project"},
+  {"property":"ref","header":"ref", editor: "stringEditor"},
+  {"property":"system.System","header":"system", nested: true},
+  {"property":"hw_ped.ped","header":"ped", nested: true, editor: "HwPedSelector", attribute: "hw_ped_id"},
+  // todo suffix selector
+  {"property":"suffix","header":"suffix"},
+  {"property":"scaleMin","header":"scaleMin", editor: "stringEditor"},
+  {"property":"scaleMax","header":"scaleMax", editor: "stringEditor"},
+  // todo: unit selector
+  {"property":"Unit","header":"Unit"},
+  {"property":"rev","header":"rev", editor: "stringEditor"},
+  {"property":"tag_no","header":"tag_no", editor: "stringEditor"},
+  {"property":"UniquePTAG","header":"UniquePTAG", editor: "stringEditor"},
+  {"property":"un","header":"un", editor: "stringEditor"},
+  {"property":"bv","header":"bv", editor: "stringEditor"},
+  {"property":"pds_panel.panel","header":"panel", nested: true, editor: "PdsPanelSelector", attribute: 'pds_panel_id'},
+  {"property":"coord","header":"coord", editor: "stringEditor"},
+  {"property":"hw_ped.ped","header":"Type", nested: true},
+  {"property":"Description","header":"Description", editor: "stringEditor"},
+  {"property":"Description_EN","header":"Description_EN", editor: "stringEditor"}
+  //{"property":"version","header":"version"},
+  //{"property":"mark","header":"mark"},
+  //{"property":"t","header":"t"},
+  //{"property":"panel_id","header":"panel_id"}
+  ];

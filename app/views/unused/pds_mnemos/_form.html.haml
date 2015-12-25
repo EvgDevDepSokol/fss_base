@@ -1,0 +1,58 @@
+= form_for @pds_mnemo do |f|
+  - if @pds_mnemo.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_mnemo.errors.count, "error")} prohibited this pds_mnemo from being saved:"
+      %ul
+        - @pds_mnemo.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :Code
+    = f.text_field :Code
+  .field
+    = f.label :Marker
+    = f.text_field :Marker
+  .field
+    = f.label :TechCode
+    = f.text_field :TechCode
+  .field
+    = f.label :Type
+    = f.text_field :Type
+  .field
+    = f.label :Opened
+    = f.text_field :Opened
+  .field
+    = f.label :Closed
+    = f.text_field :Closed
+  .field
+    = f.label :Control
+    = f.text_field :Control
+  .field
+    = f.label :AutoDist
+    = f.text_field :AutoDist
+  .field
+    = f.label :Parameter
+    = f.text_field :Parameter
+  .field
+    = f.label :Description
+    = f.text_field :Description
+  .field
+    = f.label :Description_EN
+    = f.text_field :Description_EN
+  .field
+    = f.label :Gr_Dreg
+    = f.text_field :Gr_Dreg
+  .field
+    = f.label :Detector
+    = f.number_field :Detector
+  .field
+    = f.label :Characteristics
+    = f.text_field :Characteristics
+  .actions
+    = f.submit 'Save'

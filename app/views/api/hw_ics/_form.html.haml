@@ -1,0 +1,76 @@
+= form_for @hw_ic do |f|
+  - if @hw_ic.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@hw_ic.errors.count, "error")} prohibited this hw_ic from being saved:"
+      %ul
+        - @hw_ic.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :ref
+    = f.text_field :ref
+  .field
+    = f.label :ped
+    = f.number_field :ped
+  .field
+    = f.label :rev
+    = f.text_field :rev
+  .field
+    = f.label :tag_no
+    = f.text_field :tag_no
+  .field
+    = f.label :UniquePTAG
+    = f.text_field :UniquePTAG
+  .field
+    = f.label :un
+    = f.text_field :un
+  .field
+    = f.label :bv
+    = f.text_field :bv
+  .field
+    = f.label :panel
+    = f.text_field :panel
+  .field
+    = f.label :coord
+    = f.text_field :coord
+  .field
+    = f.label :scaleMin
+    = f.text_field :scaleMin
+  .field
+    = f.label :scaleMax
+    = f.text_field :scaleMax
+  .field
+    = f.label :Unit
+    = f.number_field :Unit
+  .field
+    = f.label :Description
+    = f.text_field :Description
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :Type
+    = f.text_field :Type
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Description_EN
+    = f.text_area :Description_EN
+  .field
+    = f.label :panel
+    = f.text_field :panel
+  .field
+    = f.label :suffix
+    = f.text_field :suffix
+  .field
+    = f.label :version
+    = f.number_field :version
+  .field
+    = f.label :mark
+    = f.text_field :mark
+  .actions
+    = f.submit 'Save'

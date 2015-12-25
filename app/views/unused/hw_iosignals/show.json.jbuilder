@@ -1,0 +1,1 @@
+json.extract! @hw_iosignal, :id, :Project, :pedID, :signID, :wirecode, :contact, :sw_pref, :sw_suff, :hw_suff, :comment, :contactnum, :description, :diapason, :limits, :t, :temp, :created_at, :updated_at

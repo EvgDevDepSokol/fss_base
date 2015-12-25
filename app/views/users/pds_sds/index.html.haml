@@ -1,0 +1,35 @@
+%h1 Listing pds_sds
+
+%table
+  %thead
+    %tr
+      %th Sdtitle
+      %th Sys
+      %th Project
+      %th Title en
+      %th Numb
+      %th Blobobj
+      %th T
+      %th From sapfir
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_sds.each do |pds_sd|
+      %tr
+        %td= pds_sd.SdTitle
+        %td= pds_sd.sys
+        %td= pds_sd.Project
+        %td= pds_sd.title_EN
+        %td= pds_sd.Numb
+        %td= pds_sd.BlobObj
+        %td= pds_sd.t
+        %td= pds_sd.from_sapfir
+        %td= link_to 'Show', pds_sd
+        %td= link_to 'Edit', edit_pds_sd_path(pds_sd)
+        %td= link_to 'Destroy', pds_sd, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds sd', new_pds_sd_path

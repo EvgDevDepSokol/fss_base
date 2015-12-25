@@ -1,0 +1,17 @@
+%h1= title
+
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  // todo: add documentation selector
+  var columns = [
+    {"property":"id","header":"DocSysID", hidden: true},
+    {property: "system.System", header: "Система", editor: "SystemSelector", attribute: 'system_id', nested: true},
+    {"property":"pds_documentation.DocTitle","header":"DocTitle",  attribute: 'pds_documentation_id', nested: true},
+    {"property":"pds_documentation.DocTitle_EN","header":"DocTitle_EN", nested: true},
+    //{"property":"t","header":"t"}
+  ];

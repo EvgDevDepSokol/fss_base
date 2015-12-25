@@ -1,0 +1,29 @@
+%h1 Listing tablelists
+
+%table
+  %thead
+    %tr
+      %th Table
+      %th Title
+      %th Desc
+      %th Blobobj
+      %th Number
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @tablelists.each do |tablelist|
+      %tr
+        %td= tablelist.table
+        %td= tablelist.title
+        %td= tablelist.Desc
+        %td= tablelist.BlobObj
+        %td= tablelist.number
+        %td= link_to 'Show', tablelist
+        %td= link_to 'Edit', edit_tablelist_path(tablelist)
+        %td= link_to 'Destroy', tablelist, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Tablelist', new_tablelist_path

@@ -1,0 +1,14 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+
+  {"property":"id","header":"ID"},
+  {"property":"ioname","header":"ioname", editor: "stringEditor"},
+  {"property":"memtype","header":"memtype", editor: "stringEditor"},
+  {"property":"rem","header":"rem", editor: "stringEditor"}
+  ];

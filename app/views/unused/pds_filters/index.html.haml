@@ -1,0 +1,41 @@
+%h1 Listing pds_filters
+
+%table
+  %thead
+    %tr
+      %th Kks
+      %th Shortdesc
+      %th Desc en
+      %th Level
+      %th Room
+      %th Project
+      %th Sys
+      %th Eq type
+      %th Var
+      %th Old var
+      %th Sd n
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_filters.each do |pds_filter|
+      %tr
+        %td= pds_filter.kks
+        %td= pds_filter.ShortDesc
+        %td= pds_filter.Desc_EN
+        %td= pds_filter.level
+        %td= pds_filter.room
+        %td= pds_filter.Project
+        %td= pds_filter.sys
+        %td= pds_filter.eq_type
+        %td= pds_filter.var
+        %td= pds_filter.old_var
+        %td= pds_filter.sd_N
+        %td= link_to 'Show', pds_filter
+        %td= link_to 'Edit', edit_pds_filter_path(pds_filter)
+        %td= link_to 'Destroy', pds_filter, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds filter', new_pds_filter_path

@@ -1,0 +1,27 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  {"property":"id","header":"ProjectID"},
+  {"property":"project_number","header":"project_number", editor: "stringEditor"},
+  {"property":"project_name","header":"project_name", editor: "stringEditor"},
+  {"property":"project_name_EN","header":"project_name_EN", editor: "stringEditor"},
+  {"property":"Contractor","header":"Contractor", editor: "stringEditor"},
+  {"property":"companyID","header":"companyID", editor: "stringEditor"},
+  {"property":"contract_number","header":"contract_number", editor: "stringEditor"},
+  {"property":"contract_date","header":"contract_date", editor: "stringEditor"},
+  {"property":"ProjectManager","header":"ProjectManager", editor: "stringEditor"},
+  {"property":"SWManager","header":"SWManager", editor: "stringEditor"},
+  {"property":"HWManager","header":"HWManager", editor: "stringEditor"},
+  {"property":"Factor","header":"Factor", editor: "stringEditor"},
+  {"property":"Description","header":"Description", editor: "stringEditor"},
+  {"property":"Description_EN","header":"Description_EN", editor: "stringEditor"},
+  {"property":"Notes","header":"Notes", editor: "stringEditor"},
+  {"property":"BlobObj","header":"BlobObj", editor: "stringEditor"},
+  //{"property":"t","header":"t"},
+  {"property":"contract_end_date","header":"contract_end_date", editor: "stringEditor"}
+  ];

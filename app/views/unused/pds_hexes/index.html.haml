@@ -1,0 +1,43 @@
+%h1 Listing pds_hexes
+
+%table
+  %thead
+    %tr
+      %th Kks
+      %th Shortdesc
+      %th S
+      %th Level
+      %th Room
+      %th Project
+      %th Sys
+      %th Eq type
+      %th Var
+      %th Old var
+      %th Desc en
+      %th Sd n
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_hexes.each do |pds_hex|
+      %tr
+        %td= pds_hex.kks
+        %td= pds_hex.ShortDesc
+        %td= pds_hex.s
+        %td= pds_hex.level
+        %td= pds_hex.room
+        %td= pds_hex.Project
+        %td= pds_hex.sys
+        %td= pds_hex.eq_type
+        %td= pds_hex.var
+        %td= pds_hex.old_var
+        %td= pds_hex.Desc_EN
+        %td= pds_hex.sd_N
+        %td= link_to 'Show', pds_hex
+        %td= link_to 'Edit', edit_pds_hex_path(pds_hex)
+        %td= link_to 'Destroy', pds_hex, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds hex', new_pds_hex_path

@@ -1,0 +1,229 @@
+= form_for @dwg_panel do |f|
+  - if @dwg_panel.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@dwg_panel.errors.count, "error")} prohibited this dwg_panel from being saved:"
+      %ul
+        - @dwg_panel.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :panel
+    = f.check_box :panel
+  .field
+    = f.label :NAME
+    = f.text_field :NAME
+  .field
+    = f.label :EV
+    = f.text_field :EV
+  .field
+    = f.label :EH
+    = f.number_field :EH
+  .field
+    = f.label :SV
+    = f.text_field :SV
+  .field
+    = f.label :SH
+    = f.number_field :SH
+  .field
+    = f.label :MP_CMEMO
+    = f.text_field :MP_CMEMO
+  .field
+    = f.label :MP_CODE
+    = f.text_field :MP_CODE
+  .field
+    = f.label :MP_CODE1
+    = f.text_field :MP_CODE1
+  .field
+    = f.label :MP_CODE2
+    = f.text_field :MP_CODE2
+  .field
+    = f.label :MP_L0
+    = f.text_field :MP_L0
+  .field
+    = f.label :MP_L0_0
+    = f.text_field :MP_L0_0
+  .field
+    = f.label :MP_L0_1
+    = f.text_field :MP_L0_1
+  .field
+    = f.label :MP_L0_2
+    = f.text_field :MP_L0_2
+  .field
+    = f.label :MP_L0_3
+    = f.text_field :MP_L0_3
+  .field
+    = f.label :MP_L0_4
+    = f.text_field :MP_L0_4
+  .field
+    = f.label :MP_L0_0_x
+    = f.number_field :MP_L0_0_x
+  .field
+    = f.label :MP_L0_0_y
+    = f.number_field :MP_L0_0_y
+  .field
+    = f.label :MP_L0_0_w
+    = f.number_field :MP_L0_0_w
+  .field
+    = f.label :MP_L0_0_h
+    = f.number_field :MP_L0_0_h
+  .field
+    = f.label :MP_L0_0_f
+    = f.number_field :MP_L0_0_f
+  .field
+    = f.label :MP_L0_1_x
+    = f.number_field :MP_L0_1_x
+  .field
+    = f.label :MP_L0_1_y
+    = f.number_field :MP_L0_1_y
+  .field
+    = f.label :MP_L0_1_w
+    = f.number_field :MP_L0_1_w
+  .field
+    = f.label :MP_L0_1_h
+    = f.number_field :MP_L0_1_h
+  .field
+    = f.label :MP_L0_1_f
+    = f.number_field :MP_L0_1_f
+  .field
+    = f.label :MP_L0_2_x
+    = f.number_field :MP_L0_2_x
+  .field
+    = f.label :MP_L0_2_y
+    = f.number_field :MP_L0_2_y
+  .field
+    = f.label :MP_L0_2_w
+    = f.number_field :MP_L0_2_w
+  .field
+    = f.label :MP_L0_2_h
+    = f.number_field :MP_L0_2_h
+  .field
+    = f.label :MP_L0_2_f
+    = f.number_field :MP_L0_2_f
+  .field
+    = f.label :MP_L0_3_x
+    = f.number_field :MP_L0_3_x
+  .field
+    = f.label :MP_L0_3_y
+    = f.number_field :MP_L0_3_y
+  .field
+    = f.label :MP_L0_3_w
+    = f.number_field :MP_L0_3_w
+  .field
+    = f.label :MP_L0_3_h
+    = f.number_field :MP_L0_3_h
+  .field
+    = f.label :MP_L0_3_f
+    = f.number_field :MP_L0_3_f
+  .field
+    = f.label :MP_L0_4_x
+    = f.number_field :MP_L0_4_x
+  .field
+    = f.label :MP_L0_4_y
+    = f.number_field :MP_L0_4_y
+  .field
+    = f.label :MP_L0_4_w
+    = f.number_field :MP_L0_4_w
+  .field
+    = f.label :MP_L0_4_h
+    = f.number_field :MP_L0_4_h
+  .field
+    = f.label :MP_L0_4_f
+    = f.number_field :MP_L0_4_f
+  .field
+    = f.label :MP_MASS
+    = f.number_field :MP_MASS
+  .field
+    = f.label :MP_MAX
+    = f.text_field :MP_MAX
+  .field
+    = f.label :MP_MIN
+    = f.text_field :MP_MIN
+  .field
+    = f.label :MP_MODE
+    = f.text_field :MP_MODE
+  .field
+    = f.label :MP_MODEORD
+    = f.number_field :MP_MODEORD
+  .field
+    = f.label :MP_NAME0
+    = f.text_field :MP_NAME0
+  .field
+    = f.label :MP_NAME1
+    = f.text_field :MP_NAME1
+  .field
+    = f.label :MP_ORDER
+    = f.text_field :MP_ORDER
+  .field
+    = f.label :MP_PROJ
+    = f.number_field :MP_PROJ
+  .field
+    = f.label :MP_S0
+    = f.number_field :MP_S0
+  .field
+    = f.label :MP_S100
+    = f.number_field :MP_S100
+  .field
+    = f.label :MP_S20
+    = f.number_field :MP_S20
+  .field
+    = f.label :MP_S40
+    = f.number_field :MP_S40
+  .field
+    = f.label :MP_S50
+    = f.number_field :MP_S50
+  .field
+    = f.label :MP_S60
+    = f.text_field :MP_S60
+  .field
+    = f.label :MP_S80
+    = f.number_field :MP_S80
+  .field
+    = f.label :MP_TYPE0
+    = f.text_field :MP_TYPE0
+  .field
+    = f.label :MP_TYPE1
+    = f.text_field :MP_TYPE1
+  .field
+    = f.label :MP_U0
+    = f.text_field :MP_U0
+  .field
+    = f.label :MP_U1
+    = f.text_field :MP_U1
+  .field
+    = f.label :MP_IO
+    = f.text_field :MP_IO
+  .field
+    = f.label :MP_IOCONT
+    = f.text_field :MP_IOCONT
+  .field
+    = f.label :MP_IONAME
+    = f.text_field :MP_IONAME
+  .field
+    = f.label :TYPE
+    = f.text_field :TYPE
+  .field
+    = f.label :FONT
+    = f.text_field :FONT
+  .field
+    = f.label :MIRROR
+    = f.number_field :MIRROR
+  .field
+    = f.label :ROTATE
+    = f.text_field :ROTATE
+  .field
+    = f.label :revision
+    = f.number_field :revision
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :rotation
+    = f.number_field :rotation
+  .field
+    = f.label :ref
+    = f.text_field :ref
+  .actions
+    = f.submit 'Save'

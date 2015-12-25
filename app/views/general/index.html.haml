@@ -1,0 +1,21 @@
+%h1
+  = title
+
+= render partial: 'general_grid'
+
+= link_to url_for(controller: :general, action: :new), class: 'btn btn-default' do
+  = "Добавить #{model}"
+  = content_tag(:span, '', class: "fa fa-pencil")
+
+= link_to url_for(controller: :general, action: :index, format: :csv), class: 'btn btn-primary', target: '_blank' do
+  = "Скачать в CSV"
+  = content_tag(:span, '', class: "fa fa-save")
+
+= link_to url_for(controller: :general, action: :index, format: :xlsx), class: 'btn btn-primary', target: '_blank' do
+  = "Скачать в XLSx"
+  = content_tag(:span, '', class: "fa fa-save")
+
+:javascript
+  var modelName = "#{model.to_s.underscore}";
+  var url = "#{ url_for(controller: :general, action: :create) }";
+= javascript_include_tag 'table_inline_edit'

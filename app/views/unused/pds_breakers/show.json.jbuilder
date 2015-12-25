@@ -1,0 +1,1 @@
+json.extract! @pds_breaker, :id, :sys, :Project, :tag_RU, :tag_EN, :ed_power, :ctrl_power, :anc_power, :Time, :Algorithm, :Desc_RU, :Desc_EN, :model, :eq_type, :connection, :sd_N, :created_at, :updated_at

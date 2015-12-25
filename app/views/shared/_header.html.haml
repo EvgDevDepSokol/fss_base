@@ -1,0 +1,25 @@
+.header
+  %table{ cellpadding:"2", width: "1000", border: "0"}
+    %tbody
+      %tr
+        %td{colspan: "3"}
+          - if current_user
+            = image_tag "man.gif"
+            %a#ctl00_lnkfio.MyLink{ href: "javascript:__doPostBack('ctl00$lnkfio','')"}
+              = current_user.name
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          = image_tag "help.gif"
+          %a#ctl00_lnkhelp.MyLink{ href: "javascript:__doPostBack('ctl00$lnkhelp','')"}
+            Помощь
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          = image_tag "dr0.gif"
+          %a#ctl00_lnkDr_s.MyLink{href:"javascript:__doPostBack('ctl00$lnkDr_s','')"}
+            Dr manager
+
+        %td{ colspan: "4", align: "center"}
+          - if @project
+            %span#ctl00_lblCurProj.LabelTitleBig
+              Текущий проект:
+              = link_to pds_project_path(@project) do
+                %b
+                  =@project.name

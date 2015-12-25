@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%p
+  %b Sys:
+  = @pds_simplification.sys
+%p
+  %b Project:
+  = @pds_simplification.Project
+%p
+  %b Numb:
+  = @pds_simplification.Numb
+%p
+  %b Desc:
+  = @pds_simplification.Desc
+%p
+  %b Desc en:
+  = @pds_simplification.Desc_EN
+%p
+  %b Support:
+  = @pds_simplification.support
+%p
+  %b Support en:
+  = @pds_simplification.support_EN
+%p
+  %b Queryid:
+  = @pds_simplification.queryID
+%p
+  %b T:
+  = @pds_simplification.t
+
+= link_to 'Edit', edit_pds_simplification_path(@pds_simplification)
+\|
+= link_to 'Back', pds_simplifications_path

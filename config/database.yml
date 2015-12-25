@@ -1,0 +1,30 @@
+default: &default
+  adapter: mysql2
+  pool: 5
+  timeout: 5000
+
+
+development:
+  <<: *default
+  database: pds_db
+  username: djet
+  password: djet
+  host: localhost
+
+test:
+  <<: *default
+  database: djet_test
+  host: localhost
+
+production:
+  <<: *default
+  database: pds_db
+  username: djet
+  password: djet
+  host: localhost
+
+#  <<: *default
+#  database: pds_db
+#  username: djet
+#  password: myhome1989
+#  host: djet.cloudapp.net

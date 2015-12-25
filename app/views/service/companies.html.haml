@@ -1,0 +1,19 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  {"property":"id","header":"cID"},
+  {"property":"shortName","header":"shortName", editor: "stringEditor"},
+  {"property":"shortName_en","header":"shortName_en", editor: "stringEditor"},
+  {"property":"LongName","header":"LongName", editor: "stringEditor"},
+  {"property":"LongName_en","header":"LongName_en", editor: "stringEditor"},
+  {"property":"Descriprion","header":"Descriprion", editor: "stringEditor"},
+  //{"property":"Logo","header":"Logo"},
+  {"property":"AcceptorPost_en","header":"AcceptorPost_en", editor: "stringEditor"},
+  {"property":"AcceptorPost","header":"AcceptorPost", editor: "stringEditor"},
+  {"property":"AcceptorName_en","header":"AcceptorName_en", editor: "stringEditor"},
+  {"property":"AcceptorName","header":"AcceptorName", editor: "stringEditor"}];

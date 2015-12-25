@@ -1,0 +1,55 @@
+= form_for @pds_breaker do |f|
+  - if @pds_breaker.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_breaker.errors.count, "error")} prohibited this pds_breaker from being saved:"
+      %ul
+        - @pds_breaker.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :tag_RU
+    = f.text_field :tag_RU
+  .field
+    = f.label :tag_EN
+    = f.text_field :tag_EN
+  .field
+    = f.label :ed_power
+    = f.number_field :ed_power
+  .field
+    = f.label :ctrl_power
+    = f.number_field :ctrl_power
+  .field
+    = f.label :anc_power
+    = f.number_field :anc_power
+  .field
+    = f.label :Time
+    = f.text_field :Time
+  .field
+    = f.label :Algorithm
+    = f.text_field :Algorithm
+  .field
+    = f.label :Desc_RU
+    = f.text_field :Desc_RU
+  .field
+    = f.label :Desc_EN
+    = f.text_field :Desc_EN
+  .field
+    = f.label :model
+    = f.text_field :model
+  .field
+    = f.label :eq_type
+    = f.number_field :eq_type
+  .field
+    = f.label :connection
+    = f.text_field :connection
+  .field
+    = f.label :sd_N
+    = f.number_field :sd_N
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Ic:
+  = @pds_button.IC
+%p
+  %b Sys:
+  = @pds_button.sys
+%p
+  %b Project:
+  = @pds_button.Project
+%p
+  %b Range:
+  = @pds_button.range
+%p
+  %b Fixed:
+  = @pds_button.Fixed
+%p
+  %b T:
+  = @pds_button.t
+
+= link_to 'Edit', edit_pds_button_path(@pds_button)
+\|
+= link_to 'Back', pds_buttons_path

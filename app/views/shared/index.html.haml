@@ -1,0 +1,11 @@
+%h1
+  = title
+  test
+= grid(@grid, show_filters: :when_filtered, class: :table) do |g|
+  - g.action_column
+  - PdsButton.attribute_names.each do |attribute|
+    - g.column  do |attr|
+      test
+
+
+= link_to 'New Pds button', new_pds_button_path

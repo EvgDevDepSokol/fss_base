@@ -1,0 +1,19 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns =
+  [{"property":"id","header":"ppcdID"},
+    {property: "system", header: "Система",
+      editor: "SystemSelector", attribute: 'system_id'},
+          {"property":"Shifr","header":"Shifr", editor: "stringEditor"},
+    {"property":"Key","header":"Key", editor: "stringEditor"},
+    {"property":"identif","header":"identif", editor: "stringEditor"},
+    {"property":"Description","header":"Description", editor: "stringEditor"},
+    {"property":"Description_EN","header":"Description_EN", editor: "stringEditor"},
+    {"property":"Detector","header":"Detector", editor: "stringEditor"},
+    {"property":"t","header":"t"},
+    {"property":"code","header":"code", editor: "stringEditor"}];

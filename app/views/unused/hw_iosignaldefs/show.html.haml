@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Ioname:
+  = @hw_iosignaldef.ioname
+%p
+  %b Memtype:
+  = @hw_iosignaldef.memtype
+%p
+  %b Rem:
+  = @hw_iosignaldef.rem
+
+= link_to 'Edit', edit_hw_iosignaldef_path(@hw_iosignaldef)
+\|
+= link_to 'Back', hw_iosignaldefs_path

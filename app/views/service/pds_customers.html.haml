@@ -1,0 +1,21 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  {"property":"id","header":"customerID"},
+  {"property":"Project","header":"Project"},
+  {"property":"AgreeName","header":"AgreeName", editor: "stringEditor"},
+  //{"property":"t","header":"t"},
+  {"property":"AgreeJobTitle","header":"AgreeJobTitle", editor: "stringEditor"},
+  {"property":"AgreeJobTitle_EN","header":"AgreeJobTitle_EN", editor: "stringEditor"},
+  {"property":"AcceptedName1","header":"AcceptedName1", editor: "stringEditor"},
+  {"property":"AcceptedJobTitle1","header":"AcceptedJobTitle1", editor: "stringEditor"},
+  {"property":"AcceptedJobTitle1_EN","header":"AcceptedJobTitle1_EN", editor: "stringEditor"},
+  {"property":"AcceptedName2","header":"AcceptedName2", editor: "stringEditor"},
+  {"property":"AcceptedJobTitle2","header":"AcceptedJobTitle2", editor: "stringEditor"},
+  {"property":"AcceptedJobTitle2_EN","header":"AcceptedJobTitle2_EN", editor: "stringEditor"},
+  {"property":"Name","header":"Name", editor: "stringEditor"}];

@@ -1,0 +1,49 @@
+%h1 Listing pds_breakers
+
+%table
+  %thead
+    %tr
+      %th Sys
+      %th Project
+      %th Tag ru
+      %th Tag en
+      %th Ed power
+      %th Ctrl power
+      %th Anc power
+      %th Time
+      %th Algorithm
+      %th Desc ru
+      %th Desc en
+      %th Model
+      %th Eq type
+      %th Connection
+      %th Sd n
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_breakers.each do |pds_breaker|
+      %tr
+        %td= pds_breaker.sys
+        %td= pds_breaker.Project
+        %td= pds_breaker.tag_RU
+        %td= pds_breaker.tag_EN
+        %td= pds_breaker.ed_power
+        %td= pds_breaker.ctrl_power
+        %td= pds_breaker.anc_power
+        %td= pds_breaker.Time
+        %td= pds_breaker.Algorithm
+        %td= pds_breaker.Desc_RU
+        %td= pds_breaker.Desc_EN
+        %td= pds_breaker.model
+        %td= pds_breaker.eq_type
+        %td= pds_breaker.connection
+        %td= pds_breaker.sd_N
+        %td= link_to 'Show', pds_breaker
+        %td= link_to 'Edit', edit_pds_breaker_path(pds_breaker)
+        %td= link_to 'Destroy', pds_breaker, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds breaker', new_pds_breaker_path

@@ -1,0 +1,57 @@
+-#  react applies here
+%table.table.table-striped#left_menu
+
+
+- if @project
+  :javascript
+    var menu_data = [
+      {
+        label: "Оборудование панелей",
+        type: 'equipment_panels',
+        children: #{controller_actions_list(EquipmentPanelsController, @project)}
+      },
+      {
+        label: "Технологическое оборудование",
+        type: 'technology_equipment',
+        children: #{controller_actions_list(TechnologyEquipmentController, @project)}
+      },
+      {
+        label: "Hardware",
+        type: 'hardware',
+        children: #{controller_actions_list(HardwareController, @project)}
+      },
+      {
+        label: "Системы отображения",
+        type: 'display_systems',
+        children: #{controller_actions_list(DisplaySystemsController, @project)}
+      },
+      {
+        label: "Служебные",
+        type: 'service',
+        children: #{controller_actions_list(ServiceController, @project)}
+      },
+      {
+        label: "Электрооборудование",
+        type: 'electric_equipment',
+        children: #{controller_actions_list(ElectricEquipmentController, @project)}
+      },
+      {
+        label: "Отказы и Remote",
+        type: 'remotes',
+        children: #{controller_actions_list(RemotesController, @project)}
+      },
+      {
+        label: "Данные проектов",
+        type: 'project_settings',
+        children: #{controller_actions_list(ProjectSettingsController, @project)}
+      }
+    ];
+- else
+  :javascript
+    var menu_data = [
+        {
+          label: "Служебные",
+          type: 'service',
+          children: #{controller_actions_list(ServiceController)}
+        }
+      ];

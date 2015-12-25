@@ -1,0 +1,48 @@
+%h1
+  = title
+
+= grid(@grid, show_filters: false, class: 'table editable-table') do |g|
+
+  - g.column name: mt(:TEquipID, model).html_safe, attribute: 'TEquipID'
+
+  - (model.attribute_names - ['TEquipID']).each do |attribute|
+    - g.column name: mt(attribute, model), attribute: attribute do |model|
+      - editable_input(model, attribute)
+
+  - g.column do |object|
+    - edit_button(object)
+
+= link_to url_for(controller: :general, action: :new), class: 'btn btn-default' do
+  = "Добавить #{model}"
+  = content_tag(:span, '', class: "fa fa-pencil")
+
+= link_to url_for(controller: :general, action: :index, format: :csv), class: 'btn btn-primary', target: '_blank' do
+  = "Скачать в CSV"
+  = content_tag(:span, '', class: "fa fa-save")
+
+= link_to url_for(controller: :general, action: :index, format: :xlsx), class: 'btn btn-primary', target: '_blank' do
+  = "Скачать в XLSx"
+  = content_tag(:span, '', class: "fa fa-save")
+
+
+:javascript
+  var data = #{@array.to_json};
+  var columns = [
+    {property: "TEquipID", header: "TEquipID"},
+    {property: "typeE", header: "typeE"}
+  ];
+
+  var modelName = "#{model.to_s.underscore}";
+  var url = "#{ url_for(controller: :general, action: :create) }";
+= javascript_include_tag 'table_inline_edit'
+
+.row
+  .col-md-12
+    test here
+.row
+  .col-md-12
+    #content_pds_equips
+
+.row
+  .col-md-12
+    #content3

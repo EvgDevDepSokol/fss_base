@@ -1,0 +1,32 @@
+%h1
+  = title
+
+.row
+  .column
+    #hw_ic_table
+= #render partial: 'hw_ics/general_grid'
+
+= link_to url_for(controller: :general, action: :new), class: 'btn btn-default' do
+  = "Добавить #{model}"
+  = content_tag(:span, '', class: "fa fa-pencil")
+
+= link_to url_for(controller: :general, action: :index, format: :csv), class: 'btn btn-primary', target: '_blank' do
+  = "Скачать в CSV"
+  = content_tag(:span, '', class: "fa fa-save")
+
+= link_to url_for(controller: :general, action: :index, format: :xlsx), class: 'btn btn-primary', target: '_blank' do
+  = "Скачать в XLSx"
+  = content_tag(:span, '', class: "fa fa-save")
+
+
+- columns = HwIc.attribute_names.map{ |attr| {property: attr, header: attr}}
+
+
+:javascript
+  var modelName = "#{model.to_s.underscore}";
+  var url = "#{ url_for(controller: :general, action: :create) }";
+
+  var data = #{@data_list.to_json};
+  var columns = #{columns.to_json};
+
+= javascript_include_tag 'table_inline_edit'

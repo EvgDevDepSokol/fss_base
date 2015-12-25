@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Ic:
+  = @pds_recorder.IC
+%p
+  %b Sys:
+  = @pds_recorder.sys
+%p
+  %b Project:
+  = @pds_recorder.Project
+%p
+  %b Ctrl power:
+  = @pds_recorder.ctrl_power
+%p
+  %b T:
+  = @pds_recorder.t
+
+= link_to 'Edit', edit_pds_recorder_path(@pds_recorder)
+\|
+= link_to 'Back', pds_recorders_path

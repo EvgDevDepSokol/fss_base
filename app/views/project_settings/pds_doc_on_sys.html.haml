@@ -1,0 +1,16 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  // todo: add documentation selector
+  var columns =
+  [{"property":"id","header":"DocSysID", hidden: true},
+    {property: "system.System", header: "Система", editor: "SystemSelector", attribute: 'system_id', nested: true},
+    {"property":"pds_documentation.DocTitle","header":"Doc", editor: 'PdsDocumentationsSelector', attribute: 'pds_documentation_id', nested: true},
+    {"property":"pds_documentation.Type","header":"Type", nested: true},
+    {"property":"pds_documentation.NPP_Number","header":"NPP_Number", nested: true},
+    //{"property":"t","header":"t"}
+  ]

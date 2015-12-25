@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Contr num:
+  = @contract.contr_Num
+%p
+  %b Project:
+  = @contract.Project
+%p
+  %b State:
+  = @contract.state
+%p
+  %b Date:
+  = @contract.date
+%p
+  %b Desc:
+  = @contract.Desc
+
+= link_to 'Edit', edit_contract_path(@contract)
+\|
+= link_to 'Back', contracts_path

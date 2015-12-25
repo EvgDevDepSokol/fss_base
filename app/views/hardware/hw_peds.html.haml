@@ -1,0 +1,43 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  {"property":"ped_N","header":"ped_N"},
+  //{"property":"Project","header":"Project"},
+  {"property":"ped","header":"ped", editor: "stringEditor"},
+  {"property":"Code","header":"Code", editor: "stringEditor"},
+  // todo: da/net selector
+  {"property":"GenExtSig","header":"GenExtSig"},
+  {"property":"AI","header":"AI", editor: "stringEditor"},
+  {"property":"AO","header":"AO", editor: "stringEditor"},
+  {"property":"AO*","header":"AO*", editor: "stringEditor"},
+  {"property":"DI","header":"DI", editor: "stringEditor"},
+  {"property":"LO","header":"LO", editor: "stringEditor"},
+  {"property":"LO*","header":"LO*", editor: "stringEditor"},
+  {"property":"LO+","header":"LO+", editor: "stringEditor"},
+  {"property":"LO220","header":"LO220", editor: "stringEditor"},
+  {"property":"RO","header":"RO", editor: "stringEditor"},
+  {"property":"DO","header":"DO", editor: "stringEditor"},
+  {"property":"IOSUM","header":"IOSUM", editor: "stringEditor"},
+  {"property":"5VDC","header":"5VDC", editor: "stringEditor"},
+  {"property":"24VDC","header":"24VDC", editor: "stringEditor"},
+  {"property":"10VDC","header":"10VDC", editor: "stringEditor"},
+  {"property":"12VDC","header":"12VDC", editor: "stringEditor"},
+  {"property":"60VDC","header":"60VDC", editor: "stringEditor"},
+  {"property":"100VDC","header":"100VDC", editor: "stringEditor"},
+  {"property":"9VDC","header":"9VDC", editor: "stringEditor"},
+  {"property":"220VAC","header":"220VAC", editor: "stringEditor"},
+  {"property":"1,2VAC","header":"1,2VAC", editor: "stringEditor"},
+  {"property":"1,5VAC","header":"1,5VAC", editor: "stringEditor"},
+  {"property":"2,5VAC","header":"2,5VAC", editor: "stringEditor"},
+  {"property":"5VAC","header":"5VAC", editor: "stringEditor"},
+  {"property":"hw_devtype.RuName","header":"type", nested: true, editor: "HwDevTypesSelector", attribute: "hw_devtype_id"},
+  {"property":"VENDOR","header":"VENDOR", editor: "stringEditor"},
+  {"property":"DESCRIPT","header":"DESCRIPT", editor: "stringEditor"},
+  {"property":"REM","header":"REM", editor: "stringEditor"}
+  //{"property":"t","header":"t"},
+  ];

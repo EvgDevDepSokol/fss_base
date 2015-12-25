@@ -1,0 +1,88 @@
+= form_for @pds_regulator do |f|
+  - if @pds_regulator.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_regulator.errors.count, "error")} prohibited this pds_regulator from being saved:"
+      %ul
+        - @pds_regulator.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :model
+    = f.text_field :model
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :tag_RU
+    = f.text_field :tag_RU
+  .field
+    = f.label :tag_EN
+    = f.text_field :tag_EN
+  .field
+    = f.label :station_sys
+    = f.text_field :station_sys
+  .field
+    = f.label :Desc
+    = f.text_field :Desc
+  .field
+    = f.label :ed_power
+    = f.number_field :ed_power
+  .field
+    = f.label :ctrl_power
+    = f.number_field :ctrl_power
+  .field
+    = f.label :anc_power
+    = f.number_field :anc_power
+  .field
+    = f.label :nom_state
+    = f.text_field :nom_state
+  .field
+    = f.label :open_rate
+    = f.text_field :open_rate
+  .field
+    = f.label :close_rate
+    = f.text_field :close_rate
+  .field
+    = f.label :sd_N
+    = f.number_field :sd_N
+  .field
+    = f.label :doc_reg_N
+    = f.number_field :doc_reg_N
+  .field
+    = f.label :Algorithm
+    = f.text_field :Algorithm
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :Desc_EN
+    = f.text_field :Desc_EN
+  .field
+    = f.label :import_t
+    = f.datetime_select :import_t
+  .field
+    = f.label :mod
+    = f.text_field :mod
+  .field
+    = f.label :vlv
+    = f.text_field :vlv
+  .field
+    = f.label :vlv_1
+    = f.number_field :vlv_1
+  .field
+    = f.label :vlv_2
+    = f.number_field :vlv_2
+  .field
+    = f.label :det
+    = f.text_field :det
+  .field
+    = f.label :eq_type
+    = f.number_field :eq_type
+  .field
+    = f.label :par_val
+    = f.text_field :par_val
+  .actions
+    = f.submit 'Save'

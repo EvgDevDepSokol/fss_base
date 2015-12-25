@@ -1,0 +1,39 @@
+%p#notice= notice
+
+%p
+  %b Ic:
+  = @pds_announciator.IC
+%p
+  %b Project:
+  = @pds_announciator.Project
+%p
+  %b Sys:
+  = @pds_announciator.sys
+%p
+  %b Ctrl power:
+  = @pds_announciator.ctrl_power
+%p
+  %b T:
+  = @pds_announciator.t
+%p
+  %b Type:
+  = @pds_announciator.Type
+%p
+  %b Gr dreg:
+  = @pds_announciator.Gr_Dreg
+%p
+  %b Detector:
+  = @pds_announciator.Detector
+%p
+  %b Characteristics:
+  = @pds_announciator.Characteristics
+%p
+  %b Sign:
+  = @pds_announciator.sign
+%p
+  %b Code:
+  = @pds_announciator.Code
+
+= link_to 'Edit', edit_pds_announciator_path(@pds_announciator)
+\|
+= link_to 'Back', pds_announciators_path

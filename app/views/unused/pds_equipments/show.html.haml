@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Project:
+  = @pds_equipment.Project
+%p
+  %b Sys:
+  = @pds_equipment.sys
+%p
+  %b Kks:
+  = @pds_equipment.KKS
+%p
+  %b Eq type:
+  = @pds_equipment.eq_type
+%p
+  %b Description ru:
+  = @pds_equipment.Description_RU
+%p
+  %b Description en:
+  = @pds_equipment.Description_EN
+%p
+  %b Type equip:
+  = @pds_equipment.type_equip
+%p
+  %b Sd n:
+  = @pds_equipment.sd_N
+
+= link_to 'Edit', edit_pds_equipment_path(@pds_equipment)
+\|
+= link_to 'Back', pds_equipments_path

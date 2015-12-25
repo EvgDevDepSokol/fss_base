@@ -1,0 +1,29 @@
+%h1 Listing hw_iosignaldims
+
+%table
+  %thead
+    %tr
+      %th Project
+      %th Signid
+      %th Num
+      %th Type
+      %th Suff
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @hw_iosignaldims.each do |hw_iosignaldim|
+      %tr
+        %td= hw_iosignaldim.Project
+        %td= hw_iosignaldim.signID
+        %td= hw_iosignaldim.num
+        %td= hw_iosignaldim.type
+        %td= hw_iosignaldim.suff
+        %td= link_to 'Show', hw_iosignaldim
+        %td= link_to 'Edit', edit_hw_iosignaldim_path(hw_iosignaldim)
+        %td= link_to 'Destroy', hw_iosignaldim, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Hw iosignaldim', new_hw_iosignaldim_path

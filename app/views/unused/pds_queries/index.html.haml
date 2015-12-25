@@ -1,0 +1,47 @@
+%h1 Listing pds_queries
+
+%table
+  %thead
+    %tr
+      %th Project
+      %th Sys
+      %th Querynumber
+      %th Query make date
+      %th Answer expected date
+      %th Query essence
+      %th Engineer n
+      %th Query transfer date
+      %th Answer date
+      %th Answer essence
+      %th Who answered
+      %th If close
+      %th Assumption
+      %th T
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_queries.each do |pds_query|
+      %tr
+        %td= pds_query.Project
+        %td= pds_query.sys
+        %td= pds_query.queryNumber
+        %td= pds_query.query_make_date
+        %td= pds_query.answer_expected_date
+        %td= pds_query.query_essence
+        %td= pds_query.engineer_N
+        %td= pds_query.query_transfer_date
+        %td= pds_query.answer_date
+        %td= pds_query.answer_essence
+        %td= pds_query.who_answered
+        %td= pds_query.if_close
+        %td= pds_query.Assumption
+        %td= pds_query.t
+        %td= link_to 'Show', pds_query
+        %td= link_to 'Edit', edit_pds_query_path(pds_query)
+        %td= link_to 'Destroy', pds_query, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds query', new_pds_query_path

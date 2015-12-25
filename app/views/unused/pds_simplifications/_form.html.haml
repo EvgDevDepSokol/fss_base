@@ -1,0 +1,37 @@
+= form_for @pds_simplification do |f|
+  - if @pds_simplification.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_simplification.errors.count, "error")} prohibited this pds_simplification from being saved:"
+      %ul
+        - @pds_simplification.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :Numb
+    = f.text_field :Numb
+  .field
+    = f.label :Desc
+    = f.text_area :Desc
+  .field
+    = f.label :Desc_EN
+    = f.text_area :Desc_EN
+  .field
+    = f.label :support
+    = f.text_area :support
+  .field
+    = f.label :support_EN
+    = f.text_area :support_EN
+  .field
+    = f.label :queryID
+    = f.number_field :queryID
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .actions
+    = f.submit 'Save'

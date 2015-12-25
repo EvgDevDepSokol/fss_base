@@ -1,0 +1,1 @@
+json.extract! @pds_ppca, :id, :Project, :sys, :Shifr, :Key, :identif, :Description, :Description_EN, :Detector, :Unit, :L_lim, :U_lim, :nom, :LA, :LW, :HW, :HA, :t, :code, :power, :UnitID, :created_at, :updated_at

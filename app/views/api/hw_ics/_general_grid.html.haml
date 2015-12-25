@@ -1,0 +1,26 @@
+
+= grid(@grid, show_filters: false, class: 'table editable-table') do |g|
+
+  - g.column name: mt(:ref, model), attribute: 'ref' do |model|
+    - content_tag(:span, model.ref, class: 'editable', 'data-name' => :ref )
+
+  - g.column name: lt(:pds_syslist, model).html_safe,
+   attribute: 'sys' do |model|
+    - content_tag(:span, model.system, class: 'editable', 'data-name' => :system )
+
+  - g.column name: lt(:hw_ped, model), attribute: 'ped' do |model|
+    - content_tag(:span, model.hw_ped, class: 'editable', 'data-name' => :hw_ped )
+
+  - g.column name: lt(:panel, model), attribute: 'panel' do |model|
+    - content_tag(:span, model.panel, class: 'editable', 'data-name' => :panel )
+
+  - (model.attribute_names - ['ref', 'sys', 'ped', 'icID', 'Project', 'panel_id']).each do |attribute|
+    - g.column name: mt(attribute, model), attribute: attribute do |model|
+      - content_tag(:span, model.send(attribute), class: 'editable', 'data-name' => attribute )
+
+  - g.column do |object|
+    - content_tag(:button,
+        content_tag(:span, '', class: "fa fa-pencil"),
+          class: 'btn btn-default edit') + content_tag(:button,
+          'save', {class: "btn btn-primary save",
+          style: 'display:none', 'data-url' => url_for(object) })

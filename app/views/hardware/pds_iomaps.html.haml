@@ -1,0 +1,18 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  //{"property":"hwaddress_N","header":"hwaddress_N"},
+  //{"property":"Project","header":"Project"},
+  {"property":"hwaddress","header":"hwaddress", editor: "stringEditor"},
+  {"property":"io_point_name","header":"io_point_name", editor: "stringEditor"},
+  {"property":"number_of_array_elem","header":"number_of_array_elem", editor: "stringEditor"},
+  {"property":"sid","header":"sid", editor: "stringEditor"},
+  {"property":"comp_name","header":"comp_name", editor: "stringEditor"},
+  {"property":"remark","header":"remark", editor: "stringEditor"}
+  //{"property":"t","header":"t"}
+  ];

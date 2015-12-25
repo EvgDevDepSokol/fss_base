@@ -1,0 +1,23 @@
+%h1= title
+
+%h2= index_view
+
+#general_table
+
+:javascript
+  var title = "#{title}";
+
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+  var columns = [
+  {"property":"id","header":"ReportID", hidden: true},
+  {"property":"Project","header":"Project", hidden: true},
+  {"property":"pds_engineer.name","header":"Engineer", editor: "PdsEngineersSelector", attribute: 'pds_engineer_id', nested: true},
+  {"property":"t","header":"t"},
+  {"property":"DocTitle","header":"DocTitle", editor: 'stringEditor'},
+  {"property":"Code","header":"Code", editor: 'stringEditor'},
+  {"property":"FileRu","header":"FileRu"},
+  {"property":"working_engineer_ru.name","header":"CheckOutRu", nested: true},
+  {"property":"FileEn","header":"FileEn"},
+  {"property":"working_engineer_en.name","header":"CheckOutEn", nested: true}
+  ];

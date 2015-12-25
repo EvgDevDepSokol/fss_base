@@ -1,0 +1,7 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: @model.to_s) do |sheet|
+  sheet.add_row @model.column_names
+  @model.all.each do |general_object|
+    sheet.add_row general_object.attributes.values
+  end
+end

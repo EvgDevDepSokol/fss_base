@@ -1,0 +1,165 @@
+%h1 Listing dwg_panels
+
+%table
+  %thead
+    %tr
+      %th Project
+      %th Panel
+      %th Name
+      %th Ev
+      %th Eh
+      %th Sv
+      %th Sh
+      %th Mp cmemo
+      %th Mp code
+      %th Mp code1
+      %th Mp code2
+      %th Mp l0
+      %th Mp l0 0
+      %th Mp l0 1
+      %th Mp l0 2
+      %th Mp l0 3
+      %th Mp l0 4
+      %th Mp l0 0 x
+      %th Mp l0 0 y
+      %th Mp l0 0 w
+      %th Mp l0 0 h
+      %th Mp l0 0 f
+      %th Mp l0 1 x
+      %th Mp l0 1 y
+      %th Mp l0 1 w
+      %th Mp l0 1 h
+      %th Mp l0 1 f
+      %th Mp l0 2 x
+      %th Mp l0 2 y
+      %th Mp l0 2 w
+      %th Mp l0 2 h
+      %th Mp l0 2 f
+      %th Mp l0 3 x
+      %th Mp l0 3 y
+      %th Mp l0 3 w
+      %th Mp l0 3 h
+      %th Mp l0 3 f
+      %th Mp l0 4 x
+      %th Mp l0 4 y
+      %th Mp l0 4 w
+      %th Mp l0 4 h
+      %th Mp l0 4 f
+      %th Mp mass
+      %th Mp max
+      %th Mp min
+      %th Mp mode
+      %th Mp modeord
+      %th Mp name0
+      %th Mp name1
+      %th Mp order
+      %th Mp proj
+      %th Mp s0
+      %th Mp s100
+      %th Mp s20
+      %th Mp s40
+      %th Mp s50
+      %th Mp s60
+      %th Mp s80
+      %th Mp type0
+      %th Mp type1
+      %th Mp u0
+      %th Mp u1
+      %th Mp io
+      %th Mp iocont
+      %th Mp ioname
+      %th Type
+      %th Font
+      %th Mirror
+      %th Rotate
+      %th Revision
+      %th T
+      %th Rotation
+      %th Ref
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @dwg_panels.each do |dwg_panel|
+      %tr
+        %td= dwg_panel.Project
+        %td= dwg_panel.panel
+        %td= dwg_panel.NAME
+        %td= dwg_panel.EV
+        %td= dwg_panel.EH
+        %td= dwg_panel.SV
+        %td= dwg_panel.SH
+        %td= dwg_panel.MP_CMEMO
+        %td= dwg_panel.MP_CODE
+        %td= dwg_panel.MP_CODE1
+        %td= dwg_panel.MP_CODE2
+        %td= dwg_panel.MP_L0
+        %td= dwg_panel.MP_L0_0
+        %td= dwg_panel.MP_L0_1
+        %td= dwg_panel.MP_L0_2
+        %td= dwg_panel.MP_L0_3
+        %td= dwg_panel.MP_L0_4
+        %td= dwg_panel.MP_L0_0_x
+        %td= dwg_panel.MP_L0_0_y
+        %td= dwg_panel.MP_L0_0_w
+        %td= dwg_panel.MP_L0_0_h
+        %td= dwg_panel.MP_L0_0_f
+        %td= dwg_panel.MP_L0_1_x
+        %td= dwg_panel.MP_L0_1_y
+        %td= dwg_panel.MP_L0_1_w
+        %td= dwg_panel.MP_L0_1_h
+        %td= dwg_panel.MP_L0_1_f
+        %td= dwg_panel.MP_L0_2_x
+        %td= dwg_panel.MP_L0_2_y
+        %td= dwg_panel.MP_L0_2_w
+        %td= dwg_panel.MP_L0_2_h
+        %td= dwg_panel.MP_L0_2_f
+        %td= dwg_panel.MP_L0_3_x
+        %td= dwg_panel.MP_L0_3_y
+        %td= dwg_panel.MP_L0_3_w
+        %td= dwg_panel.MP_L0_3_h
+        %td= dwg_panel.MP_L0_3_f
+        %td= dwg_panel.MP_L0_4_x
+        %td= dwg_panel.MP_L0_4_y
+        %td= dwg_panel.MP_L0_4_w
+        %td= dwg_panel.MP_L0_4_h
+        %td= dwg_panel.MP_L0_4_f
+        %td= dwg_panel.MP_MASS
+        %td= dwg_panel.MP_MAX
+        %td= dwg_panel.MP_MIN
+        %td= dwg_panel.MP_MODE
+        %td= dwg_panel.MP_MODEORD
+        %td= dwg_panel.MP_NAME0
+        %td= dwg_panel.MP_NAME1
+        %td= dwg_panel.MP_ORDER
+        %td= dwg_panel.MP_PROJ
+        %td= dwg_panel.MP_S0
+        %td= dwg_panel.MP_S100
+        %td= dwg_panel.MP_S20
+        %td= dwg_panel.MP_S40
+        %td= dwg_panel.MP_S50
+        %td= dwg_panel.MP_S60
+        %td= dwg_panel.MP_S80
+        %td= dwg_panel.MP_TYPE0
+        %td= dwg_panel.MP_TYPE1
+        %td= dwg_panel.MP_U0
+        %td= dwg_panel.MP_U1
+        %td= dwg_panel.MP_IO
+        %td= dwg_panel.MP_IOCONT
+        %td= dwg_panel.MP_IONAME
+        %td= dwg_panel.TYPE
+        %td= dwg_panel.FONT
+        %td= dwg_panel.MIRROR
+        %td= dwg_panel.ROTATE
+        %td= dwg_panel.revision
+        %td= dwg_panel.t
+        %td= dwg_panel.rotation
+        %td= dwg_panel.ref
+        %td= link_to 'Show', dwg_panel
+        %td= link_to 'Edit', edit_dwg_panel_path(dwg_panel)
+        %td= link_to 'Destroy', dwg_panel, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Dwg panel', new_dwg_panel_path

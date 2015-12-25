@@ -1,0 +1,36 @@
+%p#notice= notice
+
+%p
+  %b Project:
+  = @pds_ppcd.Project
+%p
+  %b Sys:
+  = @pds_ppcd.sys
+%p
+  %b Shifr:
+  = @pds_ppcd.Shifr
+%p
+  %b Key:
+  = @pds_ppcd.Key
+%p
+  %b Identif:
+  = @pds_ppcd.identif
+%p
+  %b Description:
+  = @pds_ppcd.Description
+%p
+  %b Description en:
+  = @pds_ppcd.Description_EN
+%p
+  %b Detector:
+  = @pds_ppcd.Detector
+%p
+  %b T:
+  = @pds_ppcd.t
+%p
+  %b Code:
+  = @pds_ppcd.code
+
+= link_to 'Edit', edit_pds_ppcd_path(@pds_ppcd)
+\|
+= link_to 'Back', pds_ppcds_path

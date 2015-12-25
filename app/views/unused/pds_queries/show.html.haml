@@ -1,0 +1,48 @@
+%p#notice= notice
+
+%p
+  %b Project:
+  = @pds_query.Project
+%p
+  %b Sys:
+  = @pds_query.sys
+%p
+  %b Querynumber:
+  = @pds_query.queryNumber
+%p
+  %b Query make date:
+  = @pds_query.query_make_date
+%p
+  %b Answer expected date:
+  = @pds_query.answer_expected_date
+%p
+  %b Query essence:
+  = @pds_query.query_essence
+%p
+  %b Engineer n:
+  = @pds_query.engineer_N
+%p
+  %b Query transfer date:
+  = @pds_query.query_transfer_date
+%p
+  %b Answer date:
+  = @pds_query.answer_date
+%p
+  %b Answer essence:
+  = @pds_query.answer_essence
+%p
+  %b Who answered:
+  = @pds_query.who_answered
+%p
+  %b If close:
+  = @pds_query.if_close
+%p
+  %b Assumption:
+  = @pds_query.Assumption
+%p
+  %b T:
+  = @pds_query.t
+
+= link_to 'Edit', edit_pds_query_path(@pds_query)
+\|
+= link_to 'Back', pds_queries_path

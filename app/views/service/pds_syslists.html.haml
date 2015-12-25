@@ -1,0 +1,16 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  {"property":"id","header":"SystemID"},
+  {"property":"System","header":"System", editor: "stringEditor"},
+  {"property":"Descriptor","header":"Descriptor", editor: "stringEditor"},
+  {"property":"Category","header":"Category", editor: "stringEditor"},
+  {"property":"shortDesc","header":"shortDesc", editor: "stringEditor"},
+  {"property":"shortDesc_EN","header":"shortDesc_EN", editor: "stringEditor"}//,
+  //{"property":"t","header":"t"}
+  ];

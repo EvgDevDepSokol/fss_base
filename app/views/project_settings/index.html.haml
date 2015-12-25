@@ -1,0 +1,12 @@
+%h1= title
+
+%h2= index_view
+
+#general_table
+
+:javascript
+  var title = "#{title}";
+
+  var data = #{table_data};
+  var columns = #{table_header};
+  var model_name = "#{hash_model_name}";

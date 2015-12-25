@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Project:
+  = @pds_alg_type.Project
+%p
+  %b Alg type:
+  = @pds_alg_type.alg_type
+%p
+  %b Numb:
+  = @pds_alg_type.numb
+
+= link_to 'Edit', edit_pds_alg_type_path(@pds_alg_type)
+\|
+= link_to 'Back', pds_alg_types_path

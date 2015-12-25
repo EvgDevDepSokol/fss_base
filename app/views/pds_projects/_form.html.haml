@@ -1,0 +1,61 @@
+= form_for @pds_project do |f|
+  - if @pds_project.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_project.errors.count, "error")} prohibited this pds_project from being saved:"
+      %ul
+        - @pds_project.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :project_number
+    = f.text_field :project_number
+  .field
+    = f.label :project_name
+    = f.text_field :project_name
+  .field
+    = f.label :project_name_EN
+    = f.text_field :project_name_EN
+  .field
+    = f.label :Contractor
+    = f.text_field :Contractor
+  .field
+    = f.label :companyID
+    = f.number_field :companyID
+  .field
+    = f.label :contract_number
+    = f.text_field :contract_number
+  .field
+    = f.label :contract_date
+    = f.date_select :contract_date
+  .field
+    = f.label :ProjectManager
+    = f.number_field :ProjectManager
+  .field
+    = f.label :SWManager
+    = f.number_field :SWManager
+  .field
+    = f.label :HWManager
+    = f.number_field :HWManager
+  .field
+    = f.label :Factor
+    = f.text_field :Factor
+  .field
+    = f.label :Description
+    = f.text_field :Description
+  .field
+    = f.label :Description_EN
+    = f.text_area :Description_EN
+  .field
+    = f.label :Notes
+    = f.text_field :Notes
+  .field
+    = f.label :BlobObj
+    = f.number_field :BlobObj
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :contract_end_date
+    = f.date_select :contract_end_date
+  .actions
+    = f.submit 'Save', class: 'btn btn-success'

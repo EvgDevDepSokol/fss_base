@@ -1,0 +1,29 @@
+%h1 Listing tblbinaries
+
+%table
+  %thead
+    %tr
+      %th Title
+      %th Type
+      %th Length
+      %th Binobj
+      %th T
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @tblbinaries.each do |tblbinary|
+      %tr
+        %td= tblbinary.Title
+        %td= tblbinary.Type
+        %td= tblbinary.Length
+        %td= tblbinary.binObj
+        %td= tblbinary.t
+        %td= link_to 'Show', tblbinary
+        %td= link_to 'Edit', edit_tblbinary_path(tblbinary)
+        %td= link_to 'Destroy', tblbinary, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Tblbinary', new_tblbinary_path

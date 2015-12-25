@@ -1,0 +1,4 @@
+= CSV.generate(col_sep: ';') do |csv|
+  - csv << @model.column_names
+  - @model.all.each do |general_object|
+    - csv << general_object.attributes.values_at(*@model.column_names)

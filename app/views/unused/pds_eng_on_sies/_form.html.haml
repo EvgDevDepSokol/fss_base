@@ -1,0 +1,25 @@
+= form_for @pds_eng_on_sy do |f|
+  - if @pds_eng_on_sy.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_eng_on_sy.errors.count, "error")} prohibited this pds_eng_on_sy from being saved:"
+      %ul
+        - @pds_eng_on_sy.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :engineer_N
+    = f.number_field :engineer_N
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :TestOperator_N
+    = f.number_field :TestOperator_N
+  .actions
+    = f.submit 'Save'

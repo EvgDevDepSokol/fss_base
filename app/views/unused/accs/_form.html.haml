@@ -1,0 +1,49 @@
+= form_for @acc do |f|
+  - if @acc.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@acc.errors.count, "error")} prohibited this acc from being saved:"
+      %ul
+        - @acc.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :ped
+    = f.number_field :ped
+  .field
+    = f.label :Name
+    = f.number_field :Name
+  .field
+    = f.label :number
+    = f.number_field :number
+  .field
+    = f.label :SH
+    = f.number_field :SH
+  .field
+    = f.label :SV
+    = f.number_field :SV
+  .field
+    = f.label :tag_no
+    = f.number_field :tag_no
+  .field
+    = f.label :store
+    = f.number_field :store
+  .field
+    = f.label :scale_min
+    = f.number_field :scale_min
+  .field
+    = f.label :scale_max
+    = f.number_field :scale_max
+  .field
+    = f.label :Unit
+    = f.number_field :Unit
+  .field
+    = f.label :MP_CMEMO
+    = f.number_field :MP_CMEMO
+  .field
+    = f.label :pa
+    = f.text_field :pa
+  .actions
+    = f.submit 'Save'

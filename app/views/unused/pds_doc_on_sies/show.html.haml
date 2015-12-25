@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Doc:
+  = @pds_doc_on_sy.Doc
+%p
+  %b Sys:
+  = @pds_doc_on_sy.sys
+%p
+  %b T:
+  = @pds_doc_on_sy.t
+
+= link_to 'Edit', edit_pds_doc_on_sy_path(@pds_doc_on_sy)
+\|
+= link_to 'Back', pds_doc_on_sies_path

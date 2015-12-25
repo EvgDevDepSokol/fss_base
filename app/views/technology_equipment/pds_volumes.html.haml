@@ -1,0 +1,20 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  //{property:"id",header:"volumeID"},
+  {property: "system.System", header: "Система", editor: "SystemSelector", attribute: 'system_id', nested: true},
+  {property:"pds_man_equip.Type",header:"Тип В ИС", editor: "PdsManEquipSelector", attribute: 'pds_man_equip_id', nested: true},
+
+  {property:"kks",header:"kks", editor: "stringEditor"},
+  {property:"ShortDesc",header:"ShortDesc", editor: "stringEditor"},
+  {property:"Desc_EN",header:"Desc_EN", editor: "stringEditor"},
+  {property:"volume",header:"volume", editor: "stringEditor"},
+  {property:"height",header:"height", editor: "stringEditor"},
+  {property:"level",header:"level", editor: "stringEditor"},
+  {property:"room",header:"room", editor: "stringEditor"},
+  {property:"pds_sd.SdTitle", header:"sd_N", editor: "SdSelector", attribute: 'pds_sd_id', nested: true}];

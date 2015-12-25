@@ -1,0 +1,106 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %title= content_for?(:title) ? yield(:title) : "BazaDjet"
+    = csrf_meta_tags
+    / Le HTML5 shim, for IE6-8 support of HTML elements
+    /[if lt IE 9]
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    = stylesheet_link_tag "application", :media => "all"
+    / For third-generation iPad with high-resolution Retina display:
+    / Size should be 144 x 144 pixels
+    = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144'
+    / For iPhone with high-resolution Retina display:
+    / Size should be 114 x 114 pixels
+    = favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114'
+    / For first- and second-generation iPad:
+    / Size should be 72 x 72 pixels
+    = favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72'
+    / For non-Retina iPhone, iPod Touch, and Android 2.1+ devices:
+    / Size should be 57 x 57 pixels
+    = favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png'
+    / For all other devices
+    / Size should be 32 x 32 pixels
+    = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
+
+    = javascript_include_tag "application"
+
+
+  %body
+    .navbar.navbar-static-top.white
+      .container-fluid
+        %a.navbar-brand{href: root_url}
+          = image_tag 'logo.jpg', height: 40
+
+        - if @project
+          %h1.navbar-text.navbar-center
+            =@project.name
+        - if current_user
+          %ul.nav.navbar-nav.navbar-right
+            %li.dropdown
+              %a.dropdown-toggle{href: '#', 'data-toggle' => "dropdown", role: "button", 'aria-expanded' => "false"}
+                = current_user.name
+            %li
+    .navbar.navbar-static-top.blue
+      .container-fluid
+        -#%button.navbar-toggle{"data-target" => ".navbar-responsive-collapse", "data-toggle" => "collapse", :type => "button"}
+        -#  %span.icon-bar
+        -#  %span.icon-bar
+        -#  %span.icon-bar
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          %p.navbar-text
+            Список таблиц
+          %ul.nav.navbar-nav
+            %li
+              = link_to root_url do
+                = image_tag('tables.png')
+                Таблицы
+            %li
+              = link_to root_url do
+                = image_tag('blog_accept.png')
+                Протоколы рассогласований
+
+          %ul.nav.navbar-nav
+            %li
+              = link_to root_url do
+                = image_tag('settings.png')
+                Настройки
+            %li
+              = link_to root_url do
+                = image_tag('reports.png')
+                Отчеты
+            %li#import_xlsx_modal
+              = link_to root_url do
+                = image_tag('import_export.png')
+                Экспорт Импорт
+            %li
+              = link_to root_url do
+                = image_tag('generate.png')
+                Генерация
+
+          %ul.nav.navbar-right.navbar-nav
+            - if current_user
+              %li
+                = link_to '#'do
+                  = image_tag('help.png')
+                  Помощь
+              %li
+                = link_to '#'do
+                  = image_tag('logout.png')
+                  Выход
+    .container.app-container
+      .container.inner-container
+        - # if @project
+        .col.left-menu
+          = render 'shared/table_list', hash: get_tables_list
+        .col.main-container
+          = content_for?(:content) ? yield(:content) : yield
+
+    %footer
+      %p © Project DB 2015
+      %p.notice=notice
+      %p.alert=alert

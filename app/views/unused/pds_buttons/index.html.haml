@@ -1,0 +1,12 @@
+%h1 Listing pds_buttons
+
+= grid(@pds_buttons_grid, show_filters: :when_filtered, class: :table) do |g|
+  - g.action_column
+  - g.column name: 'IC', attribute: 'IC'
+  - g.column name: 'sys', attribute: 'sys'
+  - g.column name: 'Project', attribute: 'Project'
+  - g.column name: 'Range', attribute: 'range'
+  - g.column name: 'Fixed', attribute: 'Fixed'
+  - g.column name: 'T', attribute: 't'
+
+= link_to 'New Pds button', new_pds_button_path

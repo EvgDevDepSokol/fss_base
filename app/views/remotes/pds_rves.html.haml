@@ -1,0 +1,28 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns =
+  [{"property":"id","header":"rfID"},
+  {property: "system", header: "Система", editor: "SystemSelector", attribute: 'system_id'},
+  {"property":"name_RU","header":"name_RU", editor: "stringEditor"},
+  {"property":"name","header":"name", editor: "stringEditor"},
+  {"property":"tag_RU","header":"tag_RU", editor: "stringEditor"},
+  {"property":"Desc","header":"Desc", editor: "stringEditor"},
+  {"property":"Desc_EN","header":"Desc_EN", editor: "stringEditor"},
+  {"property":"range","header":"range", editor: "stringEditor"},
+  {"property":"Unit","header":"Unit", editor: "stringEditor"},
+  {"property":"type","header":"type", editor: "stringEditor"},
+  {"property":"Type_FB","header":"Type_FB", editor: "stringEditor"},
+  {"property":"unit_FB","header":"unit_FB", editor: "stringEditor"},
+  {"property":"range_FB","header":"range_FB", editor: "stringEditor"},
+  {"property":"rate","header":"rate", editor: "stringEditor"},
+  {"property":"Ptag","header":"Ptag", editor: "stringEditor"},
+  {"property":"sd_N","header":"sd_N", editor: "stringEditor"},
+  {"property":"t","header":"t"},
+  {"property":"typerf","header":"typerf", editor: "stringEditor"},
+  {"property":"scale","header":"scale", editor: "stringEditor"},
+  {"property":"frfID","header":"frfID", editor: "stringEditor"}];

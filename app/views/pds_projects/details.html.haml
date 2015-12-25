@@ -1,0 +1,53 @@
+%h1 Проекты
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th Project number
+      %th Project name
+      %th Project name en
+      %th Contractor
+      %th Companyid
+      %th Contract number
+      %th Contract date
+      %th Projectmanager
+      %th Swmanager
+      %th Hwmanager
+      %th Factor
+      %th Description
+      %th Description en
+      %th Notes
+      %th Blobobj
+      %th T
+      %th Contract end date
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_projects.each do |pds_project|
+      %tr
+        %td= pds_project.project_number
+        %td= pds_project.project_name
+        %td= pds_project.project_name_EN
+        %td= pds_project.Contractor
+        %td= pds_project.companyID
+        %td= pds_project.contract_number
+        %td= pds_project.contract_date
+        %td= pds_project.ProjectManager
+        %td= pds_project.SWManager
+        %td= pds_project.HWManager
+        %td= pds_project.Factor
+        %td= pds_project.Description
+        %td= pds_project.Description_EN
+        %td= pds_project.Notes
+        %td= pds_project.BlobObj
+        %td= pds_project.t
+        %td= pds_project.contract_end_date
+        %td= link_to 'Show', pds_project
+        %td= link_to 'Edit', edit_pds_project_path(pds_project)
+        %td= link_to 'Destroy', pds_project, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds project', new_pds_project_path

@@ -1,0 +1,19 @@
+= form_for @pds_alg_type do |f|
+  - if @pds_alg_type.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_alg_type.errors.count, "error")} prohibited this pds_alg_type from being saved:"
+      %ul
+        - @pds_alg_type.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :alg_type
+    = f.text_field :alg_type
+  .field
+    = f.label :numb
+    = f.number_field :numb
+  .actions
+    = f.submit 'Save'

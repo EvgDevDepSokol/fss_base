@@ -1,0 +1,31 @@
+= form_for @pds_buttons_light do |f|
+  - if @pds_buttons_light.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_buttons_light.errors.count, "error")} prohibited this pds_buttons_light from being saved:"
+      %ul
+        - @pds_buttons_light.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :IC
+    = f.number_field :IC
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :ctrl_power
+    = f.number_field :ctrl_power
+  .field
+    = f.label :range
+    = f.text_area :range
+  .field
+    = f.label :Fixed
+    = f.check_box :Fixed
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .actions
+    = f.submit 'Save'

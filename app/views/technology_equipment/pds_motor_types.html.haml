@@ -1,0 +1,22 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  {property:"id",header:"MotorTypeID", hidden: true},
+  {property:"MotorType",header:"MotorType", editor: "stringEditor"},
+  {property:"I_nom",header:"I_nom", editor: "stringEditor"},
+  {property:"U_nom",header:"U_nom", editor: "stringEditor"},
+  {property:"nom_pressure",header:"nom_pressure", editor: "stringEditor"},
+  {property:"nom_water_rate",header:"nom_water_rate", editor: "stringEditor"},
+  {property:"N_nom",header:"N_nom", editor: "stringEditor"},
+  {property:"cos",header:"cos", editor: "stringEditor"},
+  {property:"up_rate",header:"up_rate", editor: "stringEditor"},
+  {property:"down_rate",header:"down_rate", editor: "stringEditor"},
+  {property:"Coeff1",header:"Coeff1", editor: "stringEditor"},
+  {property:"Coeff2",header:"Coeff2", editor: "stringEditor"},
+  {property:"Coeff3",header:"Coeff3", editor: "stringEditor"}]

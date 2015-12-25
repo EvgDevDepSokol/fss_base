@@ -1,0 +1,43 @@
+= form_for @pds_ejector do |f|
+  - if @pds_ejector.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_ejector.errors.count, "error")} prohibited this pds_ejector from being saved:"
+      %ul
+        - @pds_ejector.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :kks
+    = f.text_field :kks
+  .field
+    = f.label :ShortDesc
+    = f.text_field :ShortDesc
+  .field
+    = f.label :Desc_EN
+    = f.text_area :Desc_EN
+  .field
+    = f.label :capacity
+    = f.text_field :capacity
+  .field
+    = f.label :level
+    = f.text_field :level
+  .field
+    = f.label :room
+    = f.text_field :room
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :eq_type
+    = f.number_field :eq_type
+  .field
+    = f.label :Unit
+    = f.number_field :Unit
+  .field
+    = f.label :sd_N
+    = f.number_field :sd_N
+  .actions
+    = f.submit 'Save'

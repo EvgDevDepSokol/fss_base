@@ -1,0 +1,49 @@
+%h1 Listing hw_iosignals
+
+%table
+  %thead
+    %tr
+      %th Project
+      %th Pedid
+      %th Signid
+      %th Wirecode
+      %th Contact
+      %th Sw pref
+      %th Sw suff
+      %th Hw suff
+      %th Comment
+      %th Contactnum
+      %th Description
+      %th Diapason
+      %th Limits
+      %th T
+      %th Temp
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @hw_iosignals.each do |hw_iosignal|
+      %tr
+        %td= hw_iosignal.Project
+        %td= hw_iosignal.pedID
+        %td= hw_iosignal.signID
+        %td= hw_iosignal.wirecode
+        %td= hw_iosignal.contact
+        %td= hw_iosignal.sw_pref
+        %td= hw_iosignal.sw_suff
+        %td= hw_iosignal.hw_suff
+        %td= hw_iosignal.comment
+        %td= hw_iosignal.contactnum
+        %td= hw_iosignal.description
+        %td= hw_iosignal.diapason
+        %td= hw_iosignal.limits
+        %td= hw_iosignal.t
+        %td= hw_iosignal.temp
+        %td= link_to 'Show', hw_iosignal
+        %td= link_to 'Edit', edit_hw_iosignal_path(hw_iosignal)
+        %td= link_to 'Destroy', hw_iosignal, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Hw iosignal', new_hw_iosignal_path

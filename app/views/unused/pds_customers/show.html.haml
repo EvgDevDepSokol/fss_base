@@ -1,0 +1,42 @@
+%p#notice= notice
+
+%p
+  %b Project:
+  = @pds_customer.Project
+%p
+  %b Agreename:
+  = @pds_customer.AgreeName
+%p
+  %b T:
+  = @pds_customer.t
+%p
+  %b Agreejobtitle:
+  = @pds_customer.AgreeJobTitle
+%p
+  %b Agreejobtitle en:
+  = @pds_customer.AgreeJobTitle_EN
+%p
+  %b Acceptedname1:
+  = @pds_customer.AcceptedName1
+%p
+  %b Acceptedjobtitle1:
+  = @pds_customer.AcceptedJobTitle1
+%p
+  %b Acceptedjobtitle1 en:
+  = @pds_customer.AcceptedJobTitle1_EN
+%p
+  %b Acceptedname2:
+  = @pds_customer.AcceptedName2
+%p
+  %b Acceptedjobtitle2:
+  = @pds_customer.AcceptedJobTitle2
+%p
+  %b Acceptedjobtitle2 en:
+  = @pds_customer.AcceptedJobTitle2_EN
+%p
+  %b Name:
+  = @pds_customer.Name
+
+= link_to 'Edit', edit_pds_customer_path(@pds_customer)
+\|
+= link_to 'Back', pds_customers_path

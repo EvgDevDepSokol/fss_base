@@ -1,0 +1,91 @@
+= form_for @pds_dr do |f|
+  - if @pds_dr.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_dr.errors.count, "error")} prohibited this pds_dr from being saved:"
+      %ul
+        - @pds_dr.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :drNum
+    = f.number_field :drNum
+  .field
+    = f.label :stage
+    = f.text_field :stage
+  .field
+    = f.label :drAuthor_text
+    = f.text_field :drAuthor_text
+  .field
+    = f.label :drAuthor
+    = f.number_field :drAuthor
+  .field
+    = f.label :rfr
+    = f.check_box :rfr
+  .field
+    = f.label :closed
+    = f.check_box :closed
+  .field
+    = f.label :createDate
+    = f.datetime_select :createDate
+  .field
+    = f.label :expRespDate
+    = f.datetime_select :expRespDate
+  .field
+    = f.label :query
+    = f.text_area :query
+  .field
+    = f.label :reply
+    = f.text_area :reply
+  .field
+    = f.label :sentForRev
+    = f.text_area :sentForRev
+  .field
+    = f.label :replyAuthor_text
+    = f.text_field :replyAuthor_text
+  .field
+    = f.label :replyAuthor
+    = f.number_field :replyAuthor
+  .field
+    = f.label :closedBy
+    = f.number_field :closedBy
+  .field
+    = f.label :openedDate
+    = f.datetime_select :openedDate
+  .field
+    = f.label :inprogressDate
+    = f.datetime_select :inprogressDate
+  .field
+    = f.label :replyDate
+    = f.datetime_select :replyDate
+  .field
+    = f.label :closedDate
+    = f.datetime_select :closedDate
+  .field
+    = f.label :NameDr
+    = f.text_field :NameDr
+  .field
+    = f.label :Status
+    = f.text_field :Status
+  .field
+    = f.label :IC
+    = f.number_field :IC
+  .field
+    = f.label :PowerState
+    = f.text_field :PowerState
+  .field
+    = f.label :Priority
+    = f.text_field :Priority
+  .field
+    = f.label :Disparity
+    = f.text_field :Disparity
+  .field
+    = f.label :CommingResult
+    = f.text_field :CommingResult
+  .actions
+    = f.submit 'Save'

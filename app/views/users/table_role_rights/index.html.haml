@@ -1,0 +1,25 @@
+%h1 Listing table_role_rights
+
+%table
+  %thead
+    %tr
+      %th Tableid
+      %th Roleid
+      %th Value
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @table_role_rights.each do |table_role_right|
+      %tr
+        %td= table_role_right.tableID
+        %td= table_role_right.roleID
+        %td= table_role_right.value
+        %td= link_to 'Show', table_role_right
+        %td= link_to 'Edit', edit_table_role_right_path(table_role_right)
+        %td= link_to 'Destroy', table_role_right, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Table role right', new_table_role_right_path

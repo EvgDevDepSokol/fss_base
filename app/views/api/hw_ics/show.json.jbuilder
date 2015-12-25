@@ -1,0 +1,1 @@
+json.extract! @hw_ic, :id, :Project, :ref, :ped, :rev, :tag_no, :UniquePTAG, :un, :bv, :panel, :coord, :scaleMin, :scaleMax, :Unit, :Description, :t, :Type, :sys, :Description_EN, :panel_id, :suffix, :version, :mark, :created_at, :updated_at

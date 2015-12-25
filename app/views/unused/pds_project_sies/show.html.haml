@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Project:
+  = @pds_project_sy.Project
+%p
+  %b Station sys:
+  = @pds_project_sy.Station_sys
+%p
+  %b Sys:
+  = @pds_project_sy.sys
+%p
+  %b Desc ru:
+  = @pds_project_sy.Desc_RU
+%p
+  %b Desc en:
+  = @pds_project_sy.Desc_EN
+%p
+  %b T:
+  = @pds_project_sy.t
+
+= link_to 'Edit', edit_pds_project_sy_path(@pds_project_sy)
+\|
+= link_to 'Back', pds_project_sies_path

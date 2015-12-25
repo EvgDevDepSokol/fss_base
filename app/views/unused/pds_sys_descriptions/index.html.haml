@@ -1,0 +1,31 @@
+%h1 Listing pds_sys_descriptions
+
+%table
+  %thead
+    %tr
+      %th Project
+      %th Sys
+      %th Description
+      %th Description en
+      %th Shortdesc
+      %th Shortdesc en
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_sys_descriptions.each do |pds_sys_description|
+      %tr
+        %td= pds_sys_description.Project
+        %td= pds_sys_description.sys
+        %td= pds_sys_description.Description
+        %td= pds_sys_description.Description_EN
+        %td= pds_sys_description.shortDesc
+        %td= pds_sys_description.shortDesc_EN
+        %td= link_to 'Show', pds_sys_description
+        %td= link_to 'Edit', edit_pds_sys_description_path(pds_sys_description)
+        %td= link_to 'Destroy', pds_sys_description, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds sys description', new_pds_sys_description_path

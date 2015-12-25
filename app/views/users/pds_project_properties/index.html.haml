@@ -1,0 +1,73 @@
+%h1 Listing pds_project_properties
+
+%table
+  %thead
+    %tr
+      %th Hostname
+      %th Hostip
+      %th Simdir
+      %th Isname
+      %th Isip
+      %th Rootpass
+      %th Iopass
+      %th Loadpass
+      %th Tgispass
+      %th Ostype
+      %th Lowlimkeyfield
+      %th Uplimkeyfield
+      %th Language
+      %th Enabled
+      %th Resname
+      %th Classlib
+      %th Serviceport
+      %th Statsinterval
+      %th Pdscode
+      %th Fdscode
+      %th Ports3serv
+      %th Report prefix
+      %th Encoding
+      %th Pmcode
+      %th Pmshortcode
+      %th Stcode
+      %th Stshortcode
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_project_properties.each do |pds_project_property|
+      %tr
+        %td= pds_project_property.HostName
+        %td= pds_project_property.HostIP
+        %td= pds_project_property.SimDir
+        %td= pds_project_property.ISName
+        %td= pds_project_property.ISIP
+        %td= pds_project_property.RootPass
+        %td= pds_project_property.IOPass
+        %td= pds_project_property.LoadPass
+        %td= pds_project_property.TgisPass
+        %td= pds_project_property.OSType
+        %td= pds_project_property.LowLimKeyField
+        %td= pds_project_property.UpLimKeyField
+        %td= pds_project_property.Language
+        %td= pds_project_property.Enabled
+        %td= pds_project_property.ResName
+        %td= pds_project_property.ClassLib
+        %td= pds_project_property.ServicePort
+        %td= pds_project_property.StatsInterval
+        %td= pds_project_property.pdsCode
+        %td= pds_project_property.fdsCode
+        %td= pds_project_property.portS3serv
+        %td= pds_project_property.report_prefix
+        %td= pds_project_property.Encoding
+        %td= pds_project_property.pmCode
+        %td= pds_project_property.pmShortCode
+        %td= pds_project_property.stCode
+        %td= pds_project_property.stShortCode
+        %td= link_to 'Show', pds_project_property
+        %td= link_to 'Edit', edit_pds_project_property_path(pds_project_property)
+        %td= link_to 'Destroy', pds_project_property, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds project property', new_pds_project_property_path

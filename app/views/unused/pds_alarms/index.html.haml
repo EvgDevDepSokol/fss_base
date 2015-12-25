@@ -1,0 +1,27 @@
+%h1 Listing pds_alarms
+
+%table
+  %thead
+    %tr
+      %th Ic
+      %th Sys
+      %th Project
+      %th T
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_alarms.each do |pds_alarm|
+      %tr
+        %td= pds_alarm.IC
+        %td= pds_alarm.sys
+        %td= pds_alarm.Project
+        %td= pds_alarm.t
+        %td= link_to 'Show', pds_alarm
+        %td= link_to 'Edit', edit_pds_alarm_path(pds_alarm)
+        %td= link_to 'Destroy', pds_alarm, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds alarm', new_pds_alarm_path

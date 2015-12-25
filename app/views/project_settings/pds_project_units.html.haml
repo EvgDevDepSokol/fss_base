@@ -1,0 +1,13 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns =
+  [{"property":"id","header":"ProjUnitID", hidden: true},
+  {"property":"unit.Unit_RU","header":"Unit_RU", editor: "stringEditor", nested: true},
+  {"property":"unit.Unit_EN","header":"Unit_RN", editor: "stringEditor", nested: true},
+  //{"property":"t","header":"t"}
+  ];

@@ -1,0 +1,59 @@
+%h1 Listing pds_ppcas
+
+%table
+  %thead
+    %tr
+      %th Project
+      %th Sys
+      %th Shifr
+      %th Key
+      %th Identif
+      %th Description
+      %th Description en
+      %th Detector
+      %th Unit
+      %th L lim
+      %th U lim
+      %th Nom
+      %th La
+      %th Lw
+      %th Hw
+      %th Ha
+      %th T
+      %th Code
+      %th Power
+      %th Unitid
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_ppcas.each do |pds_ppca|
+      %tr
+        %td= pds_ppca.Project
+        %td= pds_ppca.sys
+        %td= pds_ppca.Shifr
+        %td= pds_ppca.Key
+        %td= pds_ppca.identif
+        %td= pds_ppca.Description
+        %td= pds_ppca.Description_EN
+        %td= pds_ppca.Detector
+        %td= pds_ppca.Unit
+        %td= pds_ppca.L_lim
+        %td= pds_ppca.U_lim
+        %td= pds_ppca.nom
+        %td= pds_ppca.LA
+        %td= pds_ppca.LW
+        %td= pds_ppca.HW
+        %td= pds_ppca.HA
+        %td= pds_ppca.t
+        %td= pds_ppca.code
+        %td= pds_ppca.power
+        %td= pds_ppca.UnitID
+        %td= link_to 'Show', pds_ppca
+        %td= link_to 'Edit', edit_pds_ppca_path(pds_ppca)
+        %td= link_to 'Destroy', pds_ppca, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds ppca', new_pds_ppca_path

@@ -1,0 +1,18 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  {property:"id",header:"ejectorID", hidden: true},
+  {property: "system.System", header: "Система", editor: "SystemSelector", attribute: 'system_id', nested: true},
+  {property:"kks", header:"kks", editor: "stringEditor"},
+  {property:"ShortDesc", header:"ShortDesc", editor: "stringEditor"},
+  {property:"Desc_EN", header:"Desc_EN", editor: "stringEditor"},
+  {property:"capacity", header:"capacity", editor: "stringEditor"},
+  {property:"level", header:"level", editor: "stringEditor"},
+  {property:"room", header:"room", editor: "stringEditor"},
+  {property:"pds_project_unit", header:"Unit", editor: "UnitSelector", attribute: 'pds_project_unit', nested: true},
+  {property:"pds_sd.SdTitle", header:"sd_N", editor: "SdSelector", attribute: 'pds_sd_id', nested: true}];

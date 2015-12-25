@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Engid:
+  = @sign_rpt.engID
+%p
+  %b Engname:
+  = @sign_rpt.engName
+%p
+  %b Blobobj:
+  = @sign_rpt.BlobObj
+
+= link_to 'Edit', edit_sign_rpt_path(@sign_rpt)
+\|
+= link_to 'Back', sign_rpts_path

@@ -1,0 +1,31 @@
+%h1 Listing pds_blocks
+
+%table
+  %thead
+    %tr
+      %th Sys
+      %th P p
+      %th Desc
+      %th Doc
+      %th Varname
+      %th Project
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_blocks.each do |pds_block|
+      %tr
+        %td= pds_block.sys
+        %td= pds_block.p_p
+        %td= pds_block.Desc
+        %td= pds_block.doc
+        %td= pds_block.varName
+        %td= pds_block.Project
+        %td= link_to 'Show', pds_block
+        %td= link_to 'Edit', edit_pds_block_path(pds_block)
+        %td= link_to 'Destroy', pds_block, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds block', new_pds_block_path

@@ -1,0 +1,29 @@
+%h1 Listing pds_meters
+
+%table
+  %thead
+    %tr
+      %th Ic
+      %th Sys
+      %th Project
+      %th Ctrl power
+      %th T
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_meters.each do |pds_meter|
+      %tr
+        %td= pds_meter.IC
+        %td= pds_meter.sys
+        %td= pds_meter.Project
+        %td= pds_meter.ctrl_power
+        %td= pds_meter.t
+        %td= link_to 'Show', pds_meter
+        %td= link_to 'Edit', edit_pds_meter_path(pds_meter)
+        %td= link_to 'Destroy', pds_meter, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds meter', new_pds_meter_path

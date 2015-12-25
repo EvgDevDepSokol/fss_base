@@ -1,0 +1,39 @@
+%h1 Listing audits
+
+%table
+  %thead
+    %tr
+      %th Project
+      %th Table name
+      %th Tag ru
+      %th Tag en
+      %th Sys
+      %th Field changed
+      %th Id
+      %th Old value
+      %th New value
+      %th T
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @audits.each do |audit|
+      %tr
+        %td= audit.Project
+        %td= audit.table_name
+        %td= audit.tag_RU
+        %td= audit.tag_EN
+        %td= audit.sys
+        %td= audit.field_changed
+        %td= audit.id
+        %td= audit.old_value
+        %td= audit.new_value
+        %td= audit.t
+        %td= link_to 'Show', audit
+        %td= link_to 'Edit', edit_audit_path(audit)
+        %td= link_to 'Destroy', audit, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Audit', new_audit_path

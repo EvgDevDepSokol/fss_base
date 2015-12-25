@@ -1,0 +1,82 @@
+= form_for @pds_malfunction do |f|
+  - if @pds_malfunction.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_malfunction.errors.count, "error")} prohibited this pds_malfunction from being saved:"
+      %ul
+        - @pds_malfunction.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Dimension
+    = f.number_field :Dimension
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :Numb
+    = f.number_field :Numb
+  .field
+    = f.label :shortDesc
+    = f.text_area :shortDesc
+  .field
+    = f.label :shortDesc_EN
+    = f.text_area :shortDesc_EN
+  .field
+    = f.label :cause
+    = f.text_area :cause
+  .field
+    = f.label :cause_EN
+    = f.text_area :cause_EN
+  .field
+    = f.label :fullDesc
+    = f.text_area :fullDesc
+  .field
+    = f.label :fullDesc_EN
+    = f.text_area :fullDesc_EN
+  .field
+    = f.label :type
+    = f.text_field :type
+  .field
+    = f.label :if_delete
+    = f.text_area :if_delete
+  .field
+    = f.label :if_delete_EN
+    = f.text_field :if_delete_EN
+  .field
+    = f.label :lowlim_regidity
+    = f.text_field :lowlim_regidity
+  .field
+    = f.label :uplim_regidity
+    = f.text_field :uplim_regidity
+  .field
+    = f.label :regidity_unit
+    = f.text_field :regidity_unit
+  .field
+    = f.label :regidity_text
+    = f.text_field :regidity_text
+  .field
+    = f.label :regidity_text_EN
+    = f.text_field :regidity_text_EN
+  .field
+    = f.label :Unit_status
+    = f.text_field :Unit_status
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :File
+    = f.text_field :File
+  .field
+    = f.label :regidity_unitid
+    = f.number_field :regidity_unitid
+  .field
+    = f.label :scale
+    = f.number_field :scale
+  .field
+    = f.label :sd_N
+    = f.number_field :sd_N
+  .actions
+    = f.submit 'Save'

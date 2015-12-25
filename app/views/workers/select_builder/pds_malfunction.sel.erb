@@ -1,0 +1,17 @@
+<% data.each do |pds_rf| %>
+    <%= "/#{input_type} yp:m#{pds_rf.system.System}%02d" % pds_rf.Numb %>
+    .DESC <%= pds_rf.description %>
+    @TYPE(<%= pds_rf.type %>) @FEED(ypxfm<%= "#{pds_rf.system.System}#{pds_rf.Numb}" %>)
+
+
+
+
+    .UNIT
+    .SYS <%= pds_rf.system.System.downcase %>
+    .TYPE L,1
+    .FORM L1
+    .VALU F,V
+    .DIM
+    .PRED <%= preprocessor %>
+
+<% end %>

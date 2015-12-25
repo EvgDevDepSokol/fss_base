@@ -1,0 +1,15 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  //{"property":"id","header":"ID"},
+  //{"property":"Project","header":"Project"},
+  {"property":"signID","header":"signID", editor: "stringEditor"},
+  {"property":"num","header":"num", editor: "stringEditor"},
+  {"property":"type","header":"type", editor: "stringEditor"},
+  {"property":"suff","header":"suff", editor: "stringEditor"}
+  ];

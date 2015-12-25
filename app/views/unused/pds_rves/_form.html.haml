@@ -1,0 +1,70 @@
+= form_for @pds_rf do |f|
+  - if @pds_rf.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_rf.errors.count, "error")} prohibited this pds_rf from being saved:"
+      %ul
+        - @pds_rf.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :name_RU
+    = f.text_field :name_RU
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :tag_RU
+    = f.text_field :tag_RU
+  .field
+    = f.label :Desc
+    = f.text_field :Desc
+  .field
+    = f.label :Desc_EN
+    = f.text_field :Desc_EN
+  .field
+    = f.label :range
+    = f.text_field :range
+  .field
+    = f.label :Unit
+    = f.number_field :Unit
+  .field
+    = f.label :type
+    = f.text_field :type
+  .field
+    = f.label :Type_FB
+    = f.text_field :Type_FB
+  .field
+    = f.label :unit_FB
+    = f.number_field :unit_FB
+  .field
+    = f.label :range_FB
+    = f.text_field :range_FB
+  .field
+    = f.label :rate
+    = f.text_field :rate
+  .field
+    = f.label :Ptag
+    = f.text_field :Ptag
+  .field
+    = f.label :sd_N
+    = f.number_field :sd_N
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :typerf
+    = f.text_field :typerf
+  .field
+    = f.label :scale
+    = f.text_field :scale
+  .field
+    = f.label :frfID
+    = f.number_field :frfID
+  .actions
+    = f.submit 'Save'

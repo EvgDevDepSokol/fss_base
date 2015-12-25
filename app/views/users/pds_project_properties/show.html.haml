@@ -1,0 +1,87 @@
+%p#notice= notice
+
+%p
+  %b Hostname:
+  = @pds_project_property.HostName
+%p
+  %b Hostip:
+  = @pds_project_property.HostIP
+%p
+  %b Simdir:
+  = @pds_project_property.SimDir
+%p
+  %b Isname:
+  = @pds_project_property.ISName
+%p
+  %b Isip:
+  = @pds_project_property.ISIP
+%p
+  %b Rootpass:
+  = @pds_project_property.RootPass
+%p
+  %b Iopass:
+  = @pds_project_property.IOPass
+%p
+  %b Loadpass:
+  = @pds_project_property.LoadPass
+%p
+  %b Tgispass:
+  = @pds_project_property.TgisPass
+%p
+  %b Ostype:
+  = @pds_project_property.OSType
+%p
+  %b Lowlimkeyfield:
+  = @pds_project_property.LowLimKeyField
+%p
+  %b Uplimkeyfield:
+  = @pds_project_property.UpLimKeyField
+%p
+  %b Language:
+  = @pds_project_property.Language
+%p
+  %b Enabled:
+  = @pds_project_property.Enabled
+%p
+  %b Resname:
+  = @pds_project_property.ResName
+%p
+  %b Classlib:
+  = @pds_project_property.ClassLib
+%p
+  %b Serviceport:
+  = @pds_project_property.ServicePort
+%p
+  %b Statsinterval:
+  = @pds_project_property.StatsInterval
+%p
+  %b Pdscode:
+  = @pds_project_property.pdsCode
+%p
+  %b Fdscode:
+  = @pds_project_property.fdsCode
+%p
+  %b Ports3serv:
+  = @pds_project_property.portS3serv
+%p
+  %b Report prefix:
+  = @pds_project_property.report_prefix
+%p
+  %b Encoding:
+  = @pds_project_property.Encoding
+%p
+  %b Pmcode:
+  = @pds_project_property.pmCode
+%p
+  %b Pmshortcode:
+  = @pds_project_property.pmShortCode
+%p
+  %b Stcode:
+  = @pds_project_property.stCode
+%p
+  %b Stshortcode:
+  = @pds_project_property.stShortCode
+
+= link_to 'Edit', edit_pds_project_property_path(@pds_project_property)
+\|
+= link_to 'Back', pds_project_properties_path

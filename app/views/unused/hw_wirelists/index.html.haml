@@ -1,0 +1,65 @@
+%h1 Listing hw_wirelists
+
+%table
+  %thead
+    %tr
+      %th From
+      %th To
+      %th Wc
+      %th Nc
+      %th Io
+      %th M
+      %th S
+      %th Word
+      %th Bit
+      %th Power
+      %th Origin
+      %th Net
+      %th Ped
+      %th Project
+      %th Rev
+      %th Unit
+      %th Step
+      %th T
+      %th Ic
+      %th Remarks
+      %th Io signalid
+      %th Panel
+      %th Pds mark
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @hw_wirelists.each do |hw_wirelist|
+      %tr
+        %td= hw_wirelist.from
+        %td= hw_wirelist.to
+        %td= hw_wirelist.wc
+        %td= hw_wirelist.nc
+        %td= hw_wirelist.io
+        %td= hw_wirelist.m
+        %td= hw_wirelist.s
+        %td= hw_wirelist.word
+        %td= hw_wirelist.bit
+        %td= hw_wirelist.power
+        %td= hw_wirelist.origin
+        %td= hw_wirelist.net
+        %td= hw_wirelist.ped
+        %td= hw_wirelist.Project
+        %td= hw_wirelist.rev
+        %td= hw_wirelist.Unit
+        %td= hw_wirelist.step
+        %td= hw_wirelist.t
+        %td= hw_wirelist.IC
+        %td= hw_wirelist.remarks
+        %td= hw_wirelist.io_signalID
+        %td= hw_wirelist.panel
+        %td= hw_wirelist.pds_mark
+        %td= link_to 'Show', hw_wirelist
+        %td= link_to 'Edit', edit_hw_wirelist_path(hw_wirelist)
+        %td= link_to 'Destroy', hw_wirelist, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Hw wirelist', new_hw_wirelist_path

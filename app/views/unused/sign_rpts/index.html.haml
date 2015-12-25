@@ -1,0 +1,25 @@
+%h1 Listing sign_rpts
+
+%table
+  %thead
+    %tr
+      %th Engid
+      %th Engname
+      %th Blobobj
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @sign_rpts.each do |sign_rpt|
+      %tr
+        %td= sign_rpt.engID
+        %td= sign_rpt.engName
+        %td= sign_rpt.BlobObj
+        %td= link_to 'Show', sign_rpt
+        %td= link_to 'Edit', edit_sign_rpt_path(sign_rpt)
+        %td= link_to 'Destroy', sign_rpt, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Sign rpt', new_sign_rpt_path

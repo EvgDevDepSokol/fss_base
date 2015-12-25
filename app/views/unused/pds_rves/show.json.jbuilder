@@ -1,0 +1,1 @@
+json.extract! @pds_rf, :id, :sys, :Project, :name_RU, :name, :tag_RU, :Desc, :Desc_EN, :range, :Unit, :type, :Type_FB, :unit_FB, :range_FB, :rate, :Ptag, :sd_N, :t, :typerf, :scale, :frfID, :created_at, :updated_at

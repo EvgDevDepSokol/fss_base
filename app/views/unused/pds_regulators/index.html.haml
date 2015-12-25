@@ -1,0 +1,71 @@
+%h1 Listing pds_regulators
+
+%table
+  %thead
+    %tr
+      %th Model
+      %th Project
+      %th Sys
+      %th Tag ru
+      %th Tag en
+      %th Station sys
+      %th Desc
+      %th Ed power
+      %th Ctrl power
+      %th Anc power
+      %th Nom state
+      %th Open rate
+      %th Close rate
+      %th Sd n
+      %th Doc reg n
+      %th Algorithm
+      %th T
+      %th Desc en
+      %th Import t
+      %th Mod
+      %th Vlv
+      %th Vlv 1
+      %th Vlv 2
+      %th Det
+      %th Eq type
+      %th Par val
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_regulators.each do |pds_regulator|
+      %tr
+        %td= pds_regulator.model
+        %td= pds_regulator.Project
+        %td= pds_regulator.sys
+        %td= pds_regulator.tag_RU
+        %td= pds_regulator.tag_EN
+        %td= pds_regulator.station_sys
+        %td= pds_regulator.Desc
+        %td= pds_regulator.ed_power
+        %td= pds_regulator.ctrl_power
+        %td= pds_regulator.anc_power
+        %td= pds_regulator.nom_state
+        %td= pds_regulator.open_rate
+        %td= pds_regulator.close_rate
+        %td= pds_regulator.sd_N
+        %td= pds_regulator.doc_reg_N
+        %td= pds_regulator.Algorithm
+        %td= pds_regulator.t
+        %td= pds_regulator.Desc_EN
+        %td= pds_regulator.import_t
+        %td= pds_regulator.mod
+        %td= pds_regulator.vlv
+        %td= pds_regulator.vlv_1
+        %td= pds_regulator.vlv_2
+        %td= pds_regulator.det
+        %td= pds_regulator.eq_type
+        %td= pds_regulator.par_val
+        %td= link_to 'Show', pds_regulator
+        %td= link_to 'Edit', edit_pds_regulator_path(pds_regulator)
+        %td= link_to 'Destroy', pds_regulator, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds regulator', new_pds_regulator_path

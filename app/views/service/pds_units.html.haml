@@ -1,0 +1,15 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  //{"property":"id","header":"UnitID"},
+  {"property":"Unit_RU","header":"Unit_RU", editor: "stringEditor"},
+  {"property":"Unit_EN","header":"Unit_EN", editor: "stringEditor"},
+  {"property":"MultFactor","header":"MultFactor", editor: "stringEditor"},
+  {"property":"ZeroShift","header":"ZeroShift", editor: "stringEditor"},
+  //{"property":"t","header":"t"},
+  {"property":"import_t","header":"import_t", editor: "stringEditor"}];

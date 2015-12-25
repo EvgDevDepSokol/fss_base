@@ -1,0 +1,34 @@
+= form_for @pds_sd do |f|
+  - if @pds_sd.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_sd.errors.count, "error")} prohibited this pds_sd from being saved:"
+      %ul
+        - @pds_sd.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :SdTitle
+    = f.text_field :SdTitle
+  .field
+    = f.label :sys
+    = f.number_field :sys
+  .field
+    = f.label :Project
+    = f.number_field :Project
+  .field
+    = f.label :title_EN
+    = f.text_field :title_EN
+  .field
+    = f.label :Numb
+    = f.text_field :Numb
+  .field
+    = f.label :BlobObj
+    = f.number_field :BlobObj
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :from_sapfir
+    = f.datetime_select :from_sapfir
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Project:
+  = @hw_iosignaldim.Project
+%p
+  %b Signid:
+  = @hw_iosignaldim.signID
+%p
+  %b Num:
+  = @hw_iosignaldim.num
+%p
+  %b Type:
+  = @hw_iosignaldim.type
+%p
+  %b Suff:
+  = @hw_iosignaldim.suff
+
+= link_to 'Edit', edit_hw_iosignaldim_path(@hw_iosignaldim)
+\|
+= link_to 'Back', hw_iosignaldims_path

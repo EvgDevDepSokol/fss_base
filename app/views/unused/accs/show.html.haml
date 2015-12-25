@@ -1,0 +1,45 @@
+%p#notice= notice
+
+%p
+  %b Project:
+  = @acc.Project
+%p
+  %b Ped:
+  = @acc.ped
+%p
+  %b Name:
+  = @acc.Name
+%p
+  %b Number:
+  = @acc.number
+%p
+  %b Sh:
+  = @acc.SH
+%p
+  %b Sv:
+  = @acc.SV
+%p
+  %b Tag no:
+  = @acc.tag_no
+%p
+  %b Store:
+  = @acc.store
+%p
+  %b Scale min:
+  = @acc.scale_min
+%p
+  %b Scale max:
+  = @acc.scale_max
+%p
+  %b Unit:
+  = @acc.Unit
+%p
+  %b Mp cmemo:
+  = @acc.MP_CMEMO
+%p
+  %b Pa:
+  = @acc.pa
+
+= link_to 'Edit', edit_acc_path(@acc)
+\|
+= link_to 'Back', accs_path

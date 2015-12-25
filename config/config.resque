@@ -1,0 +1,6 @@
+queues: 'high,med,low'
+pid_file: 'tmp/pids/resque.pid'
+interval: 1
+daemon: true
+timeout: 5
+graceful_term: false

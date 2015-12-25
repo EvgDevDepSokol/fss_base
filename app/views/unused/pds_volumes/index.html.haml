@@ -1,0 +1,41 @@
+%h1 Listing pds_volumes
+
+%table
+  %thead
+    %tr
+      %th Kks
+      %th Shortdesc
+      %th Desc en
+      %th Volume
+      %th Height
+      %th Level
+      %th Room
+      %th Project
+      %th Sys
+      %th Eq type
+      %th Sd n
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_volumes.each do |pds_volume|
+      %tr
+        %td= pds_volume.kks
+        %td= pds_volume.ShortDesc
+        %td= pds_volume.Desc_EN
+        %td= pds_volume.volume
+        %td= pds_volume.height
+        %td= pds_volume.level
+        %td= pds_volume.room
+        %td= pds_volume.Project
+        %td= pds_volume.sys
+        %td= pds_volume.eq_type
+        %td= pds_volume.sd_N
+        %td= link_to 'Show', pds_volume
+        %td= link_to 'Edit', edit_pds_volume_path(pds_volume)
+        %td= link_to 'Destroy', pds_volume, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds volume', new_pds_volume_path

@@ -1,0 +1,12 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  {"property":"tableID","header":"tableID"},
+  {"property":"roleID","header":"roleID", editor: "stringEditor"},
+  {"property":"value","header":"value", editor: "stringEditor"}
+  ];

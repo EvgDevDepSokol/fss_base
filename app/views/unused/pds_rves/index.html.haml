@@ -1,0 +1,59 @@
+%h1 Listing pds_rves
+
+%table
+  %thead
+    %tr
+      %th Sys
+      %th Project
+      %th Name ru
+      %th Name
+      %th Tag ru
+      %th Desc
+      %th Desc en
+      %th Range
+      %th Unit
+      %th Type
+      %th Type fb
+      %th Unit fb
+      %th Range fb
+      %th Rate
+      %th Ptag
+      %th Sd n
+      %th T
+      %th Typerf
+      %th Scale
+      %th Frfid
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_rves.each do |pds_rf|
+      %tr
+        %td= pds_rf.sys
+        %td= pds_rf.Project
+        %td= pds_rf.name_RU
+        %td= pds_rf.name
+        %td= pds_rf.tag_RU
+        %td= pds_rf.Desc
+        %td= pds_rf.Desc_EN
+        %td= pds_rf.range
+        %td= pds_rf.Unit
+        %td= pds_rf.type
+        %td= pds_rf.Type_FB
+        %td= pds_rf.unit_FB
+        %td= pds_rf.range_FB
+        %td= pds_rf.rate
+        %td= pds_rf.Ptag
+        %td= pds_rf.sd_N
+        %td= pds_rf.t
+        %td= pds_rf.typerf
+        %td= pds_rf.scale
+        %td= pds_rf.frfID
+        %td= link_to 'Show', pds_rf
+        %td= link_to 'Edit', edit_pds_rf_path(pds_rf)
+        %td= link_to 'Destroy', pds_rf, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds rf', new_pds_rf_path

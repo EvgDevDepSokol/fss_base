@@ -1,0 +1,25 @@
+%h1 Listing pds_alg_types
+
+%table
+  %thead
+    %tr
+      %th Project
+      %th Alg type
+      %th Numb
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_alg_types.each do |pds_alg_type|
+      %tr
+        %td= pds_alg_type.Project
+        %td= pds_alg_type.alg_type
+        %td= pds_alg_type.numb
+        %td= link_to 'Show', pds_alg_type
+        %td= link_to 'Edit', edit_pds_alg_type_path(pds_alg_type)
+        %td= link_to 'Destroy', pds_alg_type, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds alg type', new_pds_alg_type_path

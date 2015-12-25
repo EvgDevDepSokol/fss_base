@@ -1,0 +1,13 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns =
+  [{"property":"id","header":"AssignID", hidden: true},
+    {property: "system.System", header: "Система", editor: "SystemSelector", attribute: 'system_id', nested: true},
+  {"property":"pds_engineer.name","header":"engineer_N", editor: "PdsEngineersSelector", attribute: 'pds_engineer_id', nested: true},
+  //{"property":"t","header":"t"},
+  {"property":"pds_engineer_test.name","header":"TestOperator_N", editor: "PdsEngineersSelector", attribute: 'pds_engineer_test_id', nested: true}];

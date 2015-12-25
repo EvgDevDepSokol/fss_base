@@ -1,0 +1,91 @@
+= form_for @pds_project_property do |f|
+  - if @pds_project_property.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_project_property.errors.count, "error")} prohibited this pds_project_property from being saved:"
+      %ul
+        - @pds_project_property.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :HostName
+    = f.text_field :HostName
+  .field
+    = f.label :HostIP
+    = f.text_field :HostIP
+  .field
+    = f.label :SimDir
+    = f.text_field :SimDir
+  .field
+    = f.label :ISName
+    = f.text_field :ISName
+  .field
+    = f.label :ISIP
+    = f.text_field :ISIP
+  .field
+    = f.label :RootPass
+    = f.text_field :RootPass
+  .field
+    = f.label :IOPass
+    = f.text_field :IOPass
+  .field
+    = f.label :LoadPass
+    = f.text_field :LoadPass
+  .field
+    = f.label :TgisPass
+    = f.text_field :TgisPass
+  .field
+    = f.label :OSType
+    = f.text_field :OSType
+  .field
+    = f.label :LowLimKeyField
+    = f.number_field :LowLimKeyField
+  .field
+    = f.label :UpLimKeyField
+    = f.number_field :UpLimKeyField
+  .field
+    = f.label :Language
+    = f.text_field :Language
+  .field
+    = f.label :Enabled
+    = f.text_field :Enabled
+  .field
+    = f.label :ResName
+    = f.text_field :ResName
+  .field
+    = f.label :ClassLib
+    = f.text_field :ClassLib
+  .field
+    = f.label :ServicePort
+    = f.text_field :ServicePort
+  .field
+    = f.label :StatsInterval
+    = f.number_field :StatsInterval
+  .field
+    = f.label :pdsCode
+    = f.text_field :pdsCode
+  .field
+    = f.label :fdsCode
+    = f.text_field :fdsCode
+  .field
+    = f.label :portS3serv
+    = f.text_field :portS3serv
+  .field
+    = f.label :report_prefix
+    = f.text_field :report_prefix
+  .field
+    = f.label :Encoding
+    = f.text_field :Encoding
+  .field
+    = f.label :pmCode
+    = f.text_field :pmCode
+  .field
+    = f.label :pmShortCode
+    = f.text_field :pmShortCode
+  .field
+    = f.label :stCode
+    = f.text_field :stCode
+  .field
+    = f.label :stShortCode
+    = f.text_field :stShortCode
+  .actions
+    = f.submit 'Save'

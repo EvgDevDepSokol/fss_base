@@ -1,0 +1,82 @@
+= form_for @pds_engineer do |f|
+  - if @pds_engineer.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pds_engineer.errors.count, "error")} prohibited this pds_engineer from being saved:"
+      %ul
+        - @pds_engineer.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :TH
+    = f.text_field :TH
+  .field
+    = f.label :TO
+    = f.check_box :TO
+  .field
+    = f.label :L
+    = f.check_box :L
+  .field
+    = f.label :EL
+    = f.check_box :EL
+  .field
+    = f.label :CR
+    = f.check_box :CR
+  .field
+    = f.label :D
+    = f.check_box :D
+  .field
+    = f.label :SWM
+    = f.check_box :SWM
+  .field
+    = f.label :HWM
+    = f.check_box :HWM
+  .field
+    = f.label :PM
+    = f.check_box :PM
+  .field
+    = f.label :t
+    = f.datetime_select :t
+  .field
+    = f.label :EMail
+    = f.text_field :EMail
+  .field
+    = f.label :CheifDirector
+    = f.check_box :CheifDirector
+  .field
+    = f.label :login
+    = f.text_field :login
+  .field
+    = f.label :pwd
+    = f.text_field :pwd
+  .field
+    = f.label :dismiss
+    = f.check_box :dismiss
+  .field
+    = f.label :coreID
+    = f.number_field :coreID
+  .field
+    = f.label :phoneNum
+    = f.text_field :phoneNum
+  .field
+    = f.label :cellNum
+    = f.text_field :cellNum
+  .field
+    = f.label :IP
+    = f.text_field :IP
+  .field
+    = f.label :compJack
+    = f.number_field :compJack
+  .field
+    = f.label :phoneJack
+    = f.number_field :phoneJack
+  .field
+    = f.label :sectorID1
+    = f.number_field :sectorID1
+  .field
+    = f.label :enabled
+    = f.check_box :enabled
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,23 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns = [
+  {"property":"id","header":"BreakerID"},
+  {property: "system", header: "Система", editor: "SystemSelector", attribute: 'system_id'},
+  {"property":"tag_RU","header":"tag_RU", editor: "stringEditor"},
+  {"property":"tag_EN","header":"tag_EN", editor: "stringEditor"},
+  {"property":"ed_power","header":"ed_power", editor: "stringEditor"},
+  {"property":"ctrl_power","header":"ctrl_power", editor: "stringEditor"},
+  {"property":"anc_power","header":"anc_power", editor: "stringEditor"},
+  {"property":"Time","header":"Time", editor: "stringEditor"},
+  {"property":"Algorithm","header":"Algorithm", editor: "stringEditor"},
+  {"property":"Desc_RU","header":"Desc_RU", editor: "stringEditor"},
+  {"property":"Desc_EN","header":"Desc_EN", editor: "stringEditor"},
+  {"property":"model","header":"model", editor: "stringEditor"},
+  {"property":"eq_type","header":"eq_type", editor: "stringEditor"},
+  {"property":"connection","header":"connection", editor: "stringEditor"},
+  {"property":"sd_N","header":"sd_N", editor: "stringEditor"}];

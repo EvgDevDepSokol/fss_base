@@ -1,0 +1,29 @@
+%h1 Listing pds_recorders
+
+%table
+  %thead
+    %tr
+      %th Ic
+      %th Sys
+      %th Project
+      %th Ctrl power
+      %th T
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_recorders.each do |pds_recorder|
+      %tr
+        %td= pds_recorder.IC
+        %td= pds_recorder.sys
+        %td= pds_recorder.Project
+        %td= pds_recorder.ctrl_power
+        %td= pds_recorder.t
+        %td= link_to 'Show', pds_recorder
+        %td= link_to 'Edit', edit_pds_recorder_path(pds_recorder)
+        %td= link_to 'Destroy', pds_recorder, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds recorder', new_pds_recorder_path

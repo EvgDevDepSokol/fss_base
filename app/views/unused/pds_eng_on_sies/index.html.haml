@@ -1,0 +1,29 @@
+%h1 Listing pds_eng_on_sies
+
+%table
+  %thead
+    %tr
+      %th Sys
+      %th Project
+      %th Engineer n
+      %th T
+      %th Testoperator n
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @pds_eng_on_sies.each do |pds_eng_on_sy|
+      %tr
+        %td= pds_eng_on_sy.sys
+        %td= pds_eng_on_sy.Project
+        %td= pds_eng_on_sy.engineer_N
+        %td= pds_eng_on_sy.t
+        %td= pds_eng_on_sy.TestOperator_N
+        %td= link_to 'Show', pds_eng_on_sy
+        %td= link_to 'Edit', edit_pds_eng_on_sy_path(pds_eng_on_sy)
+        %td= link_to 'Destroy', pds_eng_on_sy, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Pds eng on sy', new_pds_eng_on_sy_path

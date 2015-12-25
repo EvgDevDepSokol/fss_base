@@ -1,0 +1,15 @@
+#general_table
+
+:javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+
+  var columns =
+  [{"property":"id","header":"MalfunctDimID"},
+  {"property":"Malfunction","header":"Malfunction", editor: "stringEditor"},
+  {"property":"Character","header":"Character", editor: "stringEditor"},
+  {"property":"Target_EN","header":"Target_EN", editor: "stringEditor"},
+  {"property":"Target","header":"Target", editor: "stringEditor"},
+  {"property":"sd_N","header":"sd_N", editor: "stringEditor"},
+  {"property":"is_main","header":"is_main", editor: "stringEditor"}];

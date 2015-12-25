@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b News:
+  = @news.news
+%p
+  %b T:
+  = @news.t
+%p
+  %b Date:
+  = @news.date
+
+= link_to 'Edit', edit_news_path(@news)
+\|
+= link_to 'Back', news_index_path

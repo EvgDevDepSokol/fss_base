@@ -1,0 +1,15 @@
+.row
+  .col-sm-4
+    По  записей.
+    %br
+    Всего записей: 7992 на 160 страницах.
+    %br
+    Выбрать страницу...
+
+
+= grid(@grid, show_filters: false, class: 'table editable-table') do |g|
+  - model.attribute_names.each do |attribute|
+    - g.column name: attribute, attribute: attribute do |model|
+      - content_tag(:span, model.send(attribute), class: 'editable', 'data-attribute' => attribute )
+  - g.column do |object|
+    - edit_button(object)
