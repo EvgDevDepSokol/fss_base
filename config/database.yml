@@ -13,7 +13,9 @@ development:
 
 test:
   <<: *default
-  database: djet_test
+  database: pds_db
+  username: djet
+  password: djet
   host: localhost
 
 production:

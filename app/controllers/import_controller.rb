@@ -16,12 +16,12 @@ class ImportController < ApplicationController
 
   rescue
     render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
-      status: :unprocessable_entity
+    status: :unprocessable_entity
   end
 
   private
   def current_object
-    @current_object ||= model.find(params[:id])
+    @current_object ||= model.find(params[:id]) if params[:id]
   end
 
   def project

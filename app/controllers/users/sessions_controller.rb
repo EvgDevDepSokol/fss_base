@@ -12,7 +12,7 @@ class Users::SessionsController < Devise::SessionsController
   before_filter :configure_permitted_parameters
 
   def configure_permitted_parameters
-#    devise_parameter_sanitizer.for(:sign_in).push(:login)
-    devise_parameter_sanitizer.sanitize(:sign_in)
+    devise_parameter_sanitizer.for(:sign_in).push(:login)
+#    devise_parameter_sanitizer.sanitize(:sign_in)
   end
 end

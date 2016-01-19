@@ -1,5 +1,5 @@
 var React = require('react');
-var SimpleSelect = require('../modules/simple-select.jsx');
+//var SimpleSelect = require('../modules/simple-select.jsx');
 var _ = require('underscore');
 
 var ImportStep1 = require('./xlsx-import/step1.jsx')
@@ -79,7 +79,7 @@ var ImportXlsxModal = React.createClass({
 
   step1Finished: function(file){
 
-    // перенести в step 2
+   /* // перенести в step 2
     var onSelectChange = function(columnKey){
       var context = this;
       return function(value){
@@ -146,11 +146,18 @@ var ImportXlsxModal = React.createClass({
         columns: importHeaders,
         step: 2
       });
-      /* DO SOMETHING WITH workbook HERE */
+      // DO SOMETHING WITH workbook HERE 
     }.bind(this);
 
     reader.readAsBinaryString(file);
-    //this.setState({step: 2});
+    //this.setState({step: 2}); */
+      //debugger;
+      this.setState({
+     //   importData: importJson,
+     //   columns: importHeaders,
+        step: 2
+      });
+ 
   },
 
   step2Finished: function(){
@@ -172,7 +179,7 @@ var ImportXlsxModal = React.createClass({
 
   sendDataToServer: function(data){
     $.ajax({
-      url: '/import/update_all',
+      url: '/update_all',
       dataType: 'json',
       type: 'PUT',
       data: {data: data, model: model_name},

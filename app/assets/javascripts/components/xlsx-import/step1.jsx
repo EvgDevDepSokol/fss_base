@@ -1,4 +1,5 @@
 var React = require('react');
+var SimpleSelect = require('../../modules/simple-select.jsx');
 var Modal = require('react-modal');
 
 var ImportStep1 = React.createClass({
@@ -22,8 +23,7 @@ var ImportStep1 = React.createClass({
   },
 
   onImportFile: function(e) {
-    debugger;
-
+  
 
     var files = e.target.files;
 
@@ -35,7 +35,7 @@ var ImportStep1 = React.createClass({
 
     this.processFile(file);
 
-    var reader = new FileReader();
+/*    var reader = new FileReader();
     this.setState({fileName: file.name});
     reader.onload = function(e) {
 
@@ -71,6 +71,18 @@ var ImportStep1 = React.createClass({
 
       });
 
+      // перенести в step 2
+      var onSelectChange = function(columnKey){
+        var context = this;
+        return function(value){
+          var impColumns = context.state.columns;
+          impColumns[columnKey]['to'] = value;
+          impColumns[columnKey]['toColumn'] = context.findColumnData(value);
+          context.setState({columns: impColumns});
+        }
+      }.bind(this);
+     
+
       context = this;
       var selectProps = {options: options};
       Object.keys(importHeaders).forEach(function(key) {
@@ -86,9 +98,9 @@ var ImportStep1 = React.createClass({
           importHeaders[key]['toColumn'] = context.findColumnData(selectProps['value']);
       });
 
-    }
+    }*/
 
-  },
+  }, 
 
   processFile: function(file){
     debugger;
@@ -138,7 +150,8 @@ var ImportStep1 = React.createClass({
 
       });
 
-      context = this;
+
+      var context = this;
       var selectProps = {options: options};
       Object.keys(importHeaders).forEach(function(key) {
         //selectProps['name'] = 'select' + key;
@@ -157,7 +170,7 @@ var ImportStep1 = React.createClass({
       this.setState({
         importData: importJson,
         columns: importHeaders,
-        step: 2
+//        step: 2
       });
       /* DO SOMETHING WITH workbook HERE */
     }.bind(this);
