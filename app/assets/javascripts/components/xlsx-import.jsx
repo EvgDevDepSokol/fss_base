@@ -75,14 +75,13 @@ var ImportXlsxModal = React.createClass({
 
   step1Finished: function(file){
     debugger;
-    rememberData();
+    var tmp = rememberData();
     this.setState({
-//      importData: importJson,
-//      columns: importHeaders,
-//      importData: ImportStep1.state,
-//      columns: ImportStep1.columns,
+      importData: tmp[0],
+      columns: tmp[1],
       step: 2
     });
+    tmp=null;
   },
 
   step2Finished: function(){

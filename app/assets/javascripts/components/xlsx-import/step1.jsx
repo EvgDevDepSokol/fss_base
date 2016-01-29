@@ -92,11 +92,13 @@ var ImportStep1 = React.createClass({
       });
 
       rememberData = function(){
-        this.setState({
-          importData: importJson,
-          columns: importHeaders,
-        });
-      };     
+        debugger;
+        var a = [];
+        a.push(importJson);
+        a.push(importHeaders);
+        return a;
+      };
+           
 //      debugger;
 //      var context = this;
   //    this.setState({
