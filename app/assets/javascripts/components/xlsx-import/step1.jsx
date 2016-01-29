@@ -1,6 +1,7 @@
 var React = require('react');
 var SimpleSelect = require('../../modules/simple-select.jsx');
 var Modal = require('react-modal');
+var _ = require('underscore');
 
 var ImportStep1 = React.createClass({
   displayName: 'ImportStep1',
@@ -22,22 +23,14 @@ var ImportStep1 = React.createClass({
       this.closeModal();
   },
 
-  onImportFile: function(e) {
-  
-
-    var files = e.target.files;
-
-
-    if(files.length > 0){
-      var file = files[0];
-      this.setState({file: file});
-    }
-
-    this.processFile(file);
-  }, 
-
   processFile: function(file){
-    debugger;
+//    debugger;
+    findColumnData = function(colProperty){
+      return _.find(columns, function(col){
+        return col.property == colProperty;
+      });
+    };
+
     // перенести в step 2
     var onSelectChange = function(columnKey){
       var context = this;
@@ -48,6 +41,7 @@ var ImportStep1 = React.createClass({
         context.setState({columns: impColumns});
       }
     }.bind(this);
+//    };
 
     //debugger;
     var reader = new FileReader();
@@ -69,49 +63,64 @@ var ImportStep1 = React.createClass({
 
       var options = [];
       columns.forEach(function(col){
-
         var label = col.header;
         if(col.property == 'id'){
           label = col.header + ' (key)';
         }
-
         if(col.nested){
           if(col.attribute)
             options.push({value: col.property, label: label });
         }else{
           options.push({value: col.property, label: label });
         }
-
       });
 
-
-      var context = this;
+  //    var context = this;
       var selectProps = {options: options};
       Object.keys(importHeaders).forEach(function(key) {
         //selectProps['name'] = 'select' + key;
         selectProps['onChange'] = onSelectChange(key);
-        selectProps['value'] = null;
+//        selectProps['value'] = null;
+        selectProps['value'] = key;
         selectProps['selected'] = key;
 
-       var toColumnSelector = React.createElement(SimpleSelect, selectProps);
+        var toColumnSelector = React.createElement(SimpleSelect, selectProps);
 
         importHeaders[key] = {selector: toColumnSelector, to: selectProps['value']};
         if(selectProps['value'] != null)
-          importHeaders[key]['toColumn'] = context.findColumnData(selectProps['value']);
+          importHeaders[key]['toColumn'] = this.findColumnData(selectProps['value']);
       });
 
-      //debugger;
-      this.setState({
-        importData: importJson,
-        columns: importHeaders,
-//        step: 2
-      });
+      rememberData = function(){
+        this.setState({
+          importData: importJson,
+          columns: importHeaders,
+        });
+      };     
+//      debugger;
+//      var context = this;
+  //    this.setState({
+  //      importData: importJson,
+  //      columns: importHeaders,
+  //    });
       /* DO SOMETHING WITH workbook HERE */
     }.bind(this);
+//    }.bind(ImportXlsxModal);
 
     reader.readAsBinaryString(file);
     //this.setState({step: 2});
+
+
   },
+
+  onImportFile: function(e) {
+    var files = e.target.files;
+    if(files.length > 0){
+      var file = files[0];
+      this.setState({file: file});
+    }
+    this.processFile(file);
+  }, 
 
   render: function() {
     return (

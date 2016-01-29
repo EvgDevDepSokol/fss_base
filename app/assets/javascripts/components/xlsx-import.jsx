@@ -6,6 +6,8 @@ var ImportStep1 = require('./xlsx-import/step1.jsx')
 var ImportStep2 = require('./xlsx-import/step2.jsx')
 var ImportStep3 = require('./xlsx-import/step3.jsx')
 
+
+
 var ImportXlsxModal = React.createClass({
   displayName: 'ImportXlsxModal',
 
@@ -71,21 +73,16 @@ var ImportXlsxModal = React.createClass({
     this.setState({step: 0});
   },
 
-  findColumnData: function(colProperty){
-    return _.find(columns, function(col){
-      return col.property == colProperty;
-    });
-  },
-
   step1Finished: function(file){
-
-      //debugger;
-      this.setState({
-     //   importData: importJson,
-     //   columns: importHeaders,
-        step: 2
-      });
- 
+    debugger;
+    rememberData();
+    this.setState({
+//      importData: importJson,
+//      columns: importHeaders,
+//      importData: ImportStep1.state,
+//      columns: ImportStep1.columns,
+      step: 2
+    });
   },
 
   step2Finished: function(){
@@ -97,7 +94,6 @@ var ImportXlsxModal = React.createClass({
       importData: [{data: {}}],
       parsedData: parsedData });
     this.sendDataToServer(parsedData);
-
   },
 
   step3Finished: function(){
