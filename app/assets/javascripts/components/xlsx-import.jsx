@@ -24,7 +24,7 @@ var ImportXlsxModal = React.createClass({
 
   mapImportData: function(){
     var importColumns = this.state.columns;
-
+    debugger
     // наполняем данными importColumns
     Object.keys(importColumns).forEach(function (columnKey) {
       var toColumn = importColumns[columnKey].toColumn;
@@ -33,35 +33,35 @@ var ImportXlsxModal = React.createClass({
     });
 
     var data = this.state.importData[0].data.map(function(row) {
-        var convertedRow = {};
+      var convertedRow = {};
 
-        Object.keys(importColumns).forEach(function (columnKey) {
-          var to = importColumns[columnKey].to;
-          var toColumn = importColumns[columnKey].toColumn;
+      Object.keys(importColumns).forEach(function (columnKey) {
+        var to = importColumns[columnKey].to;
+        var toColumn = importColumns[columnKey].toColumn;
 
-          if(to != null){
-            if(toColumn == null)
-              //debugger;
+        if(to != null){
+          if(toColumn == null){
+         
+          }else if(toColumn.nested == true){
+            debugger;
+            var val = row[columnKey];
+            var newVal = _.find(importColumns[columnKey].options, function(option){
+               return option.label == val;
+            });
+            if(newVal){
+              convertedRow[to] = newVal.value;
+            }else{
+              // report error
+            };
 
-            if(toColumn.nested == true){
-              var val = row[columnKey];
-              var newVal = _.find(importColumns[columnKey].options, function(option){
-                 return option.label == val;
-              });
-              if(newVal)
-                convertedRow[to] = newVal.value;
-              else
-              {
-                // report error
-              }
+          }else{
+            convertedRow[to] = row[columnKey];
+          };
+        };
 
-            }else
-              convertedRow[to] = row[columnKey];
-          }
-
-        });
-        return convertedRow;
       });
+      return convertedRow;
+    });
     return data;
   },
 
@@ -74,7 +74,7 @@ var ImportXlsxModal = React.createClass({
   },
 
   step1Finished: function(file){
-    debugger;
+//    debugger;
     var tmp = rememberData();
     this.setState({
       importData: tmp[0],
@@ -150,7 +150,7 @@ var ImportXlsxModal = React.createClass({
 module.exports = ImportXlsxModal;
 
 var getColumnOptions = function(column){
-  if(!column.nested || !column.path)
+  if(!column.nested/* || !column.path*/)
     return;
 
   return column.editor ? column.editor.options() : [];

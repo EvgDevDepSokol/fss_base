@@ -27,7 +27,8 @@ var ImportStep1 = React.createClass({
 //    debugger;
     findColumnData = function(colProperty){
       return _.find(columns, function(col){
-        return col.property == colProperty;
+//        return col.property == colProperty;
+        return col.header == colProperty;
       });
     };
 
@@ -75,7 +76,6 @@ var ImportStep1 = React.createClass({
         }
       });
 
-  //    var context = this;
       var selectProps = {options: options};
       Object.keys(importHeaders).forEach(function(key) {
         //selectProps['name'] = 'select' + key;
@@ -92,7 +92,6 @@ var ImportStep1 = React.createClass({
       });
 
       rememberData = function(){
-        debugger;
         var a = [];
         a.push(importJson);
         a.push(importHeaders);
@@ -107,11 +106,8 @@ var ImportStep1 = React.createClass({
   //    });
       /* DO SOMETHING WITH workbook HERE */
     }.bind(this);
-//    }.bind(ImportXlsxModal);
 
     reader.readAsBinaryString(file);
-    //this.setState({step: 2});
-
 
   },
 
