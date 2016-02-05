@@ -1,27 +1,38 @@
 class ImportController < ApplicationController
 
   include GeneralControllerHelper
-
   def update_all
+#    byebug
+    @key_name=model.primary_key
     params[:data].each do |row|
-      Rails.logger.warn row.as_json
-    end
-    if current_object.update permit_params
+      @key_val=row[1][@key_name]
+      @ind=row[0]
+      logger.debug "@key_name                 : #{@key_name}"
+      logger.debug "@key_val                  : #{@key_val10}"
+      logger.debug "@ind                      : #{@ind}"
+      logger.debug "row[1]                    : #{row[1]}"
+      logger.debug "current_object            : #{current_object}"
+      logger.debug "current_object.custom_hash: #{current_object.custom_hash}"
 
-      render json: {status: :ok, data: current_object.custom_hash}
-    else
-      render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
-        status: :unprocessable_entity
+      if current_object.update(permit_params)
+        logger.debug "ok"
+#        render json: {status: :ok } # , data: current_object.custom_hash}
+      else
+        logger.warning "Error"
+#        render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
+#          status: :unprocessable_entity
+      end
     end
-
+    render json: {status: :ok}
   rescue
-    render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
-    status: :unprocessable_entity
+    logger.error "Import_all Rescue"
+#    render json: {(errors: current_object.errors , data: current_object.reload.custom_hash})if current_object,
+    render json:{status: :unprocessable_entity}
   end
 
   private
   def current_object
-    @current_object ||= model.find(params[:id]) if params[:id]
+    @current_object = (model.find(@key_val) if @key_val)  
   end
 
   def project
@@ -29,6 +40,7 @@ class ImportController < ApplicationController
   end
 
   def permit_params
+    params[model.to_s.underscore]=params[:data][@ind]
     params.require(model.to_s.underscore).permit!
   end
 
