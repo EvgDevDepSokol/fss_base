@@ -12,7 +12,8 @@ class HwPed < ActiveRecord::Base
   end
 
   def custom_hash
-    serializable_hash(include: {hw_devtype: {only: [:RuName]}})end
+    serializable_hash(include: {hw_devtype: {only: [:RuName]}})
+  end
 
   def serializable_hash(options={})
     super options.merge(methods: :id)
