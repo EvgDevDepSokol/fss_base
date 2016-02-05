@@ -122,6 +122,7 @@ class HardwareController < ApplicationController
   end
 
   def permit_params
+    byebug
     params.require(model.to_s.underscore).permit!
   end
 

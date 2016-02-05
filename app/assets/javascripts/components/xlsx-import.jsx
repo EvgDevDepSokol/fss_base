@@ -85,7 +85,7 @@ var ImportXlsxModal = React.createClass({
   },
 
   step2Finished: function(){
-    //debugger;
+    debugger;
     var parsedData = this.mapImportData();
     console.log(parsedData);
     this.setState({
@@ -96,7 +96,7 @@ var ImportXlsxModal = React.createClass({
   },
 
   step3Finished: function(){
-    //debugger;
+    debugger;
     this.setState({step: 0});
   },
 
