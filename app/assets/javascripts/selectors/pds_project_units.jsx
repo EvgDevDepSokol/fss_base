@@ -25,10 +25,11 @@ module.exports = React.createClass({
 
     var getOptions = function(input, callback) {
       setTimeout(function() {
+        debugger;
 
         var options = [];
         $.ajax({
-          url: '/api/hw_peds',
+          url: '/api/pds_project_units',
           dataType: 'json',
           type: 'GET',
           success: function(data) {
@@ -41,7 +42,8 @@ module.exports = React.createClass({
           async: false
         });
 
-        options = $.map(options , function(el){ return {value: el.id, label: el.ped} } )
+//        options = $.map(options , function(el){ return {value: el.id, label: el.Unit_RU} } )
+        options = $.map(options , function(el){ return {value: el.id, label: el.unit} } )
 
         callback(null, {
           options: options,
@@ -67,7 +69,8 @@ module.exports = React.createClass({
 module.exports.options = function(){
   var options = [];
   $.ajax({
-    url: '/api/hw_peds',
+    //url: '/api/hw_peds',
+    url: '/api/pds_project_units',
     dataType: 'json',
     type: 'GET',
     success: function(data) {
@@ -80,6 +83,6 @@ module.exports.options = function(){
     async: false
   });
 
-  options = $.map(options , function(el){ return {value: el.id, label: el.ped} } )
+  options = $.map(options , function(el){ return {value: el.id, label: el.Unit_RU} } )
   return options;
 };
