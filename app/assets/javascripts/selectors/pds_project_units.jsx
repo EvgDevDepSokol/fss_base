@@ -29,11 +29,12 @@ module.exports = React.createClass({
 
         var options = [];
         $.ajax({
-          url: '/api/pds_project_units',
+          url: '/pds_project_units',
           dataType: 'json',
           type: 'GET',
+          data:{pds_project_id:project.ProjectID},
           success: function(data) {
-            options = data;
+            options = data.data;
           }.bind(this),
           error: function(xhr, status, err) {
             console.error(this.props.url, status, err.toString());
@@ -42,8 +43,7 @@ module.exports = React.createClass({
           async: false
         });
 
-//        options = $.map(options , function(el){ return {value: el.id, label: el.Unit_RU} } )
-        options = $.map(options , function(el){ return {value: el.id, label: el.unit} } )
+        options = $.map(options , function(el){ return {value: el.ProjUnitID, label: el['unit'].Unit_RU} } )
 
         callback(null, {
           options: options,
@@ -69,10 +69,10 @@ module.exports = React.createClass({
 module.exports.options = function(){
   var options = [];
   $.ajax({
-    //url: '/api/hw_peds',
-    url: '/api/pds_project_units',
+    url: '/pds_project_units',
     dataType: 'json',
     type: 'GET',
+    data:{pds_project_id:project.ProjectID},
     success: function(data) {
       options = data;
     }.bind(this),

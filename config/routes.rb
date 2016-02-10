@@ -105,13 +105,14 @@ Rails.application.routes.draw do
     resources :pds_engineers, only: [:index]
     resources :pds_documentations, only: [:index]
     resources :pds_motor_types, only: [:index]
-    resources :pds_project_units, only: [:index]
 
     controller :mass_operations, path: :mass_operations do
       put :update_all
     end
 
   end
+
+  resources :pds_project_units, only: [:index]
 
   resource :select_builder
 
