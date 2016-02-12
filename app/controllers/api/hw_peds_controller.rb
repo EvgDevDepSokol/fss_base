@@ -1,10 +1,11 @@
 class Api::HwPedsController < ApplicationController
   before_action :set_hw_ped, only: [:show, :edit, :update, :destroy]
+  before_action :project, only: :index
 
   # GET /hw_peds
   # GET /hw_peds.json
   def index
-    @hw_peds = HwPed.all
+    @hw_peds = HwPed.where(Project: project.ProjectID)
   end
 
   # GET /hw_peds/1
@@ -71,4 +72,8 @@ class Api::HwPedsController < ApplicationController
     def hw_ped_params
       params[:hw_ped]
     end
+
+    def project
+      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+    end   
 end

@@ -25,12 +25,12 @@ module.exports = React.createClass({
 
     var getOptions = function(input, callback) {
       setTimeout(function() {
-
         var options = [];
         $.ajax({
           url: '/api/hw_peds',
           dataType: 'json',
           type: 'GET',
+          data:{pds_project_id:project.ProjectID},
           success: function(data) {
             options = data;
           }.bind(this),
@@ -70,6 +70,7 @@ module.exports.options = function(){
     url: '/api/hw_peds',
     dataType: 'json',
     type: 'GET',
+    data:{pds_project_id:project.ProjectID},
     success: function(data) {
       options = data;
     }.bind(this),
