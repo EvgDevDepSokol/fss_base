@@ -12,7 +12,7 @@ class TechnologyEquipmentController < BaseController
     @data_list = PdsDetector.where(Project: project.ProjectID).
       includes(:system, :pds_section_assembler,
       :pds_man_equip, :pds_sd, :pds_documentation).
-      includes(pds_project_unit: [:unit])
+      includes(pds_project_unit: [:unit]).limit(100) #todo "delete limit"
   end
 
   def pds_ejectors

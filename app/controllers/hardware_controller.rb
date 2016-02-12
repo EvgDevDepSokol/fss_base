@@ -14,9 +14,9 @@ class HardwareController < ApplicationController
     # для таблиц где есть ProjectID мы хотим видеть данные в контексте
     # данного проекта, для остальных пока отображаем все данные
     if model.new.respond_to?(:Project)
-      @data_list = model.where(Project: project.ProjectID).limit(10000)
+      @data_list = model.where(Project: project.ProjectID).limit(100)
     else
-      @data_list = model.limit(10000)
+      @data_list = model.limit(100)
     end
 
     respond_to do |format|
@@ -122,7 +122,6 @@ class HardwareController < ApplicationController
   end
 
   def permit_params
-    byebug
     params.require(model.to_s.underscore).permit!
   end
 

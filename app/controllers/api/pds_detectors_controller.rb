@@ -5,7 +5,7 @@ class Api::PdsDetectorsController < ApplicationController
   # GET /pds_detectors.json
   def index
     # todo fix limit
-    @pds_detectors = PdsDetector.limit(100)
+    @pds_detectors = PdsDetector.limit(1000)
   end
 
   # GET /pds_detectors/1
@@ -43,9 +43,11 @@ class Api::PdsDetectorsController < ApplicationController
   def update
     respond_to do |format|
       if @pds_detector.update(pds_detector_params)
+        puts 'if'
         format.html { redirect_to @pds_detector, notice: 'Pds detector was successfully updated.' }
         format.json { render :show, status: :ok, location: @pds_detector }
       else
+        puts 'else'
         format.html { render :edit }
         format.json { render json: @pds_detector.errors, status: :unprocessable_entity }
       end
