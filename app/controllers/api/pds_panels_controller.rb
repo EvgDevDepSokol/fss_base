@@ -1,10 +1,11 @@
 class Api::PdsPanelsController < ApplicationController
   before_action :set_pds_panel, only: [:show, :edit, :update, :destroy]
+  before_action :project, only: :index
 
   # GET /pds_panels
   # GET /pds_panels.json
   def index
-    @pds_panels = PdsPanel.all
+    @pds_panels = PdsPanel.where(Project: project.ProjectID)
   end
 
   # GET /pds_panels/1
@@ -71,4 +72,8 @@ class Api::PdsPanelsController < ApplicationController
     def pds_panel_params
       params.require(:pds_panel).permit(:panel, :start, :end, :migsjem, :memsjem, :lamptest, :soundtest, :soundtest_warn, :pressconfirm, :soundtest_alarm, :Project, :soundsjem, :soundalarm, :power_lamp, :Tab_No, :pnl_type, :fhd, :lamptest_suff)
     end
+
+    def project
+      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+    end 
 end
