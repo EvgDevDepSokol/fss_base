@@ -6,14 +6,7 @@ class PdsProjectUnitsController < ApplicationController
   # GET /pds_project_units.json
   def index
     @pds_project_units = PdsProjectUnit.where(Project: project.ProjectID)
-    @tmp = {}
-    @icnt = 0
-    @pds_project_units.each do |e|
-      @tmp[@icnt] = e.custom_hash
-      @icnt = @icnt + 1
-    end
-    p @tmp[0]
-    puts @tmp[0]
+    @tmp = @pds_project_units.map{ |e| e.custom_hash }
     render json: {status: :ok , data:  @tmp}
   end
 
@@ -42,7 +35,7 @@ class PdsProjectUnitsController < ApplicationController
         format.json { render :show, status: :created, location: @pds_project_unit }
       else
         format.html { render :new }
-        format.json { render json: @pds_project_unit.errors, status: :unprocessable_entity }
+        format.json { render json: @pds_project_unit.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
@@ -56,7 +49,7 @@ class PdsProjectUnitsController < ApplicationController
         format.json { render :show, status: :ok, location: @pds_project_unit }
       else
         format.html { render :edit }
-        format.json { render json: @pds_project_unit.errors, status: :unprocessable_entity }
+        format.json { render json: @pds_project_unit.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end

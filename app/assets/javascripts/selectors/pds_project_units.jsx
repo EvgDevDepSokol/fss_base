@@ -74,7 +74,7 @@ module.exports.options = function(){
     type: 'GET',
     data:{pds_project_id:project.ProjectID},
     success: function(data) {
-      options = data;
+      options = data.data;
     }.bind(this),
     error: function(xhr, status, err) {
       console.error(this.props.url, status, err.toString());
@@ -83,6 +83,6 @@ module.exports.options = function(){
     async: false
   });
 
-  options = $.map(options , function(el){ return {value: el.id, label: el.Unit_RU} } )
+  options = $.map(options , function(el){ return {value: el.ProjUnitID, label: el['unit'].Unit_RU} } )
   return options;
 };
