@@ -31,6 +31,7 @@ module.exports = React.createClass({
           url: '/api/pds_section_assemblers',
           dataType: 'json',
           type: 'GET',
+          data:{pds_project_id:project.ProjectID},
           success: function(data) {
             options = data;
           }.bind(this),
@@ -72,6 +73,7 @@ module.exports.options = function(){
     url: '/api/pds_section_assemblers',
     dataType: 'json',
     type: 'GET',
+    data:{pds_project_id:project.ProjectID},
     success: function(data) {
       options = data;
     }.bind(this),

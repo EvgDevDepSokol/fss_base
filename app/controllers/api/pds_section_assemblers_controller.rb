@@ -1,10 +1,11 @@
 class Api::PdsSectionAssemblersController < ApplicationController
   before_action :set_pds_section_assembler, only: [:show, :edit, :update, :destroy]
+  before_action :project, only: :index
 
   # GET /pds_section_assemblers
   # GET /pds_section_assemblers.json
   def index
-    @pds_section_assemblers = PdsSectionAssembler.all
+    @pds_section_assemblers = PdsSectionAssembler.where(Project: project.ProjectID)
   end
 
   # GET /pds_section_assemblers/1
@@ -71,4 +72,8 @@ class Api::PdsSectionAssemblersController < ApplicationController
     def pds_section_assembler_params
       params.require(:pds_section_assembler).permit(:Project, :section_name, :assembler, :t, :assembler_pwr, :assembler_ec)
     end
+
+    def project
+      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+    end   
 end
