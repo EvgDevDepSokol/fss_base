@@ -2,12 +2,14 @@ class HardwareController < ApplicationController
   include GeneralControllerHelper
   require 'csv'
 
+  layout 'layouts/table'
+
   ACTIONS = [ :hw_ic, :hw_peds, :hw_wirelist, :pds_iomap, :hw_iosignaldefs,
     :hw_iosignals, :hw_devtypes, :hw_iosignaldim, :pds_panels]
 
   before_action :project
 
-  helper_method :table_data, :table_header, :editable_properties, :model_class
+  helper_method :table_data, :table_header, :editable_properties, :model_class,:project
 
   def index
     #Rails.logger.info params
