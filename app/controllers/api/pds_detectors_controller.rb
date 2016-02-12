@@ -1,11 +1,12 @@
 class Api::PdsDetectorsController < ApplicationController
   before_action :set_pds_detector, only: [:show, :edit, :update, :destroy]
+  before_action :project, only: :index
 
   # GET /pds_detectors
   # GET /pds_detectors.json
   def index
     # todo fix limit
-    @pds_detectors = PdsDetector.limit(1000)
+    @pds_detectors = PdsDetector.where(Project: project.ProjectID)
   end
 
   # GET /pds_detectors/1
@@ -74,4 +75,8 @@ class Api::PdsDetectorsController < ApplicationController
     def pds_detector_params
       #params.require(:pds_detector).permit(:Project, :sys, :station_sys, :tag, :tag_RU, :Desc, :Desc_EN, :Group_N, :ctrl_power, :nom_state, :low_lim, :up_lim, :LA, :HA, :LW, :HW, :LT, :HT, :Unit, :1coef_shift, :2coef_scale, :sluggishness, :scale_noise, :sd_N, :doc_reg_N, :Func, :t, :Type, :TypeDetec, :Room, :SPTable, :SCK_input, :SP_1, :SP_2, :SP_3, :SPT_ACTION, :SPT_COMMENT, :DREG_input, :TimeConst, :power, :varible, :import_t, :mod, :eq_type, :alg_type)
     end
+
+    def project
+      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+    end  
 end
