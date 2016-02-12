@@ -40,7 +40,6 @@ module.exports = React.createClass({
           }.bind(this),
           async: false
         });
-
         options = $.map(options , function(el){ return {value: el.id, label: el.ped} } )
 
         callback(null, {
