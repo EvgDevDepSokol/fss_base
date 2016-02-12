@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 TableList = YAML.load_file('public/data/tables.yml')
 
-module BazaDjet
+module FSS_database
   class Application < Rails::Application
     config.autoload_paths << "#{ config.root }/lib"
 
