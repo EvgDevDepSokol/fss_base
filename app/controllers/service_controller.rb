@@ -76,7 +76,7 @@ class ServiceController < BaseController
   end
 
   def articles
-    @data_list = Article.all
+    @data_list = Article.all.sort_by{:t}.reverse
   end
 
   def create
