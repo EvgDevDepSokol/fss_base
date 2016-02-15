@@ -89,7 +89,7 @@
                   = image_tag('help.png')
                   Помощь
               %li
-                = link_to '#'do
+                = link_to destroy_user_session_path, :method => :delete do
                   = image_tag('logout.png')
                   Выход
     .container.app-container
