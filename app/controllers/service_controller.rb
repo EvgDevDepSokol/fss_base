@@ -76,7 +76,7 @@ class ServiceController < BaseController
   end
 
   def articles
-    @data_list = Article.all.sort_by{:t}.reverse
+    @data_list = Article.order(t: :desc)
   end
 
   def create
@@ -93,7 +93,7 @@ class ServiceController < BaseController
   # Use callbacks to share common setup or constraints between actions.
   def set_pds_button
     @current_object = model.find(params[:id])
-  end
+ end
 
   def current_object
     @current_object ||= model.find(params[:id])
