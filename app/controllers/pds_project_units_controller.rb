@@ -1,7 +1,6 @@
 class PdsProjectUnitsController < ApplicationController
   before_action :set_pds_project_unit, only: [:show, :edit, :update, :destroy]
   before_action :project, only: :index
-
   # GET /pds_project_units
   # GET /pds_project_units.json
   def index
@@ -65,17 +64,18 @@ class PdsProjectUnitsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_project_unit
-      @pds_project_unit = PdsProjectUnit.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_project_unit_params
-      params.require(:pds_project_unit).permit(:Project, :Unit, :t)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_project_unit
+    @pds_project_unit = PdsProjectUnit.find(params[:id])
+  end
 
-    def project
-      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
-    end   
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_project_unit_params
+    params.require(:pds_project_unit).permit(:Project, :Unit, :t)
+  end
+
+  def project
+    @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+  end
 end

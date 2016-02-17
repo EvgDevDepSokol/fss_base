@@ -2,7 +2,7 @@ class ImportController < ApplicationController
 
   include GeneralControllerHelper
   def update_all
-#    byebug
+    #    byebug
     @key_name=model.primary_key
     params[:data].each do |row|
       @key_val=row[1][@key_name]
@@ -16,23 +16,24 @@ class ImportController < ApplicationController
 
       if current_object.update(permit_params)
         logger.debug "ok"
-#        render json: {status: :ok } # , data: current_object.custom_hash}
+      #        render json: {status: :ok } # , data: current_object.custom_hash}
       else
         logger.warning "Error"
-#        render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
-#          status: :unprocessable_entity
+      #        render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
+      #          status: :unprocessable_entity
       end
     end
     render json: {status: :ok}
   rescue
     logger.error "Import_all Rescue"
-#    render json: {(errors: current_object.errors , data: current_object.reload.custom_hash})if current_object,
+    #    render json: {(errors: current_object.errors , data: current_object.reload.custom_hash})if current_object,
     render json:{status: :unprocessable_entity}
-  end
+    end
 
   private
+
   def current_object
-    @current_object = (model.find(@key_val) if @key_val)  
+    @current_object = (model.find(@key_val) if @key_val)
   end
 
   def project
@@ -48,7 +49,7 @@ class ImportController < ApplicationController
     if model_class.method_defined? :custom_hash
       @data_list.map{ |e| e.custom_hash }.to_json
     else
-      @data_list.to_json
+    @data_list.to_json
     end
   end
 

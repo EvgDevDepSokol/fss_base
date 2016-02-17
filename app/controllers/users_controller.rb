@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   #before_action :set_pds_engineer, only: [:show, :edit, :update, :destroy]
-
   # GET /pds_engineers
   # GET /pds_engineers.json
   def index
@@ -62,13 +61,14 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_engineer
-      @pds_engineer = PdsEngineer.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_engineer_params
-      params.require(:pds_engineer).permit(:name, :TH, :TO, :L, :EL, :CR, :D, :SWM, :HWM, :PM, :t, :EMail, :CheifDirector, :login, :pwd, :dismiss, :coreID, :phoneNum, :cellNum, :IP, :compJack, :phoneJack, :sectorID1, :enabled)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_engineer
+    @pds_engineer = PdsEngineer.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_engineer_params
+    params.require(:pds_engineer).permit(:name, :TH, :TO, :L, :EL, :CR, :D, :SWM, :HWM, :PM, :t, :EMail, :CheifDirector, :login, :pwd, :dismiss, :coreID, :phoneNum, :cellNum, :IP, :compJack, :phoneJack, :sectorID1, :enabled)
+  end
 end

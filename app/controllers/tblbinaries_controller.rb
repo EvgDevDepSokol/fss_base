@@ -1,6 +1,5 @@
 class TblbinariesController < ApplicationController
   before_action :set_tblbinary, only: [:show, :edit, :update, :destroy]
-
   # GET /tblbinaries
   # GET /tblbinaries.json
   def index
@@ -34,7 +33,7 @@ class TblbinariesController < ApplicationController
     #image.write "output.png"
 
     send_data image.to_blob, type: 'image/png', disposition: 'inline'
-#    send_data TRANSPARENT_GIF, :type => 'image/gif', :disposition => 'inline'
+  #    send_data TRANSPARENT_GIF, :type => 'image/gif', :disposition => 'inline'
 
   end
 
@@ -79,13 +78,14 @@ class TblbinariesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tblbinary
-      @tblbinary = Tblbinary.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def tblbinary_params
-      params.require(:tblbinary).permit(:Title, :Type, :Length, :binObj, :t)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tblbinary
+    @tblbinary = Tblbinary.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def tblbinary_params
+    params.require(:tblbinary).permit(:Title, :Type, :Length, :binObj, :t)
+  end
 end

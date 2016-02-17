@@ -4,7 +4,7 @@ class PdsEngineer < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :rememberable, :trackable
 
-  alias :devise_valid_password? :valid_password?
+#  alias :devise_valid_password? :valid_password?
 
   def valid_password?(password)
     begin
@@ -21,9 +21,9 @@ class PdsEngineer < ActiveRecord::Base
     end
   end
 
-  def is_admin?
-    CheifDirector
-  end
+#  def is_admin?
+#    CheifDirector
+#  end
 
   def email
     self.EMail

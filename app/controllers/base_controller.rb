@@ -6,7 +6,6 @@ class BaseController < ApplicationController
 
   before_action :project
   helper_method :project, :table_data
-
   def create
     @current_object = model_class.new permit_params
 
@@ -29,7 +28,7 @@ class BaseController < ApplicationController
   rescue
     render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
       status: :unprocessable_entity
-  end
+    end
 
   def destroy
     if current_object.destroy
@@ -40,6 +39,7 @@ class BaseController < ApplicationController
   end
 
   private
+
   def current_object
     @current_object ||= model.find(params[:id])
   end
@@ -56,7 +56,7 @@ class BaseController < ApplicationController
     if model_class.method_defined? :custom_hash
       @data_list.map{ |e| e.custom_hash }.to_json
     else
-      @data_list.to_json
+    @data_list.to_json
     end
   end
 

@@ -29,11 +29,11 @@ class GeneralController < ApplicationController
 
   def index_view
     (template_exists?("#{model_path}/index") ? "#{model_path}/index" : :index )
-    #if %(pds_lamp).include? model_path
-    #  params[:model]
-    #else
-    #  :index
-    #end
+  #if %(pds_lamp).include? model_path
+  #  params[:model]
+  #else
+  #  :index
+  #end
   end
 
   # GET /pds_buttons/1
@@ -99,6 +99,7 @@ class GeneralController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_pds_button
     @current_object = model.find(params[:id])
@@ -128,6 +129,5 @@ class GeneralController < ApplicationController
   def table_data
     @data
   end
-
 
 end

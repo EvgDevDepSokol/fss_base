@@ -1,6 +1,5 @@
 class PdsUnitsController < ApplicationController
   before_action :set_pds_unit, only: [:show, :edit, :update, :destroy]
-
   # GET /pds_units
   # GET /pds_units.json
   def index
@@ -62,13 +61,14 @@ class PdsUnitsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_unit
-      @pds_unit = PdsUnit.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_unit_params
-      params.require(:pds_unit).permit(:Unit_RU, :Unit_EN, :MultFactor, :ZeroShift, :t, :import_t)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_unit
+    @pds_unit = PdsUnit.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_unit_params
+    params.require(:pds_unit).permit(:Unit_RU, :Unit_EN, :MultFactor, :ZeroShift, :t, :import_t)
+  end
 end

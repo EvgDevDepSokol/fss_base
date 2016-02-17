@@ -1,6 +1,5 @@
 class PdsProjectsController < ApplicationController
   before_action :set_pds_project, only: [:show, :edit, :update, :destroy]
-
   # GET /pds_projects
   # GET /pds_projects.json
   def select
@@ -59,13 +58,14 @@ class PdsProjectsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_project
-      @pds_project = PdsProject.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_project_params
-      params.require(:pds_project).permit(:project_number, :project_name, :project_name_EN, :Contractor, :companyID, :contract_number, :contract_date, :ProjectManager, :SWManager, :HWManager, :Factor, :Description, :Description_EN, :Notes, :BlobObj, :t, :contract_end_date)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_project
+    @pds_project = PdsProject.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_project_params
+    params.require(:pds_project).permit(:project_number, :project_name, :project_name_EN, :Contractor, :companyID, :contract_number, :contract_date, :ProjectManager, :SWManager, :HWManager, :Factor, :Description, :Description_EN, :Notes, :BlobObj, :t, :contract_end_date)
+  end
 end

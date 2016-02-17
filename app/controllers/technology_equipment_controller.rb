@@ -69,6 +69,6 @@ class TechnologyEquipmentController < BaseController
   helper_method :table_header
 
   def table_header
-      model_class.attribute_names.map{ |attr| {property: attr, header: attr}}.to_json
+    model_class.attribute_names.map{ |attr| {property: attr, header: attr}}.to_json
   end
 end
