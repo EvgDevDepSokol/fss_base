@@ -106,10 +106,29 @@ table{
     .navbar-nav{
       li{
         a{
+          height: 35px;
+          padding: 0px;
+          font-size: 10px;
+
+          &:hover{
+            height: 25px;
+            background-color: #87cdeb;
+            color: #304d67;
+          }
+
+          img{
+            height: 25px;
+          }
+        }
+      }
+      div{
+        a{
+          height: 35px;
           padding: 5px;
           font-size: 10px;
 
           &:hover{
+            height: 25px;
             background-color: #87cdeb;
             color: #304d67;
           }
@@ -159,12 +178,13 @@ table{
     }
   }
 }
-
+//todo сделать исчезающую панель
 .left-menu.col{
   width: 245px;
-  //  float: left;
+  // float: left;
   display: table-cell;
   border-right: 6px solid #ABD2E6;
+  //min-width: 245px;
   min-width: 245px;
 
   #left_menu.table{
@@ -208,7 +228,7 @@ table{
       span.node{
         line-height: 11px;
         font-family: tahoma;
-        font-size: 11px;
+        font-size: 16px;
         font-weight: normal;
         color: rgb(68, 68, 68);
 
