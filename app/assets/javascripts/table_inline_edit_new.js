@@ -29,6 +29,7 @@ $( document ).ready(function() {
 
     $('.table.editable-table .edit').click(function(){
         // скрываем другие строки
+        debugger
         $('.table.editable-table').find('.editable-open').editable('hide');
         $('.table.editable-table').find('.btn-primary').hide();
         $('.table.editable-table').find('.edit').show();

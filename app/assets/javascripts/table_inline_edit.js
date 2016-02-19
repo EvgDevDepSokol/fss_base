@@ -33,7 +33,6 @@ $( document ).ready(function() {
 
     $('.table.editable-table .save').click(function() {
         var $btn = $(this);
-        //debugger;
 
         var inputs = $('.table.editable-table').find('form input');
         $(this).closest('tr').removeClass('editable-raw');
