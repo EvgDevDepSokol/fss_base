@@ -28,6 +28,7 @@ var PdsPanelSelector = require('../selectors/pds_panels.jsx');
 var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
+var BooleanSelector = require('../selectors/boolean.jsx');
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
@@ -47,7 +48,7 @@ var Replace = require('../modules/replace.jsx');
 var stringEditor =  require('../inputs/input.jsx')();
 var dateEditor =  require('../inputs/input.jsx')();
 var TextEditor =  require('../inputs/text_editor.jsx')();
-var BooleanEditor = require('../inputs/boolean.jsx')();
+//var BooleanEditor = require('../inputs/boolean.jsx')();
 
 //var ImportXlsxModal = require('./xlsx-import.js.jsx');
 
@@ -101,7 +102,7 @@ var TableContainer = React.createClass({
         }
 
         if(typeof(value) == "boolean"){
-          value = value ? React.createElement("span", null, "✓") : React.createElement("span", null, "✗");
+          value = value ? "TRUE" : "FALSE";
         }
 
         var editedRow = context.state["editedRow"];
