@@ -52,6 +52,8 @@
   %b Contract end date:
   = @pds_project.contract_end_date
 
-= link_to 'Edit', edit_pds_project_path(@pds_project)
-\|
-= link_to 'Back', pds_projects_path
+/= link_to 'Edit', edit_pds_project_path(@pds_project)
+/\|
+/= link_to 'Back', pds_projects_path
+/\|
+= link_to 'Select', index_pds_project_articles_path(@pds_project)
