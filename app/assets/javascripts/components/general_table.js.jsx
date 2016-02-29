@@ -102,7 +102,7 @@ var TableContainer = React.createClass({
         }
 
         if(typeof(value) == "boolean"){
-          value = value ? "TRUE" : "FALSE";
+          value = value ? "ДА" : "НЕТ";
         }
 
         var editedRow = context.state["editedRow"];

@@ -27,8 +27,8 @@ module.exports = React.createClass({
       setTimeout(function() {
 
         var options = [
-         { value: 'false', label: 'FALSE', clearableValue: 'false'},
-         { value: 'true', label: 'TRUE', clearableValue: 'false'}]
+         { value: 'false', label: 'НЕТ', clearableValue: 'false'},
+         { value: 'true', label: 'ДА', clearableValue: 'false'}]
  
         callback(null, {
           options: options,
@@ -50,10 +50,10 @@ module.exports = React.createClass({
   }
 });
 
-module.exports.options = function(){
-  var options = []
-  options = [
-    { value: 'false', label: 'FALSE' },
-    { value: 'true', label: 'TRUE' }]
-  return options;
-};  
+//module.exports.options = function(){
+//  var options = []
+//  options = [
+//    { value: 'false', label: 'FALSE' },
+//    { value: 'true', label: 'TRUE' }]
+//  return options;
+//};  
