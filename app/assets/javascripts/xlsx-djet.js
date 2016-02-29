@@ -94,7 +94,7 @@ function s2ab(s) {
 
 function exportData(data, columns){
 
-  //debugger;
+  debugger;
   /* original data */
   var ws_name = "SheetJS";
 
