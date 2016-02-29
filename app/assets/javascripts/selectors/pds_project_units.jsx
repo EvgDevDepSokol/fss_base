@@ -25,7 +25,7 @@ module.exports = React.createClass({
 
     var getOptions = function(input, callback) {
       setTimeout(function() {
-        debugger;
+        //debugger;
 
         var options = [];
         $.ajax({
