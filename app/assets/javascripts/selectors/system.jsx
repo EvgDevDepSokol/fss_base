@@ -58,30 +58,31 @@ module.exports = React.createClass({
       React.createElement(Select, {name: "System",
         asyncOptions: getOptions,
         onChange: this.onChange,
-        value: this.state.value
+        value: this.state.value,
+        clearable: false
         })
     );
   }
 });
 
 
-module.exports.options = function(){
-  var options = [];
-  $.ajax({
-    url: '/api/pds_syslists',
-    dataType: 'json',
-    type: 'GET',
-    success: function(data) {
-      options = data;
-    }.bind(this),
-    error: function(xhr, status, err) {
-      //debugger;
-      console.error(this.props.url, status, err.toString());
-      options = [];
-    }.bind(this),
-    async: false
-  });
-
-  options = $.map(options , function(el){ return {value: el.id, label: el.System} } )
-  return options;
-};
+//module.exports.options = function(){
+//  var options = [];
+//  $.ajax({
+//    url: '/api/pds_syslists',
+//    dataType: 'json',
+//    type: 'GET',
+//    success: function(data) {
+//      options = data;
+//    }.bind(this),
+//    error: function(xhr, status, err) {
+//      //debugger;
+//      console.error(this.props.url, status, err.toString());
+//      options = [];
+//    }.bind(this),
+//    async: false
+//  });
+//
+//  options = $.map(options , function(el){ return {value: el.id, label: el.System} } )
+//  return options;
+//};
