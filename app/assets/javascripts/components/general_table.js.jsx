@@ -545,7 +545,7 @@ var TableContainer = React.createClass({
                 Скрыть / Показать поля
               </div>
               <div className="export-to-excel" onClick={this.onExportClick}>
-                Експорт в Excel
+                Экспорт в Excel
               </div>
             </div>
 
