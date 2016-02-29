@@ -25,6 +25,7 @@ module.exports = React.createClass({
 
     var getOptions = function(input, callback) {
       setTimeout(function() {
+        debugger
         var options = [];
         $.ajax({
           url: '/api/pds_panels',
@@ -40,7 +41,7 @@ module.exports = React.createClass({
           }.bind(this),
           async: false
         });
-        options = $.map(options , function(el){ return {value: el.id, label: el.panel} } )
+        options = $.map(options , function(el){ return {value: el.panel, label: el.panel} } )
 
         callback(null, {
           options: options,
@@ -56,6 +57,7 @@ module.exports = React.createClass({
       React.createElement(Select, {name: "IC",
         asyncOptions: getOptions,
         onChange: this.onChange,
+        clearable: false,
         value: this.state.value
         })
     );
@@ -63,23 +65,23 @@ module.exports = React.createClass({
 });
 
 
-module.exports.options = function(){
-  var options = [];
-  $.ajax({
-    url: '/api/pds_panels',
-    dataType: 'json',
-    type: 'GET',
-    data:{pds_project_id:project.ProjectID},
-    success: function(data) {
-      options = data;
-    }.bind(this),
-    error: function(xhr, status, err) {
-      console.error(this.props.url, status, err.toString());
-      options = [];
-    }.bind(this),
-    async: false
-  });
-
-  options = $.map(options , function(el){ return {value: el.id, label: el.panel} } )
-  return options;
-};
+//module.exports.options = function(){
+//  var options = [];
+//  $.ajax({
+//    url: '/api/pds_panels',
+//    dataType: 'json',
+//    type: 'GET',
+//    data:{pds_project_id:project.ProjectID},
+//    success: function(data) {
+//      options = data;
+//    }.bind(this),
+//    error: function(xhr, status, err) {
+//      console.error(this.props.url, status, err.toString());
+//      options = [];
+//    }.bind(this),
+//    async: false
+//  });
+//
+//  options = $.map(options , function(el){ return {value: el.id, label: el.panel} } )
+//  return options;
+//};
