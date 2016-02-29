@@ -21,6 +21,7 @@ class HwIc < ActiveRecord::Base
     serializable_hash(include: {
         system: {only: :System},
         pds_panel: {only: [:panel]},
+        pds_project_unit: {only: [], include: {unit: {only: :Unit_RU}}},
         hw_ped: {only: [:ped], include: {hw_devtype: {only: [:RuName]}}}},)
   end
 
