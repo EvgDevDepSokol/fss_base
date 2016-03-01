@@ -44,7 +44,8 @@ class TechnologyEquipmentController < BaseController
   # todo: not finished
   def pds_motors
     @data_list = PdsMotor.where(Project: project.ProjectID).
-      includes(:system, :pds_section_assembler, :pds_motor_type,
+      includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power,
+:pds_motor_type,
         :pds_man_equip, :pds_sd, :pds_documentation)
   end
 
