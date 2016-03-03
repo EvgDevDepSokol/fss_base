@@ -1,7 +1,8 @@
 %h1
   = title
 
-= render partial: 'general_grid'
+= render 'general_grid'
+//= render partial: 'general_grid'
 
 = link_to url_for(controller: :general, action: :new), class: 'btn btn-default' do
   = "Добавить #{model}"
