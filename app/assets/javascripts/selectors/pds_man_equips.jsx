@@ -16,6 +16,7 @@ module.exports = React.createClass({
   },
 
   onChange(value, object) {
+    if(object.length > 0) this.setState({value: object[0].label});
     var h = {};
     h[this.props.attribute] = value;
     this.props.onValue(h);
@@ -25,7 +26,7 @@ module.exports = React.createClass({
 
     var getOptions = function(input, callback) {
       setTimeout(function() {
-
+        debugger
         var options = [];
         $.ajax({
           url: '/api/pds_man_equips',
@@ -56,7 +57,7 @@ module.exports = React.createClass({
 
 
     return (
-      React.createElement(Select, {name: "IC",
+      React.createElement(Select, {name: "PdsSectionAssembler",
         asyncOptions: getOptions,
         onChange: this.onChange,
         value: this.state.value
@@ -66,24 +67,24 @@ module.exports = React.createClass({
 });
 
 
-module.exports.options = function(){
-  var options = [];
-  $.ajax({
-    url: '/api/pds_man_equips',
-    dataType: 'json',
-    type: 'GET',
-    success: function(data) {
-      options = data;
-    }.bind(this),
-    error: function(xhr, status, err) {
-      console.error(this.props.url, status, err.toString());
-      options = [];
-    }.bind(this),
-    async: false
-  });
-
-  options = $.map(options , function(el){
-    return {value: el.id, label: el.Type}
-  });
-  return options;
-};
+//module.exports.options = function(){
+//  var options = [];
+//  $.ajax({
+//    url: '/api/pds_man_equips',
+//    dataType: 'json',
+//    type: 'GET',
+//    success: function(data) {
+//      options = data;
+//    }.bind(this),
+//    error: function(xhr, status, err) {
+//      console.error(this.props.url, status, err.toString());
+//      options = [];
+//    }.bind(this),
+//    async: false
+//  });
+//
+//  options = $.map(options , function(el){
+//    return {value: el.id, label: el.Type}
+//  });
+//  return options;
+//};

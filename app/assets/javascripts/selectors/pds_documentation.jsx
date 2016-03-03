@@ -16,9 +16,7 @@ module.exports = React.createClass({
   },
 
   onChange(value, object) {
-    if(object.length > 0){
-      this.setState({value: object[0].label});
-    }
+    if(object.length > 0) this.setState({value: object[0].label});
     var h = {};
     h[this.props.attribute] = value;
     this.props.onValue(h);

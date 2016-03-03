@@ -4,7 +4,7 @@
 
 var React = require('react');
 var Select = require('react-select');
-
+//var onChange = require('./selectors.jsx').onChange;
 
 module.exports = React.createClass({
   displayName: 'SystemSelector',
@@ -16,13 +16,13 @@ module.exports = React.createClass({
   },
 
   onChange(value, object) {
+    if(object.length > 0) this.setState({value: object[0].label});
     var h = {};
     h[this.props.attribute] = value;
     this.props.onValue(h);
   },
 
   render: function() {
-
     var getOptions = function(input, callback) {
       setTimeout(function() {
 
@@ -43,14 +43,13 @@ module.exports = React.createClass({
         });
 
         options = $.map(options , function(el){ return {value: el.id, label: el.System} } )
-
         callback(null, {
           options: options,
           // CAREFUL! Only set this to true when there are no more options,
           // or more specific queries will not be sent to the server.
-          complete: true
+        //  complete: true,
         });
-      }, 500);
+      }, 0);
     };
 
 
@@ -58,6 +57,7 @@ module.exports = React.createClass({
       React.createElement(Select, {name: "System",
         asyncOptions: getOptions,
         onChange: this.onChange,
+        //onChange: onChange,
         value: this.state.value,
         clearable: false
         })
