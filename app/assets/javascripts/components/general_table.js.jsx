@@ -29,6 +29,7 @@ var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var BooleanSelector = require('../selectors/boolean.jsx');
+var ProjectSelector = require('../selectors/project.jsx');
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
@@ -43,7 +44,6 @@ var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 var Search = require('../modules/search.jsx');
 var Replace = require('../modules/replace.jsx');
 
-
 //var TextEditor = editors.input();
 var stringEditor =  require('../inputs/input.jsx')();
 var dateEditor =  require('../inputs/input.jsx')();
@@ -51,6 +51,7 @@ var TextEditor =  require('../inputs/text_editor.jsx')();
 //var BooleanEditor = require('../inputs/boolean.jsx')();
 
 //var ImportXlsxModal = require('./xlsx-import.js.jsx');
+import {sortByOrder} from 'lodash';
 
 var TableContainer = React.createClass({
   displayName: 'djetFullTable',
@@ -359,9 +360,9 @@ var TableContainer = React.createClass({
           sortColumn(
             this.state.columns,
             column,
-            this.state.data,
+//            this.state.data,
             this.setState.bind(this),
-            myDefaultSorter
+//            myDefaultSorter
           );
         }.bind(this)
       },
@@ -408,8 +409,9 @@ var TableContainer = React.createClass({
     sortColumn(
       this.state.columns,
       column,
-      this.state.data,
-      this.setState.bind(this)
+//      this.state.data,
+      this.setState.bind(this),
+      myDefaultSorter
     );
   },
 
@@ -503,9 +505,11 @@ var TableContainer = React.createClass({
       data = Search.search(this.state.search, this.state.columns, data);
     }
 
+    data = sortColumn.sort(data, this.state.sortingColumn, sortByOrder); 
+
     var paginated = Paginator.paginate(data, pagination);
     var totalPages = Math.ceil(data.length / pagination.perPage);
-
+    //debugger
     return (
       <div className="main-container-inner" key={"main-table"}>
         <div className="table-info" key={"table-info"}>
@@ -515,7 +519,7 @@ var TableContainer = React.createClass({
           <div className="info">
             <div className="left">
               <div className='total'>
-                {"Всего записей " + data.length + " на " + totalPages + " стр."}
+                {"Записей " + data.length + " на " + totalPages + " стр."}
               </div>
               <div className='icon'></div>
               <div className='system-selector'>
