@@ -13,25 +13,25 @@ Rails.application.routes.draw do
 
     EquipmentPanelsController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :equipment_panels, model: table do
-        get :index, as: :index, on: :collection, to: table.to_s.pluralize.to_sym
+        get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
       end
     end
 
     TechnologyEquipmentController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :technology_equipment, model: table do
-        get :index, as: :index, on: :collection, to: table.to_s.pluralize.to_sym
+        get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
       end
     end
 
     HardwareController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :hardware, model: table do
-        get :index, as: :index, on: :collection, to: table.to_s.pluralize.to_sym
+        get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
       end
     end
 
     DisplaySystemsController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :display_systems, model: table do
-        get :index, as: :index, on: :collection, to: table.to_s.pluralize.to_sym
+        get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
       end
     end
 
@@ -49,13 +49,13 @@ Rails.application.routes.draw do
 
     ProjectSettingsController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :project_settings, model: table do
-        get :index, as: :index, on: :collection, to: table.to_s.pluralize.to_sym
+        get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
       end
     end
 
     ServiceController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :service, model: table do
-        get :index, as: :index, on: :collection, to: table.to_s.pluralize.to_sym
+        get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
       end
     end
     #end
@@ -69,7 +69,7 @@ Rails.application.routes.draw do
 
   ServiceController::ACTIONS.each do |table|
     resources table.to_s.pluralize, controller: :service, model: table do
-      get :index, as: :index, on: :collection, to: table.to_s.pluralize.to_sym
+      get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
     end
   end
 
