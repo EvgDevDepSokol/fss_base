@@ -9,12 +9,14 @@ class DisplaySystemsController < ApplicationController
 
   # todo: сделать разбиение запроса на части, а то долго отдается
   def pds_ppcas
-    @data_list = PdsPpca.includes(:system).all
+    # @data_list = PdsPpca.includes(:system).all
+    @data_list = PdsPpca.includes(:system).limit(1000)
   end
 
   # todo: сделать разбиение запроса на части, а то долго отдается
   def pds_ppcds
-    @data_list = PdsPpcd.includes(:system).all
+    # @data_list = PdsPpcd.includes(:system).all
+    @data_list = PdsPpcd.includes(:system).limit(1000)
   end
 
   def pds_sds
