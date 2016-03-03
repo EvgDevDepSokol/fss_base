@@ -482,8 +482,12 @@ var TableContainer = React.createClass({
       return;
 
     if(val){
-      var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
-      this.setState({data: data});
+      if(val==34){ //ALL
+        this.setState({data: this.props.data});
+      } else {
+        var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
+        this.setState({data: data});
+      }
     }else{
       // we reset data
       this.setState({data: this.props.data});
