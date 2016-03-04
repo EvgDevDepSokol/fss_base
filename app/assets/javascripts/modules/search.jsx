@@ -53,7 +53,7 @@ module.exports = React.createClass({
 module.exports.search = function(search, columns, data) {
   var query = search.query;
   var column = search.column;
-
+  debugger
   if(!query) {
     return data;
   }
@@ -68,7 +68,8 @@ module.exports.search = function(search, columns, data) {
     {
       //debugger;
       return columns.filter(isColumnVisible.bind(this, row)).length > 0;
-    }.bind(this)
+//    }.bind(this)
+    }
   );
 
   function isColumnVisible(row, col) {
@@ -98,12 +99,12 @@ module.exports.search = function(search, columns, data) {
       formattedValue = formattedValue.toString();
     }
 
-
-
     // TODO: allow strategy to be passed, now just defaulting to prefix
-    var predicate = predicates.prefix(query.toLowerCase());
+//    var predicate = predicates.prefix(query.toLowerCase());
+//    return predicate.matches(formattedValue.toLowerCase());
 
-    return predicate.matches(formattedValue.toLowerCase());
+    var predicate = predicates.infix(query.toLowerCase());
+    return predicate.evaluate(formattedValue.toLowerCase());
   }
 };
 

@@ -42,6 +42,7 @@ var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 
 // modules
 var Search = require('../modules/search.jsx');
+//var Search = require('reactabular').Search;
 var Replace = require('../modules/replace.jsx');
 
 //var TextEditor = editors.input();
@@ -80,7 +81,6 @@ var TableContainer = React.createClass({
     }.bind(this));
 
     var editableField = function(options) {
-      //debugger;
 
       var editor = options.editor; // || editors.input();
       var attribute = options.attribute;
@@ -88,7 +88,6 @@ var TableContainer = React.createClass({
       var nested = options.nested;
 
       return function(value, data, rowIndex, property) {
-        //debugger;
         if(nested)
         {
           var keys = property.split(".");
@@ -113,7 +112,6 @@ var TableContainer = React.createClass({
               value: value,
               attribute: attribute || property,
               onValue: function (valueHash) {
-                //debugger;
                 var sendData = $.extend(context.state.sendData, valueHash);
                 context.setState({lockRow: true, sendData: sendData});
               }
@@ -202,7 +200,6 @@ var TableContainer = React.createClass({
                   dataType: 'json',
                   type: 'DELETE',
                   success: function(data) {
-                    //debugger;
                     this.state.data.splice(idx, 1);
                     this.setState({
                       data: this.state.data,
@@ -210,7 +207,6 @@ var TableContainer = React.createClass({
                     });
                   }.bind(this),
                   error: function(xhr, status, err) {
-                    //debugger;
                     console.error(this.props.url, status, err.toString());
                   }.bind(this)
                 });
@@ -246,7 +242,6 @@ var TableContainer = React.createClass({
                     type: 'POST',
                     data: d,
                     success: function(response) {
-                      //debugger;
                       this.state.data[idx] = response.data;
                       this.setState({
                         data: this.state.data,
@@ -266,7 +261,6 @@ var TableContainer = React.createClass({
                     type: 'PUT',
                     data: d,
                     success: function(response) {
-                      //debugger;
                       this.state.data[idx] = response.data;
                       this.setState({
                         data: this.state.data,
@@ -276,7 +270,6 @@ var TableContainer = React.createClass({
                       });
                     }.bind(this),
                     error: function(xhr, status, err) {
-                      //debugger;
                       console.error(this.props.url, status, err.toString());
                     }.bind(this)
                   });
@@ -501,12 +494,13 @@ var TableContainer = React.createClass({
     var data = this.state.data || [];
     var pagination = this.state.pagination || {};
     var header = this.state.header;
-
     if (this.state.search.query) {
+      debugger
       // apply search to data
       // alternatively you could hit backend `onChange`
       // or push this part elsewhere depending on your needs
-      data = Search.search(this.state.search, this.state.columns, data);
+      data = Search.search(this.state.search, this.state.columns, data)
+      //data = Search.search(data,columns,this.state.search.column,this.state.search.query);
     }
 
     data = sortColumn.sort(data, this.state.sortingColumn, sortByOrder); 
