@@ -58,6 +58,7 @@ module.exports = React.createClass({
       React.createElement(Select, {name: "IC",
         asyncOptions: getOptions,
         onChange: this.onChange,
+        clearable: false,
         value: this.state.value
         })
     );
