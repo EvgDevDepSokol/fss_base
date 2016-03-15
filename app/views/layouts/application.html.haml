@@ -97,7 +97,7 @@
         - # if @project
         .col.left-menu#left_menu
           = render 'shared/table_list', hash: get_tables_list
-        .col.main-container
+        .col.main-container#main_table
           = content_for?(:content) ? yield(:content) : yield
 
     %footer

@@ -6,22 +6,23 @@
   var model_name = "#{hash_model_name}";
 
   var columns = [
-  {"property":"id","header":"ppcID"},
-  {property: "system.System", header: "Система", editor: "SystemSelector", attribute: 'system_id', nested: true},
-  {"property":"Shifr","header":"Shifr", editor: "stringEditor"},
-  {"property":"Key","header":"Key", editor: "stringEditor"},
-  {"property":"identif","header":"identif", editor: "stringEditor"},
-  {"property":"Description","header":"Description", editor: "stringEditor"},
-  {"property":"Description_EN","header":"Description_EN", editor: "stringEditor"},
-  {"property":"Detector","header":"Detector", editor: "stringEditor"},
-  {"property":"Unit","header":"Unit", editor: "stringEditor"},
-  {"property":"L_lim","header":"L_lim", editor: "stringEditor"},
-  {"property":"U_lim","header":"U_lim", editor: "stringEditor"},
-  {"property":"nom","header":"nom", editor: "stringEditor"},
-  {"property":"LA","header":"LA", editor: "stringEditor"},
-  {"property":"LW","header":"LW", editor: "stringEditor"},
-  {"property":"HW","header":"HW", editor: "stringEditor"},
-  {"property":"HA","header":"HA", editor: "stringEditor"},
-  {"property":"code","header":"code", editor: "stringEditor"},
-  {"property":"power","header":"power", editor: "stringEditor"},
-  {"property":"UnitID","header":"UnitID", editor: "stringEditor"}];
+  {"property":"id","header":"ppcID",hidden: true},
+  {property: "system.System", header: "Сист.", editor: "SystemSelector", attribute: 'system_id', nested: true},
+  {"property":"Shifr","header":"Шифр", editor: "stringEditor"},
+  {"property":"Key","header":"Ключ", editor: "stringEditor"},
+  {"property":"identif","header":"Идентификатор", editor: "stringEditor"},
+  {"property":"Description","header":"Описание", editor: "stringEditor"},
+  {"property":"Description_EN","header":"Описание(EN)", editor: "stringEditor"},
+  {"property":"Detector","header":"Датчик", editor: "stringEditor"},
+  {"property":"Разм.","header":"Разм.", editor: "stringEditor"},
+  {"property":"L_lim","header":"Мин.", editor: "stringEditor"},
+  {"property":"U_lim","header":"Макс.", editor: "stringEditor"},
+  {"property":"nom","header":"Ном. знач.", editor: "stringEditor"}
+  //{"property":"LA","header":"LA", editor: "stringEditor"},
+  //{"property":"LW","header":"LW", editor: "stringEditor"},
+  //{"property":"HW","header":"HW", editor: "stringEditor"},
+  //{"property":"HA","header":"HA", editor: "stringEditor"},
+  //{"property":"code","header":"code", editor: "stringEditor"},
+  //{"property":"power","header":"power", editor: "stringEditor"},
+  //{"property":"UnitID","header":"UnitID", editor: "stringEditor"}];
+  ];

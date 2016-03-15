@@ -6,10 +6,10 @@
   var model_name = "#{hash_model_name}";
 
   var columns =
-  [{"property":"id","header":"MalfunctDimID"},
-  {"property":"Malfunction","header":"Malfunction", editor: "stringEditor"},
-  {"property":"Character","header":"Character", editor: "stringEditor"},
-  {"property":"Target_EN","header":"Target_EN", editor: "stringEditor"},
-  {"property":"Target","header":"Target", editor: "stringEditor"},
-  {"property":"sd_N","header":"sd_N", editor: "stringEditor"},
-  {"property":"is_main","header":"is_main", editor: "stringEditor"}];
+  [{"property":"id","header":"MalfunctDimID",hidden: true},
+  {"property":"Malfunction","header":"Отказ", editor: "stringEditor"},
+  {"property":"Character","header":"Литера", editor: "stringEditor"},
+  {"property":"Target_EN","header":"Объект отказа(EN)", editor: "stringEditor"},
+  {"property":"Target","header":"Объект отказа", editor: "stringEditor"},
+  {"property":"Сим. диаграмма","header":"Сим. диаграмма", editor: "stringEditor"},
+  {"property":"is_main","header":"is_main", editor: "BooleanSelector", nested: true}];

@@ -6,7 +6,7 @@
   var model_name = "#{hash_model_name}";
 
   var columns = [
-  {"property":"wirelist_N","header":"wirelist_N"},
+  {"property":"wirelist_N","header":"wirelist_N",hidden: true},
   {"property":"from","header":"from", editor: "stringEditor"},
   {"property":"to","header":"to", editor: "stringEditor"},
   {"property":"wc","header":"wc", editor: "stringEditor"},
@@ -16,19 +16,19 @@
   {"property":"s","header":"s", editor: "stringEditor"},
   {"property":"word","header":"word", editor: "stringEditor"},
   {"property":"bit","header":"bit", editor: "stringEditor"},
-  {"property":"power","header":"power", editor: "stringEditor"},
-  {"property":"origin","header":"origin", editor: "stringEditor"},
-  {"property":"net","header":"net", editor: "stringEditor"},
-  {"property":"hw_ped.ped","header":"ped", nested: true, editor: "HwPedSelector", attribute: "hw_ped_id"},
+  //{"property":"power","header":"Питание", editor: "stringEditor"},
+  //{"property":"origin","header":"origin", editor: "stringEditor"},
+  //{"property":"net","header":"net", editor: "stringEditor"},
+  {"property":"hw_ped.ped","header":"PED", nested: true, editor: "HwPedSelector", attribute: "hw_ped_id"},
   //{"property":"Project","header":"Project"},
-  {"property":"rev","header":"rev", editor: "stringEditor"},
+  {"property":"rev","header":"Ревизия", editor: "stringEditor"},
   // todo: fix unit selector
-  {"property":"Unit","header":"Unit"},
-  {"property":"step","header":"step", editor: "stringEditor"},
+  //{"property":"Unit","header":"Разм."},
+  //{"property":"step","header":"step", editor: "stringEditor"},
   //{"property":"t","header":"t"},
-  {"property":"IC","header":"IC", editor: "stringEditor"},
-  {"property":"remarks","header":"remarks", editor: "stringEditor"},
-  {"property":"io_signalID","header":"io_signalID", editor: "stringEditor"},
-  {"property":"pds_panel.panel","header":"panel", nested: true, editor: "PdsPanelSelector", attribute: 'panel_id'},
-  {"property":"pds_mark","header":"pds_mark", editor: "stringEditor"}]
+  {"property":"IC","header":"REF", editor: "stringEditor"},
+  {"property":"remarks","header":"Заметка", editor: "stringEditor"},
+  //{"property":"io_signalID","header":"io_signalID", editor: "stringEditor"},
+  {"property":"pds_panel.panel","header":"Панель", nested: true, editor: "PdsPanelSelector", attribute: 'panel_id'}]
+  //{"property":"pds_mark","header":"pds_mark", editor: "stringEditor"}]
   ;

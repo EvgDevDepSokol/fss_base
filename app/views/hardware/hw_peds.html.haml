@@ -6,12 +6,11 @@
   var model_name = "#{hash_model_name}";
 
   var columns = [
-  {"property":"ped_N","header":"ped_N"},
-  //{"property":"Project","header":"Project"},
-  {"property":"ped","header":"ped", editor: "stringEditor"},
-  {"property":"Code","header":"Code", editor: "stringEditor"},
-  // todo: da/net selector
-  {"property":"GenExtSig","header":"GenExtSig"},
+  {"property":"ped_N","header":"ped_N",hidden: true},
+  {"property":"Project","header":"Project",hidden: true},
+  {"property":"PED","header":"PED", editor: "stringEditor"},
+  {"property":"Code","header":"Код", editor: "stringEditor"},
+  {"property":"GenExtSig","header":"Ген.доп.сигн.", editor: "BooleanYNSelector",nested: true},
   {"property":"AI","header":"AI", editor: "stringEditor"},
   {"property":"AO","header":"AO", editor: "stringEditor"},
   {"property":"AO*","header":"AO*", editor: "stringEditor"},
@@ -35,9 +34,8 @@
   {"property":"1,5VAC","header":"1,5VAC", editor: "stringEditor"},
   {"property":"2,5VAC","header":"2,5VAC", editor: "stringEditor"},
   {"property":"5VAC","header":"5VAC", editor: "stringEditor"},
-  {"property":"hw_devtype.RuName","header":"type", nested: true, editor: "HwDevTypesSelector", attribute: "hw_devtype_id"},
-  {"property":"VENDOR","header":"VENDOR", editor: "stringEditor"},
-  {"property":"DESCRIPT","header":"DESCRIPT", editor: "stringEditor"},
-  {"property":"REM","header":"REM", editor: "stringEditor"}
-  //{"property":"t","header":"t"},
+  {"property":"hw_devtype.RuName","header":"Тип оборудования", nested: true, editor: "HwDevTypesSelector", attribute: "hw_devtype_id"},
+  {"property":"VENDOR","header":"Изготовитель", editor: "stringEditor"},
+  {"property":"DESCRIPT","header":"Доп. описание", editor: "stringEditor"},
+  {"property":"REM","header":"Заметка", editor: "stringEditor"}
   ];

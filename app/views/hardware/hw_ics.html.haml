@@ -6,23 +6,23 @@
   var model_name = "#{hash_model_name}";
 
   var columns = [
-  {"property":"icID","header":"icID"},
+  //{"property":"icID","header":"icID"},
   //{"property":"Project","header":"Project"},
   {"property":"ref","header":"ref", editor: "stringEditor"},
   {"property":"system.System","header":"system", nested: true},
-  {property:"hw_ped.ped","header":"ped", nested: true, editor: "HwPedSelector", attribute: "hw_ped_id"},
+  {property:"hw_ped.ped","header":"PED", nested: true, editor: "HwPedSelector", attribute: "hw_ped_id"},
   // todo suffix selector
-  {"property":"suffix","header":"suffix"},
-  {"property":"scaleMin","header":"scaleMin", editor: "stringEditor"},
-  {"property":"scaleMax","header":"scaleMax", editor: "stringEditor"},
-  {property:"pds_project_unit.unit.Unit_RU", header:"Unit", editor: "UnitSelector", attribute: 'pds_project_unit_id', nested: true},
+  //{"property":"suffix","header":"suffix"},
+  {"property":"Мин.","header":"Мин.", editor: "stringEditor"},
+  {"property":"Макс.","header":"Макс.", editor: "stringEditor"},
+  {property:"pds_project_unit.unit.Unit_RU", header:"Разм.", editor: "UnitSelector", attribute: 'pds_project_unit_id', nested: true},
   {"property":"rev","header":"rev", editor: "stringEditor"},
-  {"property":"tag_no","header":"tag_no", editor: "stringEditor"},
+  {"property":"KKS/PED","header":"KKS/PED", editor: "stringEditor"},
   {"property":"UniquePTAG","header":"UniquePTAG", editor: "stringEditor"},
   {"property":"un","header":"un", editor: "stringEditor"},
-  {"property":"bv","header":"bv", editor: "stringEditor"},
+  //{"property":"bv","header":"bv", editor: "stringEditor"},
   {property:"panel","header":"panel", editor: "PdsPanelSelector", attribute: 'pds_panel_id', nested: true},
-  {"property":"coord","header":"coord", editor: "stringEditor"},
+  //{"property":"coord","header":"coord", editor: "stringEditor"},
   {"property":"hw_ped.hw_devtype.RuName","header":"Type", nested: true},
   {"property":"Description","header":"Description", editor: "stringEditor"},
   {"property":"Description_EN","header":"Description_EN", editor: "stringEditor"}
