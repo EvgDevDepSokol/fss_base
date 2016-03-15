@@ -1,14 +1,19 @@
+'use strict';
+
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Table = require('reactabular').Table;
 var _ = require('underscore');
 
-var Paginator = require('react-pagify');
+var Paginator = require('react-pagify').default;
 
 var sortColumn = require('reactabular').sortColumn;
-var findIndex = require('lodash/array/findIndex');
+var findIndex = require('lodash').findIndex;
+var orderBy = require('lodash').orderBy;
 
 var cells = require('reactabular').cells;
 var editors = require('reactabular').editors;
+var segmentize = require('segmentize');
 
 
 var titleCase = require('title-case');
@@ -16,7 +21,7 @@ var titleCase = require('title-case');
 // form here
 //var Form = require('plexus-form');
 //var validate = require('plexus-validate');
-//var SkyLight = require('react-skylight');
+//var SkyLight = require('react-skylight').default;
 
 var SystemSelector = require('../selectors/system.jsx');
 var HwIcSelector = require('../selectors/hw_ic.jsx');
@@ -29,6 +34,7 @@ var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var BooleanSelector = require('../selectors/boolean.jsx');
+var BooleanYNSelector = require('../selectors/booleanyn.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
 
 // todo: fix
@@ -51,8 +57,10 @@ var dateEditor =  require('../inputs/input.jsx')();
 var TextEditor =  require('../inputs/text_editor.jsx')();
 //var BooleanEditor = require('../inputs/boolean.jsx')();
 
+//var columnNamesjson = require('json!../../../../public/data/table_translations.json')
+//var columnNames = require('reactabular').columnNames;
 //var ImportXlsxModal = require('./xlsx-import.js.jsx');
-import {sortByOrder} from 'lodash';
+//import {sortByOrder} from 'lodash';
 
 var TableContainer = React.createClass({
   displayName: 'djetFullTable',
@@ -73,12 +81,16 @@ var TableContainer = React.createClass({
         tEquipID: celldata[rowIndex].tEquipID
       });
 
-      //this.state.data[idx][property] = value;
+      this.state.data[idx][property] = value;
 
       this.setState({
         data: data
       });
     }.bind(this));
+
+    var highlighter = (column) => highlight((value) => {
+        return Search.matches(column, value, this.state.search.query);
+    });
 
     var editableField = function(options) {
 
@@ -104,6 +116,8 @@ var TableContainer = React.createClass({
         if(typeof(value) == "boolean"){
           value = value ? "ДА" : "НЕТ";
         }
+       
+        if(!value) value = '';
 
         var editedRow = context.state["editedRow"];
         if (editedRow === rowIndex) {
@@ -144,6 +158,7 @@ var TableContainer = React.createClass({
           }
         });
 
+        if(!tempVal) tempVal = '';
         return {value: tempVal};
       }
     }.bind(this);
@@ -173,11 +188,10 @@ var TableContainer = React.createClass({
     // remove hidden elements and add buttons
     columns = columns.concat([
         {
-          header: 'buttons',
+          header: 'Кнопки',
           style: {width: '100px'},
           classes: 'buttons-col',
           cell: function(value, celldata, rowIndex, property){
-
             var url = window.location.href;
             var newRow = celldata[rowIndex].newRow;
             var itemId = celldata[rowIndex].id;
@@ -231,7 +245,7 @@ var TableContainer = React.createClass({
             var saveClick = function() {
               if(!$.isEmptyObject(this.state.sendData))
               {
-                d = {};
+                var d = {};
                 d[this.props.objectType] = this.state.sendData;
                 if(newRow){
                   idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
@@ -341,7 +355,7 @@ var TableContainer = React.createClass({
       columns: columns,
       showFilters: false,
       pagination: {
-        page: 0,
+        page: 1,
         perPage: 20
       },
       search: {
@@ -375,8 +389,10 @@ var TableContainer = React.createClass({
     if(this.state.lockRow)
       return;
     var pagination = this.state.pagination || {};
+    var pages = Math.ceil(this.state.data.length / pagination.perPage);
 
-    pagination.page = page;
+    pagination.page = Math.min(Math.max(page, 1), pages);
+    //pagination.page = page;
 
     this.setState({
       pagination: pagination
@@ -386,7 +402,7 @@ var TableContainer = React.createClass({
   onPerPage: function(e) {
     var pagination = this.state.pagination || {};
 
-    pagination.perPage = parseInt(event.target.value, 10);
+    pagination.perPage = parseInt(e.target.value, 10);
 
     this.setState({
       pagination: pagination
@@ -494,8 +510,10 @@ var TableContainer = React.createClass({
     var data = this.state.data || [];
     var pagination = this.state.pagination || {};
     var header = this.state.header;
+
+  //  data = attachIds(data);
+
     if (this.state.search.query) {
-      debugger
       // apply search to data
       // alternatively you could hit backend `onChange`
       // or push this part elsewhere depending on your needs
@@ -503,10 +521,13 @@ var TableContainer = React.createClass({
       //data = Search.search(data,columns,this.state.search.column,this.state.search.query);
     }
 
-    data = sortColumn.sort(data, this.state.sortingColumn, sortByOrder); 
-
-    var paginated = Paginator.paginate(data, pagination);
-    var totalPages = Math.ceil(data.length / pagination.perPage);
+    data = sortColumn.sort(data, this.state.sortingColumn, orderBy); 
+    
+    var paginated = paginate(data, pagination);
+    var pages = Math.ceil(data.length / Math.max(
+      isNaN(pagination.perPage) ? 1 : pagination.perPage, 1)
+    );
+//    var totalPages = Math.ceil(data.length / pagination.perPage);
     //debugger
     return (
       <div className="main-container-inner" key={"main-table"}>
@@ -517,7 +538,7 @@ var TableContainer = React.createClass({
           <div className="info">
             <div className="left">
               <div className='total'>
-                {"Записей " + data.length + " на " + totalPages + " стр."}
+                {"Записей " + data.length + " на " + pages + " стр."}
               </div>
               <div className='icon'></div>
               <div className='system-selector'>
@@ -572,33 +593,63 @@ var TableContainer = React.createClass({
 
       <div className='table-container' key={"table-container"}>
 
-        <Table header={header} columns={this.state.columns} data={paginated.data}
+        <Table columnNames={header} columns={this.state.columns} data={paginated.data}
           className='table table-bordered' selectedRow={this.state.editedRow} />
 
         <div className='pagination'>
-          <Paginator
-            page={paginated.page}
-            pages={paginated.amount}
-            beginPages={3}
-            endPages={3}
-            onSelect={this.onSelect}></Paginator>
-        </div>
-
-      </div>
-      </div>
+           <Paginator.Context className="pagify-pagination"
+           segments={segmentize({
+                 page: pagination.page,
+                 pages: pages,
+                 beginPages: 3,
+                 endPages: 3,
+                 sidePages: 2
+             })} onSelect={this.onSelect}>
+                 <Paginator.Button page={pagination.page - 1}>Previous</Paginator.Button>
+                 <Paginator.Segment field="beginPages" />
+                 <Paginator.Ellipsis className="ellipsis"
+                   previousField="beginPages" nextField="previousPages" />
+                 <Paginator.Segment field="previousPages" />
+                 <Paginator.Segment field="centerPage" className="selected" />
+                 <Paginator.Segment field="nextPages" />
+                 <Paginator.Ellipsis className="ellipsis"
+                   previousField="nextPages" nextField="endPages" />
+                 <Paginator.Segment field="endPages" />
+                 <Paginator.Button page={pagination.page + 1}>Next</Paginator.Button>
+           </Paginator.Context>
+         </div>
+       </div>
+     </div>
     );
   }
 });
 
 $(document).ready(function () {
 
-  React.render(
+  ReactDOM.render(
     <TableContainer columns={columns} data={data}
       objectType={model_name} title={title}/>,
     document.getElementById('general_table')
   );
 
 });
+
+function paginate(data, o) {
+    data = data || [];
+
+    // adapt to zero indexed logic
+    var page = o.page - 1 || 0;
+    var perPage = o.perPage;
+
+    var amountOfPages = Math.ceil(data.length / perPage);
+    var startPage = page < amountOfPages? page: 0;
+
+    return {
+        amount: amountOfPages,
+        data: data.slice(startPage * perPage, startPage * perPage + perPage),
+        page: startPage
+    };
+}
 
 function augmentWithTitles(o) {
   for (var property in o) {
@@ -607,7 +658,13 @@ function augmentWithTitles(o) {
 
   return o;
 }
+function attachIds(arr) {
+    return arr.map((o, i) => {
+        o.id = i;
 
+        return o;
+    });
+}
 function getNestedKey(obj, keys) {
   var tempVal = obj;
 

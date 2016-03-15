@@ -34,3 +34,5 @@
 // require_tree .
 //= require_self
 // require table_inline_edit
+//= require react
+//= require react_ujs

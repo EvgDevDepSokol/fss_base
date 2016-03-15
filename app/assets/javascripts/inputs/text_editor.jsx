@@ -1,6 +1,8 @@
 'use strict';
 
-var React = require('react/addons');
+//var React = require('react/addons');
+//var React = require('react-addons-{addon}');
+var React = require('react');
 
 
 module.exports = function()  {
