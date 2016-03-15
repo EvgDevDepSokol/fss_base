@@ -58,7 +58,7 @@ module.exports = React.createClass({
 
 
     return (
-      React.createElement(Select, {name: "IC",
+      React.createElement(Select, {name: "section_name",
         asyncOptions: getOptions,
         onChange: this.onChange,
         clearable: false,
@@ -68,7 +68,7 @@ module.exports = React.createClass({
   }
 });
 
-//
+
 //module.exports.options = function(){
 //  var options = [];
 //  $.ajax({

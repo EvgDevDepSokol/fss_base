@@ -57,7 +57,7 @@ module.exports = React.createClass({
 
 
     return (
-      React.createElement(Select, {name: "IC",
+      React.createElement(Select, {name: "valve",
         asyncOptions: getOptions,
         onChange: this.onChange,
         clearable: false,

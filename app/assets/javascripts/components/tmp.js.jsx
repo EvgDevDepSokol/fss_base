@@ -45,7 +45,7 @@ var schema = {
 };
 
 var Uploader = React.createClass({
-  componentDidMount: function() {
+  componentWillMount: function() {
     var input = document.createElement('input');
     input.type = 'file';
     input.multiple = false;

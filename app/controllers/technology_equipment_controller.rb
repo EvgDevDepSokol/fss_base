@@ -12,7 +12,7 @@ class TechnologyEquipmentController < BaseController
     @data_list = PdsDetector.where(Project: project.ProjectID).
       includes(:system, :pds_section_assembler,
       :pds_man_equip, :pds_sd, :pds_documentation).
-      includes(pds_project_unit: [:unit]).limit(100) #todo "delete limit"
+      includes(pds_project_unit: [:unit])  
   end
 
   def pds_ejectors
@@ -41,7 +41,6 @@ class TechnologyEquipmentController < BaseController
     @data_list = PdsMotorType.all
   end
 
-  # todo: not finished
   def pds_motors
     @data_list = PdsMotor.where(Project: project.ProjectID).
       includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power,

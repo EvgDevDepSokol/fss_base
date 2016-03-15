@@ -78,14 +78,14 @@ var TreeView = React.createClass({
       }
       return elem;
     }).filter(function(v){return v!==null});;
-    //debugger;
+    debugger;
     this.setState({data: newData});
   },
 
   render: function() {
     var data = this.state.data;
     this.setNodeId({ nodes: data });
-    //debugger;
+    debugger;
     var children = [];
     if (data) {
       var _this = this;
