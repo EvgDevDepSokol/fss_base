@@ -23,7 +23,9 @@ var titleCase = require('title-case');
 //var validate = require('plexus-validate');
 //var SkyLight = require('react-skylight').default;
 
+var SystemAllSelector = require('../selectors/system_all.jsx');
 var SystemSelector = require('../selectors/system.jsx');
+
 var HwIcSelector = require('../selectors/hw_ic.jsx');
 var DetectorSelector = require('../selectors/detector.jsx');
 var PdsManEquipSelector = require('../selectors/pds_man_equips.jsx');

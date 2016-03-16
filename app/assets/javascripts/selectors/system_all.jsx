@@ -1,4 +1,4 @@
-// selector to be used for systems for all projects
+// selector to be used for systems for corrunt project
 
 'use strict';
 
@@ -23,16 +23,14 @@ module.exports = React.createClass({
   },
 
   render: function() {
-
     var getOptions = function(input, callback) {
       setTimeout(function() {
 
         var options = [];
         $.ajax({
-          url: '/api/pds_sys_descriptions',
+          url: '/api/pds_syslists',
           dataType: 'json',
           type: 'GET',
-          data:{pds_project_id:project.ProjectID},
           success: function(data) {
             options = data;
           }.bind(this),
@@ -45,20 +43,11 @@ module.exports = React.createClass({
         });
 
         options = $.map(options , function(el){ return {value: el.id, label: el.System} } )
-        options.sort(function(a, b){
-          var nameA=a.label.toLowerCase(), nameB=b.label.toLowerCase()
-          if (nameA < nameB) //sort string ascending
-            return -1 
-          if (nameA > nameB)
-            return 1
-          return 0 //default return value (no sorting)
-        })
-
         callback(null, {
           options: options,
           // CAREFUL! Only set this to true when there are no more options,
           // or more specific queries will not be sent to the server.
-          complete: true,
+        //  complete: true,
         });
       }, 0);
     };
@@ -75,3 +64,25 @@ module.exports = React.createClass({
     );
   }
 });
+
+
+//module.exports.options = function(){
+//  var options = [];
+//  $.ajax({
+//    url: '/api/pds_syslists',
+//    dataType: 'json',
+//    type: 'GET',
+//    success: function(data) {
+//      options = data;
+//    }.bind(this),
+//    error: function(xhr, status, err) {
+//      //debugger;
+//      console.error(this.props.url, status, err.toString());
+//      options = [];
+//    }.bind(this),
+//    async: false
+//  });
+//
+//  options = $.map(options , function(el){ return {value: el.id, label: el.System} } )
+//  return options;
+//};
