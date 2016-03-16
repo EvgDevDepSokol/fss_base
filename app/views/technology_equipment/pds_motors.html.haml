@@ -6,10 +6,10 @@
   {property: "pds_motor_type.MotorType", header: "Тип двигат.", editor: "PdsMotorTypeSelector", attribute: 'pds_motor_type_id', nested: true},
   {property: "system.System", header: "Сист.", editor: "SystemSelector", attribute: 'system_id', nested: true},
   //{"property":"station_sys","header":"station_sys", editor: "stringEditor"},
-  {"property":"TAG_RU","header":"TAG_RU", editor: "stringEditor"},
-  {"property":"TAG/KKS","header":"TAG/KKS", editor: "stringEditor"},
-  {"property":"Описание","header":"Описание", editor: "TextEditor"},
-  {"property":"Описание(EN)","header":"Описание(EN)", editor: "TextEditor"},
+  {"property":"tag_RU","header":"TAG_RU", editor: "stringEditor"},
+  {"property":"tag_EN","header":"TAG/KKS", editor: "stringEditor"},
+  {"property":"Desc_RU","header":"Описание", editor: "TextEditor"},
+  {"property":"Desc_EN","header":"Описание(EN)", editor: "TextEditor"},
  
   {property: "psa_ed_power.section_name", header: "Сил. пит.",
     editor: "PdsSectionAssemblerSelector", attribute: 'psa_ed_power_id', nested: true},
@@ -18,7 +18,7 @@
   {property: "psa_anc_power.section_name", header: "Пит. сигн.",
     editor: "PdsSectionAssemblerSelector", attribute: 'psa_anc_power_id', nested: true},
 
-  //{"property":"Помещение","header":"Помещение", editor: "stringEditor"},
+  //{"property":"room","header":"Помещение", editor: "stringEditor"},
   //{"property":"elevation","header":"elevation", editor: "stringEditor"},
   //{"property":"Stopway","header":"Stopway", editor: "stringEditor"},
   //{"property":"nom_state","header":"nom_state", editor: "BooleanSelector", nested:true},
@@ -31,7 +31,7 @@
   {"property":"up_rate","header":"t разг.", editor: "stringEditor"},
   {"property":"down_rate","header":"t выб.", editor: "stringEditor"},
   {"property":"zmn","header":"ЗМН", editor: "stringEditor"},
-  {"property":"Компонент","header":"Компонент", editor: "stringEditor"},
+  {"property":"model","header":"Компонент", editor: "stringEditor"},
   //{"property":"type_temp","header":"type_temp", editor: "stringEditor"},
   {"property":"voltage","header":"Напряжение, кВ", editor: "stringEditor"},
   //{"property":"RTZO_OLD1","header":"RTZO_OLD1", editor: "stringEditor"},
@@ -43,5 +43,5 @@
   //{"property":"import_t","header":"import_t"},
   //{"property":"mod","header":"mod", editor: "stringEditor"},
   //{"property":"eq_type","header":"eq_type", editor: "stringEditor"},
-  {"property":"Соединение","header":"Соединение", editor: "stringEditor"}];
-  //{"property":"Алгоритм","header":"Алгоритм", editor: "stringEditor"}];
+  {"property":"connection","header":"Соединение", editor: "stringEditor"}];
+  //{"property":"Algorithm","header":"Алгоритм", editor: "stringEditor"}];
