@@ -75,6 +75,10 @@ class ProjectSettingsController < ApplicationController
       includes(:pds_query, :system)
   end
 
+  def pds_sys_descriptions
+    @data_list = PdsSysDescription.where(Project: project.ProjectID)
+  end
+
   def create
     @pds_button = PdsButton.new permit_params
 
