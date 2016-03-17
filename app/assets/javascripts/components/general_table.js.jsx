@@ -593,35 +593,59 @@ var TableContainer = React.createClass({
           </div>
         </div>
 
-      <div className='table-container' key={"table-container"}>
+        <div className='pagination'>
+          <Paginator.Context className="pagify-pagination"
+            segments={segmentize({
+                  page: pagination.page,
+                  pages: pages,
+                  beginPages: 3,
+                  endPages: 3,
+                  sidePages: 2
+              })} onSelect={this.onSelect}>
+                  <Paginator.Button page={pagination.page - 1}>Предыдущая</Paginator.Button>
+                  <Paginator.Segment field="beginPages" />
+                  <Paginator.Ellipsis className="ellipsis"
+                    previousField="beginPages" nextField="previousPages" />
+                  <Paginator.Segment field="previousPages" />
+                  <Paginator.Segment field="centerPage" className="selected" />
+                  <Paginator.Segment field="nextPages" />
+                  <Paginator.Ellipsis className="ellipsis"
+                    previousField="nextPages" nextField="endPages" />
+                  <Paginator.Segment field="endPages" />
+                  <Paginator.Button page={pagination.page + 1}>Следующая</Paginator.Button>
+          </Paginator.Context>
+        </div>
 
-        <Table columnNames={header} columns={this.state.columns} data={paginated.data}
-          className='table table-bordered' selectedRow={this.state.editedRow} />
+        <div className='table-container' key={"table-container"}>
+
+          <Table columnNames={header} columns={this.state.columns} data={paginated.data}
+            className='table table-bordered' selectedRow={this.state.editedRow} />
+
+        </div>
 
         <div className='pagination'>
-           <Paginator.Context className="pagify-pagination"
-           segments={segmentize({
-                 page: pagination.page,
-                 pages: pages,
-                 beginPages: 3,
-                 endPages: 3,
-                 sidePages: 2
-             })} onSelect={this.onSelect}>
-                 <Paginator.Button page={pagination.page - 1}>Previous</Paginator.Button>
-                 <Paginator.Segment field="beginPages" />
-                 <Paginator.Ellipsis className="ellipsis"
-                   previousField="beginPages" nextField="previousPages" />
-                 <Paginator.Segment field="previousPages" />
-                 <Paginator.Segment field="centerPage" className="selected" />
-                 <Paginator.Segment field="nextPages" />
-                 <Paginator.Ellipsis className="ellipsis"
-                   previousField="nextPages" nextField="endPages" />
-                 <Paginator.Segment field="endPages" />
-                 <Paginator.Button page={pagination.page + 1}>Next</Paginator.Button>
-           </Paginator.Context>
-         </div>
-       </div>
-     </div>
+          <Paginator.Context className="pagify-pagination"
+            segments={segmentize({
+                page: pagination.page,
+                pages: pages,
+                beginPages: 3,
+                endPages: 3,
+                sidePages: 2
+            })} onSelect={this.onSelect}>
+                <Paginator.Button page={pagination.page - 1}>Предыдущая</Paginator.Button>
+                <Paginator.Segment field="beginPages" />
+                <Paginator.Ellipsis className="ellipsis"
+                  previousField="beginPages" nextField="previousPages" />
+                <Paginator.Segment field="previousPages" />
+                <Paginator.Segment field="centerPage" className="selected" />
+                <Paginator.Segment field="nextPages" />
+                <Paginator.Ellipsis className="ellipsis"
+                  previousField="nextPages" nextField="endPages" />
+                <Paginator.Segment field="endPages" />
+                <Paginator.Button page={pagination.page + 1}>Следующая</Paginator.Button>
+          </Paginator.Context>
+        </div>
+      </div>
     );
   }
 });
