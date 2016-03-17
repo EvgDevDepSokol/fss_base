@@ -166,7 +166,7 @@ table{
     -moz-border-radius: 14px;
     border-radius: 14px;
     //float: left;
-    display: table;
+    display: block;
     height:100%;
 
     &:after{
@@ -191,7 +191,7 @@ table{
   }
   .react-search{
     background-color: #ABD2E6;
-    padding-top: 5px;
+    padding-top: 12px;
     padding-bottom: 6px;
     border-bottom: 1px solid #6DA3BD;
 
@@ -253,7 +253,8 @@ table{
   background-color: #ABD2E6;
   //float: left;
   padding-top: 5px;
-  min-width: 900px;
+  //min-width: 900px;
+  max-width: 500px;
   width: 100%;
   margin-left: 250px;
   overflow: auto;
@@ -269,7 +270,7 @@ table{
       //overflow:auto;
 
       .table-container{
-        min-height: 1465px;
+        //min-height: 1465px;
       }
     }
   }
@@ -467,6 +468,7 @@ table{
     position: relative;
     padding: 5px;
     margin-top: 3px;
+    overflow: auto;
 
     table{
       tr{
@@ -707,6 +709,9 @@ table{
 
 }
 
+.pagination {
+  margin: 0px;
+}  
 .pagify-pagination {
     margin: 1em;
     padding: 0;
