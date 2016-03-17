@@ -16,9 +16,9 @@ class PdsMetersDigital < ActiveRecord::Base
         hw_ic: { only: [:ref, :tag_no, :Description, :scaleMin, :scaleMax],
           include: {
             hw_ped: {only: [:ped]},
-            pds_project_unit: {include: {
-              unit: {only: :Unit_RU} },
-              only: []}} },
+            pds_project_unit: {only: [], include: {unit: {only: :Unit_RU}}}
+          }
+        },
         system: {only: [:System]},
         pds_section_assembler: {only: [:section_name]}})
   end
