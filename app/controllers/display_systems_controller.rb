@@ -1,26 +1,29 @@
-class DisplaySystemsController < ApplicationController
-  include GeneralControllerHelper
+class DisplaySystemsController < BaseController
+  # include GeneralControllerHelper
 
   ACTIONS = [:pds_ppca, :pds_ppcd, :pds_sd]
 
-  before_action :project
+  # before_action :project
 
-  helper_method :table_data, :table_header, :editable_properties, :model_class
+  # helper_method :table_data, :table_header, :editable_properties, :model_class
 
   # todo: сделать разбиение запроса на части, а то долго отдается
   def pds_ppcas
     # @data_list = PdsPpca.includes(:system).all
-    @data_list = PdsPpca.includes(:system).limit(1000)
+    @data_list = PdsPpca.where(Project: project.ProjectID)
+.includes(:system)
   end
 
   # todo: сделать разбиение запроса на части, а то долго отдается
   def pds_ppcds
     # @data_list = PdsPpcd.includes(:system).all
-    @data_list = PdsPpcd.includes(:system).limit(1000)
+    @data_list = PdsPpcd.where(Project: project.ProjectID)
+.includes(:system)
   end
 
   def pds_sds
-    @data_list = PdsSd.includes(:system).all
+    @data_list = PdsSd.where(Project: project.ProjectID)
+.includes(:system)
   end
 
   def create
@@ -57,22 +60,28 @@ class DisplaySystemsController < ApplicationController
     end
   end
 
-  private
+  helper_method :table_header
 
-  def current_object
-    @current_object ||= model.find(params[:id])
+  def table_header
+    model_class.attribute_names.map{ |attr| {property: attr, header: attr}}.to_json
   end
 
-  def project
-    @project ||= PdsProject.find(params[:pds_project_id])
-  end
-
-  def permit_params
-    params.require(model.to_s.underscore).permit!
-  end
-
-  def table_data
-    @data_list.map{ |e| e.custom_hash }.to_json
-  end
+#  private
+#
+#  def current_object
+#    @current_object ||= model.find(params[:id])
+#  end
+#
+#  def project
+#    @project ||= PdsProject.find(params[:pds_project_id])
+#  end
+#
+#  def permit_params
+#    params.require(model.to_s.underscore).permit!
+#  end
+#
+#  def table_data
+#    @data_list.map{ |e| e.custom_hash }.to_json
+#  end
 
 end
