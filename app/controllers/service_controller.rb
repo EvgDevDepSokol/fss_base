@@ -39,7 +39,7 @@ class ServiceController < BaseController
   end
 
   def tblbinaries
-    @data_list = Tblbinary.all
+    @data_list = Tblbinary.limit(100)
   end
 
   def pds_units
