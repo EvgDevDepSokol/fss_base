@@ -1,9 +1,14 @@
 class EquipmentPanelsController < BaseController
 
-  ACTIONS = [:pds_bru, :pds_misc, :pds_set, :pds_switch_nofix, :pds_switch_fix,
+  ACTIONS = [:hw_ic, :pds_bru, :pds_misc, :pds_set, :pds_switch_nofix, :pds_switch_fix,
     :pds_buttons, :pds_buttons_lights, :pds_lamps, :pds_mnemo, :pds_meters,
     :pds_meters_digital, :pds_alarm, :pds_recorders, :pds_announciator,
     :pds_meters_channels]
+
+  def hw_ics
+    @data_list = HwIc.where(Project: project.ProjectID).
+      includes(hw_ped: [:hw_devtype], pds_panel: [])
+  end
 
   def pds_brus
     @data_list = PdsBru.where(Project: project.ProjectID).

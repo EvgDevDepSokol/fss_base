@@ -4,7 +4,7 @@ class HardwareController < ApplicationController
 
   layout 'layouts/table'
 
-  ACTIONS = [ :hw_ic, :hw_peds, :hw_wirelist, :pds_iomap, :hw_iosignaldefs,
+  ACTIONS = [ :hw_peds, :hw_wirelist, :pds_iomap, :hw_iosignaldefs,
     :hw_iosignals, :hw_devtypes, :hw_iosignaldim, :pds_panels]
 
   before_action :project
@@ -27,11 +27,6 @@ class HardwareController < ApplicationController
       format.xlsx
     end
 
-  end
-
-  def hw_ics
-    @data_list = HwIc.where(Project: project.ProjectID).
-      includes(hw_ped: [:hw_devtype], pds_panel: [])
   end
 
   def hw_peds
