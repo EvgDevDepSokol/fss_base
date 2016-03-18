@@ -118,8 +118,7 @@ var TableContainer = React.createClass({
         if(typeof(value) == "boolean"){
           value = value ? "ДА" : "НЕТ";
         }
-       
-        if(!value) value = '';
+        if(value==null) value = '';
 
         var editedRow = context.state["editedRow"];
         if (editedRow === rowIndex) {
@@ -160,7 +159,7 @@ var TableContainer = React.createClass({
           }
         });
 
-        if(!tempVal) tempVal = '';
+        if(tempVal==null) tempVal = '';
         return {value: tempVal};
       }
     }.bind(this);
@@ -529,8 +528,7 @@ var TableContainer = React.createClass({
     var pages = Math.ceil(data.length / Math.max(
       isNaN(pagination.perPage) ? 1 : pagination.perPage, 1)
     );
-//    var totalPages = Math.ceil(data.length / pagination.perPage);
-    //debugger
+    debugger
     return (
       <div className="main-container-inner" key={"main-table"}>
         <div className="table-info" key={"table-info"}>
