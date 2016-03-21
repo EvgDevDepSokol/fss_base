@@ -1,5 +1,6 @@
 class ProjectSettingsController < ApplicationController
   include GeneralControllerHelper
+  layout 'layouts/table'
   require 'csv'
 
   ACTIONS = [ :pds_eng_on_sys, :pds_project_unit, :pds_doc_on_sys,
@@ -9,7 +10,7 @@ class ProjectSettingsController < ApplicationController
 
   before_action :project
 
-  helper_method :table_data, :table_header, :editable_properties, :model_class
+  helper_method :project, :table_data, :table_header, :editable_properties, :model_class
 
   def index
     #Rails.logger.info params

@@ -1,12 +1,13 @@
 class ElectricEquipmentController < ApplicationController
   include GeneralControllerHelper
+  layout 'layouts/table'
   require 'csv'
 
   ACTIONS = [:pds_breakers, :pds_equipments, :pds_section_assembler]
 
   before_action :project, only: :index
 
-  helper_method :table_data, :table_header, :editable_properties, :model_class
+  helper_method :project, :table_data, :table_header, :editable_properties, :model_class
 
   def index
     #Rails.logger.info params
