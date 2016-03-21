@@ -43,7 +43,7 @@ Rails.application.routes.draw do
 
     RemotesController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :remotes, model: table do
-        get :index, as: :index, on: :collection
+        get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
       end
     end
 
@@ -58,7 +58,6 @@ Rails.application.routes.draw do
         get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
       end
     end
-    #end
 
     #YAML.load_file('public/data/tables.yml').each do |table, name|
     #  resources table.to_s.pluralize, controller: :general, model: table do
@@ -105,6 +104,7 @@ Rails.application.routes.draw do
     resources :pds_engineers, only: [:index]
     resources :pds_documentations, only: [:index]
     resources :pds_motor_types, only: [:index]
+    resources :pds_sys_descriptions, only: [:index]
 
     controller :mass_operations, path: :mass_operations do
       put :update_all

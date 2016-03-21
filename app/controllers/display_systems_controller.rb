@@ -1,11 +1,6 @@
 class DisplaySystemsController < BaseController
-  # include GeneralControllerHelper
 
   ACTIONS = [:pds_ppca, :pds_ppcd, :pds_sd]
-
-  # before_action :project
-
-  # helper_method :table_data, :table_header, :editable_properties, :model_class
 
   # todo: сделать разбиение запроса на части, а то долго отдается
   def pds_ppcas
@@ -65,23 +60,5 @@ class DisplaySystemsController < BaseController
   def table_header
     model_class.attribute_names.map{ |attr| {property: attr, header: attr}}.to_json
   end
-
-#  private
-#
-#  def current_object
-#    @current_object ||= model.find(params[:id])
-#  end
-#
-#  def project
-#    @project ||= PdsProject.find(params[:pds_project_id])
-#  end
-#
-#  def permit_params
-#    params.require(model.to_s.underscore).permit!
-#  end
-#
-#  def table_data
-#    @data_list.map{ |e| e.custom_hash }.to_json
-#  end
 
 end
