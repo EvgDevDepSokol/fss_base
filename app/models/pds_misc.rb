@@ -1,7 +1,6 @@
 class PdsMisc < ActiveRecord::Base
 
   self.table_name = 'pds_misc'
-  self.primary_key = 'MiscID'
 
   belongs_to :hw_ic, foreign_key: 'IC'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
@@ -12,7 +11,6 @@ class PdsMisc < ActiveRecord::Base
   alias_attribute :hw_ic_id, :IC
   alias_attribute :system_id, :sys
   alias_attribute :pds_section_assembler_id, :ctrl_power
-
 
   def custom_hash
     serializable_hash(include: {

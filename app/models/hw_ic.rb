@@ -9,6 +9,7 @@ class HwIc < ActiveRecord::Base
   belongs_to :pds_panel, foreign_key: :panel
   #delegate :unit, to: :pds_project_unit
 
+  alias_attribute :system_id, :sys
   alias_attribute :hw_ped_id, :ped
   alias_attribute :pds_project_unit_id, :Unit
   alias_attribute :pds_panel_id, :panel

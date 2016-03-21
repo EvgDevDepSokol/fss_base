@@ -6,7 +6,6 @@ class PdsDetector < ActiveRecord::Base
   belongs_to :pds_man_equip, foreign_key: 'eq_type'
   belongs_to :pds_sd, foreign_key: 'sd_N'
   belongs_to :pds_documentation, foreign_key: 'doc_reg_N'
-#  belongs_to :pds_project_unit, foreign_key: 'Unit', class_name: 'PdsProjectUnit'
   belongs_to :pds_project_unit, foreign_key: 'Unit'
 
   alias_attribute :system_id, :sys
@@ -28,5 +27,9 @@ class PdsDetector < ActiveRecord::Base
         pds_documentation: {only: :DocTitle}
     })
   end
+
+#  def serializable_hash(options={})
+#    super options.merge(methods: :id)
+#  end
 
 end
