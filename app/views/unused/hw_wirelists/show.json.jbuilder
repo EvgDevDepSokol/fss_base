@@ -1,1 +1,0 @@
-json.extract! @hw_wirelist, :id, :from, :to, :wc, :nc, :io, :m, :s, :word, :bit, :power, :origin, :net, :ped, :Project, :rev, :Unit, :step, :t, :IC, :remarks, :io_signalID, :panel, :pds_mark, :created_at, :updated_at
