@@ -81,7 +81,6 @@ group :production do
 end
 
 # Use debugger
-# gem 'debugger', group: [:development, :test]
 gem 'byebug' , group: [:development, :test]
 
 gem 'schema_to_scaffold'
@@ -91,7 +90,6 @@ gem 'jquery-ui-rails'
 gem 'devise'
 gem "select2-rails"
 
-#gem "browserify-rails", "~> 0.7"
 gem "browserify-rails"
 
 gem 'react-rails'
@@ -102,7 +100,6 @@ gem "schema_validations"
 
 # workers for select exports
 gem 'redis'
-# gem "resque", "~> 1.25"
 gem "resque"
 
 gem 'simple_form'

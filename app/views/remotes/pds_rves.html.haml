@@ -7,7 +7,7 @@
 
   var columns =
   [{"property":"id","header":"rfID",hidden: true},
-  {property: "system", header: "Сист.", editor: "SystemSelector", attribute: 'system_id'},
+  {property: "system.System", header: "Сист.", editor: "SystemSelector", attribute: 'system_id',nested: true},
   //{"property":"name_RU","header":"name_RU", editor: "stringEditor"},
   {"property":"name","header":"TAG", editor: "stringEditor"},
   {"property":"tag_RU","header":"TAG_RU", editor: "stringEditor"},
@@ -16,13 +16,13 @@
   {"property":"range","header":"Диапазон RF", editor: "stringEditor"},
   {"property":"Разм.","header":"Разм. RF", editor: "stringEditor"},
   {"property":"type","header":"Тип RF", editor: "stringEditor"},
-  {"property":"Type_FB","header":"Тип FB", editor: "stringEditor"},
-  {"property":"unit_FB","header":"Разм. FB", editor: "stringEditor"},
   {"property":"range_FB","header":"Диапазон FB", editor: "stringEditor"},
-  {"property":"rate","header":"rate", editor: "stringEditor"},
+  {"property":"unit_FB","header":"Разм. FB", editor: "stringEditor"},
+  {"property":"Type_FB","header":"Тип FB", editor: "stringEditor"},
+  //{"property":"rate","header":"rate", editor: "stringEditor"},
   {"property":"Ptag","header":"PTAG", editor: "stringEditor"},
-  {"property":"sd_N","header":"Сим. диаграмма", editor: "stringEditor"},
-  {"property":"t","header":"t"},
-  {"property":"typerf","header":"typerf", editor: "stringEditor"},
-  {"property":"scale","header":"scale", editor: "stringEditor"},
-  {"property":"frfID","header":"frfID", editor: "stringEditor"}];
+  {"property":"sd_N","header":"Сим. диаграмма", editor: "stringEditor"}];
+  //{"property":"t","header":"t"},
+  //{"property":"typerf","header":"typerf", editor: "stringEditor"},
+  //{"property":"scale","header":"scale", editor: "stringEditor"},
+  //{"property":"frfID","header":"frfID", editor: "stringEditor"}];

@@ -7,9 +7,9 @@
 
   var columns =
   [{"property":"id","header":"MalfID",hidden: true},
-  {property: "system", header: "Сист.", editor: "SystemSelector", attribute: 'system_id'},
-  {"property":"Dimension","header":"Массив", editor: "stringEditor"},
+  {property: "system.System", header: "Сист.", editor: "SystemSelector", attribute: 'system_id',nested: true},
   {"property":"Numb","header":"Номер", editor: "stringEditor"},
+  {"property":"Dimension","header":"Массив", editor: "stringEditor"},
   {"property":"shortDesc","header":"Краткое описание", editor: "stringEditor"},
   {"property":"shortDesc_EN","header":"Краткое описание(EN)", editor: "stringEditor"},
   {"property":"cause","header":"Причина", editor: "stringEditor"},
@@ -28,5 +28,5 @@
   {"property":"Unit_status","header":"Состояние блока", editor: "stringEditor"},
   //{"property":"t","header":"t"},
   //{"property":"File","header":"File", editor: "stringEditor"},
-  {"property":"scale","header":"Scale (ИС)", editor: "stringEditor"},
+  {"property":"scale","header":"Scale (ИС)", editor: "BooleanNumbSelector"},
   {"property":"sd_N","header":"Сим. диаграмма", editor: "stringEditor"}];

@@ -6,7 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 
 module.exports = React.createClass({
-  displayName: 'BooleanSelector',
+  displayName: 'ProjectShortSelector',
 
   getInitialState() {
     return {
@@ -26,9 +26,11 @@ module.exports = React.createClass({
       setTimeout(function() {
 
         var options = [
-         { value: 'false', label: 'НЕТ', clearableValue: 'false'},
-         { value: 'true', label: 'ДА', clearableValue: 'false'}]
- 
+         { value: 90        , label: 'ПМТ Смоленск-2'}, 
+         { value: 87        , label: 'ПМТ СмАЭС-3'},
+         { value: 83        , label: 'Курск-2'}'
+         { value: 80000001  , label: 'ПМТ КуАЭС-4'},
+         { value: 88        , label: 'ПМТ БалАЭС-1'  }] 
         callback(null, {
           options: options,
           complete: true
@@ -37,7 +39,7 @@ module.exports = React.createClass({
     };
 
     return (
-      React.createElement(Select, {name: "Boolean",
+      React.createElement(Select, {name: "Project",
       asyncOptions: getOptions,
       onChange: this.onChange,
       value: this.props.value,

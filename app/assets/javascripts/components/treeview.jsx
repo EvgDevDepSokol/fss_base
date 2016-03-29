@@ -28,7 +28,7 @@ var TreeView = React.createClass({
 
   render: function() {
     var props = this.props;
-
+    debugger
     var collapsed = props.collapsed != null ?
       props.collapsed :
       this.state.collapsed;
@@ -172,7 +172,8 @@ var SideMenu = React.createClass({
             return('');
           }
         }, this)}
-        </div>
+          </div>
+
         </div>
       </div>
     );

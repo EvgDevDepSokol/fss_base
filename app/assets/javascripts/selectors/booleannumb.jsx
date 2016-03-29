@@ -6,7 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 
 module.exports = React.createClass({
-  displayName: 'BooleanSelector',
+  displayName: 'BooleanNumbSelector',
 
   getInitialState() {
     return {
@@ -26,8 +26,8 @@ module.exports = React.createClass({
       setTimeout(function() {
 
         var options = [
-         { value: 'false', label: 'НЕТ', clearableValue: 'false'},
-         { value: 'true', label: 'ДА', clearableValue: 'false'}]
+         { value: '0', label: 'НЕТ', clearableValue: 'false'},
+         { value: '-1', label: 'ДА', clearableValue: 'false'}]
  
         callback(null, {
           options: options,

@@ -139,7 +139,7 @@
   max-height: 200px;
   position: absolute;
   top: 100%;
-  width: 200%;
+  width: 150%;
   z-index: 1000;
   -webkit-overflow-scrolling: touch;
 }

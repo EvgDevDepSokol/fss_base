@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
     #member do
     resources :pds_syslist
-    resources :hw_ic
+    #resources :hw_ic
 
     EquipmentPanelsController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :equipment_panels, model: table do

@@ -23,8 +23,9 @@ var titleCase = require('title-case');
 //var validate = require('plexus-validate');
 //var SkyLight = require('react-skylight').default;
 
-var SystemAllSelector = require('../selectors/system_all.jsx');
 var SystemSelector = require('../selectors/system.jsx');
+var SystemAllSelector = require('../selectors/system_all.jsx');
+var SystemNullSelector = require('../selectors/system_nullable.jsx');
 
 var HwIcSelector = require('../selectors/hw_ic.jsx');
 var DetectorSelector = require('../selectors/detector.jsx');
@@ -37,6 +38,7 @@ var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var BooleanSelector = require('../selectors/boolean.jsx');
 var BooleanYNSelector = require('../selectors/booleanyn.jsx');
+var BooleanNumbSelector = require('../selectors/booleannumb.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
 var ValveTypeSelector = require('../selectors/static_valve_types.jsx');
 var MalfunctionTypeSelector = require('../selectors/static_malfunction_types.jsx');
@@ -122,6 +124,12 @@ var TableContainer = React.createClass({
         }
         if(value==null) value = '';
 
+        if (editor) {
+          if ((editor == BooleanNumbSelector) && (typeof(value) == "number")){
+            value = (value == 0) ? "НЕТ" : "ДА";
+          }
+        }
+
         var editedRow = context.state["editedRow"];
         if (editedRow === rowIndex) {
           return {
@@ -201,6 +209,8 @@ var TableContainer = React.createClass({
             var idx = findIndex(this.state.data, {id: itemId});
 
             var remove = function() {
+              var res = confirm("Вы действительно желаете удалить запись?"); 
+              if(!res) return;
               if(newRow){
                 var idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
 
@@ -248,6 +258,7 @@ var TableContainer = React.createClass({
             var saveClick = function() {
               if(!$.isEmptyObject(this.state.sendData))
               {
+               // debugger
                 var d = {};
                 d[this.props.objectType] = this.state.sendData;
                 if(newRow){
@@ -412,6 +423,19 @@ var TableContainer = React.createClass({
     });
   },
 
+  onPage: function(e) {
+    var pagination = this.state.pagination || {};
+    var pages = Math.ceil(this.state.data.length / pagination.perPage);
+    var page = parseInt(e.target.value, 10);
+    if (isNaN(page)) page=1;
+    pagination.page = Math.min(Math.max(page, 1), pages);
+
+    this.setState({
+      pagination: pagination
+    });
+  },
+
+
   onHeaderClick: function(column){
     // reset edits
     this.setState({
@@ -441,15 +465,17 @@ var TableContainer = React.createClass({
   },*/
 
   onAddRowClick: function(copyRow){
+    //debugger
     if(this.state.lockRow)
       return;
+
 
     var copyRow  = copyRow || {};
     var data = this.state.data;
 
     // чтобы добавить строку в начало, находим индекс первой строки
     var p = this.state.pagination;
-    var idx = p.page * p.perPage;
+    var idx = (p.page-1) * p.perPage;
 
     //data.unshift({newRow: true, id: "new-" +  Date.now()});
     delete copyRow['id'];
@@ -483,6 +509,22 @@ var TableContainer = React.createClass({
     return sendData;
   },
 
+  onHideTreeViewClick: function(){
+    debugger
+    var left_menu =$('#left_menu');
+    var main_table =$('#main_table');
+    var panel_sticker =$('#panel-sticker'); 
+    if (left_menu[0].hidden==false) {
+      left_menu[0].hidden=true;
+      main_table[0].style.left='0px';
+      panel_sticker[0].style.backgroundPosition = 'right';
+    } else {
+      left_menu[0].hidden=false;
+      main_table[0].style.left='245px';
+      panel_sticker[0].style.backgroundPosition = 'left';
+    } 
+  },
+
   onExportClick: function(){
     exportData(this.props.data, this.props.columns);
   },
@@ -494,12 +536,8 @@ var TableContainer = React.createClass({
       return;
 
     if(val){
-      if(val==34){ //ALL
-        this.setState({data: this.props.data});
-      } else {
-        var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
-        this.setState({data: data});
-      }
+      var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
+      this.setState({data: data});
     }else{
       // we reset data
       this.setState({data: this.props.data});
@@ -513,9 +551,6 @@ var TableContainer = React.createClass({
     var data = this.state.data || [];
     var pagination = this.state.pagination || {};
     var header = this.state.header;
-
-  //  data = attachIds(data);
-
     if (this.state.search.query) {
       // apply search to data
       // alternatively you could hit backend `onChange`
@@ -530,7 +565,8 @@ var TableContainer = React.createClass({
     var pages = Math.ceil(data.length / Math.max(
       isNaN(pagination.perPage) ? 1 : pagination.perPage, 1)
     );
-    debugger
+    
+    //debugger
     return (
       <div className="main-container-inner" key={"main-table"}>
         <div className="table-info" key={"table-info"}>
@@ -540,20 +576,21 @@ var TableContainer = React.createClass({
           <div className="info">
             <div className="left">
               <div className='total'>
-                {"Записей " + data.length + " на " + pages + " стр."}
+                <p>Записей -</p>
+                <p>{data.length}</p>
+                <p>{"на " + pages + " стр."}</p>
               </div>
-              <div className='icon'></div>
               <div className='system-selector'>
-                <SystemSelector attribute="system" onValue={this.onSystemSelectorChange} />
-                <p>система</p>
+                <SystemNullSelector attribute="system" onValue={this.onSystemSelectorChange} />
+                <p>cистема</p>
               </div>
               <div className='per-page-container'>
                 <input type='text' defaultValue={pagination.perPage} onChange={this.onPerPage}></input>
-                <p>Кол-во записей</p>
+                <p>строк</p>
               </div>
               <div className='page-container'>
-                <input type='text' defaultValue={pagination.page} onChange={this.onPerPage}></input>
-                <p>страница</p>
+                <input type='text' defaultValue={pagination.page} onChange={this.onPage}></input>
+                <p>cтр.</p>
               </div>
               <div className='icon-filter'>
                 Фильтр
@@ -567,7 +604,7 @@ var TableContainer = React.createClass({
             </div>
             <div className="right">
               <div className="show-filters">
-                Скрыть / Показать поля
+                Скрыть/ Показать поля
               </div>
               <div className="export-to-excel" onClick={this.onExportClick}>
                 Экспорт в Excel
@@ -622,29 +659,9 @@ var TableContainer = React.createClass({
             className='table table-bordered' selectedRow={this.state.editedRow} />
 
         </div>
-
-        <div className='pagination'>
-          <Paginator.Context className="pagify-pagination"
-            segments={segmentize({
-                page: pagination.page,
-                pages: pages,
-                beginPages: 3,
-                endPages: 3,
-                sidePages: 2
-            })} onSelect={this.onSelect}>
-                <Paginator.Button page={pagination.page - 1}>Предыдущая</Paginator.Button>
-                <Paginator.Segment field="beginPages" />
-                <Paginator.Ellipsis className="ellipsis"
-                  previousField="beginPages" nextField="previousPages" />
-                <Paginator.Segment field="previousPages" />
-                <Paginator.Segment field="centerPage" className="selected" />
-                <Paginator.Segment field="nextPages" />
-                <Paginator.Ellipsis className="ellipsis"
-                  previousField="nextPages" nextField="endPages" />
-                <Paginator.Segment field="endPages" />
-                <Paginator.Button page={pagination.page + 1}>Следующая</Paginator.Button>
-          </Paginator.Context>
-        </div>
+        <div id="panel-sticker" onClick={this.onHideTreeViewClick}>
+          <p></p> 
+        </div>    
       </div>
     );
   }
@@ -684,13 +701,13 @@ function augmentWithTitles(o) {
 
   return o;
 }
-function attachIds(arr) {
-    return arr.map((o, i) => {
-        o.id = i;
-
-        return o;
-    });
-}
+//function attachIds(arr) {
+//    return arr.map((o, i) => {
+//        o.id = i;
+//
+//        return o;
+//    });
+//}
 function getNestedKey(obj, keys) {
   var tempVal = obj;
 

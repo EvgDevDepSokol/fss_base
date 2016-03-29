@@ -42,53 +42,54 @@
         - if current_user
           %ul.nav.navbar-nav.navbar-right
             %li.dropdown
+              = image_tag('icons/stock_people.png')
               %a.dropdown-toggle{href: '#', 'data-toggle' => "dropdown", role: "button", 'aria-expanded' => "false"}
                 = current_user.name
             %li
     .navbar.navbar-static-top.blue
       .container-fluid
-        -#%button.navbar-toggle{"data-target" => ".navbar-responsive-collapse", "data-toggle" => "collapse", :type => "button"}
-        -#  %span.icon-bar
-        -#  %span.icon-bar
-        -#  %span.icon-bar
+        %button.navbar-toggle{"data-target" => ".navbar-responsive-collapse", "data-toggle" => "collapse", :type => "button"}
+          %span.text
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
         .navbar-collapse.collapse.navbar-responsive-collapse
           %p.navbar-text
             Список таблиц
-          %ul.nav.navbar-nav
-            %li
+          %ul.nav.navbar-left.navbar-nav
+            %li#navbar_tables
               = link_to root_url do
                 = image_tag('tables.png')
                 Таблицы
-            %li
+            %li#navbar_protocols
               = link_to root_url do
                 = image_tag('blog_accept.png')
                 Протоколы рассогласований
-
-          %ul.nav.navbar-nav
-            %li#settings
-              = link_to root_url do
-                = image_tag('settings.png')
-                Настройки
-            %li#reports
-              = link_to root_url do
-                = image_tag('reports.png')
-                Отчеты
-            %li#import_xlsx_modal
-              = link_to root_url do
-                = image_tag('import_export.png')
-                Экспорт Импорт
-            %li#generics
-              = link_to root_url do
-                = image_tag('generate.png')
-                Генерация
-
+          .container      
+            %ul.nav.navbar-middle.navbar-nav
+              %li#navbar_settings
+                = link_to root_url do
+                  = image_tag('settings.png')
+                  Настройки
+              %li#navbar_reports
+                = link_to root_url do
+                  = image_tag('reports.png')
+                  Отчеты
+              %li#import_xlsx_modal
+                = link_to root_url do
+                  = image_tag('import_export.png')
+                  Экспорт Импорт
+              %li#navbar_generics
+                = link_to root_url do
+                  = image_tag('generate.png')
+                  Генерация
           %ul.nav.navbar-right.navbar-nav
             - if current_user
-              %li
+              %li#navbar_help
                 = link_to '#'do
                   = image_tag('help.png')
                   Помощь
-              %li
+              %li#navbar_exit
                 = link_to destroy_user_session_path, :method => :delete do
                   = image_tag('logout.png')
                   Выход
@@ -99,8 +100,3 @@
           = render 'shared/table_list', hash: get_tables_list
         .col.main-container#main_table
           = content_for?(:content) ? yield(:content) : yield
-
-    %footer
-      %p © Project DB 2016
-      %p.notice=notice
-      %p.alert=alert

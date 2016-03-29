@@ -21,6 +21,7 @@ class PdsMalfunction < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
+        system: {only: :System},
         pds_project_unit: {only: [], include: {unit: {only: :Unit_RU}}}
     })
   end

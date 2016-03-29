@@ -52,7 +52,7 @@ module.exports = React.createClass({
           // or more specific queries will not be sent to the server.
           complete: true
         });
-      }, 500);
+      }, 5);
     };
 
 

@@ -39,7 +39,7 @@ module.exports = React.createClass({
           options: options,
           complete: true
         });
-      }, 500);
+      }, 5);
     };
 
     return (

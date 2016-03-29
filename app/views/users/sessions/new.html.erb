@@ -5,7 +5,10 @@
   <%= f.text_field :login, :autofocus => true %></div>
 
   <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+    <%= f.password_field :password %>
+  </div>
+
+  <%= react_component('ProjectSelector', name: 'Project') %>
 
   <% if devise_mapping.rememberable? -%>
     <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>

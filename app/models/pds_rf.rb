@@ -1,6 +1,7 @@
 class PdsRf < ActiveRecord::Base
 
-  self.inheritance_column = nil
+  #self.inheritance_column = nil
+  self.inheritance_column = :_type_disabled
   self.table_name = 'pds_rf'
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
@@ -8,8 +9,13 @@ class PdsRf < ActiveRecord::Base
   belongs_to :pds_project_unit, foreign_key: :Unit, class_name: 'PdsProjectUnit'
   belongs_to :pds_project, foreign_key: 'Project'
 
-  def serializable_hash(options={})
-    super.merge({id: id, system: system.to_s})
+#  def serializable_hash(options={})
+#    super.merge({id: id, system: system.to_s})
+#  end
+
+  def custom_hash
+    serializable_hash(include: {
+        system: {only: :System} })
   end
 
   def unit_with_language

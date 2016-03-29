@@ -12,7 +12,8 @@ class BaseController < ApplicationController
     if @current_object.save
       render json: { status: :created, data: current_object.reload.custom_hash }
     else
-      render json: { errors: @current_object.errors, status: :unprocessable_entity }
+      render json: { errors: @current_object.errors.inspect, status: :unprocessable_entity }
+      Rails.logger.info(@current_object.errors.inspect)
     end
   end
 
@@ -21,12 +22,12 @@ class BaseController < ApplicationController
 
       render json: {status: :ok, data: current_object.custom_hash}
     else
-      render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
+      render json: {errors: current_object.errors.inspect, data: current_object.reload.custom_hash},
         status: :unprocessable_entity
     end
 
   rescue
-    render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
+    render json: {errors: current_object.errors.inspect, data: current_object.reload.custom_hash},
       status: :unprocessable_entity
     end
 
@@ -34,7 +35,7 @@ class BaseController < ApplicationController
     if current_object.destroy
       render json: {}, head: :no_content
     else
-      render json: {errors: current_object.errors}, status: 403
+      render json: {errors: current_object.errors.inspect}, status: 403
     end
   end
 
