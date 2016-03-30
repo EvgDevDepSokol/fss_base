@@ -5,17 +5,24 @@ class PdsRf < ActiveRecord::Base
   self.table_name = 'pds_rf'
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
-  alias_attribute :system_id, :sys
-  belongs_to :pds_project_unit, foreign_key: :Unit, class_name: 'PdsProjectUnit'
+  belongs_to :pds_project_unit, foreign_key: 'Unit', class_name: 'PdsProjectUnit'
+  belongs_to :psa_project_unit, foreign_key: 'unit_FB', class_name: 'PdsProjectUnit'
   belongs_to :pds_project, foreign_key: 'Project'
 
+
+  alias_attribute :system_id, :sys
+  alias_attribute :pds_project_unit_id, :Unit
+  alias_attribute :psa_project_unit_id, :unit_FB
 #  def serializable_hash(options={})
 #    super.merge({id: id, system: system.to_s})
 #  end
 
   def custom_hash
     serializable_hash(include: {
-        system: {only: :System} })
+        system: {only: :System}, 
+        pds_project_unit: {only: [], include: {unit: {only: :Unit_RU}}},
+        psa_project_unit: {only: [], include: {unit: {only: :Unit_RU}}}
+    })
   end
 
   def unit_with_language
