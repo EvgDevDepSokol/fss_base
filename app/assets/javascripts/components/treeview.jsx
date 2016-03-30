@@ -47,11 +47,16 @@ var TreeView = React.createClass({
         onClick={this.handleClick}>
         ▾
       </div>;
+    var label =
+      <div
+        onClick={this.handleClick}>
+          {props.nodeLabel}
+      </div>;
 
     return (
       <div className="tree-view">
           {arrow}
-          {props.nodeLabel}
+          {label}
         <div className={containerClassName}>
             {props.children}
         </div>
@@ -130,7 +135,6 @@ var SideMenu = React.createClass({
       }
       return $.extend(elem, {visible: false});
     });
-    //debugger;
     this.setState({dataSource: newData});
   },
 

@@ -25,7 +25,7 @@ var titleCase = require('title-case');
 
 var SystemSelector = require('../selectors/system.jsx');
 var SystemAllSelector = require('../selectors/system_all.jsx');
-var SystemNullSelector = require('../selectors/system_nullable.jsx');
+var SystemFilterSelector = require('../selectors/system_filter.jsx');
 
 var HwIcSelector = require('../selectors/hw_ic.jsx');
 var DetectorSelector = require('../selectors/detector.jsx');
@@ -536,15 +536,20 @@ var TableContainer = React.createClass({
       return;
 
     if(val){
-      var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
-      this.setState({data: data});
+      if(val == -1 ){
+        // we reset data
+        this.setState({data: this.props.data});
+      } else {
+        var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
+        this.setState({data: data});
+      }
     }else{
       // we reset data
       this.setState({data: this.props.data});
     }
 
     var system = valueHash.system;
-    console.log(system);
+    //console.log(system);
   },
 
   render: function() {
@@ -581,7 +586,7 @@ var TableContainer = React.createClass({
                 <p>{"на " + pages + " стр."}</p>
               </div>
               <div className='system-selector'>
-                <SystemNullSelector attribute="system" onValue={this.onSystemSelectorChange} />
+                <SystemFilterSelector attribute="system" onValue={this.onSystemSelectorChange} />
                 <p>cистема</p>
               </div>
               <div className='per-page-container'>
