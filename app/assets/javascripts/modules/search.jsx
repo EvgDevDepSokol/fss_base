@@ -2,6 +2,7 @@
 
 var isString = require('lodash').isString;
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 var formatters = require('reactabular').formatters;
 var predicates = require('reactabular').predicates;
@@ -42,8 +43,8 @@ module.exports = React.createClass({
   change:function() {
     (this.props.onChange || noop)({
       search: {
-        query: this.refs.query.getDOMNode().value,
-        column: this.refs.column.getDOMNode().value
+        query: ReactDOM.findDOMNode(this.refs.query).value,
+        column: ReactDOM.findDOMNode(this.refs.column).value
       }
     });
   }

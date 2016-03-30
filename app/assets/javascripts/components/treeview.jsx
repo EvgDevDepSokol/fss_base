@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var LocalStorageMixin = require('react-localstorage');
 var TreeView = React.createClass({
   propTypes: {
@@ -28,7 +29,6 @@ var TreeView = React.createClass({
 
   render: function() {
     var props = this.props;
-    debugger
     var collapsed = props.collapsed != null ?
       props.collapsed :
       this.state.collapsed;
@@ -71,7 +71,7 @@ var TreeSearch = React.createClass({
    * Input box text has changed, trigger update of the autocomplete box.
    **/
   changeInput: function () {
-    var searchValue = this.refs.searchInput.getDOMNode().value;
+    var searchValue = ReactDOM.findDOMNode(this.refs.searchInput).value;
     this.setState({searchValue: searchValue});
     this.props.changeInput(searchValue);
   },

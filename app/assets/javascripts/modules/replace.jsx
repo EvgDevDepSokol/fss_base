@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 module.exports = React.createClass({
   displayName: 'Replace',
@@ -17,9 +18,9 @@ module.exports = React.createClass({
       data: {
         pds_project_id: project ? project.id : null,
         model: model_name,
-        column: this.refs.column.getDOMNode().value,
-        from: this.refs.from.getDOMNode().value,
-        to: this.refs.to.getDOMNode().value
+        column: ReactDOM.findDOMNode(this.refs.column).value,
+        from: ReactDOM.findDOMNode(this.refs.from).value,
+        to: ReactDOM.findDOMNode(this.refs.to).value
       },
       type: 'PUT',
       success: function() {

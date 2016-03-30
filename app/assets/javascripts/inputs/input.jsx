@@ -3,6 +3,7 @@
 //var React = require('react/addons');
 //var React = require('react-addons-{addon}');
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 module.exports = function()  {
   return React.createClass({
@@ -44,7 +45,7 @@ module.exports = function()  {
 
     done:function() {
       var h = {};
-      h[this.props.attribute] = this.getDOMNode().value
+      h[this.props.attribute] = ReactDOM.findDOMNode(this).value
       this.props.onValue(h);
     }
   });
