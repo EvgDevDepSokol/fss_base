@@ -4,6 +4,7 @@
 
 var React = require('react');
 var Select = require('react-select');
+//var update = require('react-addons-update');
 //var onChange = require('./selectors.jsx').onChange;
 
 module.exports = React.createClass({
@@ -11,7 +12,8 @@ module.exports = React.createClass({
 
   getInitialState() {
     return {
-      value: this.props.value
+      //label: 'Везде'
+      //value: -1
     };
   },
 
@@ -43,7 +45,7 @@ module.exports = React.createClass({
           }.bind(this),
           async: false
         });
-
+        debugger
         options = $.map(options , function(el){ return {value: el.id, label: el.System} } )
         options.sort(function(a, b){
           var nameA=a.label.toLowerCase(), nameB=b.label.toLowerCase()
@@ -53,7 +55,11 @@ module.exports = React.createClass({
             return 1
           return 0 //default return value (no sorting)
         })
-
+        var i;
+        for (i = options.length-1;i>=0; --i) {
+              options[i+1]=options[i];
+        }
+        options[0] = {value: -1, label: 'Везде'};
         callback(null, {
           options: options,
           // CAREFUL! Only set this to true when there are no more options,
@@ -70,7 +76,8 @@ module.exports = React.createClass({
         onChange: this.onChange,
         //onChange: onChange,
         value: this.state.value,
-        clearable: true
+        clearable: false,
+        placeholder: 'Везде'
         })
     );
   }
