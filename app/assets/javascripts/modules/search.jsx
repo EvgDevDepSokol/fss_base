@@ -19,7 +19,7 @@ module.exports = React.createClass({
     var columns = this.props.columns || [];
     var options = [{
       value: 'all',
-      name: 'All'
+      name: 'Везде'
     }].concat(columns.map(function(column)  {
         if(column.property && column.header) {
           return {

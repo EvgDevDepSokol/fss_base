@@ -59,7 +59,7 @@ module.exports = React.createClass({
         for (i = options.length-1;i>=0; --i) {
               options[i+1]=options[i];
         }
-        options[0] = {value: -1, label: 'Везде'};
+        options[0] = {value: -1, label: 'Все'};
         callback(null, {
           options: options,
           // CAREFUL! Only set this to true when there are no more options,
@@ -77,7 +77,7 @@ module.exports = React.createClass({
         //onChange: onChange,
         value: this.state.value,
         clearable: false,
-        placeholder: 'Везде'
+        placeholder: 'Все'
         })
     );
   }

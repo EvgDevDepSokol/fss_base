@@ -123,7 +123,7 @@ var ImportXlsxModal = React.createClass({
       <div>
         <a href="#" onClick={this.openStep1}>
           <img alt="Import export" src="/assets/import_export.png" />
-          Экспорт Импорт
+          Экспорт/ Импорт
         </a>
 
         <ImportStep1 key={"step-1"}
@@ -141,7 +141,6 @@ var ImportXlsxModal = React.createClass({
           isOpen={this.state.step == 3}
           onNextModal={this.step3Finished}
           onCloseModal={this.closeAllModals} />
-
       </div>
     );
   }
