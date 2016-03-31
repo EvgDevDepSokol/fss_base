@@ -112,6 +112,13 @@ var SideMenu = React.createClass({
 
   filterData: function(pattern) {
     //debugger;
+    //
+    if (!String.prototype.includes) {
+      String.prototype.includes = function() {
+        'use strict';
+        return String.prototype.indexOf.apply(this, arguments) !== -1;
+      };
+    };
     var data = $.merge([], this.props.dataSource);
     var newData = data.map(function(elem){
       if( !pattern || elem.label.toLowerCase().includes(pattern)){
