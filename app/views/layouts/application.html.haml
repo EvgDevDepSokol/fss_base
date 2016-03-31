@@ -54,7 +54,7 @@
           %span.icon-bar
           %span.icon-bar
         .navbar-collapse.collapse.navbar-responsive-collapse
-          %p.navbar-text
+          %p.navbar-text#navbar-text-header
             Список таблиц
           %ul.nav.navbar-left.navbar-nav
             %li#navbar_tables
@@ -65,7 +65,7 @@
               = link_to root_url do
                 = image_tag('blog_accept.png')
                 Протоколы рассогласований
-          .container      
+          .container#navbar-middle-container      
             %ul.nav.navbar-middle.navbar-nav
               %li#navbar_settings
                 = link_to root_url do
@@ -78,7 +78,7 @@
               %li#import_xlsx_modal
                 = link_to root_url do
                   = image_tag('import_export.png')
-                  Экспорт Импорт
+                  Экспорт/ Импорт
               %li#navbar_generics
                 = link_to root_url do
                   = image_tag('generate.png')

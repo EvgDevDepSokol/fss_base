@@ -514,14 +514,20 @@ var TableContainer = React.createClass({
     var left_menu =$('#left_menu');
     var main_table =$('#main_table');
     var panel_sticker =$('#panel-sticker'); 
+    var navbar_text_header =$('#navbar-text-header'); 
+    var navbar_middle_container =$('#navbar-middle-container'); 
     if (left_menu[0].hidden==false) {
       left_menu[0].hidden=true;
       main_table[0].style.left='0px';
       panel_sticker[0].style.backgroundPosition = 'right';
+      navbar_text_header[0].hidden=true;
+      navbar_middle_container[0].style.left='380px';
     } else {
       left_menu[0].hidden=false;
       main_table[0].style.left='245px';
       panel_sticker[0].style.backgroundPosition = 'left';
+      navbar_text_header[0].hidden=false;
+      navbar_middle_container[0].style.left='520px';
     } 
   },
 
@@ -623,7 +629,7 @@ var TableContainer = React.createClass({
             <div className="add-row" onClick={this.onAddRowClick} />
 
             <div className='search-container'>
-              Search <Search columns={this.state.columns} data={this.state.data} onChange={this.onSearch} />
+              Поиск <Search columns={this.state.columns} data={this.state.data} onChange={this.onSearch} />
             </div>
 
             <div className="replace-container">
