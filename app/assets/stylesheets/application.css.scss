@@ -610,11 +610,21 @@ body{
           padding: 2px;
           vertical-align: middle;
           font-size: 10px;
-
+          
+          .Select{
+            .Select-control{
+              padding: 3px 52px 3px 0px;
+            }
+          }
           input{
             width: 100%;
           }
 
+          textarea{
+            min-height: 100px;
+            height: 100%;
+            width: 100%;
+          }
           .custom-selector{
             &.pds_documentation{
               width: 250px;

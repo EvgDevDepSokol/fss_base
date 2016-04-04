@@ -24,11 +24,13 @@ class BaseController < ApplicationController
     else
       render json: {errors: current_object.errors.inspect, data: current_object.reload.custom_hash},
         status: :unprocessable_entity
+      Rails.logger.info(@current_object.errors.inspect)
     end
 
   rescue
     render json: {errors: current_object.errors.inspect, data: current_object.reload.custom_hash},
       status: :unprocessable_entity
+      Rails.logger.info(@current_object.errors.inspect)
     end
 
   def destroy

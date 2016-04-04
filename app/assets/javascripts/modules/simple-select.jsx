@@ -10,8 +10,9 @@ module.exports = React.createClass({
     }
   },
   onChange: function(event){
+    debugger
     this.setState({value: event.target.value});
-    this.props.onChange();
+    //this.props.onChange();
   },
 
   render: function() {

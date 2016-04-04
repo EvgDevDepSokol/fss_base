@@ -68,24 +68,24 @@ module.exports = React.createClass({
 });
 
 
-module.exports.options = function(){
-  var options = [];
-  $.ajax({
-    url: '/api/pds_man_equips',
-    dataType: 'json',
-    type: 'GET',
-    success: function(data) {
-      options = data;
-    }.bind(this),
-    error: function(xhr, status, err) {
-      console.error(this.props.url, status, err.toString());
-      options = [];
-    }.bind(this),
-    async: false
-  });
-
-  options = $.map(options , function(el){
-    return {value: el.id, label: el.Type}
-  });
-  return options;
-};
+//module.exports.options = function(){
+//  var options = [];
+//  $.ajax({
+//    url: '/api/pds_man_equips',
+//    dataType: 'json',
+//    type: 'GET',
+//    success: function(data) {
+//      options = data;
+//    }.bind(this),
+//    error: function(xhr, status, err) {
+//      console.error(this.props.url, status, err.toString());
+//      options = [];
+//    }.bind(this),
+//    async: false
+//  });
+//
+//  options = $.map(options , function(el){
+//    return {value: el.id, label: el.Type}
+//  });
+//  return options;
+//};
