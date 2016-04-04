@@ -408,11 +408,20 @@ var TableContainer = React.createClass({
     return (
       <thead>
         <ColumnNames config={headerConfig} columns={columns} />
-        <ColumnFilters columns={columns} />
+        <ColumnFilters
+          columns={columns}
+          onUserInput={this.handleUserInput}
+          />
       </thead>
     );
   },  
 
+  handleUserInput: function(columns) {
+    debugger
+    this.setState({
+      columns: columns,
+    });
+  },
 // handlers
   onSelect: function(page) {
     if(this.state.lockRow)
