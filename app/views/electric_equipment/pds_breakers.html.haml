@@ -1,23 +1,22 @@
-#general_table
 
 :javascript
-  var title = "#{title}";
-  var data = #{table_data};
-  var model_name = "#{hash_model_name}";
-
   var columns = [
-  {"property":"id","header":"BreakerID"},
-  {property: "system", header: "Сист.", editor: "SystemSelector", attribute: 'system_id'},
+  {"property":"id","header":"BreakerID", hidden: true},
+  {"property":"Project","header":"Project", hidden: true},
+  {property: "system.System", header: "Сист.", editor: "SystemSelector", attribute: 'system_id', nested: true},
   {"property":"tag_RU","header":"TAG_RU", editor: "stringEditor"},
   {"property":"tag","header":"TAG/KKS", editor: "stringEditor"},
-  {"property":"ed_power","header":"Сил. пит.", editor: "stringEditor"},
-  {"property":"Питание","header":"Питание", editor: "stringEditor"},
-  {"property":"anc_power","header":"Пит. сигн.", editor: "stringEditor"},
-  {"property":"Time","header":"Time", editor: "stringEditor"},
+  //{property: "psa_ed_power.section_name", header: "Сил. пит.",
+  //  editor: "PdsSectionAssemblerSelector", attribute: 'psa_ed_power_id', nested: true},
+  {property: "psa_ctrl_power.section_name", header: "Пит. ШУ",
+    editor: "PdsSectionAssemblerSelector", attribute: 'psa_ctrl_power_id', nested: true},
+  {property: "psa_anc_power.section_name", header: "Пит. сигн.",
+    editor: "PdsSectionAssemblerSelector", attribute: 'psa_anc_power_id', nested: true},
+  //{"property":"Time","header":"Time", editor: "stringEditor"},
   {"property":"Algorithm","header":"Алгоритм", editor: "stringEditor"},
-  {"property":"Desc","header":"Описание", editor: "stringEditor"},
-  {"property":"Описание(EN)","header":"Описание(EN)", editor: "stringEditor"},
+  {"property":"Desc_RU","header":"Описание", editor: "TextEditor"},
+  {"property":"Desc_EN","header":"Описание(EN)", editor: "TextEditor"},
   {"property":"model","header":"Компонент", editor: "stringEditor"},
-  {"property":"eq_type","header":"eq_type", editor: "stringEditor"},
+  //{"property":"eq_type","header":"eq_type", editor: "stringEditor"},
   {"property":"connection","header":"Соединение", editor: "stringEditor"},
-  {"property":"sd_N","header":"Сим. диаграмма", editor: "stringEditor"}];
+  {property:"pds_sd.SdTitle", header:"Сим. диаграмма", editor: "SdSelector", attribute: 'pds_sd_id', nested: true}];

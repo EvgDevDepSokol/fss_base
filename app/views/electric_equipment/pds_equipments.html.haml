@@ -1,17 +1,11 @@
-#general_table
-
 :javascript
-  var title = "#{title}";
-  var data = #{table_data};
-  var model_name = "#{hash_model_name}";
-
   var columns =
-  [{"property":"id","header":"EqID"},
-  {property: "system", header: "Сист.", editor: "SystemSelector", attribute: 'system_id'},
+  [{"property":"id","header":"EqID",hidden:true},
+  {property: "system.System", header: "Сист.", editor: "SystemSelector", attribute: 'system_id',nested:true},
 
   {"property":"KKS","header":"KKS", editor: "stringEditor"},
-  {"property":"eq_type","header":"eq_type", editor: "stringEditor"},
-  {"property":"Description_RU","header":"Description_RU", editor: "stringEditor"},
-  {"property":"Description_EN","header":"Description_EN", editor: "stringEditor"},
-  {"property":"type_equip","header":"type_equip", editor: "stringEditor"},
-  {"property":"sd_N","header":"Сим. диаграмма", editor: "stringEditor"}];
+  {property:"pds_man_equip.Type",header:"Тип в ИС", editor: "PdsManEquipSelector", attribute: 'pds_man_equip_id', nested: true},
+  {"property":"Description_RU","header":"Описание", editor: "TextEditor"},
+  {"property":"Description_EN","header":"Описание(EN)", editor: "TextEditor"},
+  {"property":"pds_equip.typeE","header":"type_equip", editor: "stringEditor", nested: true},
+  {property:"pds_sd.SdTitle", header:"Сим. диаграмма", editor: "SdSelector", attribute: 'pds_sd_id', nested: true}];

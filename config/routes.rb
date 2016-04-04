@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
     ElectricEquipmentController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :electric_equipment, model: table do
-        get :index, as: :index, on: :collection
+        get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
       end
     end
 
