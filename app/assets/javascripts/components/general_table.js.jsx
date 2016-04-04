@@ -13,8 +13,8 @@ var orderBy = require('lodash').orderBy;
 
 var cells = require('reactabular').cells;
 var editors = require('reactabular').editors;
+var ColumnNames = require('reactabular').ColumnNames;
 var segmentize = require('segmentize');
-
 
 var titleCase = require('title-case');
 
@@ -56,6 +56,7 @@ var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 var Search = require('../modules/search.jsx');
 //var Search = require('reactabular').Search;
 var Replace = require('../modules/replace.jsx');
+var ColumnFilters = require('../modules/column_filters.jsx');
 
 //var TextEditor = editors.input();
 var stringEditor =  require('../inputs/input.jsx')();
@@ -69,7 +70,7 @@ var TextEditor =  require('../inputs/text_editor.jsx')();
 //import {sortByOrder} from 'lodash';
 
 var TableContainer = React.createClass({
-  displayName: 'djetFullTable',
+  displayName: 'VniiaesFullTable',
 
   getInitialState: function() {
     var properties = augmentWithTitles({
@@ -139,6 +140,9 @@ var TableContainer = React.createClass({
               onValue: function (valueHash) {
                 var sendData = $.extend(context.state.sendData, valueHash);
                 context.setState({lockRow: true, sendData: sendData});
+              },
+              onCancel: function(){
+                context.setState({ editedRow: null, lockRow: false, sendData: {} });
               }
             })
           };
@@ -258,7 +262,6 @@ var TableContainer = React.createClass({
             var saveClick = function() {
               if(!$.isEmptyObject(this.state.sendData))
               {
-               // debugger
                 var d = {};
                 d[this.props.objectType] = this.state.sendData;
                 if(newRow){
@@ -346,20 +349,20 @@ var TableContainer = React.createClass({
         }
       ]);
 
-    var myDefaultSorter = function (data, column) {
-      var property = column.property;
-
-      data.sort(function(a, b)  {
-        var p1 = getNestedKey(a, property) || '';
-        var p2 = getNestedKey(b, property) || '';
-
-        if(p1.localeCompare) {
-          return p1.localeCompare(p2) * column.sort;
-        }
-
-        return (p1 - p2) * column.sort;
-      });
-    };
+      var myDefaultSorter = function (data, column) {
+        var property = column.property;
+  
+        data.sort(function(a, b)  {
+          var p1 = getNestedKey(a, property) || '';
+          var p2 = getNestedKey(b, property) || '';
+  
+          if(p1.localeCompare) {
+            return p1.localeCompare(p2) * column.sort;
+          }
+  
+          return (p1 - p2) * column.sort;
+        });
+      };
 
     return {
       editedRow: null,
@@ -398,6 +401,18 @@ var TableContainer = React.createClass({
     this.setState(search);
   },
 
+  columnFilters() {
+    var headerConfig = this.state.header;
+    var columns = this.state.columns;
+    // if you don't want an header, just return;
+    return (
+      <thead>
+        <ColumnNames config={headerConfig} columns={columns} />
+        <ColumnFilters columns={columns} />
+      </thead>
+    );
+  },  
+
 // handlers
   onSelect: function(page) {
     if(this.state.lockRow)
@@ -406,7 +421,6 @@ var TableContainer = React.createClass({
     var pages = Math.ceil(this.state.data.length / pagination.perPage);
 
     pagination.page = Math.min(Math.max(page, 1), pages);
-    //pagination.page = page;
 
     this.setState({
       pagination: pagination
@@ -465,7 +479,6 @@ var TableContainer = React.createClass({
   },*/
 
   onAddRowClick: function(copyRow){
-    //debugger
     if(this.state.lockRow)
       return;
 
@@ -510,7 +523,6 @@ var TableContainer = React.createClass({
   },
 
   onHideTreeViewClick: function(){
-    debugger
     var left_menu =$('#left_menu');
     var main_table =$('#main_table');
     var panel_sticker =$('#panel-sticker'); 
@@ -562,6 +574,17 @@ var TableContainer = React.createClass({
     var data = this.state.data || [];
     var pagination = this.state.pagination || {};
     var header = this.state.header;
+    var columns = this.state.columns;
+
+    columns.forEach(function(column){
+      if (column.filter){
+        debugger
+        var cfilter = {};
+        cfilter['query'] = column.filter;
+        cfilter['column'] = column.property;
+        data = Search.search(cfilter, columns, data)
+      }
+    });
     if (this.state.search.query) {
       // apply search to data
       // alternatively you could hit backend `onChange`
@@ -577,7 +600,6 @@ var TableContainer = React.createClass({
       isNaN(pagination.perPage) ? 1 : pagination.perPage, 1)
     );
     
-    //debugger
     return (
       <div className="main-container-inner" key={"main-table"}>
         <div className="table-info" key={"table-info"}>
@@ -666,9 +688,12 @@ var TableContainer = React.createClass({
 
         <div className='table-container' key={"table-container"}>
 
-          <Table columnNames={header} columns={this.state.columns} data={paginated.data}
-            className='table table-bordered' selectedRow={this.state.editedRow} />
-
+          <Table 
+            className='table table-bordered'
+            columnNames={this.columnFilters}
+            columns={this.state.columns}
+            data={paginated.data}
+            selectedRow={this.state.editedRow}/>
         </div>
         <div id="panel-sticker" onClick={this.onHideTreeViewClick}>
           <p></p> 

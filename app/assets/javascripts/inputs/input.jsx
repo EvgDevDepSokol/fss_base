@@ -38,8 +38,11 @@ module.exports = function()  {
     },
 
     keyUp:function(e) {
-      if(e.keyCode === 13) {
+      if(e.keyCode == 13) {
         this.done();
+      }
+      if(e.keyCode == 27) {
+        this.cancel();
       }
     },
 
@@ -47,6 +50,9 @@ module.exports = function()  {
       var h = {};
       h[this.props.attribute] = ReactDOM.findDOMNode(this).value
       this.props.onValue(h);
+    },
+    cancel:function() {
+      this.props.onCancel();
     }
   });
 }.bind(this);
