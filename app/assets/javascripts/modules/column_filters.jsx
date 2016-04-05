@@ -14,7 +14,6 @@ module.exports = React.createClass({
   },
 
   ChangeFilter: function(e) {
-    debugger
     var columns = this.props.columns;
     columns[e.target.id].filter = e.target.value;
     this.props.onUserInput(columns);

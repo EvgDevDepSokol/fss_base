@@ -54,7 +54,6 @@ module.exports = React.createClass({
 module.exports.search = function(search, columns, data) {
   var query = search.query;
   var column = search.column;
-  debugger
   if(!query) {
     return data;
   }
@@ -92,7 +91,7 @@ module.exports.search = function(search, columns, data) {
 
     var formattedValue = formatter(value);
 
-    if (!formattedValue) {
+    if (formattedValue==null) {
       return false;
     }
 
@@ -107,6 +106,21 @@ module.exports.search = function(search, columns, data) {
     var predicate = predicates.infix(query.toLowerCase());
     return predicate.evaluate(formattedValue.toLowerCase());
   }
+};
+
+module.exports.matches = (column, value, query, options) => {
+    if(!query) {
+        return {};
+    }
+
+    options = options || {
+        strategy: predicates.infix,
+        transform: formatters.lowercase
+    };
+
+    var predicate = options.strategy(options.transform(query));
+
+    return predicate.matches(options.transform(value));
 };
 
 function id(a) {
