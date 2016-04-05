@@ -1,5 +1,6 @@
 'use strict';
 
+var isNumber = require('lodash').isNumber;
 var isString = require('lodash').isString;
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -12,6 +13,7 @@ module.exports = React.createClass({
 
   propTypes: {
     onChange: React.PropTypes.func,
+    data: React.PropTypes.array,
     columns: React.PropTypes.array
   },
 
@@ -91,12 +93,15 @@ module.exports.search = function(search, columns, data) {
 
     var formattedValue = formatter(value);
 
-    if (formattedValue==null) {
-      return false;
+    if (!formattedValue && isNaN(formattedValue)) {
+        return false;
     }
 
-    if(!isString(formattedValue)) {
-      formattedValue = formattedValue.toString();
+    if (isNumber(formattedValue)) {
+        formattedValue = formattedValue.toString();
+    }
+    else if (!isString(formattedValue)) {
+        formattedValue = '';
     }
 
     // TODO: allow strategy to be passed, now just defaulting to prefix
@@ -109,6 +114,7 @@ module.exports.search = function(search, columns, data) {
 };
 
 module.exports.matches = (column, value, query, options) => {
+  debugger
     if(!query) {
         return {};
     }
