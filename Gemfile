@@ -111,6 +111,7 @@ gem 'simple_form'
 group :development do
   gem 'traceroute'
   gem 'rack-mini-profiler'
+  gem 'flamegraph'
   gem 'bullet'
   gem 'rails_best_practices'
   gem 'rubocop', require: false
