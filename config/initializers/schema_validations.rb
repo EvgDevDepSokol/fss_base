@@ -31,7 +31,7 @@ SchemaValidations.setup do |config|
     # The base set of field names to always exclude from automatic validation.
     # Value is a single name, an array of names, or nil.
     # (This whitelist applies after all other considerations, global or per-model)
-    config.whitelist = [:created_at, :updated_at, :created_on, :updated_on]
+    config.whitelist = [:created_at, :updated_at, :created_on, :updated_on, :t]
 
     # The base set of validation types to always exclude from automatic validation.
     # Value is a single type, an array of types, or nil.
