@@ -107,14 +107,27 @@ module.exports.search = function(search, columns, data) {
     // TODO: allow strategy to be passed, now just defaulting to prefix
 //    var predicate = predicates.prefix(query.toLowerCase());
 //    return predicate.matches(formattedValue.toLowerCase());
-
-    var predicate = predicates.infix(query.toLowerCase());
-    return predicate.evaluate(formattedValue.toLowerCase());
+    var query_arr = query.toLowerCase().split('*');
+    var searchText = formattedValue.toLowerCase();
+    var currentPosition = 0;
+    var lpass = true;
+    debugger
+    for (var x = 0; x < query_arr.length; x++) {
+      currentPosition = searchText.indexOf(query_arr[x]);
+      searchText = searchText.slice(currentPosition+query_arr[x].length)
+      if (x == 0 && query_arr[0] !== '') {
+        lpass = lpass && (currentPosition === 0);
+      } else {
+        lpass = lpass && (currentPosition !== -1);
+      }
+    }  
+    return lpass
+//   var predicate = predicates.infix(query.toLowerCase());
+//   return predicate.evaluate(formattedValue.toLowerCase());
   }
 };
 
 module.exports.matches = (column, value, query, options) => {
-  debugger
     if(!query) {
         return {};
     }
