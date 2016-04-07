@@ -18,14 +18,14 @@ class PdsDetector < ActiveRecord::Base
   schema_validations
 
   def custom_hash
+  #   serializable_hash(except: [:Group_N, :nom_state,:sluggishness,:scale_noise,:Func,:SPTable,:SP_1,:SP_2,:SP_3,:SPT_ACTION,:SPT_COMMENT,:DREG_input,:TimeConst,:varible,:import_t,:alg_type])
     serializable_hash(include: {
         system: {only: :System},
         pds_section_assembler: {only: :section_name},
         pds_project_unit: {only: [], include: {unit: {only: :Unit_RU}}},
         pds_man_equip: {only: :Type},
-        pds_sd: {only: :SdTitle},
-        pds_documentation: {only: :DocTitle}
-    })
+        pds_sd: {only: :SdTitle}
+    }) #.except!(Group_N:)
   end
 
 #  def serializable_hash(options={})
