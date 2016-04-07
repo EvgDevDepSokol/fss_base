@@ -1,0 +1,37 @@
+{
+  "name": "djet",
+  "dependencies": {
+    "browserify": "13.0.0",
+    "browserify-incremental": ">=1.4.0",
+    "classnames": ">=1.2.2",
+    "jszip": ">=2.5.0",
+    "lodash": ">=3.8.0",
+    "react": ">=0.13.3",
+    "react-localstorage": ">=0.2.3",
+    "react-modal": ">=0.2.0",
+    "react-pagify": ">=0.5.1",
+    "react-select": ">=0.4.9",
+    "react-dom": ">=0.14.1",
+    "react-skylight": ">=0.3.0",
+    "reactabular": ">=0.6.4",
+    "reactify": ">=1.1.1",
+    "title-case": ">=1.1.0",
+    "underscore": ">=1.8.3",
+    "xlsx": ">=0.8.0",
+    "segmentize": ">=0.4.1"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ]
+    ]
+  }
+}
