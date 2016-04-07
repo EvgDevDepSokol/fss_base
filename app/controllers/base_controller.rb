@@ -55,11 +55,15 @@ class BaseController < ApplicationController
     params.require(model.to_s.underscore).permit!
   end
 
+  # Oj.default_options = { :mode => :null }
+  Oj.default_options = { :mode => :compat }
   def table_data
     if model_class.method_defined? :custom_hash
-      @data_list.map{ |e| e.custom_hash }.to_json
+      Oj.dump(@data_list.map{ |e| e.custom_hash })
+      #@data_list.map{ |e| e.custom_hash }.to_json
     else
-    @data_list.to_json
+      Oj.dump(@data_list)
+      #@data_list.to_json
     end
   end
 
