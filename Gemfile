@@ -85,6 +85,10 @@ gem 'byebug' , group: [:development, :test]
 
 gem 'schema_to_scaffold'
 
+gem 'oj'
+# gem 'oj_mimic_json'
+# gem 'json'
+
 gem 'jquery-ui-rails'
 
 gem 'devise'
@@ -106,7 +110,7 @@ gem 'simple_form'
 
 group :development do
   gem 'traceroute'
-  # gem 'rack-mini-profiler'
+  gem 'rack-mini-profiler'
   gem 'bullet'
   gem 'rails_best_practices'
   gem 'rubocop', require: false
