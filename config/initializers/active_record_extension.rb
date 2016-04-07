@@ -6,7 +6,9 @@ module ActiveRecordExtension
   # чтобы при сериализаци всегда присутствавал id
   # в стандартном виде
   def serializable_hash(options={})
-    super options.merge(methods: :id)
+    unless options.nil?
+      super options.merge(methods: :id) 
+    end
   end
 
   # add your static(class) methods here
