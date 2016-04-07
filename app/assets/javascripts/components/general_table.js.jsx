@@ -15,6 +15,9 @@ var cells = require('reactabular').cells;
 var editors = require('reactabular').editors;
 var ColumnNames = require('reactabular').ColumnNames;
 var segmentize = require('segmentize');
+var formatters = require('reactabular').formatters;
+var highlight = formatters.highlight;
+
 
 var titleCase = require('title-case');
 
@@ -64,15 +67,14 @@ var dateEditor =  require('../inputs/input.jsx')();
 var TextEditor =  require('../inputs/text_editor.jsx')();
 //var BooleanEditor = require('../inputs/boolean.jsx')();
 
-//var columnNamesjson = require('json!../../../../public/data/table_translations.json')
-//var columnNames = require('reactabular').columnNames;
-//var ImportXlsxModal = require('./xlsx-import.js.jsx');
-//import {sortByOrder} from 'lodash';
 
 var TableContainer = React.createClass({
   displayName: 'VniiaesFullTable',
 
+
   getInitialState: function() {
+    var _this=this;
+
     var properties = augmentWithTitles({
       TEquipID: {
         type: 'number'
@@ -95,9 +97,21 @@ var TableContainer = React.createClass({
       });
     }.bind(this));
 
-    var highlighter = (column) => highlight((value) => {
-        return Search.matches(column, value, this.state.search.query);
-    });
+    var highlighter = function (column) {
+      var columns = _this.props.columns;
+      var query = null;
+      columns.forEach(function (col) {
+        if (col.property == column) {
+          if (col.filter) {
+            query = col.filter;
+          }
+        }
+      });
+      if(query==null) query='';
+      return highlight(function (value) {
+        return Search.matches(column, value, query);
+      });
+    };    
 
     var editableField = function(options) {
 
@@ -182,9 +196,11 @@ var TableContainer = React.createClass({
       var h = column; //  {property: column.property, header: column.header, };
       if(column.editor) {
         column['editor'] = eval(column.editor);
-        h["cell"] = editableField(column)
+        //h["cell"] = [editableField(column),highlighter(h.property)]
+        h["cell"] = [editableField(column)]
       }else if(column.nested) {
-        h["cell"] = nestedValue(column);
+        //h["cell"] = [nestedValue(column),highlighter(h.property)];
+        h["cell"] = [nestedValue(column)];
       }
       return (h);
     });
@@ -370,6 +386,7 @@ var TableContainer = React.createClass({
       sendData: {},
       data: this.props.data,
       columns: columns,
+      formatters: formatters,
       showFilters: false,
       pagination: {
         page: 1,
@@ -417,11 +434,11 @@ var TableContainer = React.createClass({
   },  
 
   handleUserInput: function(columns) {
-    debugger
     this.setState({
       columns: columns,
     });
   },
+
 // handlers
   onSelect: function(page) {
     if(this.state.lockRow)
@@ -587,11 +604,10 @@ var TableContainer = React.createClass({
 
     columns.forEach(function(column){
       if (column.filter){
-        debugger
         var cfilter = {};
         cfilter['query'] = column.filter;
         cfilter['column'] = column.property;
-        data = Search.search(cfilter, columns, data)
+        data = Search.search(cfilter, columns, data);
       }
     });
     if (this.state.search.query) {
