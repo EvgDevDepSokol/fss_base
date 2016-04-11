@@ -113,6 +113,7 @@ group :development do
   gem 'traceroute'
   gem 'rack-mini-profiler'
   gem 'flamegraph'
+  gem 'stackprof' 
   gem 'bullet'
   gem 'rails_best_practices'
   gem 'rubocop', require: false
