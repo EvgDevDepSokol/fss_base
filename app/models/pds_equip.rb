@@ -7,5 +7,8 @@ class PdsEquip < ActiveRecord::Base
   def test
     false
   end
+  def custom_hash
+    serializable_hash.merge({id: id})
+  end
 
 end

@@ -7,9 +7,12 @@ class PdsSyslist < ActiveRecord::Base
   def to_s
     self.System
   end
-
-  def serializable_hash(options={})
-    super options.merge(methods: :id)
+  def custom_hash
+    serializable_hash.merge({id: id})
   end
+
+#  def serializable_hash(options={})
+#    super options.merge(methods: :id)
+#  end
 
 end

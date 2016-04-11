@@ -98,6 +98,7 @@ var TableContainer = React.createClass({
     }.bind(this));
 
     var highlighter = function (column) {
+      return highlight(function (value) {
       var columns = _this.props.columns;
       var query = null;
       columns.forEach(function (col) {
@@ -108,7 +109,6 @@ var TableContainer = React.createClass({
         }
       });
       if(query==null) query='';
-      return highlight(function (value) {
         return Search.matches(column, value, query);
       });
     };    
@@ -196,11 +196,11 @@ var TableContainer = React.createClass({
       var h = column; //  {property: column.property, header: column.header, };
       if(column.editor) {
         column['editor'] = eval(column.editor);
-        //h["cell"] = [editableField(column),highlighter(h.property)]
-        h["cell"] = [editableField(column)]
+        h["cell"] = [editableField(column),highlighter(h.property)]
+        //h["cell"] = [editableField(column)]
       }else if(column.nested) {
-        //h["cell"] = [nestedValue(column),highlighter(h.property)];
-        h["cell"] = [nestedValue(column)];
+        h["cell"] = [nestedValue(column),highlighter(h.property)];
+        //h["cell"] = [nestedValue(column)];
       }
       return (h);
     });
