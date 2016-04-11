@@ -33,6 +33,8 @@ module.exports = React.createClass({
                 placeholder={'Фильтр...'}
                 onChange = {this.ChangeFilter}
                 id={i}
+                name={column.property}
+                autocomplete = "on"
                 /> : ''}
             </td>
           );
