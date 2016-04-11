@@ -111,7 +111,6 @@ module.exports.search = function(search, columns, data) {
     var searchText = formattedValue.toLowerCase();
     var currentPosition = 0;
     var lpass = true;
-    debugger
     for (var x = 0; x < query_arr.length; x++) {
       currentPosition = searchText.indexOf(query_arr[x]);
       searchText = searchText.slice(currentPosition+query_arr[x].length)
@@ -132,14 +131,39 @@ module.exports.matches = (column, value, query, options) => {
         return {};
     }
 
-    options = options || {
-        strategy: predicates.infix,
-        transform: formatters.lowercase
-    };
+  debugger
+    var query_arr = query.toLowerCase().split('*');
+    var searchText = value.toLowerCase();
+    var currentPosition = 0;
+    var matches = [{startIndex: null, length: 0}];
+    var lpass = true;
+    var ilength = 0;
 
-    var predicate = options.strategy(options.transform(query));
+    for (var i = 0; i < query_arr.length; i++) {
+      currentPosition = searchText.indexOf(query_arr[i]);
+      ilength += currentPosition+query_arr[i].length;
+      searchText = searchText.slice(currentPosition + query_arr[i].length)
+      if (i == 0 && query_arr[0] !== '') {
+        lpass = lpass && (currentPosition === 0);
+      } else {
+        lpass = lpass && (currentPosition !== -1);
+      }
+      if (matches[0].startIndex == null && (query_arr[i] !== '')) {
+        matches[0].startIndex = currentPosition;
+      }
+      matches[0].length = ilength - matches[0].startIndex; 
+    }
+    if (!lpass) matches =[{startIndex: 0, length: 0}];
+    return matches 
 
-    return predicate.matches(options.transform(value));
+  //  options = options || {
+  //      strategy: predicates.infix,
+  //      transform: formatters.lowercase
+  //  };
+
+  //  var predicate = options.strategy(options.transform(query));
+
+  //  return predicate.matches(options.transform(value));
 };
 
 function id(a) {
