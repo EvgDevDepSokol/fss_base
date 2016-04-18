@@ -25,7 +25,7 @@ $(document).ready(function () {
 
   var appElement = document.getElementById('import_xlsx_modal');
   Modal.setAppElement(appElement);
-  Modal.injectCSS();
+//  Modal.injectCSS();
   ReactDOM.render(<XlsxImport key={"xlsx-import"} />, appElement);
 
 });
