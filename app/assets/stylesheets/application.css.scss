@@ -459,7 +459,9 @@ body{
           margin-right: 10px;
           .Select-control{
             border: 1px solid rgb(169, 169, 169);
-            //color:black;
+            .Select-value{
+              display: inline-block;
+            }
           }
           .Select-placeholder{
             text-align: center;
@@ -614,6 +616,12 @@ body{
           .Select{
             .Select-control{
               padding: 3px 52px 3px 0px;
+              .Select-value{
+                display: initial;
+              }
+           //   .Select-input{
+           //     display: table-cell;
+           //   }
             }
           }
           input{
