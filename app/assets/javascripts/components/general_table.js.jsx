@@ -119,17 +119,20 @@ var TableContainer = React.createClass({
       var attribute = options.attribute;
       var context = this;
       var nested = options.nested;
-
+//      debugger
       return function(value, data, rowIndex, property) {
+        var id;
         if(nested)
         {
           var keys = property.split(".");
           var tempVal = data[rowIndex];
 
+          if (tempVal[keys[0]]) id = tempVal[keys[0]].id
+          //debugger
           keys.forEach(function(key){
             if(tempVal){
               tempVal = tempVal[key];
-            }
+            };
           });
           value = tempVal;
         }
@@ -150,6 +153,7 @@ var TableContainer = React.createClass({
           return {
             value: React.createElement(editor, {
               value: value,
+              id: id,
               attribute: attribute || property,
               onValue: function (valueHash) {
                 var sendData = $.extend(context.state.sendData, valueHash);
@@ -205,51 +209,106 @@ var TableContainer = React.createClass({
       return (h);
     });
 
-    // attach filter to headers
-    //context = this;
+    // remove hidden elements
     columns = columns.filter(function(e){return e.hidden != true});
-    //.map(function(col){
-    //  var filter = null;
-    //  if(context.state.showFilters)
-    //    filter = (<p>  </p>);
-    //  col.header = (<div><p>{col.header}</p>{filter}</div>);
-    //  return col;
-    //});
 
-    // remove hidden elements and add buttons
+    // add buttons
     columns = columns.concat([
-        {
-          header: 'Кнопки',
-          style: {width: '100px'},
-          classes: 'buttons-col',
-          cell: function(value, celldata, rowIndex, property){
-            var url = window.location.href;
-            var newRow = celldata[rowIndex].newRow;
-            var itemId = celldata[rowIndex].id;
-            var idx = findIndex(this.state.data, {id: itemId});
+      {
+        header: 'Кнопки',
+        style: {width: '100px'},
+        classes: 'buttons-col',
+        cell: function(value, celldata, rowIndex, property){
+          var url = window.location.href;
+          var newRow = celldata[rowIndex].newRow;
+          var itemId = celldata[rowIndex].id;
+          var idx = findIndex(this.state.data, {id: itemId});
 
-            var remove = function() {
-              var res = confirm("Вы действительно желаете удалить запись?"); 
-              if(!res) return;
+          var remove = function() {
+            var res = confirm("Вы действительно желаете удалить запись?"); 
+            if(!res) return;
+            if(newRow){
+              var idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
+
+              this.state.data.splice(idx, 1);
+              this.setState({
+                data: this.state.data,
+                editedRow: null,
+                lockRow: false,
+                sendData: {}
+              });
+            }else{
+              $.ajax({
+                url: url + '/' + itemId,
+                dataType: 'json',
+                type: 'DELETE',
+                success: function(data) {
+                  this.state.data.splice(idx, 1);
+                  this.setState({
+                    data: this.state.data,
+                    editedRow: null
+                  });
+                }.bind(this),
+                error: function(xhr, status, err) {
+                  console.error(this.props.url, status, err.toString());
+                }.bind(this)
+              });
+            }
+
+            // this could go through flux etc.
+
+          }.bind(this);
+
+          var copy = function() {
+            this.onAddRowClick(celldata[rowIndex]);
+          }.bind(this);
+
+          var editClick = function() {
+            this.setState({editedRow: rowIndex});
+          }.bind(this);
+
+          var cancelClick = function() {
+            this.setState({ editedRow: null, lockRow: false, sendData: {} });
+          }.bind(this);
+
+          var saveClick = function() {
+            if(!$.isEmptyObject(this.state.sendData))
+            {
+              var d = {};
+              d[this.props.objectType] = this.state.sendData;
               if(newRow){
-                var idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
-
-                this.state.data.splice(idx, 1);
-                this.setState({
-                  data: this.state.data,
-                  editedRow: null,
-                  lockRow: false,
-                  sendData: {}
+                idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
+                d[this.props.objectType].Project = project.id;
+                $.ajax({
+                  url: url,
+                  dataType: 'json',
+                  type: 'POST',
+                  data: d,
+                  success: function(response) {
+                    this.state.data[idx] = response.data;
+                    this.setState({
+                      data: this.state.data,
+                      lockRow: false,
+                      sendData: {},
+                      editedRow: null
+                    });
+                  }.bind(this),
+                  error: function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                  }.bind(this)
                 });
               }else{
                 $.ajax({
                   url: url + '/' + itemId,
                   dataType: 'json',
-                  type: 'DELETE',
-                  success: function(data) {
-                    this.state.data.splice(idx, 1);
+                  type: 'PUT',
+                  data: d,
+                  success: function(response) {
+                    this.state.data[idx] = response.data;
                     this.setState({
                       data: this.state.data,
+                      lockRow: false,
+                      sendData: {},
                       editedRow: null
                     });
                   }.bind(this),
@@ -258,127 +317,91 @@ var TableContainer = React.createClass({
                   }.bind(this)
                 });
               }
-
-              // this could go through flux etc.
-
-            }.bind(this);
-
-            var copy = function() {
-              this.onAddRowClick(celldata[rowIndex]);
-            }.bind(this);
-
-            var editClick = function() {
-              this.setState({editedRow: rowIndex});
-            }.bind(this);
-
-            var cancelClick = function() {
-              this.setState({ editedRow: null, lockRow: false, sendData: {} });
-            }.bind(this);
-
-            var saveClick = function() {
-              if(!$.isEmptyObject(this.state.sendData))
-              {
-                var d = {};
-                d[this.props.objectType] = this.state.sendData;
-                if(newRow){
-                  idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
-                  d[this.props.objectType].Project = project.id;
-                  $.ajax({
-                    url: url,
-                    dataType: 'json',
-                    type: 'POST',
-                    data: d,
-                    success: function(response) {
-                      this.state.data[idx] = response.data;
-                      this.setState({
-                        data: this.state.data,
-                        lockRow: false,
-                        sendData: {},
-                        editedRow: null
-                      });
-                    }.bind(this),
-                    error: function(xhr, status, err) {
-                      console.error(this.props.url, status, err.toString());
-                    }.bind(this)
-                  });
-                }else{
-                  $.ajax({
-                    url: url + '/' + itemId,
-                    dataType: 'json',
-                    type: 'PUT',
-                    data: d,
-                    success: function(response) {
-                      this.state.data[idx] = response.data;
-                      this.setState({
-                        data: this.state.data,
-                        lockRow: false,
-                        sendData: {},
-                        editedRow: null
-                      });
-                    }.bind(this),
-                    error: function(xhr, status, err) {
-                      console.error(this.props.url, status, err.toString());
-                    }.bind(this)
-                  });
-                }
-              }else
-              {
-                this.setState({
-                  lockRow: false,
-                  sendData: {},
-                  editedRow: null
-                });
-              }
-            }.bind(this);
-
-            var editButton = <span className='edit btn btn-xs btn-default' onClick={editClick.bind(this)} style={{cursor: 'pointer'}}>
-                <i className="fa fa-pencil"></i>
-              </span>;
-
-            var saveButton = <span className='edit btn btn-xs btn-default' onClick={saveClick.bind(this)} style={{cursor: 'pointer'}}>
-                <i className="fa fa-check"></i>
-            </span>;
-
-            if(!newRow){
-              var cancelButton = <span className='edit btn btn-xs btn-default' onClick={cancelClick.bind(this)} style={{cursor: 'pointer'}}>
-                <i className="fa fa-undo"></i>
-              </span>;
+            }else
+            {
+              this.setState({
+                lockRow: false,
+                sendData: {},
+                editedRow: null
+              });
             }
+          }.bind(this);
 
-            var deleteButton = <span className='remove btn btn-xs btn-danger' onClick={remove.bind(this)} style={{cursor: 'pointer'}}>
-                <i className="fa fa-times"></i>
-              </span>;
-
-            var copyButton = <span className='remove btn btn-xs btn-default' onClick={copy.bind(this)} style={{cursor: 'pointer'}}>
-              <i className="fa fa-files-o"></i>
+          var editButton = <span className='edit btn btn-xs btn-default' onClick={editClick.bind(this)} style={{cursor: 'pointer'}}>
+              <i className="fa fa-pencil"></i>
             </span>;
-            return {
-              value: (
 
-                <span style={ {width: '100px'} } >
-                  { this.state["editedRow"] === rowIndex ? [ saveButton, cancelButton ] : [editButton, copyButton] }
-                  {deleteButton}
-                </span>
-              )
-            };
-          }.bind(this)
-        }
-      ]);
+          var saveButton = <span className='edit btn btn-xs btn-default' onClick={saveClick.bind(this)} style={{cursor: 'pointer'}}>
+              <i className="fa fa-check"></i>
+          </span>;
 
-      var myDefaultSorter = function (data, column) {
-        var property = column.property;
-  
-        data.sort(function(a, b)  {
-          var p1 = getNestedKey(a, property) || '';
-          var p2 = getNestedKey(b, property) || '';
-  
-          if(p1.localeCompare) {
-            return p1.localeCompare(p2) * column.sort;
+          if(!newRow){
+            var cancelButton = <span className='edit btn btn-xs btn-default' onClick={cancelClick.bind(this)} style={{cursor: 'pointer'}}>
+              <i className="fa fa-undo"></i>
+            </span>;
           }
+
+          var deleteButton = <span className='remove btn btn-xs btn-danger' onClick={remove.bind(this)} style={{cursor: 'pointer'}}>
+              <i className="fa fa-times"></i>
+            </span>;
+
+          var copyButton = <span className='remove btn btn-xs btn-default' onClick={copy.bind(this)} style={{cursor: 'pointer'}}>
+            <i className="fa fa-files-o"></i>
+          </span>;
+          return {
+            value: (
+
+              <span style={ {width: '100px'} } >
+                { this.state["editedRow"] === rowIndex ? [ saveButton, cancelButton ] : [editButton, copyButton] }
+                {deleteButton}
+              </span>
+            )
+          };
+        }.bind(this)
+      }
+    ]);
+
+    columns = columns.concat([
+      {
+        header: 'Chk',
+        style: {width: '30px'},
+        classes: 'checkbox-col',
+        cell: function(value, celldata, rowIndex, property){
+       //   var url = window.location.href;
+       //   var newRow = celldata[rowIndex].newRow;
+       //   var itemId = celldata[rowIndex].id;
+       //   var idx = findIndex(this.state.data, {id: itemId});
+
+          var checkBox = <span classname = 'checkbox'>
+            <input type = "checkbox" />
+          </span>;
+
+          return {
+            value: (
+              <span style={ {width: '30px'} } >
+                {checkBox}
+              </span>
+            )
+          };
+
+        }.bind(this)
+      }
+    ]);
+
+    var myDefaultSorter = function (data, column) {
+      var property = column.property;
   
-          return (p1 - p2) * column.sort;
-        });
-      };
+      data.sort(function(a, b)  {
+        var p1 = getNestedKey(a, property) || '';
+        var p2 = getNestedKey(b, property) || '';
+  
+        if(p1.localeCompare) {
+          return p1.localeCompare(p2) * column.sort;
+        }
+  
+        return (p1 - p2) * column.sort;
+      });
+    };
 
     return {
       editedRow: null,
