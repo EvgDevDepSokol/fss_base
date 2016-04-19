@@ -1,10 +1,11 @@
 class Api::PdsDocumentationsController < ApplicationController
   before_action :set_pds_documentation, only: [:show, :edit, :update, :destroy]
+  before_action :project, only: :index
 
   # GET /pds_documentations
   # GET /pds_documentations.json
   def index
-    @pds_documentations = PdsDocumentation.all
+    @pds_documentations = PdsDocumentation.where(Project: project.ProjectID)
   end
 
   # GET /pds_documentations/1
@@ -71,4 +72,8 @@ class Api::PdsDocumentationsController < ApplicationController
     def pds_documentation_params
       params.require(:pds_documentation).permit(:Project, :Type, :NPP_Number, :Revision, :reg_ID, :getting_date, :DocTitle, :DocTitle_EN, :Hardcopy, :File, :t)
     end
+
+    def project
+      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+    end  
 end
