@@ -1,3 +1,4 @@
-#json.array!(@pds_project_units1) do |pds_project_unit|
-#  json.merge! pds_project_unit.attributes
-#end
+json.array!(@pds_project_units) do |pds_project_unit|
+  json.id pds_project_unit.ProjUnitID
+  json.Unit_RU pds_project_unit.unit.Unit_RU
+end

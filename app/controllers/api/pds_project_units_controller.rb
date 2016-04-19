@@ -1,12 +1,12 @@
-class PdsProjectUnitsController < ApplicationController
+class Api::PdsProjectUnitsController < ApplicationController
   before_action :set_pds_project_unit, only: [:show, :edit, :update, :destroy]
   before_action :project, only: :index
   # GET /pds_project_units
   # GET /pds_project_units.json
   def index
     @pds_project_units = PdsProjectUnit.where(Project: project.ProjectID)
-    @tmp = @pds_project_units.map{ |e| e.custom_hash }
-    render json: {status: :ok , data:  @tmp}
+    #@tmp = @pds_project_units.map{ |e| e.custom_hash }
+    #render json: {status: :ok , data:  @tmp}
   end
 
   # GET /pds_project_units/1
