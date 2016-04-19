@@ -4,14 +4,12 @@ class DisplaySystemsController < BaseController
 
   # todo: сделать разбиение запроса на части, а то долго отдается
   def pds_ppcas
-    # @data_list = PdsPpca.includes(:system).all
     @data_list = PdsPpca.where(Project: project.ProjectID)
 .includes(:system)
   end
 
   # todo: сделать разбиение запроса на части, а то долго отдается
   def pds_ppcds
-    # @data_list = PdsPpcd.includes(:system).all
     @data_list = PdsPpcd.where(Project: project.ProjectID)
 .includes(:system)
   end
