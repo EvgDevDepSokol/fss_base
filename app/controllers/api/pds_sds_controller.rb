@@ -1,10 +1,11 @@
 class Api::PdsSdsController < ApplicationController
   before_action :set_pds_sd, only: [:show, :edit, :update, :destroy]
+  before_action :project, only: :index
 
   # GET /pds_sds
   # GET /pds_sds.json
   def index
-    @pds_sds = PdsSd.all
+    @pds_sds = PdsSd.where(Project: project.ProjectID)
   end
 
   # GET /pds_sds/1
@@ -70,4 +71,8 @@ class Api::PdsSdsController < ApplicationController
     def pds_sd_params
       params.require(:pds_sd).permit(:SdTitle, :sys, :Project, :title_EN, :Numb, :BlobObj, :t, :from_sapfir)
     end
+
+    def project
+      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+    end   
 end
