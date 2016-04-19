@@ -4,6 +4,7 @@
 
 var React = require('react');
 var Select = require('react-select');
+var onChange = require('../selectors/selectors.jsx').onChange;
 
 module.exports = React.createClass({
   displayName: 'ValveTypeSelector',
@@ -14,40 +15,30 @@ module.exports = React.createClass({
     };
   },
 
-  onChange(value, object) {
-    if(object.length > 0) this.setState({value: object[0].label});
-    var h = {};
-    h[this.props.attribute] = value;
-    this.props.onValue(h);
+  setValue(value) {
+    onChange(value,this)
   },
 
   render: function() {
-    var getOptions = function(input, callback) {
-      setTimeout(function() {
 
-        var options = [
-         { value: 'valve', label: 'valve', clearableValue: 'false'},
-         { value: 'vlv_cntr', label: 'vlv_cntr', clearableValue: 'false'},
-         { value: 'vlv_pneumo', label: 'vlv_pneumo', clearableValue: 'false'},
-         { value: 'vlv_hydr', label: 'vlv_hydr', clearableValue: 'false'},
-         { value: 'vlv_sol', label: 'vlv_sol', clearableValue: 'false'},
-         { value: 'vlv_check', label: 'vlv_check', clearableValue: 'false'},
-         { value: 'vlv_relief', label: 'vlv_relief', clearableValue: 'false'},
-         { value: 'R/C', label: 'R/C', clearableValue: 'false'}]
- 
-        callback(null, {
-          options: options,
-          complete: true
-        });
-      }, 5);
-    };
+    var options = [
+     { value: 'valve', label: 'valve', clearableValue: 'false'},
+     { value: 'vlv_cntr', label: 'vlv_cntr', clearableValue: 'false'},
+     { value: 'vlv_pneumo', label: 'vlv_pneumo', clearableValue: 'false'},
+     { value: 'vlv_hydr', label: 'vlv_hydr', clearableValue: 'false'},
+     { value: 'vlv_sol', label: 'vlv_sol', clearableValue: 'false'},
+     { value: 'vlv_check', label: 'vlv_check', clearableValue: 'false'},
+     { value: 'vlv_relief', label: 'vlv_relief', clearableValue: 'false'},
+     { value: 'R/C', label: 'R/C', clearableValue: 'false'}]
 
     return (
       React.createElement(Select, {name: "ValveType",
-      asyncOptions: getOptions,
-      onChange: this.onChange,
-      value: this.props.value,
-      clearable: false
+        options: options,
+        onChange: this.setValue,
+        value: this.state.value,
+        simpleValue:true,
+        multi: false,
+        clearable: false
       })
     );
   }

@@ -4,46 +4,31 @@
 
 var React = require('react');
 var Select = require('react-select');
-//var onChange = require('./selectors.jsx').onChange;
+var onChange = require('../selectors/selectors.jsx').onChange;
+var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
 module.exports = React.createClass({
   displayName: 'SystemSelector',
 
   getInitialState() {
     return {
-      value: this.props.value
+      value: this.props.id,
     };
   },
 
-  onChange(value, object) {
-    if(object.length > 0) this.setState({value: object[0].label});
-    var h = {};
-    h[this.props.attribute] = value;
-    this.props.onValue(h);
+  setValue(value) {
+    onChange(value,this)
   },
 
   render: function() {
 
     var getOptions = function(input, callback) {
       setTimeout(function() {
-
-        var options = [];
-        $.ajax({
-          url: '/api/pds_sys_descriptions',
-          dataType: 'json',
-          type: 'GET',
-          data:{pds_project_id:project.ProjectID},
-          success: function(data) {
-            options = data;
-          }.bind(this),
-          error: function(xhr, status, err) {
-            //debugger;
-            console.error(this.props.url, status, err.toString());
-            options = [];
-          }.bind(this),
-          async: false
-        });
-
+        var options = getSelectorOptions(
+          '/api/pds_sys_descriptions',
+          {pds_project_id:project.ProjectID},
+          this
+        );
         options = $.map(options , function(el){ return {value: el.id, label: el.System} } )
         options.sort(function(a, b){
           var nameA=a.label.toLowerCase(), nameB=b.label.toLowerCase()
@@ -56,20 +41,18 @@ module.exports = React.createClass({
 
         callback(null, {
           options: options,
-          // CAREFUL! Only set this to true when there are no more options,
-          // or more specific queries will not be sent to the server.
           complete: true,
         });
       }, 0);
     };
 
-
     return (
-      React.createElement(Select, {name: "System",
-        asyncOptions: getOptions,
-        onChange: this.onChange,
-        //onChange: onChange,
+      React.createElement(Select.Async, {name: "System",
+        loadOptions: getOptions,
+        onChange: this.setValue,
         value: this.state.value,
+        simpleValue:true,
+        multi: false,
         clearable: false
         })
     );

@@ -4,6 +4,7 @@
 
 var React = require('react');
 var Select = require('react-select');
+var onChange = require('../selectors/selectors.jsx').onChange;
 
 module.exports = React.createClass({
   displayName: 'MalfunctionTypeSelector',
@@ -14,40 +15,30 @@ module.exports = React.createClass({
     };
   },
 
-  onChange(value, object) {
-    if(object.length > 0) this.setState({value: object[0].label});
-    var h = {};
-    h[this.props.attribute] = value;
-    this.props.onValue(h);
+  setValue(value) {
+    onChange(value,this)
   },
 
   render: function() {
-    var getOptions = function(input, callback) {
-      setTimeout(function() {
 
-        var options = [
-         { value: 'GBN', label: 'GBN', clearableValue: 'false'},
-         { value: 'GBR', label: 'GBR', clearableValue: 'false'},
-         { value: 'GVN', label: 'GVN', clearableValue: 'false'},
-         { value: 'GVR', label: 'GVR', clearableValue: 'false'},
-         { value: 'IBN', label: 'IBN', clearableValue: 'false'},
-         { value: 'IBR', label: 'IBR', clearableValue: 'false'},
-         { value: 'IVN', label: 'IVN', clearableValue: 'false'},
-         { value: 'IVR', label: 'IVR', clearableValue: 'false'}]
- 
-        callback(null, {
-          options: options,
-          complete: true
-        });
-      }, 5);
-    };
+    var options = [
+     { value: 'GBN', label: 'GBN', clearableValue: 'false'},
+     { value: 'GBR', label: 'GBR', clearableValue: 'false'},
+     { value: 'GVN', label: 'GVN', clearableValue: 'false'},
+     { value: 'GVR', label: 'GVR', clearableValue: 'false'},
+     { value: 'IBN', label: 'IBN', clearableValue: 'false'},
+     { value: 'IBR', label: 'IBR', clearableValue: 'false'},
+     { value: 'IVN', label: 'IVN', clearableValue: 'false'},
+     { value: 'IVR', label: 'IVR', clearableValue: 'false'}]
 
     return (
       React.createElement(Select, {name: "MalfunctionType",
-      asyncOptions: getOptions,
-      onChange: this.onChange,
-      value: this.props.value,
-      clearable: false
+        options: options,
+        onChange: this.setValue,
+        value: this.state.value,
+        simpleValue:true,
+        multi: false,
+        clearable: false
       })
     );
   }
