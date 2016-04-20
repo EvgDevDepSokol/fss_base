@@ -7,7 +7,7 @@ class ServiceController < BaseController
     :audit, :company, :pds_equips, :articles]
 
 
-  helper_method :table_data, :table_header, :editable_properties, :model_class
+  #helper_method :table_data, :table_header, :editable_properties, :model_class
 
   def tablelists
     @data_list = Tablelist.all
@@ -47,15 +47,15 @@ class ServiceController < BaseController
   end
 
   def pds_blocks
-    @data_list = PdsBlock.all
+    @data_list = PdsBlock.where(Project: project.ProjectID)
   end
 
   def pds_customers
-    @data_list = PdsCustomer.all
+    @data_list = PdsCustomer.where(Project: project.ProjectID)
   end
 
   def pds_negotiators
-    @data_list = PdsNegotiator.all
+    @data_list = PdsNegotiator.where(Project: project.ProjectID)
   end
 
   # todo: no view
@@ -64,7 +64,7 @@ class ServiceController < BaseController
   end
 
   def audits
-    @data_list = Audit.limit(1000)
+    @data_list = Audit.where(Project: project.ProjectID).order(t: :desc)
   end
 
   def companies
@@ -79,47 +79,10 @@ class ServiceController < BaseController
     @data_list = Article.order(t: :desc)
   end
 
-  def create
-    @current_object = model_class.new permit_params
-
-    if @current_object.save
-      render json: { status: :created, data: current_object.reload.serializable_hash }
-    else
-      render json: { errors: @current_object.errors, status: :unprocessable_entity }
-    end
-  end
-
-  private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_pds_button
-    @current_object = model.find(params[:id])
- end
-
-  def current_object
-    @current_object ||= model.find(params[:id])
-  end
-
-  def project
-    @project ||= PdsProject.find(params[:pds_project_id]) if params[:pds_project_id]
-  end
-
-  def editable_properties
-    if model_class.respond_to?(:editable_attributes)
-      model_class.editable_attributes.to_json
-    else
-      model_class.attribute_names.reduce({}){ |hash, attr| hash.merge(
-          attr => {type: model_class.columns_hash[attr].type,
-                   title: attr})}.to_json
-    end
-
-  end
+  helper_method :table_header
 
   def table_header
-    if model_class.respond_to?(:view_columns)
-      model_class.view_columns
-    else
-      model_class.attribute_names.map{ |attr| {property: attr, header: attr}}.to_json
-    end
+    model_class.attribute_names.map{ |attr| {property: attr, header: attr}}.to_json
   end
 
 end

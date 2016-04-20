@@ -4,7 +4,7 @@ class Api::PdsSyslistsController < ApplicationController
   # GET /pds_syslists
   # GET /pds_syslists.json
   def index
-    @pds_syslists = PdsSyslist.order('System')
+    @pds_syslists = PdsSyslist.order('System').all
   end
 
   # GET /pds_syslists/1

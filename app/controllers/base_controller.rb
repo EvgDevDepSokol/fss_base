@@ -7,6 +7,7 @@ class BaseController < ApplicationController
   before_action :project
   helper_method :project, :table_data
   def create
+    Rails.logger.warn permit_params
     @current_object = model_class.new permit_params
 
     if @current_object.save
@@ -18,6 +19,7 @@ class BaseController < ApplicationController
   end
 
   def update
+    Rails.logger.warn permit_params
     if current_object.update permit_params
 
       render json: {status: :ok, data: current_object.custom_hash}

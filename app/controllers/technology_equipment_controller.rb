@@ -86,7 +86,6 @@ class TechnologyEquipmentController < BaseController
 
   Oj.default_options = { :mode => :compat }
   def table_header
-    # model_class.attribute_names.map{ |attr| {property: attr, header: attr}}.to_json
     Oj.dump(model_class.attribute_names.map{ |attr| {property: attr, header: attr}})
   end
 

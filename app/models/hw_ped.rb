@@ -6,7 +6,6 @@ class HwPed < ActiveRecord::Base
 
   alias_attribute :hw_devtype_id, :type
 
-
   def to_s
     self.ped
   end
@@ -15,8 +14,8 @@ class HwPed < ActiveRecord::Base
     serializable_hash(include: {hw_devtype: {only: [:RuName]}})
   end
 
-  def serializable_hash(options={})
-    super options.merge(methods: :id)
-  end
+#  def serializable_hash(options={})
+#    super options.merge(methods: :id)
+#  end
 
 end

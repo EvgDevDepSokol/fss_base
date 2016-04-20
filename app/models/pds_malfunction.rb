@@ -11,14 +11,6 @@ class PdsMalfunction < ActiveRecord::Base
 
   has_many :items, class_name: 'PdsMalfunctionDim', foreign_key: :Malfunction
 
-#  def serializable_hash(options={})
-#    super options.merge(methods: :id)
-#  end
-
-#  def serializable_hash(options={})
-#    super.merge({id: id, system: system.to_s})
-#  end
-
   def custom_hash
     serializable_hash(include: {
         system: {only: :System},

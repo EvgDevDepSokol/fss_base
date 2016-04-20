@@ -6,8 +6,10 @@ class EquipmentPanelsController < BaseController
     :pds_meters_channels]
 
   def hw_ics
-    @data_list = HwIc.where(Project: project.ProjectID).
-      includes(hw_ped: [:hw_devtype], pds_panel: [])
+    @data_list = HwIc.where(Project: project.ProjectID).select(
+      :icID, :ref, :Description, :scaleMin, :scaleMax, :tag_no,
+      :UniquePTAG, :un, :panel, :Description_EN, :rev, :sys, :ped, :Unit)
+      .includes(:system, hw_ped: [:hw_devtype], pds_panel: [], pds_project_unit: [:unit])
   end
 
   def pds_brus
@@ -58,13 +60,13 @@ class EquipmentPanelsController < BaseController
   #todo: add unit to scope
   def pds_meters
     @data_list = PdsMeter.where(Project: project.ProjectID).
-      includes({hw_ic: [:hw_ped]}, :system, :pds_section_assembler)
+      includes({hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system, :pds_section_assembler)
   end
 
   #todo: add unit to scope
   def pds_meters_digitals
     @data_list = PdsMetersDigital.where(Project: project.ProjectID).
-      includes({hw_ic: [:hw_ped]}, :system, :pds_section_assembler)
+      includes({hw_ic: [:hw_ped, pds_project_unit: :unit]}, :system, :pds_section_assembler)
   end
 
   def pds_alarms
@@ -85,7 +87,7 @@ class EquipmentPanelsController < BaseController
   #todo: add unit to scope
   def pds_meters_channels
     @data_list = PdsMetersChannel.where(Project: project.ProjectID).
-      includes({hw_ic: [:hw_ped]}, :system, :pds_section_assembler)
+      includes({hw_ic: [:hw_ped, pds_project_unit: :unit]}, :system, :pds_section_assembler)
   end
 
 end

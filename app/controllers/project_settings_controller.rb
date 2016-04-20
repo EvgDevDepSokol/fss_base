@@ -54,7 +54,7 @@ class ProjectSettingsController < ApplicationController
   end
 
   def pds_project_sys
-    @data_list = PdsProjectSy.includes(:pds_documentation, :system)
+    @data_list = PdsProjectSy.where(Project: project.ProjectID).includes(:system)
   end
 
   def week_reports
