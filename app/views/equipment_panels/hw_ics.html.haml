@@ -6,10 +6,11 @@
   var model_name = "#{hash_model_name}";
 
   var columns = [
-  //{"property":"icID","header":"icID"},
+  {"property":"icID","header":"icID",hidden:true},
   //{"property":"Project","header":"Project"},
   {"property":"ref","header":"REF", editor: "stringEditor"},
   {"property":"system.System","header":"Сист.", nested: true},
+  {"property":"Description","header":"Описание", editor: "TextEditor"},
   {property:"hw_ped.ped","header":"PED", nested: true, editor: "HwPedSelector", attribute: "hw_ped_id"},
   // todo suffix selector
   //{"property":"suffix","header":"suffix"},
@@ -23,7 +24,6 @@
   {property:"panel","header":"Панель", editor: "PdsPanelSelector", attribute: 'pds_panel_id', nested: true},
   //{"property":"coord","header":"coord", editor: "stringEditor"},
   {"property":"hw_ped.hw_devtype.RuName","header":"Тип оборудования", nested: true},
-  {"property":"Description","header":"Описание", editor: "stringEditor"},
   {"property":"Description_EN","header":"Описание(EN)", editor: "stringEditor"},
   {"property":"rev","header":"Рев.", editor: "stringEditor"}
   //{"property":"version","header":"version"},

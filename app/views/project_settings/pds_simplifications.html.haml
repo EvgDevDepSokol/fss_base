@@ -13,12 +13,12 @@
   var columns = [
   {"property":"id","header":"SimplID", hidden: true},
     {property: "system.System", header: "Сист.", editor: "SystemSelector", attribute: 'system_id', nested: true},
-  {"property":"Project","header":"Project", hidden: true},
-  {"property":"Numb","header":"Numb", editor: 'stringEditor'},
+  // {"property":"Project","header":"Project", hidden: true},
+  {"property":"Numb","header":"Номер", editor: 'stringEditor'},
   {"property":"Desc","header":"Описание", editor: 'TextEditor'},
   {"property":"Desc_EN","header":"Описание(EN)", editor: 'TextEditor'},
-  {"property":"support","header":"support", editor: 'TextEditor'},
-  {"property":"support_EN","header":"support_EN", editor: 'TextEditor'},
-  {"property":"pds_query.queryNumber","header":"queryID", nested: true, attribute: 'pds_query_id' },
+  {"property":"support","header":"Обоснование", editor: 'TextEditor'},
+  {"property":"support_EN","header":"Обоснование(EN)", editor: 'TextEditor'},
+  //{"property":"pds_query.queryNumber","header":"queryID", nested: true, attribute: 'pds_query_id' },
   {"property":"t","header":"t", hidden: true}
   ];

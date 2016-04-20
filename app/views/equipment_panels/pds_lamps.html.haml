@@ -2,8 +2,7 @@
 :javascript
   var columns = [
     {property: "id", header: "LampID", hidden: true},
-    {property: "hw_ic.ref", header: "REF",
-      editor: "HwIcSelector", attribute: 'hw_ic_id', nested: true },
+    {property: "hw_ic.ref", header: "REF", nested: true },
     {property: "system.System", header: "Сист.",
       editor: "SystemSelector", attribute: 'system_id', nested: true},
     {property: "pds_section_assembler.section_name", header: "Питание",

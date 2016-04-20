@@ -6,10 +6,11 @@
   var model_name = "#{hash_model_name}";
 
   var columns = [
-  //{"property":"id","header":"blockID"},
+  {"property":"id","header":"blockID", hidden: true},
   {"property":"sys","header":"sys"},
   {"property":"p_p","header":"p_p", editor: "stringEditor"},
-  {"property":"Desc","header":"Описание", editor: "stringEditor"},
+  {"property":"Desc","header":"Описание", editor: "TextEditor"},
   {"property":"doc","header":"doc", editor: "stringEditor"},
   {"property":"varName","header":"varName", editor: "stringEditor"},
-  {"property":"Project","header":"Project"}];
+  //{"property":"Project","header":"Project"}
+  ];

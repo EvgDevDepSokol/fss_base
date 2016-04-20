@@ -16,6 +16,16 @@
         children: #{controller_actions_list(TechnologyEquipmentController, @project)}
       },
       {
+        label: "Электрооборудование",
+        type: 'electric_equipment',
+        children: #{controller_actions_list(ElectricEquipmentController, @project)}
+      },
+      {
+        label: "Отказы и ДУ",
+        type: 'remotes',
+        children: #{controller_actions_list(RemotesController, @project)}
+      },
+      {
         label: "Hardware",
         type: 'hardware',
         children: #{controller_actions_list(HardwareController, @project)}
@@ -29,16 +39,6 @@
         label: "Служебные",
         type: 'service',
         children: #{controller_actions_list(ServiceController, @project)}
-      },
-      {
-        label: "Электрооборудование",
-        type: 'electric_equipment',
-        children: #{controller_actions_list(ElectricEquipmentController, @project)}
-      },
-      {
-        label: "Отказы и ДУ",
-        type: 'remotes',
-        children: #{controller_actions_list(RemotesController, @project)}
       },
       {
         label: "Данные проектов",

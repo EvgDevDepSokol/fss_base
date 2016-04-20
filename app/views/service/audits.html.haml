@@ -5,8 +5,8 @@
   var data = #{table_data};
   var model_name = "#{hash_model_name}";
   var columns = [
-  {"property":"id","header":"auditID"},
-  {"property":"Project","header":"Project"},
+  {"property":"id","header":"auditID", hidden: true},
+  // {"property":"Project","header":"Project"},
   {"property":"table_name","header":"table_name"},
   {"property":"tag_RU","header":"TAG_RU"},
   {"property":"tag","header":"TAG/KKS"},

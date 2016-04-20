@@ -9,9 +9,10 @@
 
   // todo: add documentation selector
   var columns = [
-    {"property":"id","header":"DocSysID", hidden: true},
+    {"property":"id","header":"StationID", hidden: true},
+    {"property":"Station_sys","header":"Station_sys", editor: "stringEditor"},
     {property: "system.System", header: "Сист.", editor: "SystemSelector", attribute: 'system_id', nested: true},
-    {"property":"pds_documentation.DocTitle","header":"DocTitle",  attribute: 'pds_documentation_id', nested: true},
-    {"property":"pds_documentation.DocTitle_EN","header":"DocTitle_EN", nested: true},
+    {"property":"Desc_RU","header":"Описание", editor: "TextEditor"},
+    {"property":"Desc_EN","header":"Описание(EN)", editor: "TextEditor"},
     //{"property":"t","header":"t"}
   ];
