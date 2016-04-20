@@ -137,6 +137,7 @@
   box-sizing: border-box;
   margin-top: -1px;
   max-height: 200px;
+  max-width: 200px;
   position: absolute;
   top: 100%;
   width: 150%;
