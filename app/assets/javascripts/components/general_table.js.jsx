@@ -755,7 +755,7 @@ $(document).ready(function () {
 
   ReactDOM.render(
     <TableContainer columns={columns} data={data}
-      objectType={model_name} title={title}/>,
+      objectType={model_name} title={title} project={project}/>,
     document.getElementById('general_table')
   );
 

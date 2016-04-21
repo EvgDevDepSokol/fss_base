@@ -4,7 +4,7 @@
   = yield
 
   :javascript
-    var project = #{project.to_json};
+    var project = #{project.serializable_hash.to_json};
     var title = "#{title}";
     var data = #{table_data};
     var model_name = "#{hash_model_name}";
