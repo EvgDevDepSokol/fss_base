@@ -119,7 +119,6 @@ var TableContainer = React.createClass({
       var attribute = options.attribute;
       var context = this;
       var nested = options.nested;
-//      debugger
       return function(value, data, rowIndex, property) {
         var id;
         if(nested)
@@ -128,7 +127,6 @@ var TableContainer = React.createClass({
           var tempVal = data[rowIndex];
 
           if (tempVal[keys[0]]) id = tempVal[keys[0]].id
-          //debugger
           keys.forEach(function(key){
             if(tempVal){
               tempVal = tempVal[key];
@@ -361,9 +359,15 @@ var TableContainer = React.createClass({
       }
     ]);
 
-    columns = columns.concat([
+    //columns = columns.concat([
+    var column_x = ([
       {
-        header: 'Chk',
+        header: <div>
+          <input
+            type="checkbox"
+            onClick={() => console.log('clicked')}
+            style={{width:'20px'}}/>
+        </div>,        
         style: {width: '30px'},
         classes: 'checkbox-col',
         cell: function(value, celldata, rowIndex, property){
@@ -387,6 +391,9 @@ var TableContainer = React.createClass({
         }.bind(this)
       }
     ]);
+
+    columns = column_x.concat(columns);
+    column_x = null;
 
     var myDefaultSorter = function (data, column) {
       var property = column.property;
@@ -421,13 +428,13 @@ var TableContainer = React.createClass({
       },
       header: {
         onClick: function(column){
-          sortColumn(
-            this.state.columns,
-            column,
-//            this.state.data,
-            this.setState.bind(this),
-//            myDefaultSorter
-          );
+          if (!((column.classes == 'buttons-col')||(column.classes == 'checkbox-col'))){
+            sortColumn(
+              this.state.columns,
+              column,
+              this.setState.bind(this),
+            );
+          }
         }.bind(this)
       },
       modal: {
@@ -499,20 +506,19 @@ var TableContainer = React.createClass({
   },
 
 
-  onHeaderClick: function(column){
-    // reset edits
-    this.setState({
-      editedCell: null
-    });
-
-    sortColumn(
-      this.state.columns,
-      column,
-//      this.state.data,
-      this.setState.bind(this),
-      myDefaultSorter
-    );
-  },
+//  onHeaderClick: function(column){
+//    // reset edits
+//    this.setState({
+//      editedCell: null
+//    });
+//    sortColumn(
+//      this.state.columns,
+//      column,
+////      this.state.data,
+//      this.setState.bind(this),
+//      myDefaultSorter
+//    );
+//  },
 
 /*  onRemoveClick: function() {
     // this could go through flux etc.
