@@ -10,7 +10,32 @@ class HardwareController < BaseController
 
   def hw_wirelists
     @data_list = HwWirelist.where(Project: project.ProjectID).
-      includes(hw_ped: [:hw_devtype], pds_panel: [])
+      includes(hw_ped: [:hw_devtype], pds_panel: []).
+      pluck(
+        "wirelist_N","from","to","wc","nc","io","m","s","word","bit",
+        "hw_peds.ped_N","hw_devtype.typeID","hw_devtype.RuName",
+        "rev","IC","remarks",
+        "pds_panel.pID","pds_panel.panel")
+
+    @data_list = @data_list.each.map{ |e|
+      e1 = {}
+      e1['id']        = e[0]
+      e1['from']      = e[1]
+      e1['to']        = e[2]
+      e1['wc']        = e[3]
+      e1['nc']        = e[4]
+      e1['io']        = e[5]
+      e1['m']         = e[6]
+      e1['s']         = e[7]
+      e1['word']      = e[8]
+      e1['bit']       = e[9]
+      e1['hw_ped']    = {id: e[10], hw_devtype: {id: e[11], RuName: e[12]}}
+      e1['rev']       = e[13]
+      e1['IC']        = e[14]
+      e1['remarks']   = e[15]
+      e1['pds_panel'] = {id: e[16], panel: e[17]}
+      e = e1
+    }
   end
 
   def pds_iomaps

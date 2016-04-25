@@ -7,8 +7,11 @@ class HwWirelist < ActiveRecord::Base
 
   alias_attribute :hw_ped_id, :ped
   alias_attribute :pds_project_unit_id, :Unit
-  alias_attribute :panel_id, :panel
+  alias_attribute :pds_panel_id, :panel
 
+  def custom_map
+    true
+  end
   #todo: pds_panel link not working
   def custom_hash
     serializable_hash(include: {
