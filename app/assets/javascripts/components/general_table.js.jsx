@@ -65,6 +65,7 @@ var ColumnFilters = require('../modules/column_filters.jsx');
 var stringEditor =  require('../inputs/input.jsx')();
 var dateEditor =  require('../inputs/input.jsx')();
 var TextEditor =  require('../inputs/text_editor.jsx')();
+// var CheckboxEditor =  require('../inputs/checkbox.jsx')();
 //var BooleanEditor = require('../inputs/boolean.jsx')();
 
 
@@ -262,6 +263,7 @@ var TableContainer = React.createClass({
           }.bind(this);
 
           var editClick = function() {
+            debugger
             this.setState({editedRow: rowIndex});
           }.bind(this);
 
@@ -373,13 +375,27 @@ var TableContainer = React.createClass({
         cell: function(value, celldata, rowIndex, property){
        //   var url = window.location.href;
        //   var newRow = celldata[rowIndex].newRow;
-       //   var itemId = celldata[rowIndex].id;
-       //   var idx = findIndex(this.state.data, {id: itemId});
+          var itemId = celldata[rowIndex].id;
+          var idx = findIndex(this.state.data, {id: itemId});
 
+          var clickCheckBox = function(){
+            debugger
+              this.state.data[idx].checked = !this.state.data[idx].checked;
+              this.setState({
+                data: this.state.data,
+              });
+          }
+ 
+              //checked={this.state.data[idx].checked}
+              //id = {idx}
           var checkBox = <span classname = 'checkbox'>
-            <input type = "checkbox" />
+            <input
+              type = "checkbox"
+              onChange = {clickCheckBox.bind(this)}
+              checked = {this.state.data[idx].checked}
+            />            
           </span>;
-
+          //var checkBox = CheckboxEditor;
           return {
             value: (
               <span style={ {width: '30px'} } >
