@@ -52,8 +52,8 @@ gem 'nokogiri', require: false
 gem 'mechanize', require: false
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring', '~>1.3.6',        group: :development
-gem 'web-console', '~> 2.0',    group: :development
+gem 'spring',         group: :development
+gem 'web-console', '~> 3.0',    group: :development
 
 #gem 'wice_grid', '3.4.2'
 
@@ -87,6 +87,7 @@ gem 'byebug' , group: [:development, :test]
 gem 'schema_to_scaffold'
 
 gem 'oj'
+# gem 'pluck_to_hash'
 # gem 'oj_mimic_json'
 # gem 'json'
 
