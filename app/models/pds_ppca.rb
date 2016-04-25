@@ -4,6 +4,10 @@ class PdsPpca < ActiveRecord::Base
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   alias_attribute :system_id, :sys
 
+  def custom_map
+    true
+  end
+
   def custom_hash
     serializable_hash(include: {
         system: {only: :System} })
