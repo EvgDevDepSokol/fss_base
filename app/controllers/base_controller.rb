@@ -60,7 +60,7 @@ class BaseController < ApplicationController
   # Oj.default_options = { :mode => :null }
   def table_data
     Oj.default_options = { :mode => :compat }
-    if model_class.method_defined? :custom_hash
+    if (model_class.method_defined? :custom_hash)&&(!model_class.method_defined? :custom_map)
       Oj.dump(@data_list.map{ |e| e.custom_hash })
       #@data_list.map{ |e| e.custom_hash }.to_json
     else
