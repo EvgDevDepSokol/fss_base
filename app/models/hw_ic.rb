@@ -18,6 +18,10 @@ class HwIc < ActiveRecord::Base
   validates_length_of :rev, maximum: 1
   validates_length_of :tag_no, maximum: 330
 
+  def custom_map
+    true
+  end
+
   def custom_hash
     serializable_hash(include: {
         system: {only: :System},

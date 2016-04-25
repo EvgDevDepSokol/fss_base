@@ -5,12 +5,45 @@ class EquipmentPanelsController < BaseController
     :pds_meters_digital, :pds_alarm, :pds_recorders, :pds_announciator,
     :pds_meters_channels]
 
+#  def hw_ics
+#    @data_list = HwIc.where(Project: project.ProjectID).select(
+#      :icID, :ref, :Description, :scaleMin, :scaleMax, :tag_no,
+#      :UniquePTAG, :un, :panel, :Description_EN, :rev, :sys, :ped, :Unit)
+#      .includes(:system, hw_ped: [:hw_devtype], pds_panel: [], pds_project_unit: [:unit])
+#  end
   def hw_ics
-    @data_list = HwIc.where(Project: project.ProjectID).select(
-      :icID, :ref, :Description, :scaleMin, :scaleMax, :tag_no,
-      :UniquePTAG, :un, :panel, :Description_EN, :rev, :sys, :ped, :Unit)
-      .includes(:system, hw_ped: [:hw_devtype], pds_panel: [], pds_project_unit: [:unit])
+    @data_list = HwIc.where(Project: project.ProjectID).
+      includes(
+        :system, hw_ped: [:hw_devtype], pds_panel: [], pds_project_unit: [:unit]).
+      pluck(
+        :icID, :ref,
+        "pds_syslist.SystemID","pds_syslist.System",
+        :Description,
+        "hw_peds.ped_N","hw_peds.ped","hw_devtype.typeID","hw_devtype.RuName",
+        :scaleMin, :scaleMax,
+        "pds_project_unit.ProjUnitID","pds_unit.UnitID","pds_unit.Unit_RU",
+        :tag_no, :UniquePTAG, :un, :panel, :Description_EN, :rev)
+    @data_list = @data_list.each.map{ |e|
+      e1 = {}
+      e1['id']               = e[0]
+      e1['ref']              = e[1]
+      e1['system']           = {id: e[2], System: e[3]}
+      e1['Description']      = e[4]
+      e1['hw_ped']           = {id: e[5], ped: e[6], hw_devtype: {id: e[7], RuName: e[8]}}
+      e1['scaleMin']         = e[9]
+      e1['scaleMax']         = e[10]
+      e1['pds_project_unit'] = {id: e[11], unit: {id: e[12], Unit_RU: e[13]}}
+      e1['tag_no']           = e[14]
+      e1['UniquePTAG']       = e[15]
+      e1['un']               = e[16]
+      e1['panel']            = e[17]
+      e1['Description_EN']   = e[18]
+      e1['rev']              = e[19]
+
+      e = e1
+    }
   end
+
 
   def pds_brus
     @data_list = PdsBru.where(Project: project.ProjectID).
