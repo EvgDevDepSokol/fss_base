@@ -7,27 +7,65 @@ class TechnologyEquipmentController < BaseController
   def pds_alg_types
     @data_list = PdsAlgType.where(Project: project.ProjectID)
   end
+#  def pds_detectors
+#    @data_list = PdsDetector.where(Project: project.ProjectID).select(
+#      :DetID, :Project, :sys, :tag, :tag_RU, :Desc, :Desc_EN,
+#      :ctrl_power, :low_lim, :up_lim, :LA, :HA, :LW, 
+#      :HW, :LT, :HT, :Unit, :'1coef_shift', :'2coef_scale', 
+#      :sd_N, :doc_reg_N, :t, :Type, :TypeDetec, :Room, :SCK_input, 
+#      :power, 
+#      :import_t, :mod, :eq_type). 
+#      includes(:system, :pds_section_assembler,
+#               :pds_man_equip, :pds_sd, pds_project_unit: [:unit]) 
+#  end
 
   def pds_detectors
-    @data_list = PdsDetector.where(Project: project.ProjectID).select(
-      :DetID, :Project, :sys, :station_sys, :tag, :tag_RU, :Desc, :Desc_EN,
-      :ctrl_power, :low_lim, :up_lim, :LA, :HA, :LW, 
-      :HW, :LT, :HT, :Unit, :'1coef_shift', :'2coef_scale', 
-      :sd_N, :doc_reg_N, :t, :Type, :TypeDetec, :Room, :SCK_input, 
-      :power, 
-      :import_t, :mod, :eq_type). 
-      includes(:system, :pds_section_assembler,
-               :pds_man_equip, :pds_sd, pds_project_unit: [:unit]) 
-      # @data_list = PdsDetector.where(Project: project.ProjectID).select(
-      #   :DetID, :Project, :sys, :station_sys, :tag, :tag_RU, :Desc, :Desc_EN,
-      #   :Group_N, :ctrl_power, :nom_state, :low_lim, :up_lim, :LA, :HA, :LW, 
-      #   :HW, :LT, :HT, :Unit, :'1coef_shift', :'2coef_scale', :sluggishness,
-      #   :scale_noise,
-      #   :sd_N, :doc_reg_N, :Func, :t, :Type, :TypeDetec, :Room, :SPTable, :SCK_input, 
-      #   :SP_1, :SP_2, :SP_3, :SPT_ACTION, :SPT_COMMENT, :DREG_input, :TimeConst, :power, 
-      #   :varible, :import_t, :mod, :eq_type, :alg_type). 
-      #   includes(:system, :pds_section_assembler,
-      #   :pds_man_equip, :pds_sd, pds_project_unit: [:unit])  
+    @data_list = PdsDetector.where(Project: project.ProjectID)
+      .includes(
+        :system, :pds_section_assembler,
+        :pds_sd, pds_project_unit: [:unit])
+      .pluck(
+        :DetID,
+        "pds_syslist.SystemID","pds_syslist.System",
+        :tag, :tag_RU, :Desc, :Desc_EN,
+        "pds_section_assembler.section_N","pds_section_assembler.section_name",
+        :low_lim, :up_lim, :LA, :HA, :LW, :HW, :LT, :HT,
+        "pds_project_unit.ProjUnitID","pds_unit.UnitID","pds_unit.Unit_RU",
+        :'1coef_shift', :'2coef_scale', :Type, :TypeDetec, :Room, :SCK_input,
+        :power, :mod, 
+        "pds_sd.sd_N", "pds_sd.SdTitle")
+
+    @data_list = @data_list.each.map{ |e|
+      e1 = {}
+      e1['id']               = e[0]
+      e1['system']           = {id: e[1], System: e[2]}
+      e1['tag']              = e[3]
+      e1['tag_RU']           = e[4]
+      e1['Desc']             = e[5]
+      e1['Desc_EN']          = e[6]
+      e1['pds_section_assembler'] = {id:e[7], section_name: e[8]}
+      e1['low_lim']          = e[9]
+      e1['up_lim']           = e[10]
+      e1['LA']               = e[11]
+      e1['HA']               = e[12]
+      e1['LW']               = e[13]
+      e1['HW']               = e[14]
+      e1['LT']               = e[15]
+      e1['HT']               = e[16]
+      e1['pds_project_unit'] = {id: e[17], unit: {id: e[18], Unit_RU: e[19]}}
+      e1['1coef_shift']      = e[20]
+      e1['2coef_scale']      = e[21]
+      e1['Type']             = e[22]
+      e1['TypeDetec']        = e[23]
+      e1['Room']             = e[24]
+      e1['SCK_input']        = e[25]
+      e1['power']            = e[26]
+      e1['mod']              = e[27]
+      e1['pds_sd']           = {id: e[28], SdTitle: e[29]}
+
+      e = e1 
+    }
+     
   end
 
   def pds_ejectors
