@@ -53,7 +53,8 @@ gem 'mechanize', require: false
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',         group: :development
-gem 'web-console', '~> 3.0',    group: :development
+gem 'web-console',    group: :development
+# gem 'web-console', '~> 3.0',    group: :development
 
 #gem 'wice_grid', '3.4.2'
 
@@ -64,7 +65,8 @@ gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-bundler'
 gem 'capistrano-rbenv'
-gem 'capistrano-unicorn-nginx', '~> 2.0'
+# gem 'capistrano-unicorn-nginx', '~> 2.0'
+gem 'capistrano-unicorn-nginx'
 gem 'capistrano-npm'
 
 # Use the Unicorn app server
