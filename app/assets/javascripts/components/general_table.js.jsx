@@ -76,6 +76,7 @@ var TableContainer = React.createClass({
   getInitialState: function() {
     var _this=this;
 
+
     var properties = augmentWithTitles({
       TEquipID: {
         type: 'number'
@@ -361,20 +362,26 @@ var TableContainer = React.createClass({
       }
     ]);
 
+    var clickMainCheckbox = function(){
+      this.state.mainCheckbox_new = !this.state.mainCheckbox_new
+      this.setState({
+        mainCheckbox_new: this.state.mainCheckbox_new,
+        //mainCheckbox_old: !this.state.mainCheckbox_new
+      });
+    }
+
     //columns = columns.concat([
     var column_x = ([
       {
         header: <div>
           <input
             type="checkbox"
-            onClick={() => console.log('clicked')}
+            onClick={clickMainCheckbox.bind(this)}
             style={{width:'20px'}}/>
         </div>,        
         style: {width: '30px'},
         classes: 'checkbox-col',
         cell: function(value, celldata, rowIndex, property){
-       //   var url = window.location.href;
-       //   var newRow = celldata[rowIndex].newRow;
           var itemId = celldata[rowIndex].id;
           var idx = findIndex(this.state.data, {id: itemId});
 
@@ -386,8 +393,6 @@ var TableContainer = React.createClass({
               });
           }
  
-              //checked={this.state.data[idx].checked}
-              //id = {idx}
           var checkBox = <span classname = 'checkbox'>
             <input
               type = "checkbox"
@@ -395,7 +400,7 @@ var TableContainer = React.createClass({
               checked = {this.state.data[idx].checked}
             />            
           </span>;
-          //var checkBox = CheckboxEditor;
+
           return {
             value: (
               <span style={ {width: '30px'} } >
@@ -434,6 +439,8 @@ var TableContainer = React.createClass({
       columns: columns,
       formatters: formatters,
       showFilters: false,
+      mainCheckbox_new: false,
+      mainCheckbox_old: false,
       pagination: {
         page: 1,
         perPage: 20
@@ -662,7 +669,14 @@ var TableContainer = React.createClass({
       data = Search.search(this.state.search, this.state.columns, data)
       //data = Search.search(data,columns,this.state.search.column,this.state.search.query);
     }
-
+    var mainCheckbox_new = this.state.mainCheckbox_new;
+    if(mainCheckbox_new !== this.state.mainCheckbox_old) {
+      data.forEach(function(row){
+        row.checked = mainCheckbox_new;
+      });        
+      this.state.mainCheckbox_old = mainCheckbox_new;
+    };
+    
     data = sortColumn.sort(data, this.state.sortingColumn, orderBy); 
     
     var paginated = paginate(data, pagination);
