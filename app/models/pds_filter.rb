@@ -1,5 +1,4 @@
 class PdsFilter < ActiveRecord::Base
-
   self.table_name = 'pds_filter'
   belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
@@ -12,14 +11,13 @@ class PdsFilter < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        system: {only: :System},
-        pds_man_equip: {only: :Type},
-        pds_sd: {only: :SdTitle}
-      })
+                        system: { only: :System },
+                        pds_man_equip: { only: :Type },
+                        pds_sd: { only: :SdTitle }
+                      })
   end
 
-  def serializable_hash(options={})
+  def serializable_hash(options = {})
     super options.merge(methods: :id)
   end
-
 end

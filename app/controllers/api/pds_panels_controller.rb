@@ -63,17 +63,18 @@ class Api::PdsPanelsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_panel
-      @pds_panel = PdsPanel.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_panel_params
-      params.require(:pds_panel).permit(:panel, :start, :end, :migsjem, :memsjem, :lamptest, :soundtest, :soundtest_warn, :pressconfirm, :soundtest_alarm, :Project, :soundsjem, :soundalarm, :power_lamp, :Tab_No, :pnl_type, :fhd, :lamptest_suff)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_panel
+    @pds_panel = PdsPanel.find(params[:id])
+  end
 
-    def project
-      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
-    end 
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_panel_params
+    params.require(:pds_panel).permit(:panel, :start, :end, :migsjem, :memsjem, :lamptest, :soundtest, :soundtest_warn, :pressconfirm, :soundtest_alarm, :Project, :soundsjem, :soundalarm, :power_lamp, :Tab_No, :pnl_type, :fhd, :lamptest_suff)
+  end
+
+  def project
+    @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+  end
 end

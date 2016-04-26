@@ -1,5 +1,4 @@
 class PdsSyslist < ActiveRecord::Base
-
   self.table_name = 'pds_syslist'
 
   alias_attribute :title, :System
@@ -7,12 +6,12 @@ class PdsSyslist < ActiveRecord::Base
   def to_s
     self.System
   end
+
   def custom_hash
-    serializable_hash.merge({id: id})
+    serializable_hash.merge(id: id)
   end
 
-#  def serializable_hash(options={})
-#    super options.merge(methods: :id)
-#  end
-
+  #  def serializable_hash(options={})
+  #    super options.merge(methods: :id)
+  #  end
 end

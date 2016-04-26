@@ -3,23 +3,23 @@ class ProjectSettingsController < ApplicationController
   layout 'layouts/table'
   require 'csv'
 
-  ACTIONS = [ :pds_eng_on_sys, :pds_project_unit, :pds_doc_on_sys,
-    :pds_project_sys, :week_report, :pds_documents,
-    :pds_documentation, :pds_simplifications, :pds_queries,
-    :pds_sys_description, :pds_dr, :pds_mathmodel]
+  ACTIONS = [:pds_eng_on_sys, :pds_project_unit, :pds_doc_on_sys,
+             :pds_project_sys, :week_report, :pds_documents,
+             :pds_documentation, :pds_simplifications, :pds_queries,
+             :pds_sys_description, :pds_dr, :pds_mathmodel].freeze
 
   before_action :project
 
   helper_method :project, :table_data, :table_header, :editable_properties, :model_class
 
   def index
-    #Rails.logger.info params
+    # Rails.logger.info params
     # для таблиц где есть ProjectID мы хотим видеть данные в контексте
     # данного проекта, для остальных пока отображаем все данные
     if model.new.respond_to?(:Project)
-      @data_list = model.where(Project: project.ProjectID).limit(10000)
+      @data_list = model.where(Project: project.ProjectID).limit(10_000)
     else
-      @data_list = model.limit(10000)
+      @data_list = model.limit(10_000)
     end
 
     respond_to do |format|
@@ -27,7 +27,6 @@ class ProjectSettingsController < ApplicationController
       format.csv
       format.xlsx
     end
-
   end
 
   def index_view
@@ -40,11 +39,11 @@ class ProjectSettingsController < ApplicationController
   helper_method :index_view
 
   def pds_eng_on_sys
-    @data_list = PdsEngOnSy.where(Project: project.ProjectID).
-       includes(:pds_engineer, :pds_engineer_test, :system)
+    @data_list = PdsEngOnSy.where(Project: project.ProjectID)
+                           .includes(:pds_engineer, :pds_engineer_test, :system)
   end
 
-  # todo: не ясно как быть с выбором
+  # TODO: не ясно как быть с выбором
   def pds_project_units
     @data_list = PdsProjectUnit.where(Project: project.ProjectID).includes(:unit)
   end
@@ -58,13 +57,13 @@ class ProjectSettingsController < ApplicationController
   end
 
   def week_reports
-    @data_list = WeekReport.where(Project: project.ProjectID).
-      includes(:pds_engineer, :system)
+    @data_list = WeekReport.where(Project: project.ProjectID)
+                           .includes(:pds_engineer, :system)
   end
 
   def pds_documents
-    @data_list = PdsDocument.where(Project: project.ProjectID).
-      includes(:pds_engineer, :working_engineer_ru, :working_engineer_en)
+    @data_list = PdsDocument.where(Project: project.ProjectID)
+                            .includes(:pds_engineer, :working_engineer_ru, :working_engineer_en)
   end
 
   def pds_documentations
@@ -72,8 +71,8 @@ class ProjectSettingsController < ApplicationController
   end
 
   def pds_simplifications
-    @data_list = PdsSimplification.where(Project: project.ProjectID).
-      includes(:pds_query, :system)
+    @data_list = PdsSimplification.where(Project: project.ProjectID)
+                                  .includes(:pds_query, :system)
   end
 
   def pds_sys_descriptions
@@ -95,14 +94,14 @@ class ProjectSettingsController < ApplicationController
 
     if current_object.update permit_params
 
-      render json: {status: :ok, data: current_object.custom_hash}
+      render json: { status: :ok, data: current_object.custom_hash }
     else
-      render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
+      render json: { errors: current_object.errors, data: current_object.reload.custom_hash },
              status: :unprocessable_entity
     end
 
   rescue
-    render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
+    render json: { errors: current_object.errors, data: current_object.reload.custom_hash },
            status: :unprocessable_entity
   end
 
@@ -111,11 +110,12 @@ class ProjectSettingsController < ApplicationController
     if true
       render json: {}, head: :no_content
     else
-      render json: {errors: []}, status: 403
+      render json: { errors: [] }, status: 403
     end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_pds_button
     @current_object = model.find(params[:id])
@@ -137,27 +137,27 @@ class ProjectSettingsController < ApplicationController
     if model_class.respond_to?(:editable_attributes)
       model_class.editable_attributes.to_json
     else
-      model_class.attribute_names.reduce({}){ |hash, attr| hash.merge(
-          attr => {type: model_class.columns_hash[attr].type,
-                   title: attr})}.to_json
+      model_class.attribute_names.reduce({}) do |hash, attr|
+        hash.merge(
+          attr => { type: model_class.columns_hash[attr].type,
+                    title: attr })
+      end.to_json
     end
-
   end
 
   def table_header
     if model_class.respond_to?(:view_columns)
       model_class.view_columns
     else
-      model_class.attribute_names.map{ |attr| {property: attr, header: attr}}.to_json
+      model_class.attribute_names.map { |attr| { property: attr, header: attr } }.to_json
     end
   end
 
   def table_data
     if model_class.method_defined? :custom_hash
-      @data_list.map{ |e| e.custom_hash }.to_json
+      @data_list.map(&:custom_hash).to_json
     else
       @data_list.to_json
     end
   end
-
 end

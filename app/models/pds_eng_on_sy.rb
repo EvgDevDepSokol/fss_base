@@ -1,5 +1,4 @@
 class PdsEngOnSy < ActiveRecord::Base
-
   self.table_name = 'pds_eng_on_sys'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_engineer, foreign_key: :engineer_N
@@ -10,9 +9,8 @@ class PdsEngOnSy < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        pds_engineer: { only: :name },
-        pds_engineer_test: { only: :name },
-        system: {only: [:System]}})
+                        pds_engineer: { only: :name },
+                        pds_engineer_test: { only: :name },
+                        system: { only: [:System] } })
   end
-
 end

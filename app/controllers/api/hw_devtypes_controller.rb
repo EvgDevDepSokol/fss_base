@@ -62,13 +62,14 @@ class Api::HwDevtypesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_hw_devtype
-      @hw_devtype = HwDevtype.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def hw_devtype_params
-      params.require(:hw_devtype).permit(:RuName, :EnName, :typetable)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_hw_devtype
+    @hw_devtype = HwDevtype.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def hw_devtype_params
+    params.require(:hw_devtype).permit(:RuName, :EnName, :typetable)
+  end
 end

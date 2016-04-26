@@ -8,7 +8,6 @@ class PdsProject < ActiveRecord::Base
   end
 
   def custom_hash
-    serializable_hash.merge({id: id})
+    serializable_hash.merge(id: id)
   end
-
 end

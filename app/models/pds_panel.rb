@@ -1,5 +1,4 @@
 class PdsPanel < ActiveRecord::Base
-
   self.table_name = 'pds_panel'
 
   def to_s
@@ -7,7 +6,6 @@ class PdsPanel < ActiveRecord::Base
   end
 
   def custom_hash
-    serializable_hash.merge({id: id})
+    serializable_hash.merge(id: id)
   end
-
 end

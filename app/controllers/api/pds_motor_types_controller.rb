@@ -9,7 +9,8 @@ class Api::PdsMotorTypesController < ApplicationController
   end
 
   private
-    def set_pds_motor_type
-      @pds_motor_type = PdsMotorType.find(params[:id])
-    end
+
+  def set_pds_motor_type
+    @pds_motor_type = PdsMotorType.find(params[:id])
+  end
 end

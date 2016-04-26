@@ -8,15 +8,15 @@ class GeneralController < ApplicationController
   # GET /pds_buttons
   # GET /pds_buttons.json
   def index
-    #Rails.logger.info params
+    # Rails.logger.info params
     # для таблиц где есть ProjectID мы хотим видеть данные в контексте
     # данного проекта, для остальных пока отображаем все данные
     if false && model.new.respond_to?(:Project)
       @grid = initialize_grid(model.where(Project: project.ProjectID), name: 'general')
-      @data_list = model.where(Project: project.ProjectID).limit(10000)
+      @data_list = model.where(Project: project.ProjectID).limit(10_000)
     else
       @grid = initialize_grid(model, name: 'general')
-      @data_list = model.limit(10000)
+      @data_list = model.limit(10_000)
     end
 
     respond_to do |format|
@@ -24,16 +24,15 @@ class GeneralController < ApplicationController
       format.csv
       format.xlsx
     end
-
   end
 
   def index_view
-    (template_exists?("#{model_path}/index") ? "#{model_path}/index" : :index )
-  #if %(pds_lamp).include? model_path
-  #  params[:model]
-  #else
-  #  :index
-  #end
+    (template_exists?("#{model_path}/index") ? "#{model_path}/index" : :index)
+    # if %(pds_lamp).include? model_path
+    #  params[:model]
+    # else
+    #  :index
+    # end
   end
 
   # GET /pds_buttons/1
@@ -72,19 +71,23 @@ class GeneralController < ApplicationController
     respond_to do |format|
       if current_object.update(pds_button_params)
         format.html { redirect_to current_object, notice: 'Pds button was successfully updated.' }
-        format.json { render json: {status: :ok, data: current_object.serializable_hash} }
+        format.json { render json: { status: :ok, data: current_object.serializable_hash } }
       else
         format.html { render :edit }
-        format.json { render json: {errors: current_object.errors, data: current_object.reload.serializable_hash},
-                             status: :unprocessable_entity}
+        format.json do
+          render json: { errors: current_object.errors, data: current_object.reload.serializable_hash },
+                 status: :unprocessable_entity
+        end
       end
     end
 
   rescue
     respond_to do |format|
       format.html { render :edit }
-      format.json { render json: {errors: current_object.errors, data: current_object.reload.serializable_hash},
-                           status: :unprocessable_entity}
+      format.json do
+        render json: { errors: current_object.errors, data: current_object.reload.serializable_hash },
+               status: :unprocessable_entity
+      end
     end
   end
 
@@ -94,7 +97,7 @@ class GeneralController < ApplicationController
     if true
       render json: {}, head: :no_content
     else
-      render json: {errors: []}, status: 403
+      render json: { errors: [] }, status: 403
     end
   end
 
@@ -115,19 +118,18 @@ class GeneralController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def pds_button_params
-    params.require(model.to_s.underscore).permit! #permit(:IC, :sys, :Project, :range, :Fixed, :t)
+    params.require(model.to_s.underscore).permit! # permit(:IC, :sys, :Project, :range, :Fixed, :t)
   end
 
   def editable_properties
-    model_class.attribute_names.map{ |attr| {property: attr, header: attr}}
+    model_class.attribute_names.map { |attr| { property: attr, header: attr } }
   end
 
   def table_header
-    model_class.attribute_names.map{ |attr| {property: attr, header: attr}}
+    model_class.attribute_names.map { |attr| { property: attr, header: attr } }
   end
 
   def table_data
     @data
   end
-
 end

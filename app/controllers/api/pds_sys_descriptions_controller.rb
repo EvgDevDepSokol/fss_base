@@ -63,17 +63,18 @@ class Api::PdsSysDescriptionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_sys_description
-      @pds_sys_description = PdsSysDescription.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_sys_description_params
-      params.require(:pds_sys_description).permit(:Project, :sys, :Description, :Description_EN, :shortDesc, :shortDesc_EN)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_sys_description
+    @pds_sys_description = PdsSysDescription.find(params[:id])
+  end
 
-    def project
-      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
-    end   
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_sys_description_params
+    params.require(:pds_sys_description).permit(:Project, :sys, :Description, :Description_EN, :shortDesc, :shortDesc_EN)
+  end
+
+  def project
+    @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+  end
 end

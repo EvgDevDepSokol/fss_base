@@ -1,5 +1,4 @@
 class PdsEquip < ActiveRecord::Base
-
   self.primary_key = 'TEquipID'
 
   validate :test
@@ -7,8 +6,8 @@ class PdsEquip < ActiveRecord::Base
   def test
     false
   end
-  def custom_hash
-    serializable_hash.merge({id: id})
-  end
 
+  def custom_hash
+    serializable_hash.merge(id: id)
+  end
 end

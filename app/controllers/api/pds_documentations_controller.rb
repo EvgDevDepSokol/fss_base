@@ -63,17 +63,18 @@ class Api::PdsDocumentationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_documentation
-      @pds_documentation = PdsDocumentation.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_documentation_params
-      params.require(:pds_documentation).permit(:Project, :Type, :NPP_Number, :Revision, :reg_ID, :getting_date, :DocTitle, :DocTitle_EN, :Hardcopy, :File, :t)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_documentation
+    @pds_documentation = PdsDocumentation.find(params[:id])
+  end
 
-    def project
-      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
-    end  
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_documentation_params
+    params.require(:pds_documentation).permit(:Project, :Type, :NPP_Number, :Revision, :reg_ID, :getting_date, :DocTitle, :DocTitle_EN, :Hardcopy, :File, :t)
+  end
+
+  def project
+    @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+  end
 end

@@ -1,23 +1,22 @@
 class HardwareController < BaseController
-
-  ACTIONS = [ :hw_peds, :hw_wirelist, :pds_iomap, :hw_iosignaldefs,
-    :hw_iosignals, :hw_devtypes, :hw_iosignaldim, :pds_panels]
+  ACTIONS = [:hw_peds, :hw_wirelist, :pds_iomap, :hw_iosignaldefs,
+             :hw_iosignals, :hw_devtypes, :hw_iosignaldim, :pds_panels].freeze
 
   def hw_peds
-    @data_list = HwPed.where(Project: project.ProjectID).
-      includes(:hw_devtype)
+    @data_list = HwPed.where(Project: project.ProjectID)
+                      .includes(:hw_devtype)
   end
 
   def hw_wirelists
-    @data_list = HwWirelist.where(Project: project.ProjectID).
-      includes(hw_ped: [:hw_devtype], pds_panel: []).
-      pluck(
-        "wirelist_N","from","to","wc","nc","io","m","s","word","bit",
-        "hw_peds.ped_N","hw_devtype.typeID","hw_devtype.RuName",
-        "rev","IC","remarks",
-        "pds_panel.pID","pds_panel.panel")
+    @data_list = HwWirelist.where(Project: project.ProjectID)
+                           .includes(hw_ped: [:hw_devtype], pds_panel: [])
+                           .pluck(
+                             'wirelist_N', 'from', 'to', 'wc', 'nc', 'io', 'm', 's', 'word', 'bit',
+                             'hw_peds.ped_N', 'hw_devtype.typeID', 'hw_devtype.RuName',
+                             'rev', 'IC', 'remarks',
+                             'pds_panel.pID', 'pds_panel.panel')
 
-    @data_list = @data_list.each.map{ |e|
+    @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']        = e[0]
       e1['from']      = e[1]
@@ -29,13 +28,13 @@ class HardwareController < BaseController
       e1['s']         = e[7]
       e1['word']      = e[8]
       e1['bit']       = e[9]
-      e1['hw_ped']    = {id: e[10], hw_devtype: {id: e[11], RuName: e[12]}}
+      e1['hw_ped']    = { id: e[10], hw_devtype: { id: e[11], RuName: e[12] } }
       e1['rev']       = e[13]
       e1['IC']        = e[14]
       e1['remarks']   = e[15]
-      e1['pds_panel'] = {id: e[16], panel: e[17]}
+      e1['pds_panel'] = { id: e[16], panel: e[17] }
       e = e1
-    }
+    end
   end
 
   def pds_iomaps
@@ -59,14 +58,13 @@ class HardwareController < BaseController
   end
 
   def pds_panels
-    @data_list = PdsPanel.where(Project: project.ProjectID)#.includes(:hw_ped, :panel)
+    @data_list = PdsPanel.where(Project: project.ProjectID) # .includes(:hw_ped, :panel)
   end
 
   helper_method :table_header
 
-  Oj.default_options = { :mode => :compat }
+  Oj.default_options = { mode: :compat }
   def table_header
-    Oj.dump(model_class.attribute_names.map{ |attr| {property: attr, header: attr}})
+    Oj.dump(model_class.attribute_names.map { |attr| { property: attr, header: attr } })
   end
-
 end

@@ -62,13 +62,14 @@ class Api::PdsSyslistsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_syslist
-      @pds_syslist = PdsSyslist.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_syslist_params
-      params.require(:pds_syslist).permit(:System, :Descriptor, :Category, :shortDesc, :shortDesc_EN, :t)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_syslist
+    @pds_syslist = PdsSyslist.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_syslist_params
+    params.require(:pds_syslist).permit(:System, :Descriptor, :Category, :shortDesc, :shortDesc_EN, :t)
+  end
 end

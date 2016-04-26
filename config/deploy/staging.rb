@@ -4,9 +4,9 @@
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
 # Don't declare `role :all`, it's a meta role
-role :app, %w{denstepa@djet-rails2.cloudapp.net}
-role :web, %w{denstepa@djet-rails2.cloudapp.net}
-role :db,  %w{denstepa@djet-rails2.cloudapp.net}
+role :app, %w(denstepa@djet-rails2.cloudapp.net)
+role :web, %w(denstepa@djet-rails2.cloudapp.net)
+role :db,  %w(denstepa@djet-rails2.cloudapp.net)
 
 # Extended Server Syntax
 # ======================
@@ -18,15 +18,15 @@ role :db,  %w{denstepa@djet-rails2.cloudapp.net}
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 set :server_name, 'www.djet-rails2.cloudapp.net djet-rails2.cloudapp.net'
 
-server 'djet-rails2.cloudapp.net', user: 'deploy', roles: %w{web app db}, primary: true
+server 'djet-rails2.cloudapp.net', user: 'deploy', roles: %w(web app db), primary: true
 
 set :stage, :staging
-set :branch, "master"
+set :branch, 'master'
 set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:full_app_name)}"
 
 set :rails_env, :production
 
-#set :unicorn_worker_count, 5
+# set :unicorn_worker_count, 5
 
 set :enable_ssl, false
 

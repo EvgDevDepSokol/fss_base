@@ -1,5 +1,4 @@
 class PdsMetersChannel < ActiveRecord::Base
-
   belongs_to :hw_ic, foreign_key: 'IC'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project, foreign_key: 'Project'
@@ -13,15 +12,13 @@ class PdsMetersChannel < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        hw_ic: { only: [:ref, :tag_no, :Description, :scaleMin, :scaleMax],
-          include: {
-            hw_ped: {only: [:ped]},
-            pds_project_unit: {include: {
-              unit: {only: :Unit_RU} },
-              only: []}} },
-        system: {only: [:System]},
-        pds_section_assembler: {only: [:section_name]}})
+                        hw_ic: { only: [:ref, :tag_no, :Description, :scaleMin, :scaleMax],
+                                 include: {
+                                   hw_ped: { only: [:ped] },
+                                   pds_project_unit: { include: {
+                                     unit: { only: :Unit_RU } },
+                                                       only: [] } } },
+                        system: { only: [:System] },
+                        pds_section_assembler: { only: [:section_name] } })
   end
-
-
 end

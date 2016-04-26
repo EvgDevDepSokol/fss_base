@@ -1,5 +1,4 @@
 class WeekReport < ActiveRecord::Base
-
   self.table_name = 'week_report'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_engineer, foreign_key: :Engineer
@@ -8,7 +7,7 @@ class WeekReport < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        pds_engineer: { only: :name },
-        system: {only: [:System]}})
+                        pds_engineer: { only: :name },
+                        system: { only: [:System] } })
   end
 end

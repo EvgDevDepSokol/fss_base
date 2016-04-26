@@ -1,5 +1,4 @@
 class PdsAlarm < ActiveRecord::Base
-
   self.table_name = 'pds_alarm'
 
   belongs_to :hw_ic, foreign_key: 'IC'
@@ -11,8 +10,7 @@ class PdsAlarm < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        hw_ic: { only: [:ref, :tag_no, :Description], include: {hw_ped: {only: [:ped]}} },
-        system: {only: [:System]}})
+                        hw_ic: { only: [:ref, :tag_no, :Description], include: { hw_ped: { only: [:ped] } } },
+                        system: { only: [:System] } })
   end
-
 end

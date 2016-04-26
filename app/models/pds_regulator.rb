@@ -1,6 +1,5 @@
 class PdsRegulator < ActiveRecord::Base
-
-  #belongs_to :det
+  # belongs_to :det
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :psa_ctrl_power, foreign_key: 'ctrl_power', class_name: 'PdsSectionAssembler'
@@ -23,17 +22,16 @@ class PdsRegulator < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        system: {only: :System},
-        psa_ctrl_power: {only: :section_name},
-        psa_ed_power: {only: :section_name},
-        psa_anc_power: {only: :section_name} ,
-        pds_man_equip: {only: :Type},
-        pds_sd: {only: :SdTitle},
-        pds_documentation: {only: :DocTitle},
-        value_1: {only: :tag_RU},
-        value_2: {only: :tag_RU},
-        pds_detector: {only: :tag}
-      })
+                        system: { only: :System },
+                        psa_ctrl_power: { only: :section_name },
+                        psa_ed_power: { only: :section_name },
+                        psa_anc_power: { only: :section_name },
+                        pds_man_equip: { only: :Type },
+                        pds_sd: { only: :SdTitle },
+                        pds_documentation: { only: :DocTitle },
+                        value_1: { only: :tag_RU },
+                        value_2: { only: :tag_RU },
+                        pds_detector: { only: :tag }
+                      })
   end
-
 end

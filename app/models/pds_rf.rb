@@ -1,6 +1,5 @@
 class PdsRf < ActiveRecord::Base
-
-  #self.inheritance_column = nil
+  # self.inheritance_column = nil
   self.inheritance_column = :_type_disabled
   self.table_name = 'pds_rf'
 
@@ -9,20 +8,19 @@ class PdsRf < ActiveRecord::Base
   belongs_to :psa_project_unit, foreign_key: 'unit_FB', class_name: 'PdsProjectUnit'
   belongs_to :pds_project, foreign_key: 'Project'
 
-
   alias_attribute :system_id, :sys
   alias_attribute :pds_project_unit_id, :Unit
   alias_attribute :psa_project_unit_id, :unit_FB
-#  def serializable_hash(options={})
-#    super.merge({id: id, system: system.to_s})
-#  end
+  #  def serializable_hash(options={})
+  #    super.merge({id: id, system: system.to_s})
+  #  end
 
   def custom_hash
     serializable_hash(include: {
-        system: {only: :System}, 
-        pds_project_unit: {only: [], include: {unit: {only: :Unit_RU}}},
-        psa_project_unit: {only: [], include: {unit: {only: :Unit_RU}}}
-    })
+                        system: { only: :System },
+                        pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
+                        psa_project_unit: { only: [], include: { unit: { only: :Unit_RU } } }
+                      })
   end
 
   def unit_with_language
@@ -34,15 +32,15 @@ class PdsRf < ActiveRecord::Base
   end
 
   def type_b?(t)
-    ['B', 'VB'].include?(t)
+    %w(B VB).include?(t)
   end
 
   def type_i?(t)
-    ['I', 'VI'].include?(t)
+    %w(I VI).include?(t)
   end
 
   def type_r?(t)
-    ['R', 'VR'].include?(t)
+    %w(R VR).include?(t)
   end
 
   # selection functions
@@ -85,5 +83,4 @@ class PdsRf < ActiveRecord::Base
       'O.,V'
     end
   end
-
 end

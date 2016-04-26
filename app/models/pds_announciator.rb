@@ -1,5 +1,4 @@
 class PdsAnnounciator < ActiveRecord::Base
-
   self.table_name = 'pds_announciator'
   self.inheritance_column = nil
 
@@ -21,10 +20,9 @@ class PdsAnnounciator < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        hw_ic: { only: [:ref, :tag_no, :Description], include: {hw_ped: {only: [:ped]}} },
-        system: {only: [:System]},
-        pds_section_assembler: {only: [:section_name]},
-        pds_detector: {only: [:tag]} })
+                        hw_ic: { only: [:ref, :tag_no, :Description], include: { hw_ped: { only: [:ped] } } },
+                        system: { only: [:System] },
+                        pds_section_assembler: { only: [:section_name] },
+                        pds_detector: { only: [:tag] } })
   end
-
 end

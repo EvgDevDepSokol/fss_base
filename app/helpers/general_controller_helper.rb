@@ -1,5 +1,4 @@
 module GeneralControllerHelper
-
   def model
     @model ||= params[:model].to_s.classify.constantize
   end
@@ -17,7 +16,7 @@ module GeneralControllerHelper
   end
 
   def lt(attribute, model)
-    "#{mt(attribute, model)} #{link_to 'O', url_for([:index, @project, attribute.to_s.pluralize]) }".html_safe
+    "#{mt(attribute, model)} #{link_to 'O', url_for([:index, @project, attribute.to_s.pluralize])}".html_safe
   end
 
   # множественное число от имени модели
@@ -28,5 +27,4 @@ module GeneralControllerHelper
   def hash_model_name
     params[:model].to_s.singularize
   end
-
 end

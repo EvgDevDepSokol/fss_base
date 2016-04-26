@@ -1,5 +1,4 @@
 class PdsDocOnSy < ActiveRecord::Base
-
   self.table_name = 'pds_doc_on_sys'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_documentation, foreign_key: :Doc
@@ -8,8 +7,7 @@ class PdsDocOnSy < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        pds_documentation: { only: [:DocTitle, :Type, :NPP_Number] },
-        system: {only: [:System]}})
+                        pds_documentation: { only: [:DocTitle, :Type, :NPP_Number] },
+                        system: { only: [:System] } })
   end
-
 end

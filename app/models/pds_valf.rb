@@ -1,8 +1,7 @@
 class PdsValf < ActiveRecord::Base
-
   self.inheritance_column = :_type_disabled
-  TYPES = ["valve", "vlv_cntr", "vlv_relief", "vlv_pneumo", "vlv_sol", "vlv_check", "vlv_hydr", "R/C",nil]
-  DEPARTMENT_TYPES = ["Турбинное", "Реакторное",nil]
+  TYPES = ['valve', 'vlv_cntr', 'vlv_relief', 'vlv_pneumo', 'vlv_sol', 'vlv_check', 'vlv_hydr', 'R/C', nil].freeze
+  DEPARTMENT_TYPES = ["Турбинное", "Реакторное", nil].freeze
   belongs_to :pds_project, foreign_key: 'Project'
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
@@ -27,14 +26,13 @@ class PdsValf < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        system: {only: :System},
-        psa_ctrl_power: {only: :section_name},
-        psa_ed_power: {only: :section_name},
-        psa_anc_power: {only: :section_name} ,
-        pds_man_equip: {only: :Type},
-        pds_sd: {only: :SdTitle},
-        pds_documentation: {only: :DocTitle}
-      })
+                        system: { only: :System },
+                        psa_ctrl_power: { only: :section_name },
+                        psa_ed_power: { only: :section_name },
+                        psa_anc_power: { only: :section_name },
+                        pds_man_equip: { only: :Type },
+                        pds_sd: { only: :SdTitle },
+                        pds_documentation: { only: :DocTitle }
+                      })
   end
-
 end

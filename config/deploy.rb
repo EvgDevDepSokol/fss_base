@@ -21,9 +21,9 @@ set :repo_url, 'git@bitbucket.org:denstepa/djet.git'
 
 set :pty, true
 
-set :linked_files, %w{config/database.yml}
+set :linked_files, %w(config/database.yml)
 
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w(bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system)
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -37,56 +37,55 @@ set :keep_releases, 5
 set :rbenv_type, :user
 set :rbenv_ruby, '2.1.2'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
-set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_map_bins, %w(rake gem bundle ruby rails)
 
 set(:symlinks, [
-                 {
-                     source: "nginx.conf",
-                     link: "/etc/nginx/sites-enabled/#{fetch(:full_app_name)}"
-                 },
-                 {
-                     source: "unicorn_init.sh",
-                     link: "/etc/init.d/unicorn_#{fetch(:full_app_name)}"
-                 },
-                 {
-                     source: "log_rotation",
-                     link: "/etc/logrotate.d/#{fetch(:full_app_name)}"
-                 }#,
-                 #{
-                 #    source: "monit",
-                 #    link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
-                 #}
-             ])
+      {
+        source: 'nginx.conf',
+        link: "/etc/nginx/sites-enabled/#{fetch(:full_app_name)}"
+      },
+      {
+        source: 'unicorn_init.sh',
+        link: "/etc/init.d/unicorn_#{fetch(:full_app_name)}"
+      },
+      {
+        source: 'log_rotation',
+        link: "/etc/logrotate.d/#{fetch(:full_app_name)}"
+      } # ,
+      # {
+      #    source: "monit",
+      #    link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
+      # }
+    ])
 
 set(:config_files, %w(
-  nginx.conf
-  database.example.yml
-  log_rotation
-  unicorn.rb
-  unicorn_init.sh
-))
+      nginx.conf
+      database.example.yml
+      log_rotation
+      unicorn.rb
+      unicorn_init.sh
+    ))
 
 set(:executable_config_files, %w(
-  unicorn_init.sh
-))
+      unicorn_init.sh
+    ))
 
 namespace :deploy do
-
   # make sure we're deploying what we think we're deploying
-  #before :deploy, "deploy:check_revision"
+  # before :deploy, "deploy:check_revision"
   # only allow a deploy with passing tests to deployed
-  #before :deploy, "deploy:run_tests"
+  # before :deploy, "deploy:run_tests"
   # compile assets locally then rsync
-  #after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
-  #after :finishing, 'deploy:cleanup'
+  # after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
+  # after :finishing, 'deploy:cleanup'
 
   # remove the default nginx configuration as it will tend
   # to conflict with our configs.
-  #before 'deploy:setup_config', 'nginx:remove_default_vhost'
+  # before 'deploy:setup_config', 'nginx:remove_default_vhost'
 
   # reload nginx to it will pick up any modified vhosts from
   # setup_config
-  #after 'deploy:setup_config', 'nginx:reload'
+  # after 'deploy:setup_config', 'nginx:reload'
 
   # Restart monit so it will pick up any monit configurations
   # we've added
@@ -110,5 +109,4 @@ namespace :deploy do
       # end
     end
   end
-
 end

@@ -62,17 +62,18 @@ class Api::PdsSdsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_sd
-      @pds_sd = PdsSd.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_sd_params
-      params.require(:pds_sd).permit(:SdTitle, :sys, :Project, :title_EN, :Numb, :BlobObj, :t, :from_sapfir)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_sd
+    @pds_sd = PdsSd.find(params[:id])
+  end
 
-    def project
-      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
-    end   
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_sd_params
+    params.require(:pds_sd).permit(:SdTitle, :sys, :Project, :title_EN, :Numb, :BlobObj, :t, :from_sapfir)
+  end
+
+  def project
+    @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+  end
 end

@@ -1,5 +1,4 @@
 class PdsMnemo < ActiveRecord::Base
-
   self.table_name = 'pds_mnemo'
   self.inheritance_column = nil
 
@@ -14,8 +13,7 @@ class PdsMnemo < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        system: {only: [:System]},
-        pds_detector: {only: [:tag]}})
+                        system: { only: [:System] },
+                        pds_detector: { only: [:tag] } })
   end
-
 end

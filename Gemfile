@@ -1,16 +1,15 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-#gem 'rails', '4.1.8'
-#gem 'rails', '4.2.0'
+# gem 'rails', '4.1.8'
+# gem 'rails', '4.2.0'
 gem 'rails'
 # Use sqlite3 as the database for Active Record
-#gem 'mysql2', '~> 0.3.18'  
-gem 'mysql2'  
+# gem 'mysql2', '~> 0.3.18'
+gem 'mysql2'
 
-gem "therubyracer"
-gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem 'therubyracer'
+gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'twitter-bootstrap-rails'
 # gem "haml-rails", "~> 0.9"
 gem 'hamlit'
@@ -27,7 +26,7 @@ gem 'coffee-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
-#gem 'will_paginate', '~> 3.0.6'
+# gem 'will_paginate', '~> 3.0.6'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -37,7 +36,7 @@ gem 'turbolinks'
 # gem 'jbuilder', '~> 2.0'
 gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0',          group: :doc
+gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'axlsx_rails'
 
@@ -56,7 +55,7 @@ gem 'spring',         group: :development
 gem 'web-console',    group: :development
 # gem 'web-console', '~> 3.0',    group: :development
 
-#gem 'wice_grid', '3.4.2'
+# gem 'wice_grid', '3.4.2'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -73,10 +72,9 @@ gem 'capistrano-npm'
 
 gem 'unicorn'
 
-
 group :test do
   gem 'factory_girl'
-  gem "factory_girl_rails", "~> 4.0"
+  gem 'factory_girl_rails', '~> 4.0'
   gem 'rspec-rails', '~> 3.0'
 end
 
@@ -84,7 +82,7 @@ group :production do
 end
 
 # Use debugger
-gem 'byebug' , group: [:development, :test]
+gem 'byebug', group: [:development, :test]
 
 gem 'schema_to_scaffold'
 
@@ -96,19 +94,19 @@ gem 'oj'
 gem 'jquery-ui-rails'
 
 gem 'devise'
-gem "select2-rails"
+gem 'select2-rails'
 
-gem "browserify-rails"
+gem 'browserify-rails'
 
 gem 'react-rails'
 # gem 'lodash-rails'
 
 # custom validations
-gem "schema_validations"
+gem 'schema_validations'
 
 # workers for select exports
 gem 'redis'
-gem "resque"
+gem 'resque'
 
 gem 'simple_form'
 
@@ -116,9 +114,9 @@ group :development do
   gem 'traceroute'
   gem 'rack-mini-profiler'
   gem 'flamegraph'
-  gem 'stackprof' 
+  gem 'stackprof'
   gem 'bullet'
   gem 'rails_best_practices'
   gem 'rubocop', require: false
-  gem "rubycritic", :require => false
+  gem 'rubycritic', require: false
 end

@@ -12,7 +12,6 @@ class Api::HwIcsController < ApplicationController
       format.xlsx
       format.json
     end
-
   end
 
   # GET /pds_buttons/1
@@ -25,5 +24,4 @@ class Api::HwIcsController < ApplicationController
   def project
     @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
   end
-
 end

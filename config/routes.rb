@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
-
   root 'pds_projects#select'
   resources :pds_projects, only: [:new, :show] do
     get :select
 
     resources :general
 
-
-    #member do
+    # member do
     resources :pds_syslist
-    #resources :hw_ic
+    # resources :hw_ic
 
     EquipmentPanelsController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :equipment_panels, model: table do
@@ -59,11 +57,11 @@ Rails.application.routes.draw do
       end
     end
 
-    #YAML.load_file('public/data/tables.yml').each do |table, name|
+    # YAML.load_file('public/data/tables.yml').each do |table, name|
     #  resources table.to_s.pluralize, controller: :general, model: table do
     #    get :index, as: :index, on: :collection
     #  end
-    #end
+    # end
   end
 
   ServiceController::ACTIONS.each do |table|
@@ -72,8 +70,8 @@ Rails.application.routes.draw do
     end
   end
 
-  #TableList
-  YAML.load_file('public/data/tables.yml').each do |table, name|
+  # TableList
+  YAML.load_file('public/data/tables.yml').each do |table, _name|
     resources table.to_s.pluralize, only: [:edit, :update], controller: :general, model: table
   end
 
@@ -84,13 +82,13 @@ Rails.application.routes.draw do
   resources :users
 
   devise_for :users, class_name: 'PdsEngineer',
-             controllers: { sessions: "users/sessions" },
-             path_names: { sign_in: 'login', sign_out: 'logout'},
-             path: '/'
+                     controllers: { sessions: 'users/sessions' },
+                     path_names: { sign_in: 'login', sign_out: 'logout' },
+                     path: '/'
 
   resources :tablelist
 
-  scope :api, module: :api, :defaults => { format: :json } do
+  scope :api, module: :api, defaults: { format: :json } do
     # scope :api, format: true, constraints: { format: 'json' }, module: :api do
     resources :pds_syslists
     resources :hw_ics, only: [:index]
@@ -110,14 +108,12 @@ Rails.application.routes.draw do
     controller :mass_operations, path: :mass_operations do
       put :update_all
     end
-
   end
-
 
   resource :select_builder
 
-  resources :tblbinaries, only:[]  do
-    get 'get_file', :on => :member
+  resources :tblbinaries, only: [] do
+    get 'get_file', on: :member
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

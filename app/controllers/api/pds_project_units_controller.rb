@@ -5,8 +5,8 @@ class Api::PdsProjectUnitsController < ApplicationController
   # GET /pds_project_units.json
   def index
     @pds_project_units = PdsProjectUnit.where(Project: project.ProjectID)
-    #@tmp = @pds_project_units.map{ |e| e.custom_hash }
-    #render json: {status: :ok , data:  @tmp}
+    # @tmp = @pds_project_units.map{ |e| e.custom_hash }
+    # render json: {status: :ok , data:  @tmp}
   end
 
   # GET /pds_project_units/1

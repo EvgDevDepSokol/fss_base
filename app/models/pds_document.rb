@@ -1,5 +1,4 @@
 class PdsDocument < ActiveRecord::Base
-
   belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_engineer, foreign_key: :Author
@@ -10,10 +9,9 @@ class PdsDocument < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        pds_engineer: { only: :name },
-        working_engineer_ru: { only: :name },
-        working_engineer_en: { only: :name },
-        system: {only: [:System]}})
+                        pds_engineer: { only: :name },
+                        working_engineer_ru: { only: :name },
+                        working_engineer_en: { only: :name },
+                        system: { only: [:System] } })
   end
-
 end

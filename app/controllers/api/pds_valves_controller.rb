@@ -8,9 +8,9 @@ class PdsValvesController < ApplicationController
   def show
   end
 
-
   private
-    def set_pds_valf
-      @pds_valf = PdsValf.find(params[:id])
-    end
+
+  def set_pds_valf
+    @pds_valf = PdsValf.find(params[:id])
+  end
 end

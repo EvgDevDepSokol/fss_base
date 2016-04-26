@@ -6,4 +6,3 @@ class Role < ActiveRecord::Base
     serializable_hash
   end
 end
-

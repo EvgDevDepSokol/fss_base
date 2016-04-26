@@ -1,5 +1,4 @@
 class HwIosignaldim < ActiveRecord::Base
-
   self.table_name = 'hw_iosignaldim'
   self.inheritance_column = nil
 
@@ -7,8 +6,7 @@ class HwIosignaldim < ActiveRecord::Base
     serializable_hash
   end
 
-  def serializable_hash(options={})
+  def serializable_hash(options = {})
     super options.merge(methods: :id)
   end
-
 end

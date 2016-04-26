@@ -63,17 +63,18 @@ class Api::PdsSectionAssemblersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_section_assembler
-      @pds_section_assembler = PdsSectionAssembler.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_section_assembler_params
-      params.require(:pds_section_assembler).permit(:Project, :section_name, :assembler, :t, :assembler_pwr, :assembler_ec)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_section_assembler
+    @pds_section_assembler = PdsSectionAssembler.find(params[:id])
+  end
 
-    def project
-      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
-    end   
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_section_assembler_params
+    params.require(:pds_section_assembler).permit(:Project, :section_name, :assembler, :t, :assembler_pwr, :assembler_ec)
+  end
+
+  def project
+    @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+  end
 end

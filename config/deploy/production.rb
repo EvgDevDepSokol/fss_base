@@ -4,9 +4,9 @@
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
 # Don't declare `role :all`, it's a meta role
-role :app, %w{dev@127.0.0.1:9999}
-role :web, %w{dev@127.0.0.1:9999}
-role :db,  %w{dev@127.0.0.1:9999}
+role :app, %w(dev@127.0.0.1:9999)
+role :web, %w(dev@127.0.0.1:9999)
+role :db,  %w(dev@127.0.0.1:9999)
 
 # Extended Server Syntax
 # ======================
@@ -18,19 +18,17 @@ role :db,  %w{dev@127.0.0.1:9999}
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 set :server_name, '127.0.0.1:9999'
 
-server '127.0.0.1', user: 'dev', roles: %w{web app db}, primary: true, port: 9999
+server '127.0.0.1', user: 'dev', roles: %w(web app db), primary: true, port: 9999
 
 set :stage, :production
-set :branch, "master"
+set :branch, 'master'
 set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:full_app_name)}"
 
 set :rails_env, :production
 
-set :default_env, {
-  path: '/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin',
-}
+set :default_env, path: '/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin'
 
-#set :unicorn_worker_count, 5
+# set :unicorn_worker_count, 5
 
 set :enable_ssl, false
 

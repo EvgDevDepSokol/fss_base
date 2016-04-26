@@ -62,13 +62,14 @@ class Api::PdsManEquipsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_man_equip
-      @pds_man_equip = PdsManEquip.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_man_equip_params
-      params.require(:pds_man_equip).permit(:Type, :Descriptor, :Contr_win, :Over_menu, :Comp_malf, :t)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_man_equip
+    @pds_man_equip = PdsManEquip.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_man_equip_params
+    params.require(:pds_man_equip).permit(:Type, :Descriptor, :Contr_win, :Over_menu, :Comp_malf, :t)
+  end
 end

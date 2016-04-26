@@ -5,7 +5,7 @@ class Api::PdsDetectorsController < ApplicationController
   # GET /pds_detectors
   # GET /pds_detectors.json
   def index
-    # todo fix limit
+    # TODO: fix limit
     @pds_detectors = PdsDetector.where(Project: project.ProjectID)
   end
 
@@ -66,17 +66,18 @@ class Api::PdsDetectorsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pds_detector
-      @pds_detector = PdsDetector.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pds_detector_params
-      #params.require(:pds_detector).permit(:Project, :sys, :station_sys, :tag, :tag_RU, :Desc, :Desc_EN, :Group_N, :ctrl_power, :nom_state, :low_lim, :up_lim, :LA, :HA, :LW, :HW, :LT, :HT, :Unit, :1coef_shift, :2coef_scale, :sluggishness, :scale_noise, :sd_N, :doc_reg_N, :Func, :t, :Type, :TypeDetec, :Room, :SPTable, :SCK_input, :SP_1, :SP_2, :SP_3, :SPT_ACTION, :SPT_COMMENT, :DREG_input, :TimeConst, :power, :varible, :import_t, :mod, :eq_type, :alg_type)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pds_detector
+    @pds_detector = PdsDetector.find(params[:id])
+  end
 
-    def project
-      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
-    end  
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pds_detector_params
+    # params.require(:pds_detector).permit(:Project, :sys, :station_sys, :tag, :tag_RU, :Desc, :Desc_EN, :Group_N, :ctrl_power, :nom_state, :low_lim, :up_lim, :LA, :HA, :LW, :HW, :LT, :HT, :Unit, :1coef_shift, :2coef_scale, :sluggishness, :scale_noise, :sd_N, :doc_reg_N, :Func, :t, :Type, :TypeDetec, :Room, :SPTable, :SCK_input, :SP_1, :SP_2, :SP_3, :SPT_ACTION, :SPT_COMMENT, :DREG_input, :TimeConst, :power, :varible, :import_t, :mod, :eq_type, :alg_type)
+  end
+
+  def project
+    @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+  end
 end

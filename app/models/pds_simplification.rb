@@ -1,5 +1,4 @@
 class PdsSimplification < ActiveRecord::Base
-
   belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_query, foreign_key: 'queryID'
@@ -8,9 +7,7 @@ class PdsSimplification < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        system: {only: [:System]},
-        pds_query: {only: [:queryNumber]}})
+                        system: { only: [:System] },
+                        pds_query: { only: [:queryNumber] } })
   end
-
-
 end

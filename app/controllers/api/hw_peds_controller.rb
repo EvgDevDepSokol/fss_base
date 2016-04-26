@@ -63,17 +63,18 @@ class Api::HwPedsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_hw_ped
-      @hw_ped = HwPed.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def hw_ped_params
-      params[:hw_ped]
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_hw_ped
+    @hw_ped = HwPed.find(params[:id])
+  end
 
-    def project
-      @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
-    end   
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def hw_ped_params
+    params[:hw_ped]
+  end
+
+  def project
+    @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
+  end
 end

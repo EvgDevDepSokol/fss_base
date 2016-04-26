@@ -1,13 +1,11 @@
 class ServiceController < BaseController
+  ACTIONS = [:tablelist, :table_role_rights, :roles,
+             :pds_project_properties, :pds_engineers, :pds_project,
+             :pds_syslist, :tblbinaries, :pds_unit, :pds_blocks,
+             :pds_customers, :pds_negotiators, :sign_rpt,
+             :audit, :company, :pds_equips, :articles].freeze
 
-  ACTIONS = [ :tablelist, :table_role_rights, :roles,
-    :pds_project_properties, :pds_engineers, :pds_project,
-    :pds_syslist, :tblbinaries, :pds_unit, :pds_blocks,
-    :pds_customers, :pds_negotiators, :sign_rpt,
-    :audit, :company, :pds_equips, :articles]
-
-
-  #helper_method :table_data, :table_header, :editable_properties, :model_class
+  # helper_method :table_data, :table_header, :editable_properties, :model_class
 
   def tablelists
     @data_list = Tablelist.all
@@ -21,7 +19,7 @@ class ServiceController < BaseController
     @data_list = Role.all
   end
 
-  # todo: не ясно нужно ли тут использовать скоуп проекта
+  # TODO: не ясно нужно ли тут использовать скоуп проекта
   def pds_project_properties
     @data_list = PdsProjectProperty.all
   end
@@ -58,7 +56,7 @@ class ServiceController < BaseController
     @data_list = PdsNegotiator.where(Project: project.ProjectID)
   end
 
-  # todo: no view
+  # TODO: no view
   def sign_rpts
     @data_list = SignRpt.all
   end
@@ -82,7 +80,6 @@ class ServiceController < BaseController
   helper_method :table_header
 
   def table_header
-    model_class.attribute_names.map{ |attr| {property: attr, header: attr}}.to_json
+    model_class.attribute_names.map { |attr| { property: attr, header: attr } }.to_json
   end
-
 end

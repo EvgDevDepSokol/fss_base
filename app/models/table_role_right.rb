@@ -1,5 +1,4 @@
 class TableRoleRight < ActiveRecord::Base
-
   self.table_name = 'table_role_rights'
   self.primary_key = 'tableID'
 
@@ -9,16 +8,15 @@ class TableRoleRight < ActiveRecord::Base
   alias_attribute :role_id, :roleID
   alias_attribute :tablelist_id, :tableID
 
-  # todo: fix primary key
+  # TODO: fix primary key
   def custom_hash
     serializable_hash(include: {
-      role:{only: [:role]},
-      tablelist:{only: [:table]}
-    })
+                        role: { only: [:role] },
+                        tablelist: { only: [:table] }
+                      })
   end
 
-#  def serializable_hash(options={})
-#    super options.merge(methods: :id)
-#  end
-
+  #  def serializable_hash(options={})
+  #    super options.merge(methods: :id)
+  #  end
 end

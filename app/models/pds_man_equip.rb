@@ -1,5 +1,4 @@
 class PdsManEquip < ActiveRecord::Base
-
   self.table_name = 'pds_man_equip'
 
   alias_attribute :type, :Type
@@ -9,8 +8,7 @@ class PdsManEquip < ActiveRecord::Base
     serializable_hash(methods: [:id, :Type, :Descriptor, :Comp_malf])
   end
 
-  def serializable_hash(options={})
+  def serializable_hash(options = {})
     super options.merge(methods: :id)
   end
-
 end

@@ -1,5 +1,5 @@
 class HwIc < ActiveRecord::Base
-  #belongs_to :panel
+  # belongs_to :panel
 
   self.table_name = 'hw_ic'
 
@@ -7,7 +7,7 @@ class HwIc < ActiveRecord::Base
   belongs_to :hw_ped, foreign_key: :ped, class_name: 'HwPed'
   belongs_to :pds_project_unit, foreign_key: :Unit, class_name: 'PdsProjectUnit'
   belongs_to :pds_panel, foreign_key: :panel
-  #delegate :unit, to: :pds_project_unit
+  # delegate :unit, to: :pds_project_unit
 
   alias_attribute :system_id, :sys
   alias_attribute :hw_ped_id, :ped
@@ -24,14 +24,13 @@ class HwIc < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-        system: {only: :System},
-        pds_panel: {only: [:panel]},
-        pds_project_unit: {only: [], include: {unit: {only: :Unit_RU}}},
-        hw_ped: {only: [:ped], include: {hw_devtype: {only: [:RuName]}}}},)
+                        system: { only: :System },
+                        pds_panel: { only: [:panel] },
+                        pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
+                        hw_ped: { only: [:ped], include: { hw_devtype: { only: [:RuName] } } } })
   end
 
-  def serializable_hash(options={})
+  def serializable_hash(options = {})
     super options.merge(methods: :id)
   end
-
 end

@@ -1,5 +1,4 @@
 class Api::MassOperationsController < ApplicationController
-
   include GeneralControllerHelper
 
   def update_all
@@ -12,16 +11,13 @@ class Api::MassOperationsController < ApplicationController
       querry = querry.where(params[:column] => params[:from])
     end
 
-    if params[:ids]
-      querry = querry.where(id: params[:ids])
-    end
+    querry = querry.where(id: params[:ids]) if params[:ids]
 
     if querry.update_all(params[:column] => params[:to])
       render json: { status: :ok }
     else
       render json: { status: :error }
     end
-
   end
 
   private
@@ -29,6 +25,4 @@ class Api::MassOperationsController < ApplicationController
   def project
     @project ||= PdsProject.find(params[:pds_project_id]) if params[:pds_project_id]
   end
-
-
 end

@@ -3,8 +3,7 @@ class Company < ActiveRecord::Base
   has_many :pds_projects
 
   # logo хранится как bin obj
-  def serializable_hash(options={})
+  def serializable_hash(_options = {})
     super(except: :Logo, methods: :id)
   end
-
 end
