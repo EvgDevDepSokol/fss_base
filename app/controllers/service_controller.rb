@@ -12,7 +12,7 @@ class ServiceController < BaseController
   end
 
   def table_role_rights
-    @data_list = TableRoleRight.all
+    @data_list = TableRoleRight.includes(:role, :tablelist)
   end
 
   def roles

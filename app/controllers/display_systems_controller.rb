@@ -23,7 +23,6 @@ class DisplaySystemsController < BaseController
       e1['nom']              = e[12]
       e = e1
     end
-    # .includes(:system)
   end
 
   # TODO: сделать разбиение запроса на части, а то долго отдается
@@ -43,7 +42,6 @@ class DisplaySystemsController < BaseController
       e1['Detector']         = e[8]
       e = e1
     end
-    # .includes(:system)
   end
 
   def pds_sds

@@ -76,7 +76,7 @@ class ProjectSettingsController < ApplicationController
   end
 
   def pds_sys_descriptions
-    @data_list = PdsSysDescription.where(Project: project.ProjectID)
+    @data_list = PdsSysDescription.where(Project: project.ProjectID).includes(:system)
   end
 
   def create
