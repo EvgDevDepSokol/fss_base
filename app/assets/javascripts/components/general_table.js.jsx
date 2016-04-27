@@ -508,13 +508,27 @@ var TableContainer = React.createClass({
 
   onPerPage: function(e) {
     var pagination = this.state.pagination || {};
-
-    pagination.perPage = parseInt(e.target.value, 10);
-
-    this.setState({
-      pagination: pagination
-    });
+    if ( parseInt(e.target.value, 10)> 200) e.target.value = '200';
+    var PerPage = parseInt(e.target.value, 10);
+    if (pagination.perPage !== PerPage){
+      pagination.perPage = PerPage;
+      this.setState({
+        pagination: pagination
+      });
+    }
   },
+
+  onPerPageKeyUp:function(e) {
+    debugger
+    if(e.keyCode == 13) {
+      var pagination = this.state.pagination || {};
+      pagination.perPage = parseInt(e.target.value, 10);
+      this.setState({
+        pagination: pagination
+      });
+    }
+  },
+
 
   onPage: function(e) {
     var pagination = this.state.pagination || {};
@@ -702,11 +716,11 @@ var TableContainer = React.createClass({
                 <p>cистема</p>
               </div>
               <div className='per-page-container'>
-                <input type='text' defaultValue={pagination.perPage} onChange={this.onPerPage}></input>
+                <input type='number' min='1' max='200' defaultValue={pagination.perPage} onChange={this.onPerPage} ></input>
                 <p>строк</p>
               </div>
               <div className='page-container'>
-                <input type='text' defaultValue={pagination.page} onChange={this.onPage}></input>
+                <input type='number' defaultValue={pagination.page} onChange={this.onPage}></input>
                 <p>cтр.</p>
               </div>
               <div className='icon-filter'>
