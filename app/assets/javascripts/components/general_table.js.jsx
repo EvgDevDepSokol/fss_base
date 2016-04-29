@@ -18,7 +18,6 @@ var segmentize = require('segmentize');
 var formatters = require('reactabular').formatters;
 var highlight = formatters.highlight;
 
-
 var titleCase = require('title-case');
 
 // form here
@@ -215,9 +214,12 @@ var TableContainer = React.createClass({
     // add buttons
     columns = columns.concat([
       {
-        header: 'Кнопки',
-        style: {width: '100px'},
+        header:
+        <div className = 'buttons-col'>
+          Кнопки
+        </div>, 
         classes: 'buttons-col',
+        className: 'buttons-col',
         cell: function(value, celldata, rowIndex, property){
           var url = window.location.href;
           var newRow = celldata[rowIndex].newRow;
@@ -366,11 +368,9 @@ var TableContainer = React.createClass({
       this.state.mainCheckbox_new = !this.state.mainCheckbox_new
       this.setState({
         mainCheckbox_new: this.state.mainCheckbox_new,
-        //mainCheckbox_old: !this.state.mainCheckbox_new
       });
     }
 
-    //columns = columns.concat([
     var column_x = ([
       {
         header: <div>
@@ -416,6 +416,9 @@ var TableContainer = React.createClass({
     columns = column_x.concat(columns);
     column_x = null;
 
+    columns.map(function(column){
+      column.label = column.header
+    });
     var myDefaultSorter = function (data, column) {
       var property = column.property;
   
@@ -473,11 +476,28 @@ var TableContainer = React.createClass({
 
   columnFilters() {
     var headerConfig = this.state.header;
+    
     var columns = this.state.columns;
+
+    debugger
+    var isEditableColumn = function(column) {
+      var className = column.editor ? 'editableColumn' : 'notEditableColumn';
+      column.header = <span className = {className}>
+        {column.header}
+      </span>
+      return column
+    }
+    columns.every(isEditableColumn);
+
+    debugger
+
     // if you don't want an header, just return;
     return (
       <thead>
-        <ColumnNames config={headerConfig} columns={columns} />
+        <ColumnNames
+          config={headerConfig}
+          columns={columns}
+        />
         <ColumnFilters
           columns={columns}
           onUserInput={this.handleUserInput}
@@ -518,16 +538,16 @@ var TableContainer = React.createClass({
     }
   },
 
-  onPerPageKeyUp:function(e) {
-    debugger
-    if(e.keyCode == 13) {
-      var pagination = this.state.pagination || {};
-      pagination.perPage = parseInt(e.target.value, 10);
-      this.setState({
-        pagination: pagination
-      });
-    }
-  },
+//  onPerPageKeyUp:function(e) {
+//    debugger
+//    if(e.keyCode == 13) {
+//      var pagination = this.state.pagination || {};
+//      pagination.perPage = parseInt(e.target.value, 10);
+//      this.setState({
+//        pagination: pagination
+//      });
+//    }
+//  },
 
 
   onPage: function(e) {
@@ -659,7 +679,6 @@ var TableContainer = React.createClass({
     }
 
     var system = valueHash.system;
-    //console.log(system);
   },
 
   render: function() {
@@ -748,12 +767,9 @@ var TableContainer = React.createClass({
           <div className="left">
             <div className="add-row" onClick={this.onAddRowClick} />
 
-            <div className='search-container'>
-              Поиск <Search columns={this.state.columns} data={this.state.data} onChange={this.onSearch} />
-            </div>
 
             <div className="replace-container">
-              Replace
+              Замена
               <Replace columns={this.state.columns} />
 
             </div>
@@ -801,6 +817,9 @@ var TableContainer = React.createClass({
   }
 });
 
+          //  <div className='search-container'>
+          //    Поиск <Search columns={this.state.columns} data={this.state.data} onChange={this.onSearch} />
+          //  </div>
 $(document).ready(function () {
 
   ReactDOM.render(
@@ -835,13 +854,7 @@ function augmentWithTitles(o) {
 
   return o;
 }
-//function attachIds(arr) {
-//    return arr.map((o, i) => {
-//        o.id = i;
-//
-//        return o;
-//    });
-//}
+
 function getNestedKey(obj, keys) {
   var tempVal = obj;
 

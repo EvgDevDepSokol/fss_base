@@ -37,30 +37,32 @@ module.exports = React.createClass({
   render:function() {
     var columns = this.props.columns || [];
     var options = [{
-      value: 'all',
-      name: 'Везде'
+     // value: 'all',
+     // name: 'Везде'
     }].concat(columns.map(function(column)  {
-      if(column.property && column.header) {
-        return {
-          value: column.property,
-          name: column.header
-        };
+      if(column.property && column.label) {
+        if (column.editor){
+          if (column.editor.displayName == 'stringEditor' || column.editor.displayName == 'textEditor'){
+          return {
+            value: column.property,
+            name: column.label
+        }}};
       }
     }).filter(id));
 
     return (
-        <span />
-//      React.createElement("span", {className: "replace"},
-//        React.createElement("select", {ref: "column"}, options.map(function(option)
-//            {return React.createElement("option", {key: option.value + '-option', value: option.value}, option.name);}
-//          )
-//        ),
-//        [
-//          React.createElement("input", {ref: "from"}),
-//          React.createElement("input", {ref: "to"}),
-//          React.createElement("button", {onClick: this.onSubmit, className: "btn btn-xs btn-default"}, "Replace")
-//        ]
-//      )
+//        <span />
+      React.createElement("span", {className: "replace"},
+        React.createElement("select", {ref: "column"}, options.map(function(option)
+            {return React.createElement("option", {key: option.value + '-option', value: option.value}, option.name);}
+          )
+        ),
+        [
+          React.createElement("input", {ref: "from"}),
+          React.createElement("input", {ref: "to"}),
+          React.createElement("button", {onClick: this.onSubmit, className: "btn btn-xs btn-default"}, "Replace")
+        ]
+      )
     );
   }
 });

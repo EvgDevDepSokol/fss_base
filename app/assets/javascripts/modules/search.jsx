@@ -19,14 +19,15 @@ module.exports = React.createClass({
 
   render:function() {
     var columns = this.props.columns || [];
+    debugger
     var options = [{
       value: 'all',
       name: 'Везде'
     }].concat(columns.map(function(column)  {
-        if(column.property && column.header) {
+        if(column.property && column.label) {
           return {
             value: column.property,
-            name: column.header
+            name: column.label
           };
         }
       }).filter(id));

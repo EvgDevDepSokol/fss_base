@@ -647,7 +647,7 @@ body{
       }
 
       .buttons-col{
-        min-width: 100px;
+        //min-width: 100px;
       }
 
     }
@@ -655,6 +655,14 @@ body{
   }
 }
 
+.editableColumn{
+ // font-style: italic;
+ // COLOR: #0372E1;
+}
+.notEditableColumn{
+  font-style: italic;
+  COLOR: #687077;
+}
 .header{
   BORDER-BOTTOM: thin groove;
   PADDING-BOTTOM: 7px;
