@@ -2,6 +2,7 @@ class Api::MassOperationsController < ApplicationController
   include GeneralControllerHelper
 
   def update_all
+   # byebug
     return unless params[:column] || params[:from] || params[:to]
     querry = model_class
 

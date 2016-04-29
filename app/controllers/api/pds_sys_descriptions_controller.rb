@@ -5,7 +5,7 @@ class Api::PdsSysDescriptionsController < ApplicationController
   # GET /pds_sys_descriptions
   # GET /pds_sys_descriptions.json
   def index
-    @pds_sys_descriptions = PdsSysDescription.where(Project: project.ProjectID).select(:SysID, :Project, :sys).includes(:system)
+    @pds_sys_descriptions = PdsSysDescription.where(Project: project.ProjectID).select(:SysID, :sys).includes(:system)
   end
 
   # GET /pds_sys_descriptions/1

@@ -13,15 +13,17 @@ class EquipmentPanelsController < BaseController
   def hw_ics
     @data_list = HwIc.where(Project: project.ProjectID)
                      .includes(
-                       :system, hw_ped: [:hw_devtype], pds_panel: [], pds_project_unit: [:unit])
+                       :system,  pds_panel: [], pds_project_unit: [:unit])
+                     .includes(hw_ped: [:hw_devtype])
                      .pluck(
                        :icID, :ref,
                        'pds_syslist.SystemID', 'pds_syslist.System',
                        :Description,
-                       'hw_peds.ped_N', 'hw_peds.ped', 'hw_devtype.typeID', 'hw_devtype.RuName',
+                       'hw_peds.ped_N', :'hw_peds.ped', 'hw_devtype.typeID', 'hw_devtype.RuName',
                        :scaleMin, :scaleMax,
                        'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
                        :tag_no, :UniquePTAG, :un, :panel, :Description_EN, :rev)
+                      
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
@@ -38,7 +40,6 @@ class EquipmentPanelsController < BaseController
       e1['panel']            = e[17]
       e1['Description_EN']   = e[18]
       e1['rev']              = e[19]
-
       e = e1
     end
   end

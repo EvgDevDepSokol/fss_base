@@ -1,13 +1,14 @@
 class HwPed < ActiveRecord::Base
   self.inheritance_column = nil
+ # self.table_name = 'hw_ped'
 
   belongs_to :hw_devtype, foreign_key: :type
 
   alias_attribute :hw_devtype_id, :type
 
-  def to_s
-    ped
-  end
+#  def to_s
+#    ped
+#  end
 
   def custom_hash
     serializable_hash(include: { hw_devtype: { only: [:RuName] } })
