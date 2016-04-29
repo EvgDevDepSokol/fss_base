@@ -6,7 +6,7 @@
   var model_name = "#{hash_model_name}";
 
   var columns = [
-  // {property:"id",header:"RegID"},
+  {property:"id",header:"RegID", hidden: true},
 
   {property: "system.System", header: "Сист.", nested: true,
     editor: "SystemSelector", attribute: 'system_id'},
