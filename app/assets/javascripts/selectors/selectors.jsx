@@ -11,7 +11,6 @@ var onChange = function(value,context) {
 
 var getSelectorOptions = function(url,data,context){
   var options = [];
-  debugger
   $.ajax({
     url: url,
     dataType: 'json',

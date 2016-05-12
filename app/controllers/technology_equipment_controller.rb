@@ -111,6 +111,40 @@ class TechnologyEquipmentController < BaseController
     @data_list = PdsValf.where(Project: project.ProjectID)
                         .includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power,
                                   :pds_man_equip, :pds_sd, :pds_documentation)
+                        .pluck(
+                          :valveID, :tag_RU, :tag_EN, :Type, :Desc, :Desc_EN, :Department,
+                          :PowerTemp, :open_rate, :close_rate, :sd_N, :Algorithm,
+                          :model, :room, :connection,
+                          'pds_syslist.SystemID', 'pds_syslist.System',
+                          'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
+                          'psa_ed_powers_pds_valves.section_N', 'psa_ed_powers_pds_valves.section_name',
+                          'psa_anc_powers_pds_valves.section_N', 'psa_anc_powers_pds_valves.section_name')
+
+    @data_list = @data_list.each.map do |e|
+      e1 = {}
+      e1['id']               = e[0]
+      e1['tag_RU']           = e[1]
+      e1['tag_EN']           = e[2]
+      e1['Type']             = e[3]
+      e1['Desc']             = e[4]
+      e1['Desc_EN']          = e[5]
+      e1['Department']       = e[6]
+      e1['PowerTemp']        = e[7]
+      e1['open_rate']        = e[8]
+      e1['close_rate']       = e[9]
+      e1['sd_N']             = e[10]
+      e1['Algorithm']        = e[11]
+      e1['model']            = e[12]
+      e1['room']             = e[13]
+      e1['connection']       = e[14]
+      e1['system']           = { id: e[15], System: e[16] }
+      e1['psa_ctrl_power']   = { id: e[17], section_name: e[18] }
+      e1['psa_ed_power']     = { id: e[19], section_name: e[20] }
+      e1['psa_anc_power']    = { id: e[21], section_name: e[22] }
+
+      e = e1
+    end
+                        
   end
 
   def pds_volumes

@@ -160,7 +160,13 @@ var TableContainer = React.createClass({
               },
               onCancel: function(){
                 context.setState({ editedRow: null, lockRow: false, sendData: {} });
-              }
+              },
+              onSave: function (valueHash) {
+                var sendData = $.extend(context.state.sendData, valueHash);
+                context.setState({lockRow: true, sendData: sendData});
+                debugger
+                context.onSaveClick(context.state.data[rowIndex]);
+              },
             })
           };
         }
@@ -266,7 +272,6 @@ var TableContainer = React.createClass({
           }.bind(this);
 
           var editClick = function() {
-            debugger
             this.setState({editedRow: rowIndex});
           }.bind(this);
 
@@ -275,60 +280,9 @@ var TableContainer = React.createClass({
           }.bind(this);
 
           var saveClick = function() {
-            if(!$.isEmptyObject(this.state.sendData))
-            {
-              var d = {};
-              d[this.props.objectType] = this.state.sendData;
-              if(newRow){
-                idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
-                d[this.props.objectType].Project = project.id;
-                $.ajax({
-                  url: url,
-                  dataType: 'json',
-                  type: 'POST',
-                  data: d,
-                  success: function(response) {
-                    this.state.data[idx] = response.data;
-                    this.setState({
-                      data: this.state.data,
-                      lockRow: false,
-                      sendData: {},
-                      editedRow: null
-                    });
-                  }.bind(this),
-                  error: function(xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                  }.bind(this)
-                });
-              }else{
-                $.ajax({
-                  url: url + '/' + itemId,
-                  dataType: 'json',
-                  type: 'PUT',
-                  data: d,
-                  success: function(response) {
-                    this.state.data[idx] = response.data;
-                    this.setState({
-                      data: this.state.data,
-                      lockRow: false,
-                      sendData: {},
-                      editedRow: null
-                    });
-                  }.bind(this),
-                  error: function(xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                  }.bind(this)
-                });
-              }
-            }else
-            {
-              this.setState({
-                lockRow: false,
-                sendData: {},
-                editedRow: null
-              });
-            }
+            this.onSaveClick(celldata[rowIndex]);
           }.bind(this);
+
 
           var editButton = <span className='edit btn btn-xs btn-default' onClick={editClick.bind(this)} style={{cursor: 'pointer'}}>
               <i className="fa fa-pencil"></i>
@@ -364,27 +318,44 @@ var TableContainer = React.createClass({
       }
     ]);
 
-    var clickMainCheckbox = function(){
-      this.state.mainCheckbox_new = !this.state.mainCheckbox_new
+    var clickMainCheckboxY = function(e){
+      this.state.mainCheckbox_new = true
       this.setState({
-        mainCheckbox_new: this.state.mainCheckbox_new,
+        mainCheckbox_new: true,
+        mainCheckbox_old: false
       });
     }
 
+    var clickMainCheckboxN = function(e){
+      this.state.mainCheckbox_new = false
+      this.setState({
+        mainCheckbox_new: false,
+        mainCheckbox_old: true
+      });
+    }
+
+    var mainCheckbox =
+      <div> 
+        <input
+          type="checkbox"
+          onChange={clickMainCheckboxY.bind(this)}
+          checked = {true}/>
+        <input
+          type="checkbox"
+          onChange={clickMainCheckboxN.bind(this)}
+          checked = {false}/>
+      </div>;
+
     var column_x = ([
       {
-        header: <div>
-          <input
-            type="checkbox"
-            onClick={clickMainCheckbox.bind(this)}
-            style={{width:'20px'}}/>
-        </div>,        
-        style: {width: '30px'},
+        header:
+          <div>
+            {mainCheckbox} 
+          </div>,
         classes: 'checkbox-col',
         cell: function(value, celldata, rowIndex, property){
           var itemId = celldata[rowIndex].id;
           var idx = findIndex(this.state.data, {id: itemId});
-
           var clickCheckBox = function(){
             debugger
               this.state.data[idx].checked = !this.state.data[idx].checked;
@@ -393,13 +364,22 @@ var TableContainer = React.createClass({
               });
           }
  
+          if (idx > -1){
           var checkBox = <span classname = 'checkbox'>
             <input
               type = "checkbox"
               onChange = {clickCheckBox.bind(this)}
-              checked = {this.state.data[idx].checked}
+              checked = {this.state.data[idx].checked? this.state.data[idx].checked : false}
             />            
           </span>;
+          } else {
+          var checkBox = <span classname = 'checkbox'>
+            <input
+              type = "checkbox"
+            />            
+          </span>;
+ 
+          }
 
           return {
             value: (
@@ -479,7 +459,6 @@ var TableContainer = React.createClass({
     
     var columns = this.state.columns;
 
-    debugger
     var isEditableColumn = function(column) {
       var className = column.editor ? 'editableColumn' : 'notEditableColumn';
       column.header = <span className = {className}>
@@ -488,8 +467,6 @@ var TableContainer = React.createClass({
       return column
     }
     columns.every(isEditableColumn);
-
-    debugger
 
     // if you don't want an header, just return;
     return (
@@ -589,6 +566,68 @@ var TableContainer = React.createClass({
       data: this.state.data
     });
   },*/
+
+  onSaveClick: function(celldata) {
+    if(!$.isEmptyObject(this.state.sendData))
+    {
+      var newRow = celldata.newRow;
+      var url = window.location.href;
+      var itemId = celldata.id;
+      var idx = findIndex(this.state.data, {id: itemId});
+      var d = {};
+      d[this.props.objectType] = this.state.sendData;
+      if(newRow){
+        idx = findIndex(this.state.data, {_id: celldata._id});
+        d[this.props.objectType].Project = project.id;
+        $.ajax({
+          url: url,
+          dataType: 'json',
+          type: 'POST',
+          data: d,
+          success: function(response) {
+            this.state.data[idx] = response.data;
+            this.setState({
+              data: this.state.data,
+              lockRow: false,
+              sendData: {},
+              editedRow: null
+            });
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error(this.props.url, status, err.toString());
+          }.bind(this)
+        });
+      }else{
+        $.ajax({
+          url: url + '/' + itemId,
+          dataType: 'json',
+          type: 'PUT',
+          data: d,
+          success: function(response) {
+            this.state.data[idx] = response.data;
+            this.setState({
+              data: this.state.data,
+              lockRow: false,
+              sendData: {},
+              editedRow: null
+            });
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error(this.props.url, status, err.toString());
+          }.bind(this)
+        });
+      }
+    }else
+    {
+      this.setState({
+        lockRow: false,
+        sendData: {},
+        editedRow: null
+      });
+    }
+  },
+
+
 
   onAddRowClick: function(copyRow){
     if(this.state.lockRow)
@@ -748,6 +787,9 @@ var TableContainer = React.createClass({
               <div className='icon-replace' >
                 Замена
               </div>
+              <div className="add-row" onClick={this.onAddRowClick}>
+                Добавить запись
+              </div>
 
               <div>
               </div>
@@ -765,12 +807,11 @@ var TableContainer = React.createClass({
         </div>
         <div className="table-filters" key={"table-filters"}>
           <div className="left">
-            <div className="add-row" onClick={this.onAddRowClick} />
 
 
             <div className="replace-container">
               Замена
-              <Replace columns={this.state.columns} />
+              <Replace columns={this.state.columns} data={this.state.data} />
 
             </div>
 

@@ -61,12 +61,45 @@ class EquipmentPanelsController < BaseController
 
   def pds_switch_nofixes
     @data_list = PdsSwitchNofix.where(Project: project.ProjectID)
-                               .includes({ hw_ic: [:hw_ped] }, :system)
+                   .includes({ hw_ic: [:hw_ped] }, :system)
+                   .pluck(
+                     :KeyID,
+                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
+                     'hw_peds.ped_N', :'hw_peds.ped',
+                     'pds_syslist.SystemID', 'pds_syslist.System',
+                     'range'
+                   )
+                      
+    @data_list = @data_list.each.map do |e|
+      e1 = {}
+      e1['id']               = e[0]
+      e1['hw_ic']            = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['system']           = { id: e[7], System: e[8] }
+      e1['range']            = e[9]
+      e = e1
+    end
+
   end
 
   def pds_switch_fixes
     @data_list = PdsSwitchFix.where(Project: project.ProjectID)
                              .includes({ hw_ic: [:hw_ped] }, :system)
+                   .pluck(
+                     :KeyID,
+                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
+                     'hw_peds.ped_N', :'hw_peds.ped',
+                     'pds_syslist.SystemID', 'pds_syslist.System',
+                     'range'
+                   )
+
+    @data_list = @data_list.each.map do |e|
+      e1 = {}
+      e1['id']               = e[0]
+      e1['hw_ic']            = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['system']           = { id: e[7], System: e[8] }
+      e1['range']            = e[9]
+      e = e1
+    end
   end
 
   def pds_buttons
@@ -82,6 +115,23 @@ class EquipmentPanelsController < BaseController
   def pds_lamps
     @data_list = PdsLamp.where(Project: project.ProjectID)
                         .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler)
+                    .pluck(
+                     :LampID,
+                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
+                     'hw_peds.ped_N', :'hw_peds.ped',
+                     'pds_syslist.SystemID', 'pds_syslist.System',
+                     'pds_section_assembler.section_N','pds_section_assembler.section_name'
+                   )
+                      
+    @data_list = @data_list.each.map do |e|
+      e1 = {}
+      e1['id']                    = e[0]
+      e1['hw_ic']                 = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['system']                = { id: e[7], System: e[8] }
+      e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
+      e = e1
+    end
+                       
   end
 
   def pds_mnemos
@@ -114,6 +164,28 @@ class EquipmentPanelsController < BaseController
   def pds_announciators
     @data_list = PdsAnnounciator.where(Project: project.ProjectID)
                                 .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler, :pds_detector)
+                     .pluck(
+                     :AnnouncID,
+                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
+                     'hw_peds.ped_N', :'hw_peds.ped',
+                     'pds_syslist.SystemID', 'pds_syslist.System',
+                     'pds_section_assembler.section_N','pds_section_assembler.section_name',
+                     'pds_detectors.DetID','pds_detectors.tag',
+                     'Type','sign'
+                   )
+                      
+    @data_list = @data_list.each.map do |e|
+      e1 = {}
+      e1['id']                    = e[0]
+      e1['hw_ic']                 = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['system']                = { id: e[7], System: e[8] }
+      e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
+      e1['pds_detector']          = { id: e[11], tag: e[12] }
+      e1['Type']                  = e[13]
+      e1['sign']                  = e[14]
+      e = e1
+    end
+                                
   end
 
   # TODO: add unit to scope

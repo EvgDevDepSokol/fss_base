@@ -24,6 +24,10 @@ class PdsValf < ActiveRecord::Base
   validates :Type, inclusion: TYPES, if: :present?
   validates :Department, inclusion: DEPARTMENT_TYPES, if: :present?
 
+  def custom_map
+    true
+  end
+
   def custom_hash
     serializable_hash(include: {
                         system: { only: :System },

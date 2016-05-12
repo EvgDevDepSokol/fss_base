@@ -9,6 +9,10 @@ class PdsSwitchNofix < ActiveRecord::Base
   alias_attribute :hw_ic_id, :IC
   alias_attribute :system_id, :sys
 
+  def custom_map
+    true
+  end
+
   def custom_hash
     serializable_hash(include: {
                         hw_ic: { only: [:ref, :tag_no, :Description], include: { hw_ped: { only: [:ped] } } },

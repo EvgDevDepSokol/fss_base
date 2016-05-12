@@ -2,25 +2,33 @@ class Api::MassOperationsController < ApplicationController
   include GeneralControllerHelper
 
   def update_all
-   # byebug
     return unless params[:column] || params[:from] || params[:to]
     querry = model_class
 
-    querry = querry.where(Project: project.id) if project
-
-    if params[:from] != '*'
-      querry = querry.where(params[:column] => params[:from])
+    if querry.respond_to?(:Project)
+      querry = querry.where(Project: project.id) if project 
     end
 
-    querry = querry.where(id: params[:ids]) if params[:ids]
+    # querry = querry.where(id: params[:ids]) if params[:ids]
 
-    if querry.update_all(params[:column] => params[:to])
+    if params[:ids] 
+      p querry
+      querry = querry.find(params[:ids])
+      # querry = querry.where("? in (?)",querry.primary_key, params[:ids])
+      p querry
+  
+      querry.each do |row|
+        if row[params[:column]].include? params[:from]
+          row[params[:column]].gsub!(params[:from],params[:to])
+          row.save
+        end
+      end
+    
       render json: { status: :ok }
     else
       render json: { status: :error }
     end
   end
-
   private
 
   def project

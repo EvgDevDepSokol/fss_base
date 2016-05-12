@@ -16,14 +16,15 @@ module.exports = function()  {
 
     getInitialState:function() {
       return {
-        value: ''
+        value: this.props.value
       };
     },
 
     render:function() {
       return (
         React.createElement("input", {
-            value: this.state.value || this.props.value,
+            //value: this.state.value || this.props.value,
+            value: this.state.value,
             onChange: this.onChange,
             onKeyUp: this.keyUp,
             onBlur: this.done}
@@ -39,11 +40,17 @@ module.exports = function()  {
 
     keyUp:function(e) {
       if(e.keyCode == 13) {
+        // Enter pressed
         this.done();
       }
       if(e.keyCode == 27) {
+        // ESC pressed
         this.cancel();
       }
+      if (e.ctrlKey && e.keyCode == 13) {
+        // Ctrl-Enter pressed
+        this.save();
+      }      
     },
 
     done:function() {
@@ -53,6 +60,11 @@ module.exports = function()  {
     },
     cancel:function() {
       this.props.onCancel();
-    }
+    },
+    save:function() {
+      var h = {};
+      h[this.props.attribute] = ReactDOM.findDOMNode(this).value
+      this.props.onSave(h);
+    },
   });
 }.bind(this);
