@@ -848,7 +848,13 @@ var TableContainer = React.createClass({
             columnNames={this.columnFilters}
             columns={this.state.columns}
             data={paginated.data}
-            selectedRow={this.state.editedRow}/>
+            selectedRow={this.state.editedRow}
+            row={(d, rowIndex) => {
+                return {
+                    className: rowIndex == this.state.editedRow ? 'edited-row' : '',
+                };
+            }}            
+            />
         </div>
         <div id="panel-sticker" onClick={this.onHideTreeViewClick}>
           <p></p> 
