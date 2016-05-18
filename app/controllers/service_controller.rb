@@ -45,7 +45,7 @@ class ServiceController < BaseController
   end
 
   def pds_blocks
-    @data_list = PdsBlock.where(Project: project.ProjectID)
+    @data_list = PdsBlock.where(Project: project.ProjectID).includes(:system)
   end
 
   def pds_customers

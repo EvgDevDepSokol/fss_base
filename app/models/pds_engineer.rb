@@ -1,10 +1,23 @@
 class PdsEngineer < ActiveRecord::Base
+  # attr_accessible :login_project
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :rememberable, :trackable
 
-  #  alias :devise_valid_password? :valid_password?
+
+ # def login_project=(value)
+ #   @login_project=value
+ # end
+
+  def login_project
+    @login_project
+  end
+
+ # def self.login_project
+ #   byebug
+ #   @login_project
+ # end
 
   def valid_password?(password)
     #      logger.info " #{password}"
@@ -18,10 +31,6 @@ class PdsEngineer < ActiveRecord::Base
     self.password = password
     true
   end
-
-  #  def is_admin?
-  #    CheifDirector
-  #  end
 
   def email
     self.EMail

@@ -19,8 +19,4 @@ class HwWirelist < ActiveRecord::Base
                         hw_ped: { only: [:ped],
                                   include: { hw_devtype: { only: [:RuName] } } } })
   end
-
-  #  def serializable_hash(options={})
-  #    super options.merge(methods: :id)
-  #  end
 end

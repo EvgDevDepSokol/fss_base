@@ -87,12 +87,12 @@ var TreeSearch = React.createClass({
       <div className="react-search">
         <input type="text" className="input-text" ref="searchInput" onKeyUp={this.changeInput} />
         <i className="fa fa-search fa-lg"></i>
-        <i className="fa fa-times fa-lg" ></i>
       </div>
     );
   }
 });
 
+      //  <i className="fa fa-times fa-lg" ></i>
 var TreeListNode = React.createClass({
 
   openLink: function(){

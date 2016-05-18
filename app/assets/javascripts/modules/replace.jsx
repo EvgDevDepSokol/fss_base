@@ -73,7 +73,6 @@ module.exports = React.createClass({
     }).filter(id));
 
     return (
-//        <span />
       React.createElement("span", {className: "replace"},
         React.createElement("select", {ref: "column"}, options.map(function(option)
             {return React.createElement("option", {key: option.value + '-option', value: option.value}, option.name);}

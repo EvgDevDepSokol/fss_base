@@ -334,8 +334,9 @@ var TableContainer = React.createClass({
       });
     }
 
+     // <div style= 'display: flex'>
     var mainCheckbox =
-      <div> 
+      <div className = "two-checkboxes">
         <input
           type="checkbox"
           onChange={clickMainCheckboxY.bind(this)}
@@ -422,6 +423,7 @@ var TableContainer = React.createClass({
       columns: columns,
       formatters: formatters,
       showFilters: false,
+      showReplace: false,
       mainCheckbox_new: false,
       mainCheckbox_old: false,
       pagination: {
@@ -461,8 +463,9 @@ var TableContainer = React.createClass({
 
     var isEditableColumn = function(column) {
       var className = column.editor ? 'editableColumn' : 'notEditableColumn';
+      var header = column.header;
       column.header = <span className = {className}>
-        {column.header}
+        {header}
       </span>
       return column
     }
@@ -470,6 +473,7 @@ var TableContainer = React.createClass({
 
     // if you don't want an header, just return;
     return (
+        this.state.showFilters ?
       <thead>
         <ColumnNames
           config={headerConfig}
@@ -479,7 +483,15 @@ var TableContainer = React.createClass({
           columns={columns}
           onUserInput={this.handleUserInput}
           />
-      </thead>
+      </thead> :
+      <thead>
+        <ColumnNames
+          config={headerConfig}
+          columns={columns}
+        />
+      </thead> 
+
+
     );
   },  
 
@@ -654,6 +666,19 @@ var TableContainer = React.createClass({
       sendData: this.getDuplicatedRowsendData(copyRow)});
   },
 
+  onIconFilterClick: function(){
+    var showFilters = !this.state.showFilters;
+    this.setState({
+      showFilters:showFilters
+    });
+  },
+  onIconReplaceClick: function(){
+    var showReplace = !this.state.showReplace;
+    this.setState({
+      showReplace:showReplace
+    });
+  },
+
   getDuplicatedRowsendData: function(row){
     var sendData = {};
     _.each(Object.keys(columns), function (columnKey) {
@@ -781,17 +806,14 @@ var TableContainer = React.createClass({
                 <input type='number' defaultValue={pagination.page} onChange={this.onPage}></input>
                 <p>cтр.</p>
               </div>
-              <div className='icon-filter'>
+              <div className={this.state.showFilters ? 'icon-filter border-inset' : 'icon-filter'} onClick={this.onIconFilterClick}>
                 Фильтр
               </div>
-              <div className='icon-replace' >
+              <div className={this.state.showReplace ? 'icon-replace border-inset' : 'icon-replace'} onClick={this.onIconReplaceClick}>
                 Замена
               </div>
               <div className="add-row" onClick={this.onAddRowClick}>
                 Добавить запись
-              </div>
-
-              <div>
               </div>
             </div>
             <div className="right">
@@ -805,9 +827,8 @@ var TableContainer = React.createClass({
 
           </div>
         </div>
-        <div className="table-filters" key={"table-filters"}>
+        <div className={this.state.showReplace ? 'table-filters':'table-filters hidden-element'} key={"table-filters"}>
           <div className="left">
-
 
             <div className="replace-container">
               Замена
@@ -841,7 +862,7 @@ var TableContainer = React.createClass({
           </Paginator.Context>
         </div>
 
-        <div className='table-container' key={"table-container"}>
+        <div className={this.state.showReplace ?'table-container table-container-replace-show' : 'table-container table-container-replace-hide'} key={"table-container"}>
 
           <Table 
             className='table table-bordered'
@@ -873,8 +894,7 @@ $(document).ready(function () {
     <TableContainer columns={columns} data={data}
       objectType={model_name} title={title} project={project}/>,
     document.getElementById('general_table')
-  );
-
+    );
 });
 
 function paginate(data, o) {

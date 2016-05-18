@@ -1,7 +1,10 @@
 class PdsBlock < ActiveRecord::Base
   belongs_to :pds_project, foreign_key: 'Project'
+  belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
+  alias_attribute :system_id, :sys
 
   def custom_hash
-    serializable_hash.merge(id: id)
+    serializable_hash(include: {
+                        system: { only: :System}})
   end
 end

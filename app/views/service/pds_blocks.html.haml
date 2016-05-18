@@ -7,10 +7,12 @@
 
   var columns = [
   {"property":"id","header":"blockID", hidden: true},
-  {"property":"sys","header":"sys"},
-  {"property":"p_p","header":"p_p", editor: "stringEditor"},
+  //{"property":"sys","header":"sys"},
+  {property: "system.System", header: "Сист.",
+    editor: "SystemSelector", attribute: 'system_id', nested: true},
+  {"property":"p_p","header":"п/п", editor: "stringEditor"},
   {"property":"Desc","header":"Описание", editor: "TextEditor"},
-  {"property":"doc","header":"doc", editor: "stringEditor"},
-  {"property":"varName","header":"varName", editor: "stringEditor"},
+  {"property":"doc","header":"Документ", editor: "stringEditor"},
+  {"property":"varName","header":"Имя переменной", editor: "stringEditor"},
   //{"property":"Project","header":"Project"}
   ];

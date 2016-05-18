@@ -4,4 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :authenticate_user!
+
+  def after_sign_in_path_for(resource, *args)
+    #options  = args.extract_options!  
+    tmp=self.params['user']['login_project']
+    '/pds_projects/'+tmp+'/hw_ics'
+  end  
 end
