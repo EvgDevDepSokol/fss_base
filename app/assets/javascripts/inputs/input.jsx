@@ -23,7 +23,6 @@ module.exports = function()  {
     render:function() {
       return (
         React.createElement("input", {
-            //value: this.state.value || this.props.value,
             value: this.state.value,
             onChange: this.onChange,
             onKeyUp: this.keyUp,

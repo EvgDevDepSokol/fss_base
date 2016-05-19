@@ -358,7 +358,6 @@ var TableContainer = React.createClass({
           var itemId = celldata[rowIndex].id;
           var idx = findIndex(this.state.data, {id: itemId});
           var clickCheckBox = function(){
-            debugger
               this.state.data[idx].checked = !this.state.data[idx].checked;
               this.setState({
                 data: this.state.data,

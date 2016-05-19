@@ -11,16 +11,38 @@ class Api::MassOperationsController < ApplicationController
 
     # querry = querry.where(id: params[:ids]) if params[:ids]
 
-    if params[:ids] 
-      p querry
+    if params[:ids]
+      lpass=false 
+      column = params[:column]
       querry = querry.find(params[:ids])
-      # querry = querry.where("? in (?)",querry.primary_key, params[:ids])
-      p querry
-  
       querry.each do |row|
-        if row[params[:column]].include? params[:from]
-          row[params[:column]].gsub!(params[:from],params[:to])
-          row.save
+        val = row.send(column)
+        if val.is_a? Fixnum 
+          if val == params[:from].to_i
+            row.send(column+'=', params[:to].to_i)
+            row.save 
+            lpass=true
+          end
+        elsif val.is_a? String
+          if row[column].include? params[:from]
+            row[column].gsub!(params[:from],params[:to]) 
+            row.save
+            lpass=true
+          end
+        elsif val.is_a? Float
+          valfrom=(Float(params[:from]) rescue nil)
+          valto=(Float(params[:to]) rescue nil)
+          if Float(row[column])==valfrom
+            row[column]=valto
+            row.save
+            lpass=true
+          end
+        elsif val.nil?
+          if ((params[:from].nil?)||(params[:from]==''))
+            row.send(column+'=', params[:to])
+            row.save
+            lpass=true
+          end
         end
       end
     
