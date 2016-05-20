@@ -54,7 +54,7 @@ var CustomInput = React.createClass({
       debugger
       return (
         <div className = 'replace-selector'>
-        {React.createElement(editor)} 
+        {React.createElement(editor,{onValue:function(){}})} 
         </div>
       );
     }else{
