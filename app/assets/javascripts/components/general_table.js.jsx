@@ -480,7 +480,7 @@ var TableContainer = React.createClass({
         />
         <ColumnFilters
           columns={columns}
-          onUserInput={this.handleUserInput}
+          onUserInput={this.onFilterInput}
           />
       </thead> :
       <thead>
@@ -494,7 +494,7 @@ var TableContainer = React.createClass({
     );
   },  
 
-  handleUserInput: function(columns) {
+  onFilterInput: function(columns) {
     this.setState({
       columns: columns,
     });
@@ -667,8 +667,13 @@ var TableContainer = React.createClass({
 
   onIconFilterClick: function(){
     var showFilters = !this.state.showFilters;
+    var columns = this.state.columns;
+    if (!showFilters) columns.forEach(function (col) {
+      col.filter=null;
+    }); 
     this.setState({
-      showFilters:showFilters
+      showFilters:showFilters,
+      columns: columns
     });
   },
   onIconReplaceClick: function(){
@@ -750,14 +755,16 @@ var TableContainer = React.createClass({
     var header = this.state.header;
     var columns = this.state.columns;
 
-    columns.forEach(function(column){
-      if (column.filter){
-        var cfilter = {};
-        cfilter['query'] = column.filter;
-        cfilter['column'] = column.property;
-        data = Search.search(cfilter, columns, data);
-      }
-    });
+    if (this.state.showFilters){
+      columns.forEach(function(column){
+        if (column.filter){
+          var cfilter = {};
+          cfilter['query'] = column.filter;
+          cfilter['column'] = column.property;
+          data = Search.search(cfilter, columns, data);
+        }
+      })
+    };
     if (this.state.search.query) {
       // apply search to data
       // alternatively you could hit backend `onChange`
