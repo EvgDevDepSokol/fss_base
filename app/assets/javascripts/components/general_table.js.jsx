@@ -653,12 +653,17 @@ var TableContainer = React.createClass({
 
 
 
-  onAddRowClick: function(copyRow){
+  onAddRowClick: function(copiedRow){
     if(this.state.lockRow)
       return;
 
+    debugger
 
-    var copyRow  = copyRow || {};
+    var copyRow = {};
+    if (copiedRow.id) {
+      copyRow = $.extend({}, copiedRow);
+    };
+    // var copyRow  = newRow || {};
     var data = this.state.data;
 
     // чтобы добавить строку в начало, находим индекс первой строки

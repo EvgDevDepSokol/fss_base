@@ -19,7 +19,6 @@ module.exports = React.createClass({
 
   render:function() {
     var columns = this.props.columns || [];
-    debugger
     var options = [{
       value: 'all',
       name: 'Везде'
@@ -132,7 +131,6 @@ module.exports.matches = (column, value, query, options) => {
         return {};
     }
 
-  debugger
     var query_arr = query.toLowerCase().split('*');
     var searchText = value.toLowerCase();
     var currentPosition = 0;
