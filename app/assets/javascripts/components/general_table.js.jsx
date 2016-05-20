@@ -159,7 +159,20 @@ var TableContainer = React.createClass({
                 context.setState({lockRow: true, sendData: sendData});
               },
               onCancel: function(){
-                context.setState({ editedRow: null, lockRow: false, sendData: {} });
+                var celldata = context.state.data[rowIndex];
+                if(celldata.newRow){
+                 var idx = findIndex(context.state.data, {_id: celldata._id});
+
+                 context.state.data.splice(idx, 1);
+                 context.setState({
+                   data: context.state.data,
+                   editedRow: null,
+                   lockRow: false,
+                   sendData: {}
+                 });
+                } else {
+                  context.setState({ editedRow: null, lockRow: false, sendData: {} });
+                }
               },
               onSave: function (valueHash) {
                 var sendData = $.extend(context.state.sendData, valueHash);
