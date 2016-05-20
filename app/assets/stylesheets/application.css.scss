@@ -493,51 +493,34 @@ body{
           }
         }
 
-        .icon-filter{
+        .info-buttons{
           background-size: contain;
-          background-image: asset_data_url("icons/filter.png");
-          width: 120px;
-          height: 100%;
-          display: inline-block;
-          padding-left: 50px;
           background-repeat: no-repeat;
-          //margin-right: 15px;
-          padding-top: 20px;
+          width: 120px;
+          display: inline-block;
+          height: 40px;
+          padding-top: 10px;
           cursor: pointer;
           vertical-align: top;
           color: #0044cc;        
           font-size: 13px;
+          margin-top: 8px;
+        }
+
+        .icon-filter{
+          background-image: asset_data_url("icons/filter.png");
+          padding-left: 50px;
           margin-left: 130px;
         }
 
         .icon-replace{
-          background-size: contain;
           background-image: asset_data_url("icons/replace.png");
-          width: 120px;
-          height: 100%;
-          display: inline-block;
           padding-left: 50px;
-          background-repeat: no-repeat;
-          padding-top: 20px;
-          cursor: pointer;
-          vertical-align: top;
-          color: #0044cc;        
-          font-size: 13px;
         }
 
         .add-row{
-          background-size: contain;
           background-image: asset_data_url("icons/add_row.png");
-          width: 120px;
-          height: 100%;
-          display: inline-block;
           padding-left: 55px;
-          background-repeat: no-repeat;
-          padding-top: 20px;
-          cursor: pointer;
-          vertical-align: top;
-          color: #0044cc;        
-          font-size: 13px;
         }
       }
 

@@ -805,13 +805,13 @@ var TableContainer = React.createClass({
                 <input type='number' defaultValue={pagination.page} onChange={this.onPage}></input>
                 <p>cтр.</p>
               </div>
-              <div className={this.state.showFilters ? 'icon-filter border-inset' : 'icon-filter'} onClick={this.onIconFilterClick}>
+              <div className={this.state.showFilters ? 'icon-filter info-buttons border-inset' : 'icon-filter info-buttons'} onClick={this.onIconFilterClick}>
                 Фильтр
               </div>
-              <div className={this.state.showReplace ? 'icon-replace border-inset' : 'icon-replace'} onClick={this.onIconReplaceClick}>
+              <div className={this.state.showReplace ? 'icon-replace info-buttons border-inset' : 'icon-replace info-buttons'} onClick={this.onIconReplaceClick}>
                 Замена
               </div>
-              <div className="add-row" onClick={this.onAddRowClick}>
+              <div className="add-row info-buttons" onClick={this.onAddRowClick}>
                 Добавить запись
               </div>
             </div>
