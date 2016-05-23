@@ -4,7 +4,7 @@ class Api::PdsManEquipsController < ApplicationController
   # GET /pds_man_equips
   # GET /pds_man_equips.json
   def index
-    @pds_man_equips = PdsManEquip.all
+    @pds_man_equips = PdsManEquip.all.order(:Type)
   end
 
   # GET /pds_man_equips/1

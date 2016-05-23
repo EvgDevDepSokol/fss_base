@@ -5,7 +5,7 @@ class Api::PdsDocumentationsController < ApplicationController
   # GET /pds_documentations
   # GET /pds_documentations.json
   def index
-    @pds_documentations = PdsDocumentation.where(Project: project.ProjectID)
+    @pds_documentations = PdsDocumentation.where(Project: project.ProjectID).order(:DocTitle)
   end
 
   # GET /pds_documentations/1

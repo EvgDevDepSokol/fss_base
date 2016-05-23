@@ -5,7 +5,7 @@ class Api::PdsSectionAssemblersController < ApplicationController
   # GET /pds_section_assemblers
   # GET /pds_section_assemblers.json
   def index
-    @pds_section_assemblers = PdsSectionAssembler.where(Project: project.ProjectID)
+    @pds_section_assemblers = PdsSectionAssembler.where(Project: project.ProjectID).order(:section_name)
   end
 
   # GET /pds_section_assemblers/1

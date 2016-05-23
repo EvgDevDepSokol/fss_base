@@ -2,7 +2,7 @@ class PdsValvesController < ApplicationController
   before_action :set_pds_valf, only: [:show]
 
   def index
-    @pds_valves = PdsValf.all
+    @pds_valves = PdsValf.all.order(:Type)
   end
 
   def show

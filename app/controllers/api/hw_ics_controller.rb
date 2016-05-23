@@ -5,7 +5,7 @@ class Api::HwIcsController < ApplicationController
   before_action :project, only: :index
 
   def index
-    @hw_ics = HwIc.where(Project: project.ProjectID)
+    @hw_ics = HwIc.where(Project: project.ProjectID).order(:ref)
     respond_to do |format|
       format.html { render index_view }
       format.csv

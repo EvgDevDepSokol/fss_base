@@ -5,7 +5,7 @@ class Api::PdsPanelsController < ApplicationController
   # GET /pds_panels
   # GET /pds_panels.json
   def index
-    @pds_panels = PdsPanel.where(Project: project.ProjectID)
+    @pds_panels = PdsPanel.where(Project: project.ProjectID).order(:panel)
   end
 
   # GET /pds_panels/1

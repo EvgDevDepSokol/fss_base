@@ -5,7 +5,7 @@ class Api::HwPedsController < ApplicationController
   # GET /hw_peds
   # GET /hw_peds.json
   def index
-    @hw_peds = HwPed.where(Project: project.ProjectID)
+    @hw_peds = HwPed.where(Project: project.ProjectID).order(:ped)
   end
 
   # GET /hw_peds/1

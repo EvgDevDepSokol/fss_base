@@ -6,7 +6,7 @@ class Api::PdsDetectorsController < ApplicationController
   # GET /pds_detectors.json
   def index
     # TODO: fix limit
-    @pds_detectors = PdsDetector.where(Project: project.ProjectID)
+    @pds_detectors = PdsDetector.where(Project: project.ProjectID).order(:tag)
   end
 
   # GET /pds_detectors/1

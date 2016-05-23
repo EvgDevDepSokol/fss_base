@@ -4,7 +4,7 @@ class Api::HwDevtypesController < ApplicationController
   # GET /hw_devtypes
   # GET /hw_devtypes.json
   def index
-    @hw_devtypes = HwDevtype.all
+    @hw_devtypes = HwDevtype.all.order(:RuName)
   end
 
   # GET /hw_devtypes/1
