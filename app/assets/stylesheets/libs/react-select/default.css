@@ -142,6 +142,7 @@
   top: 100%;
   width: 150%;
   z-index: 1000;
+  display: inline-block;
   -webkit-overflow-scrolling: touch;
 }
 .Select-menu {
@@ -154,6 +155,7 @@
   cursor: pointer;
   display: block;
   padding: 2px 4px;
+  min-height:14px;
 }
 .Select-option:last-child {
   border-bottom-right-radius: 4px;
