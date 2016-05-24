@@ -52,7 +52,7 @@ class Api::MassOperationsController < ApplicationController
         end
       end
     
-      render json: { status: :ok }
+      render json: { status: :ok, data: table_data(querry)}
     else
       render json: { status: :error }
     end
@@ -62,4 +62,15 @@ class Api::MassOperationsController < ApplicationController
   def project
     @project ||= PdsProject.find(params[:pds_project_id]) if params[:pds_project_id]
   end
+
+  def table_data(querry)
+    Oj.default_options = { mode: :compat }
+    if (model_class.method_defined? :custom_hash)
+      Oj.dump(querry.map(&:custom_hash))
+    else
+      Oj.dump(querry)
+    end
+  end
+
+
 end

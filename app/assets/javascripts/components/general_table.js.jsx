@@ -48,6 +48,7 @@ var MalfunctionTypeSelector = require('../selectors/static_malfunction_types.jsx
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
 var UnitSelector = require('../selectors/pds_project_units.jsx');
+var UnitAllSelector = require('../selectors/pds_units.jsx');
 //var DocumentationSelector = require('../selectors/pds_man_equips.jsx');
 
 var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');
@@ -177,7 +178,6 @@ var TableContainer = React.createClass({
               onSave: function (valueHash) {
                 var sendData = $.extend(context.state.sendData, valueHash);
                 context.setState({lockRow: true, sendData: sendData});
-                debugger
                 context.onSaveClick(context.state.data[rowIndex]);
               },
             })
@@ -657,8 +657,6 @@ var TableContainer = React.createClass({
     if(this.state.lockRow)
       return;
 
-    debugger
-
     var copyRow = {};
     if (copiedRow.id) {
       copyRow = $.extend({}, copiedRow);
@@ -743,6 +741,11 @@ var TableContainer = React.createClass({
 
   onExportClick: function(){
     exportData(this.props.data, this.props.columns);
+  },
+
+  onReplaceDone: function(data){
+    debugger
+    this.setState({data: data})
   },
 
   onSystemSelectorChange: function(valueHash){
@@ -856,7 +859,7 @@ var TableContainer = React.createClass({
 
             <div className="replace-container">
               Замена
-              <Replace columns={this.state.columns} data={this.state.data} />
+              <Replace columns={this.state.columns} data={this.state.data} onReplaceDone={this.onReplaceDone}/>
 
             </div>
 

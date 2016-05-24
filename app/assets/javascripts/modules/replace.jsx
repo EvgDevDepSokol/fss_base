@@ -1,5 +1,4 @@
 'use strict';
-
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -32,6 +31,8 @@ var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');
 var PdsDocumentationsSelector = require('../selectors/pds_documentation.jsx');
 var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 
+var findIndex = require('lodash').findIndex;
+
 var CustomInput = React.createClass({
   displayName: 'CustomInput',
 
@@ -51,7 +52,6 @@ var CustomInput = React.createClass({
     var attribute = this.props.attribute;
     if (attribute) {
       var editor = eval(this.props.editor.displayName);
-      debugger
       return (
         <div className = 'replace-selector'>
         {React.createElement(editor,{onValue:function(){}})} 
@@ -75,7 +75,8 @@ module.exports = React.createClass({
   getInitialState:function(){
     return {
       editor: null,
-      attribute: null
+      attribute: null,
+      data: data
     }
   },
 
@@ -83,16 +84,14 @@ module.exports = React.createClass({
   onSubmit: function(){
     var data = this.props.data;
     var attribute = this.state.attribute;
+    var column = ReactDOM.findDOMNode(this.refs.column).value;
     if (attribute) {
-      var column = attribute;
       var from = ReactDOM.findDOMNode(this.refs.from).firstChild.childNodes[0].defaultValue;
       var to = ReactDOM.findDOMNode(this.refs.to).firstChild.childNodes[0].defaultValue;
     } else {
-      var column = ReactDOM.findDOMNode(this.refs.column).value;
       var from = ReactDOM.findDOMNode(this.refs.from).value;
       var to = ReactDOM.findDOMNode(this.refs.to).value;
     } 
-    debugger
     var ids = [];
 
     if (column.length > 0) {
@@ -109,14 +108,23 @@ module.exports = React.createClass({
           data: {
             pds_project_id: project ? project.id : null,
             model: model_name,
-            column: column,
+            column: attribute ? attribute : column,
             from: from,
             to: to,
             ids: ids
           },
           type: 'PUT',
-          success: function() {
-            location.reload();
+          success: function(responce) {
+            var cols = JSON.parse(responce.data);
+            var data = this.state.data;
+            var arr = column.split('.');
+            column = arr[0];
+            cols.forEach(function (col) {
+              var idx = findIndex(data, {id: col.id});
+              data[idx][column] = col[column];
+            });
+            this.props.onReplaceDone(data);
+          //  location.reload();
           }.bind(this),
           error: function(xhr, status, err) {
             console.error(this.props.url, status, err.toString());
@@ -135,7 +143,6 @@ module.exports = React.createClass({
     var tmp = e.target.value;
     var columns = this.props.columns;
     var context = this;
-    debugger
     columns.forEach(function (col) {
       if (col.property == tmp) {
         context.setState({
