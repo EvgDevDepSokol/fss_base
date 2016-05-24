@@ -6,13 +6,13 @@ class HwIc < ActiveRecord::Base
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :hw_ped, foreign_key: :pedID, class_name: 'HwPed'
   belongs_to :pds_project_unit, foreign_key: :Unit, class_name: 'PdsProjectUnit'
-  belongs_to :pds_panel, foreign_key: :panel
+  belongs_to :pds_panel, foreign_key: :panel_id
   # delegate :unit, to: :pds_project_unit
 
   alias_attribute :system_id, :sys
   alias_attribute :hw_ped_id, :pedID
   alias_attribute :pds_project_unit_id, :Unit
-  alias_attribute :pds_panel_id, :panel
+  alias_attribute :pds_panel_id, :panel_id
 
   validates_length_of :ref, maximum: 128
   validates_length_of :rev, maximum: 1

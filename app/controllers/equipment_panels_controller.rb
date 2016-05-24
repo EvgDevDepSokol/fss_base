@@ -22,7 +22,8 @@ class EquipmentPanelsController < BaseController
                        'hw_peds.ped_N', :'hw_peds.ped', 'hw_devtype.typeID', 'hw_devtype.RuName',
                        :scaleMin, :scaleMax,
                        'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
-                       :tag_no, :UniquePTAG, :un, :panel, :Description_EN, :rev)
+                       :tag_no, :UniquePTAG, :un, :Description_EN, :rev,
+                       'pds_panel.pID','pds_panel.panel')
                       
     @data_list = @data_list.each.map do |e|
       e1 = {}
@@ -37,9 +38,9 @@ class EquipmentPanelsController < BaseController
       e1['tag_no']           = e[14]
       e1['UniquePTAG']       = e[15]
       e1['un']               = e[16]
-      e1['panel']            = e[17]
-      e1['Description_EN']   = e[18]
-      e1['rev']              = e[19]
+      e1['Description_EN']   = e[17]
+      e1['rev']              = e[18]
+      e1['pds_panel']        = { id: e[19], panel: e[20]}
       e = e1
     end
   end

@@ -29,7 +29,7 @@ module.exports = React.createClass({
           {pds_project_id:project.ProjectID},
           this
         );
-        options = $.map(options , function(el){ return {value: el.panel, label: el.panel} } )
+        options = $.map(options , function(el){ return {value: el.id, label: el.panel} } )
 
         callback(null, {
           options: options,
