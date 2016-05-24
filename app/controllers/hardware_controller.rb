@@ -9,12 +9,13 @@ class HardwareController < BaseController
 
   def hw_wirelists
     @data_list = HwWirelist.where(Project: project.ProjectID)
-                           .includes(hw_ped: [:hw_devtype], pds_panel: [])
+                           .includes(:hw_ic, hw_ped: [:hw_devtype], pds_panel: [])
                            .pluck(
                              'wirelist_N', 'from', 'to', 'wc', 'nc', 'io', 'm', 's', 'word', 'bit',
                              'hw_peds.ped_N', 'hw_devtype.typeID', 'hw_devtype.RuName',
-                             'rev', 'IC', 'remarks',
-                             'pds_panel.pID', 'pds_panel.panel')
+                             'rev', 'remarks',
+                             'pds_panel.pID', 'pds_panel.panel',
+                             'hw_ic.icID', 'hw_ic.ref')
 
     @data_list = @data_list.each.map do |e|
       e1 = {}
@@ -30,9 +31,9 @@ class HardwareController < BaseController
       e1['bit']       = e[9]
       e1['hw_ped']    = { id: e[10], hw_devtype: { id: e[11], RuName: e[12] } }
       e1['rev']       = e[13]
-      e1['IC']        = e[14]
-      e1['remarks']   = e[15]
-      e1['pds_panel'] = { id: e[16], panel: e[17] }
+      e1['remarks']   = e[14]
+      e1['pds_panel'] = { id: e[15], panel: e[16] }
+      e1['hw_ic']     = { id: e[17], ref: e[18] }
       e = e1
     end
   end
