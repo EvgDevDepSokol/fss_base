@@ -8,8 +8,8 @@
   var columns = [
   {"property":"ID","header":"ID", hidden: true},
   //{"property":"Project","header":"Project"},
-  {"property":"hw_ped.ped","header":"PED", nested: true, attribute: 'hw_ped_id'},
-  {"property":"hw_iosignaldef.ioname","header":"Тип сигн.",  nested: true, attribute: 'hw_iosignaldef_id'},
+  {"property":"hw_ped.ped","header":"PED", editor:'HwPedSelector', nested: true, attribute: 'hw_ped_id'},
+  {"property":"hw_iosignaldef.ioname","header":"Тип сигн.", editor: 'HwIosignaldefSelector', nested: true, attribute: 'hw_iosignaldef_id'},
   //{"property":"wirecode","header":"wirecode", editor: "stringEditor"},
   {"property":"contact","header":"Контакт", editor: "stringEditor"},
   //{"property":"sw_pref","header":"sw_pref", editor: "stringEditor"},

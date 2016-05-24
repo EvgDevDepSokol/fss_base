@@ -34,6 +34,7 @@ var DetectorSelector = require('../selectors/detector.jsx');
 var PdsManEquipSelector = require('../selectors/pds_man_equips.jsx');
 var PdsSectionAssemblerSelector = require('../selectors/pds_section_assembler.jsx');
 var HwPedSelector = require('../selectors/hw_ped.jsx');
+var HwIosignaldefSelector = require('../selectors/hw_iosignaldef.jsx');
 var PdsPanelSelector = require('../selectors/pds_panels.jsx');
 var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 
