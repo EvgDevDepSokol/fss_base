@@ -47,7 +47,7 @@ class HardwareController < BaseController
   end
 
   def hw_iosignals
-    @data_list = HwIosignal.where(Project: project.ProjectID)
+    @data_list = HwIosignal.where(Project: project.ProjectID).includes(:hw_ped, :hw_iosignaldef)
   end
 
   def hw_devtypes
