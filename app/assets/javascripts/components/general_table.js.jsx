@@ -741,11 +741,12 @@ var TableContainer = React.createClass({
   },
 
   onExportClick: function(){
-    exportData(this.props.data, this.props.columns);
+    debugger
+    var bookname = model_name + '_' + project.id.toString() + '.xlsx';
+    exportData(this.props.data, this.props.columns, bookname);
   },
 
   onReplaceDone: function(data){
-    debugger
     this.setState({data: data})
   },
 
