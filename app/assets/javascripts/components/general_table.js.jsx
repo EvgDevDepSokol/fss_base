@@ -743,7 +743,12 @@ var TableContainer = React.createClass({
   onExportClick: function(){
     debugger
     var bookname = model_name + '_' + project.id.toString() + '.xlsx';
-    exportData(this.props.data, this.props.columns, bookname);
+  //  var lexport = confirm('OK - экспортировать с учетом фильтров, Отмена - экспортировать всю таблицу.');
+  //  if (lexport) {
+      exportData(this.state.dataxls, this.props.columns, bookname);
+  //  } else {
+  //    exportData(this.props.data, this.props.columns, bookname);
+  //  }
   },
 
   onReplaceDone: function(data){
@@ -803,7 +808,8 @@ var TableContainer = React.createClass({
       this.state.mainCheckbox_old = mainCheckbox_new;
     };
     
-    data = sortColumn.sort(data, this.state.sortingColumn, orderBy); 
+    data = sortColumn.sort(data, this.state.sortingColumn, orderBy);
+    this.state.dataxls = data; 
     
     var paginated = paginate(data, pagination);
     var pages = Math.ceil(data.length / Math.max(
