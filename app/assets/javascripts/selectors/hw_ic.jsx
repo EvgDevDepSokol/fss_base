@@ -46,6 +46,7 @@ module.exports = React.createClass({
         value: this.state.value,
         simpleValue:true,
         multi: false,
+        matchProp: 'label',
         clearable: false
         })
     );
