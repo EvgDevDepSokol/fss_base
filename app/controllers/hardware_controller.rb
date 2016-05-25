@@ -9,10 +9,10 @@ class HardwareController < BaseController
 
   def hw_wirelists
     @data_list = HwWirelist.where(Project: project.ProjectID)
-                           .includes(:hw_ic, hw_ped: [:hw_devtype], pds_panel: [])
+                           .includes(:hw_ic, :hw_ped, :pds_panel)
                            .pluck(
                              'wirelist_N', 'from', 'to', 'wc', 'nc', 'io', 'm', 's', 'word', 'bit',
-                             'hw_peds.ped_N', 'hw_devtype.typeID', 'hw_devtype.RuName',
+                             'hw_peds.ped_N', 'hw_peds.ped', 
                              'rev', 'remarks',
                              'pds_panel.pID', 'pds_panel.panel',
                              'hw_ic.icID', 'hw_ic.ref')
@@ -29,11 +29,11 @@ class HardwareController < BaseController
       e1['s']         = e[7]
       e1['word']      = e[8]
       e1['bit']       = e[9]
-      e1['hw_ped']    = { id: e[10], hw_devtype: { id: e[11], RuName: e[12] } }
-      e1['rev']       = e[13]
-      e1['remarks']   = e[14]
-      e1['pds_panel'] = { id: e[15], panel: e[16] }
-      e1['hw_ic']     = { id: e[17], ref: e[18] }
+      e1['hw_ped']    = { id: e[10], ped: e[11] }
+      e1['rev']       = e[12]
+      e1['remarks']   = e[13]
+      e1['pds_panel'] = { id: e[14], panel: e[15] }
+      e1['hw_ic']     = { id: e[16], ref: e[17] }
       e = e1
     end
   end
@@ -51,7 +51,7 @@ class HardwareController < BaseController
   end
 
   def hw_devtypes
-    @data_list = HwDevtype.all
+    @data_list = HwDevtype.all.includes(:tablelist)
   end
 
   def hw_iosignaldims
