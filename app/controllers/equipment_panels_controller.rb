@@ -12,9 +12,10 @@ class EquipmentPanelsController < BaseController
   #  end
   def hw_ics
     @data_list = HwIc.where(Project: project.ProjectID)
-                     .includes(
-                       :system,  pds_panel: [], pds_project_unit: [:unit])
+                     .includes(pds_panel: [], pds_project_unit: [:unit])
                      .includes(hw_ped: [:hw_devtype])
+                     .joins('LEFT OUTER JOIN hw_ic_sys ON hw_ic_sys.IC = hw_ic.icID')
+                     .joins('LEFT OUTER JOIN pds_syslist ON pds_syslist.SystemID = hw_ic_sys.sys').order(:ref)
                      .pluck(
                        :icID, :ref,
                        'pds_syslist.SystemID', 'pds_syslist.System',
