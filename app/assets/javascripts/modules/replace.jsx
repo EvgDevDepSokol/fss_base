@@ -38,27 +38,34 @@ var CustomInput = React.createClass({
 
   propTypes: {
     editor: React.PropTypes.func,
-    attribute: React.PropTypes.string
+    attribute: React.PropTypes.string,
   },
 
   getInitialState:function(){
     return {
       editor: this.props.editor,
-      attribute: this.props.attribute
+      attribute: this.props.attribute,
     }
   },
 
   render: function() {
     var attribute = this.props.attribute;
+    var description = this.props.description;
     if (attribute) {
       var editor = eval(this.props.editor.displayName);
       return (
         <div className = 'replace-selector'>
-        {React.createElement(editor,{onValue:function(){}})} 
+          {React.createElement(editor,{onValue:function(){}})}
+          <p> {description}</p>
         </div>
       );
     }else{
-      return (<input />);
+      return (
+        <div className = 'replace-input-container'>
+          <input className = 'replace-input'/>
+          <p> {description}</p>
+        </div>
+      );
     }
   }
 });
@@ -168,26 +175,31 @@ module.exports = React.createClass({
     }).filter(id));
 
     return (
-      React.createElement("span", {className: "replace"},
-        React.createElement("select", {ref: "column", onChange: this.onChangeColumn}, options.map(function(option)
-            {return React.createElement("option", {key: option.name, value: option.value}, option.name);}
-          )
-        ),
-        [
-          <CustomInput
-            ref="from"
-            editor = {this.state.editor}
-            attribute = {this.state.attribute}
-          />,
-          <CustomInput
-            ref="to"
-            editor = {this.state.editor}
-            attribute = {this.state.attribute}
-          />,
-          <button  onClick = {this.onSubmit} className = "btn btn-xs btn-default">
-             Replace
-          </button>,
-        ]
+      React.createElement('span', {className: 'replace'},
+        <div>
+          {React.createElement('select', {className: 'replace-column-selector', ref: 'column', onChange: this.onChangeColumn}, options.map(
+                function(option){
+                  return React.createElement('option', {key: option.name, value: option.value}, option.name);
+                }
+            )
+          )}        
+          <p></p>
+        </div>,
+        <CustomInput
+          ref='from'
+          editor = {this.state.editor}
+          attribute = {this.state.attribute}
+          description = 'Что заменить'
+        />,
+        <CustomInput
+          ref='to'
+          editor = {this.state.editor}
+          attribute = {this.state.attribute}
+          description = 'На что заменить'
+        />,
+        <button  onClick = {this.onSubmit} className = 'btn btn-xs btn-default'>
+          Replace
+        </button>
       )
     );
   }
