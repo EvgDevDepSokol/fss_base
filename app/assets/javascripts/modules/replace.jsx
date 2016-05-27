@@ -176,6 +176,10 @@ module.exports = React.createClass({
 
     return (
       React.createElement('span', {className: 'replace'},
+        <div className='replace-radio-group'>
+          <input type="radio" name="replace" value="0"/>Замена по шаблону     <br/>
+          <input type="radio" name="replace" value="1"/>Замена без шаблона    <br/>
+        </div>,
         <div>
           {React.createElement('select', {className: 'replace-column-selector', ref: 'column', onChange: this.onChangeColumn}, options.map(
                 function(option){
@@ -183,7 +187,7 @@ module.exports = React.createClass({
                 }
             )
           )}        
-          <p></p>
+          <p>Где заменить</p>
         </div>,
         <CustomInput
           ref='from'

@@ -866,7 +866,6 @@ var TableContainer = React.createClass({
           <div className="left">
 
             <div className="replace-container">
-              Замена
               <Replace columns={this.state.columns} data={this.state.data} onReplaceDone={this.onReplaceDone}/>
 
             </div>

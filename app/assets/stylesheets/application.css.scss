@@ -574,9 +574,15 @@ body{
     }
     .replace{
       display: flex;
+      margin-left: 2px;
+      margin-top: 2px;      
     }
     .search-container{
       float: left;
+      height: 100%;      
+    }
+    .replace-radio-group{
+     // border-style: ridge;
     }
     .replace-input-container{
       margin-right: 2px;
