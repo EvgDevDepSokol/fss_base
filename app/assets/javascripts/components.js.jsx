@@ -15,6 +15,7 @@ var ReactDOM = require('react-dom');
 var SideMenu = require('components/treeview.jsx');
 var XlsxImport = require('components/xlsx-import.jsx');
 var Modal = require('react-modal');
+var ProjectShortSelector =  require('selectors/static_project_short.jsx') 
 
 
 $(document).ready(function () {
@@ -25,7 +26,9 @@ $(document).ready(function () {
 
   var appElement = document.getElementById('import_xlsx_modal');
   Modal.setAppElement(appElement);
-//  Modal.injectCSS();
   ReactDOM.render(<XlsxImport key={"xlsx-import"} />, appElement);
 
+//  var appElement = document.getElementById('select_project');
+//  Modal.setAppElement(appElement);
+//  ReactDOM.render(<ProjectShortSelector key={"select_project"} />, appElement);
 });
