@@ -24,7 +24,6 @@ class HwIc < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-                        hw_ic_sys: {only: :sys},
                         system: { only: :System },
                         pds_panel: { only: [:panel] },
                         pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
