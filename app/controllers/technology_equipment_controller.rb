@@ -31,7 +31,7 @@ class TechnologyEquipmentController < BaseController
                               :low_lim, :up_lim, :LA, :HA, :LW, :HW, :LT, :HT,
                               'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
                               :'1coef_shift', :'2coef_scale', :Type, :TypeDetec, :Room, :SCK_input,
-                              :power, :mod,
+                              :mod,
                               'pds_sd.sd_N', 'pds_sd.SdTitle')
 
     @data_list = @data_list.each.map do |e|
@@ -58,9 +58,8 @@ class TechnologyEquipmentController < BaseController
       e1['TypeDetec']        = e[23]
       e1['Room']             = e[24]
       e1['SCK_input']        = e[25]
-      e1['power']            = e[26]
-      e1['mod']              = e[27]
-      e1['pds_sd']           = { id: e[28], SdTitle: e[29] }
+      e1['mod']              = e[26]
+      e1['pds_sd']           = { id: e[27], SdTitle: e[28] }
 
       e = e1
     end
