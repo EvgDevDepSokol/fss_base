@@ -458,6 +458,11 @@ body{
         .system-selector{
           display: inline-block;
           margin-right: 10px;
+          .Select.is-disabled{
+            .Select-control{
+              background-color: rgb(235, 235, 228);
+            }
+          }
           .Select-control{
             border: 1px solid rgb(169, 169, 169);
             .Select-value{
@@ -469,7 +474,10 @@ body{
             padding-right:20px;
             color: #333333;
           }
-
+          .Select-menu-outer{
+            width:100%;
+            text-align: center;
+          }
         }
         .per-page-container{
           display: inline-block;
@@ -963,10 +971,6 @@ footer{
   bottom:0;
 }
 .system-selector{
-  .Select-menu-outer{
-    width:100%;
-    text-align: center;
-  }
 }
 .navbar-middle{
   padding-left: 15%;

@@ -10,7 +10,15 @@ module.exports = React.createClass({
 
   propTypes: {
     ChangeFilter: React.PropTypes.func,
-    columns: React.PropTypes.array
+    columns: React.PropTypes.array,
+    disabled: React.PropTypes.boolean
+  },
+
+  getInitialState() {
+    return {
+      columns: this.props.columns,
+      disabled: this.props.disabled
+    };
   },
 
   ChangeFilter: function(e) {
@@ -36,6 +44,7 @@ module.exports = React.createClass({
                 id={i}
                 name={column.property}
                 autocomplete = "on"
+                disabled = {this.props.disabled}
                 /> : ''}
             </td>
           );

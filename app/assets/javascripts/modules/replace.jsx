@@ -76,14 +76,16 @@ module.exports = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func,
     columns: React.PropTypes.array,
-    data: React.PropTypes.array
+    data: React.PropTypes.array,
+    disabled: React.PropTypes.boolean
   },
 
   getInitialState:function(){
     return {
       editor: null,
       attribute: null,
-      data: data
+      data: data,
+      disabled: this.props.disabled
     }
   },
 
@@ -201,7 +203,7 @@ module.exports = React.createClass({
           attribute = {this.state.attribute}
           description = 'На что заменить'
         />,
-        <button  onClick = {this.onSubmit} className = 'btn btn-xs btn-default'>
+        <button  onClick = {this.onSubmit} className = 'btn btn-xs btn-default' disabled={this.props.disabled}>
           Replace
         </button>
       )

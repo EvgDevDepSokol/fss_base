@@ -191,7 +191,7 @@ var TableContainer = React.createClass({
             props: {
               onDoubleClick: function () {
                 if(!context.state.lockRow){
-                  context.setState({editedRow: rowIndex});
+                  context.setState({editedRow: rowIndex, lockRow: true});
                 }
               }
             }
@@ -496,6 +496,7 @@ var TableContainer = React.createClass({
         <ColumnFilters
           columns={columns}
           onUserInput={this.onFilterInput}
+          disabled={this.state.lockRow}
           />
       </thead> :
       <thead>
@@ -831,15 +832,15 @@ var TableContainer = React.createClass({
                 <p>{"на " + pages + " стр."}</p>
               </div>
               <div className='system-selector'>
-                <SystemFilterSelector attribute="system" onValue={this.onSystemSelectorChange} />
+                <SystemFilterSelector attribute="system" onValue={this.onSystemSelectorChange} disabled={this.state.lockRow} />
                 <p>cистема</p>
               </div>
               <div className='per-page-container'>
-                <input type='number' min='1' max='200' defaultValue={pagination.perPage} onChange={this.onPerPage} ></input>
+                <input type='number' min='1' max='200' defaultValue={pagination.perPage} onChange={this.onPerPage} disabled={this.state.lockRow}></input>
                 <p>строк</p>
               </div>
               <div className='page-container'>
-                <input type='number' defaultValue={pagination.page} onChange={this.onPage}></input>
+                <input type='number' defaultValue={pagination.page} onChange={this.onPage} disabled={this.state.lockRow}></input>
                 <p>cтр.</p>
               </div>
               <div className={this.state.showFilters ? 'icon-filter info-buttons border-inset' : 'icon-filter info-buttons'} onClick={this.onIconFilterClick}>
@@ -867,7 +868,7 @@ var TableContainer = React.createClass({
           <div className="left">
 
             <div className="replace-container">
-              <Replace columns={this.state.columns} data={this.state.data} onReplaceDone={this.onReplaceDone}/>
+              <Replace columns={this.state.columns} data={this.state.data} onReplaceDone={this.onReplaceDone} disabled={this.state.lockRow}/>
 
             </div>
 
