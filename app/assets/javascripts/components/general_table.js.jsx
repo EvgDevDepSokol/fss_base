@@ -161,7 +161,7 @@ var TableContainer = React.createClass({
                 context.setState({lockRow: true, sendData: sendData});
               },
               onCancel: function(){
-                var celldata = context.state.data[rowIndex];
+                var celldata = data[rowIndex];
                 if(celldata.newRow){
                  var idx = findIndex(context.state.data, {_id: celldata._id});
 
@@ -177,9 +177,10 @@ var TableContainer = React.createClass({
                 }
               },
               onSave: function (valueHash) {
+                var celldata = data[rowIndex];
                 var sendData = $.extend(context.state.sendData, valueHash);
                 context.setState({lockRow: true, sendData: sendData});
-                context.onSaveClick(context.state.data[rowIndex]);
+                context.onSaveClick(celldata);
               },
             })
           };
