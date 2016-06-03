@@ -849,7 +849,7 @@ var TableContainer = React.createClass({
               <div className={this.state.showReplace ? 'icon-replace info-buttons border-inset' : 'icon-replace info-buttons'} onClick={this.onIconReplaceClick}>
                 Замена
               </div>
-              <div className="add-row info-buttons" onClick={this.onAddRowClick}>
+              <div className={false ? 'add-row info-buttons border-inset' : 'add-row info-buttons'} onClick={this.onAddRowClick}>
                 Добавить запись
               </div>
             </div>

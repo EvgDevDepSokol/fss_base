@@ -11,9 +11,9 @@ module.exports = React.createClass({
   displayName: 'HwIcSelector',
 
   getInitialState() {
-    debugger
     return {
-      value: this.props.id
+      value: this.props.id,
+      disabled: this.props.disabled
     };
   },
 
@@ -47,6 +47,7 @@ module.exports = React.createClass({
         simpleValue:true,
         multi: false,
         matchProp: 'label',
+        disabled: this.props.disabled,
         clearable: false
         })
     );

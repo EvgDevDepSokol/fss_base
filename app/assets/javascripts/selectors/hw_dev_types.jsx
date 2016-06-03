@@ -12,7 +12,8 @@ module.exports = React.createClass({
 
   getInitialState() {
     return {
-      value: this.props.id
+      value: this.props.id,
+      disabled: this.props.disabled
     };
   },
 
@@ -46,6 +47,7 @@ module.exports = React.createClass({
         value: this.state.value,
         simpleValue:true,
         multi: false,
+        disabled: this.props.disabled,
         clearable: false
         })
     );

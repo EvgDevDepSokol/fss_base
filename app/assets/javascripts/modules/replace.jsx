@@ -45,25 +45,25 @@ var CustomInput = React.createClass({
     return {
       editor: this.props.editor,
       attribute: this.props.attribute,
+      enabled: this.props.enabled
     }
   },
 
   render: function() {
     var attribute = this.props.attribute;
     var description = this.props.description;
+    debugger
     if (attribute) {
       var editor = eval(this.props.editor.displayName);
       return (
         <div className = 'replace-selector'>
-          {React.createElement(editor,{onValue:function(){}})}
-          <p> {description}</p>
+          {React.createElement(editor,{onValue:function(){}, disabled:!this.props.enabled})}
         </div>
       );
     }else{
       return (
         <div className = 'replace-input-container'>
-          <input className = 'replace-input'/>
-          <p> {description}</p>
+          <input className = 'replace-input' disabled = {!this.props.enabled}/>
         </div>
       );
     }
@@ -77,7 +77,7 @@ module.exports = React.createClass({
     onChange: React.PropTypes.func,
     columns: React.PropTypes.array,
     data: React.PropTypes.array,
-    disabled: React.PropTypes.boolean
+//    disabled: React.PropTypes.boolean
   },
 
   getInitialState:function(){
@@ -85,7 +85,9 @@ module.exports = React.createClass({
       editor: null,
       attribute: null,
       data: data,
-      disabled: this.props.disabled
+      disabled: this.props.disabled,
+      fromIndex: 0,
+      toIndex: 0
     }
   },
 
@@ -98,8 +100,8 @@ module.exports = React.createClass({
       var from = ReactDOM.findDOMNode(this.refs.from).firstChild.childNodes[0].defaultValue;
       var to = ReactDOM.findDOMNode(this.refs.to).firstChild.childNodes[0].defaultValue;
     } else {
-      var from = ReactDOM.findDOMNode(this.refs.from).value;
-      var to = ReactDOM.findDOMNode(this.refs.to).value;
+      var from = ReactDOM.findDOMNode(this.refs.from).children[0].value;
+      var to = ReactDOM.findDOMNode(this.refs.to).children[0].value;
     } 
     var ids = [];
 
@@ -120,7 +122,9 @@ module.exports = React.createClass({
             column: attribute ? attribute : column,
             from: from,
             to: to,
-            ids: ids
+            ids: ids,
+            fromIndex: this.state.fromIndex,
+            toIndex: this.state.toIndex
           },
           type: 'PUT',
           success: function(responce) {
@@ -162,6 +166,20 @@ module.exports = React.createClass({
     });
   },
 
+  onRadioFromChange: function(e){
+    var fromIndex = parseInt(e.target.value,10);
+    var toIndex = this.state.toIndex;
+    if (fromIndex!==2){
+      toIndex = 0;
+    };
+    this.setState({fromIndex: fromIndex, toIndex: toIndex})
+  },
+
+  onRadioToChange: function(e){
+    var toIndex = parseInt(e.target.value,10);
+    this.setState({toIndex: toIndex})
+  },
+
   render:function() {
     var columns = this.props.columns || [];
     var options = [{
@@ -178,10 +196,6 @@ module.exports = React.createClass({
 
     return (
       React.createElement('span', {className: 'replace'},
-        <div className='replace-radio-group'>
-          <input type="radio" name="replace" value="0"/>Замена по шаблону     <br/>
-          <input type="radio" name="replace" value="1"/>Замена без шаблона    <br/>
-        </div>,
         <div>
           {React.createElement('select', {className: 'replace-column-selector', ref: 'column', onChange: this.onChangeColumn}, options.map(
                 function(option){
@@ -191,18 +205,29 @@ module.exports = React.createClass({
           )}        
           <p>Где заменить</p>
         </div>,
-        <CustomInput
-          ref='from'
-          editor = {this.state.editor}
-          attribute = {this.state.attribute}
-          description = 'Что заменить'
-        />,
-        <CustomInput
-          ref='to'
-          editor = {this.state.editor}
-          attribute = {this.state.attribute}
-          description = 'На что заменить'
-        />,
+        <div className='replace-from-radio-group'>
+          <input type='radio' name='replace-from' value='0' checked={this.state.fromIndex===0} onChange={this.onRadioFromChange}/>
+          <CustomInput
+            ref='from'
+            editor = {this.state.editor}
+            attribute = {this.state.attribute}
+            description = 'Что заменить'
+            enabled = {this.state.fromIndex===0}
+          /><br/>
+          <input type='radio' name='replace-from' value='1' checked={this.state.fromIndex===1} onChange={this.onRadioFromChange}/> Заменить пустые<br/>
+          <input type='radio' name='replace-from' value='2' checked={this.state.fromIndex===2} onChange={this.onRadioFromChange}/> Заменить все <br/>
+        </div>,
+        <div className='replace-to-radio-group'>
+          <input type='radio' name='replace-to' value='0' checked={this.state.toIndex===0} onChange={this.onRadioToChange}/>
+          <CustomInput
+            ref='to'
+            editor = {this.state.editor}
+            attribute = {this.state.attribute}
+            description = 'На что заменить'
+            enabled = {this.state.toIndex===0}
+          /><br/>
+          <input type='radio' name='replace-to' value='1' checked={this.state.toIndex===1} onChange={this.onRadioToChange} disabled={this.state.fromIndex!==2}/> Заменить на пустые<br/>
+        </div>,
         <button  onClick = {this.onSubmit} className = 'btn btn-xs btn-default' disabled={this.props.disabled}>
           Replace
         </button>

@@ -11,7 +11,7 @@ module.exports = React.createClass({
   propTypes: {
     ChangeFilter: React.PropTypes.func,
     columns: React.PropTypes.array,
-    disabled: React.PropTypes.boolean
+//    disabled: React.PropTypes.boolean
   },
 
   getInitialState() {
