@@ -52,7 +52,6 @@ var CustomInput = React.createClass({
   render: function() {
     var attribute = this.props.attribute;
     var description = this.props.description;
-    debugger
     if (attribute) {
       var editor = eval(this.props.editor.displayName);
       return (
