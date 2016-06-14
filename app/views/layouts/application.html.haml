@@ -28,40 +28,8 @@
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
 
     = javascript_include_tag "application"
+    
   %body
-
-    %script{:language => "javascript"}
-      function SelectRedirect(){
-      
-      switch(document.getElementById('s1').value)
-      {
-      case "":
-      window.location="../php_tutorial/site_map.php";
-      break;
-      
-      case "ASP":
-      window.location="../asp-tutorial/site_map.php";
-      break;
-      
-      case "MySQL":
-      window.location="../sql_tutorial/site_map.php";
-      break;
-      case "JS":
-      window.location="site_map.php";
-      break;
-      
-      case "HTML":
-      window.location="../html_tutorial/site_map.php";
-      break;
-      
-      \/// Can be extended to other different selections of SubCategory //////
-      default:
-      window.location="../"; // if no selection matches then redirected to home page
-      break;
-      }// end of switch
-      }
-
-
 
     .navbar.navbar-static-top.white
       .container-fluid
@@ -73,9 +41,16 @@
             =@project.name
         - if current_user
           %ul.nav.navbar-nav.navbar-right
-            %li#select_project
+            %li.project_selector
               - if @project
-                = select(:value, :id, options_for_select([['', 0], ['ПМТ Смоленск-2', 90], ['ПМТ СмАЭС-3', 87], ['Курск-2',83], ['ПМТ КуАЭС-4',80000001], ['ПМТ БалАЭС-1',88]], selected: project.id))
+                = select(:project, :id, options_for_select([['', 0], ['ПМТ Смоленск-2', 90], ['ПМТ СмАЭС-3', 87], ['Курск-2',83], ['ПМТ КуАЭС-4',80000001], ['ПМТ БалАЭС-1',88]], selected: project.id), {}, :onchange => "changeProject()")
+                :javascript
+                  function changeProject(){
+                    var tmp = document.getElementById("project_id");
+                    if (tmp.selectedIndex) {
+                      window.location.pathname = "/pds_projects/"+tmp.options[tmp.selectedIndex].value+"/"+model_path;
+                    }
+                  }
             %li.dropdown
               = image_tag('icons/stock_people.png')
               %a.dropdown-toggle{href: '#', 'data-toggle' => "dropdown", role: "button", 'aria-expanded' => "false"}
@@ -134,3 +109,5 @@
           = render 'shared/table_list', hash: get_tables_list
         .col.main-container#main_table
           = content_for?(:content) ? yield(:content) : yield
+
+         
