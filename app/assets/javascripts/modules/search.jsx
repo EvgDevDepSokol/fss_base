@@ -113,14 +113,14 @@ module.exports.search = function(search, columns, data) {
     var lpass = true;
     for (var x = 0; x < query_arr.length; x++) {
       currentPosition = searchText.indexOf(query_arr[x]);
-      searchText = searchText.slice(currentPosition+query_arr[x].length)
+      searchText = searchText.slice(currentPosition+query_arr[x].length);
       if (x == 0 && query_arr[0] !== '') {
         lpass = lpass && (currentPosition === 0);
       } else {
         lpass = lpass && (currentPosition !== -1);
       }
     }  
-    return lpass
+    return lpass;
 //   var predicate = predicates.infix(query.toLowerCase());
 //   return predicate.evaluate(formattedValue.toLowerCase());
   }
@@ -141,7 +141,7 @@ module.exports.matches = (column, value, query, options) => {
     for (var i = 0; i < query_arr.length; i++) {
       currentPosition = searchText.indexOf(query_arr[i]);
       ilength += currentPosition+query_arr[i].length;
-      searchText = searchText.slice(currentPosition + query_arr[i].length)
+      searchText = searchText.slice(currentPosition + query_arr[i].length);
       if (i == 0 && query_arr[0] !== '') {
         lpass = lpass && (currentPosition === 0);
       } else {
@@ -153,7 +153,7 @@ module.exports.matches = (column, value, query, options) => {
       matches[0].length = ilength - matches[0].startIndex; 
     }
     if (!lpass) matches =[{startIndex: 0, length: 0}];
-    return matches 
+    return matches; 
 
   //  options = options || {
   //      strategy: predicates.infix,

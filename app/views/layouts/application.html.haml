@@ -47,8 +47,10 @@
                 :javascript
                   function changeProject(){
                     var tmp = document.getElementById("project_id");
-                    if (tmp.selectedIndex) {
-                      window.location.pathname = "/pds_projects/"+tmp.options[tmp.selectedIndex].value+"/"+model_path;
+                    if (tmp.selectedIndex){
+                      if (tmp.options[tmp.selectedIndex].value != project.id) {
+                        window.location.pathname = "/pds_projects/"+tmp.options[tmp.selectedIndex].value+"/"+model_path;
+                      }
                     }
                   }
             %li.dropdown

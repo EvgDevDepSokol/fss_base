@@ -2,9 +2,9 @@ var React = require('react');
 //var SimpleSelect = require('../modules/simple-select.jsx');
 var _ = require('underscore');
 
-var ImportStep1 = require('./xlsx-import/step1.jsx')
-var ImportStep2 = require('./xlsx-import/step2.jsx')
-var ImportStep3 = require('./xlsx-import/step3.jsx')
+var ImportStep1 = require('./xlsx-import/step1.jsx');
+var ImportStep2 = require('./xlsx-import/step2.jsx');
+var ImportStep3 = require('./xlsx-import/step3.jsx');
 
 
 
@@ -175,6 +175,6 @@ var getColumnOptions = function(column){
     async: false
   });
 
-  options = $.map(options , function(el){ return {value: el.id, label: el[key]} } )
+  options = $.map(options , function(el){ return {value: el.id, label: el[key]} } );
   return options;
 };
