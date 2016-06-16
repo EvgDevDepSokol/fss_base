@@ -191,7 +191,11 @@ var TableContainer = React.createClass({
             props: {
               onDoubleClick: function () {
                 if(!context.state.lockRow){
-                  context.setState({editedRow: rowIndex, lockRow: true});
+                  if (current_user.user_rights >= 1){
+                    context.setState({editedRow: rowIndex, lockRow: true});
+                  } else {
+                    alert('У Вас недостаточно прав для редактирования записи!');
+                  }
                 }
               }
             }
@@ -248,34 +252,38 @@ var TableContainer = React.createClass({
           var idx = findIndex(this.state.data, {id: itemId});
 
           var remove = function() {
-            var res = confirm("Вы действительно желаете удалить запись?"); 
-            if(!res) return;
-            if(newRow){
-              var idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
+            if (current_user.user_rights >= 2){
+              var res = confirm("Вы действительно желаете удалить запись?"); 
+              if(!res) return;
+              if(newRow){
+                var idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
 
-              this.state.data.splice(idx, 1);
-              this.setState({
-                data: this.state.data,
-                editedRow: null,
-                lockRow: false,
-                sendData: {}
-              });
-            }else{
-              $.ajax({
-                url: url + '/' + itemId,
-                dataType: 'json',
-                type: 'DELETE',
-                success: function(data) {
-                  this.state.data.splice(idx, 1);
-                  this.setState({
-                    data: this.state.data,
-                    editedRow: null
-                  });
-                }.bind(this),
-                error: function(xhr, status, err) {
-                  console.error(this.props.url, status, err.toString());
-                }.bind(this)
-              });
+                this.state.data.splice(idx, 1);
+                this.setState({
+                  data: this.state.data,
+                  editedRow: null,
+                  lockRow: false,
+                  sendData: {}
+                });
+              }else{
+                $.ajax({
+                  url: url + '/' + itemId,
+                  dataType: 'json',
+                  type: 'DELETE',
+                  success: function(data) {
+                    this.state.data.splice(idx, 1);
+                    this.setState({
+                      data: this.state.data,
+                      editedRow: null
+                    });
+                  }.bind(this),
+                  error: function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                  }.bind(this)
+                });
+              }
+            } else {
+              alert('У Вас недостаточно прав для удаления записи!');
             }
 
             // this could go through flux etc.
@@ -283,11 +291,19 @@ var TableContainer = React.createClass({
           }.bind(this);
 
           var copy = function() {
-            this.onAddRowClick(celldata[rowIndex]);
+            if (current_user.user_rights >= 2 ){
+              this.onAddRowClick(celldata[rowIndex]);
+            } else {
+              alert('У Вас недостаточно прав для дублирования записи!');
+            }
           }.bind(this);
 
           var editClick = function() {
-            this.setState({editedRow: rowIndex});
+            if (current_user.user_rights >= 1 ){
+              this.setState({editedRow: rowIndex});
+            } else {
+              alert('У Вас недостаточно прав для редактирования записи!');
+            }
           }.bind(this);
 
           var cancelClick = function() {
@@ -299,25 +315,25 @@ var TableContainer = React.createClass({
           }.bind(this);
 
 
-          var editButton = <span className='edit btn btn-xs btn-default' onClick={editClick.bind(this)} style={{cursor: 'pointer'}}>
+          var editButton = <span className='edit btn btn-xs btn-default' onClick={editClick.bind(this)} style={{cursor: 'pointer'}} title='Редактировать запись'>
               <i className="fa fa-pencil"></i>
             </span>;
 
-          var saveButton = <span className='edit btn btn-xs btn-default' onClick={saveClick.bind(this)} style={{cursor: 'pointer'}}>
+          var saveButton = <span className='edit btn btn-xs btn-default' onClick={saveClick.bind(this)} style={{cursor: 'pointer'}} title='Сохранить изменения'>
               <i className="fa fa-check"></i>
           </span>;
 
           if(!newRow){
-            var cancelButton = <span className='edit btn btn-xs btn-default' onClick={cancelClick.bind(this)} style={{cursor: 'pointer'}}>
+            var cancelButton = <span className='edit btn btn-xs btn-default' onClick={cancelClick.bind(this)} style={{cursor: 'pointer'}} title='Отменить изменения'>
               <i className="fa fa-undo"></i>
             </span>;
           }
 
-          var deleteButton = <span className='remove btn btn-xs btn-danger' onClick={remove.bind(this)} style={{cursor: 'pointer'}}>
+          var deleteButton = <span className='remove btn btn-xs btn-danger' onClick={remove.bind(this)} style={{cursor: 'pointer'}} title='Удалить запись'>
               <i className="fa fa-times"></i>
             </span>;
 
-          var copyButton = <span className='remove btn btn-xs btn-default' onClick={copy.bind(this)} style={{cursor: 'pointer'}}>
+          var copyButton = <span className='remove btn btn-xs btn-default' onClick={copy.bind(this)} style={{cursor: 'pointer'}} title='Дублировать запись'>
             <i className="fa fa-files-o"></i>
           </span>;
           return {
@@ -478,9 +494,11 @@ var TableContainer = React.createClass({
     var isEditableColumn = function(column) {
       var className = column.editor ? 'editableColumn' : 'notEditableColumn';
       var header = column.header;
-      column.header = <span className = {className}>
-        {header}
-      </span>
+      if (!header.props){
+        column.header = <span className = {className}>
+          {header}
+        </span>
+      }
       return column
     }
     columns.every(isEditableColumn);
@@ -659,29 +677,32 @@ var TableContainer = React.createClass({
   onAddRowClick: function(copiedRow){
     if(this.state.lockRow)
       return;
+    if (current_user.user_rights >= 2 ){
+      var copyRow = {};
+      if (copiedRow.id) {
+        copyRow = $.extend({}, copiedRow);
+      };
+      // var copyRow  = newRow || {};
+      var data = this.state.data;
 
-    var copyRow = {};
-    if (copiedRow.id) {
-      copyRow = $.extend({}, copiedRow);
-    };
-    // var copyRow  = newRow || {};
-    var data = this.state.data;
+      // чтобы добавить строку в начало, находим индекс первой строки
+      var p = this.state.pagination;
+      var idx = (p.page-1) * p.perPage;
 
-    // чтобы добавить строку в начало, находим индекс первой строки
-    var p = this.state.pagination;
-    var idx = (p.page-1) * p.perPage;
-
-    //data.unshift({newRow: true, id: "new-" +  Date.now()});
-    delete copyRow['id'];
-    var sendData = copyRow;
-    copyRow['newRow'] = true;
-    copyRow['_id'] = "new-" +  Date.now();
-    data.splice(idx, 0, copyRow);
-    this.setState({
-      data: data,
-      editedRow: 0,
-      lockRow: true,
-      sendData: this.getDuplicatedRowsendData(copyRow)});
+      //data.unshift({newRow: true, id: "new-" +  Date.now()});
+      delete copyRow['id'];
+      var sendData = copyRow;
+      copyRow['newRow'] = true;
+      copyRow['_id'] = "new-" +  Date.now();
+      data.splice(idx, 0, copyRow);
+      this.setState({
+        data: data,
+        editedRow: 0,
+        lockRow: true,
+        sendData: this.getDuplicatedRowsendData(copyRow)});
+    } else {
+      alert('У Вас недостаточно прав для дублирования записи!');
+    }
   },
 
   onIconFilterClick: function(){
@@ -696,10 +717,14 @@ var TableContainer = React.createClass({
     });
   },
   onIconReplaceClick: function(){
-    var showReplace = !this.state.showReplace;
-    this.setState({
-      showReplace:showReplace
-    });
+    if (current_user.user_rights >= 1 ){
+      var showReplace = !this.state.showReplace;
+      this.setState({
+        showReplace:showReplace
+      });
+    } else {
+      alert('У Вас недостаточно прав для редактирования записей!');
+    }
   },
 
   getDuplicatedRowsendData: function(row){
@@ -907,10 +932,14 @@ var TableContainer = React.createClass({
             data={paginated.data}
             selectedRow={this.state.editedRow}
             row={(d, rowIndex) => {
+              var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
+              if (rowIndex == this.state.editedRow)  rowClass = 'edited-row';
                 return {
-                    className: rowIndex == this.state.editedRow ? 'edited-row' : '',
+                   // className: rowIndex == this.state.editedRow ? 'edited-row' : '',
+                    className: rowClass,
                 };
-            }}            
+            }}           
+            rowKey="id" 
             />
         </div>
         <div id="panel-sticker" onClick={this.onHideTreeViewClick}>

@@ -93,7 +93,10 @@ gem 'oj'
 
 gem 'jquery-ui-rails'
 
+# Authorizations and Authentication gems
 gem 'devise'
+gem 'pundit'
+
 gem 'select2-rails'
 
 gem 'browserify-rails'
@@ -112,6 +115,7 @@ gem 'simple_form'
 gem 'quiet_assets', group: :development
 
 group :development do
+  gem 'better_errors'
   gem 'traceroute'
   gem 'rack-mini-profiler'
   gem 'flamegraph'

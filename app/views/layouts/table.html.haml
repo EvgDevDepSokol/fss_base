@@ -9,6 +9,7 @@
     var data = #{table_data};
     var model_name = "#{hash_model_name}";
     var model_path = "#{model_path}";
+    var current_user = #{current_user.to_json};
 
 = render file: 'layouts/application'
 
