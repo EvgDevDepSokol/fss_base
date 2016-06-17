@@ -34,7 +34,9 @@
         label: "Системы отображения",
         type: 'display_systems',
         children: #{controller_actions_list(DisplaySystemsController, @project)}
-      },
+      }
+    ];
+    var menu_data_admin=[
       {
         label: "Служебные",
         type: 'service',
@@ -46,6 +48,9 @@
         children: #{controller_actions_list(ProjectSettingsController, @project)}
       }
     ];
+    if (#{current_user_rights} >= 3){
+      menu_data = menu_data.concat(menu_data_admin);
+    }
 - else
   :javascript
     var menu_data = [

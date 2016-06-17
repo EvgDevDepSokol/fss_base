@@ -61,4 +61,8 @@ module ViewHelper
       }
     end.to_json
   end
+
+  def current_user_rights
+    current_user.user_rights
+  end
 end
