@@ -701,7 +701,7 @@ var TableContainer = React.createClass({
         lockRow: true,
         sendData: this.getDuplicatedRowsendData(copyRow)});
     } else {
-      alert('У Вас недостаточно прав для дублирования записи!');
+      alert('У Вас недостаточно прав для добавления записи!');
     }
   },
 
