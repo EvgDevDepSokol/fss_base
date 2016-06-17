@@ -8,7 +8,7 @@ class ProjectSettingsController < ApplicationController
              :pds_documentation, :pds_simplifications, :pds_queries,
              :pds_sys_description, :pds_dr, :pds_mathmodel].freeze
 
-  before_action :project
+  before_action :project, :current_user_rights
 
   helper_method :project, :table_data, :table_header, :editable_properties, :model_class
 
@@ -158,6 +158,14 @@ class ProjectSettingsController < ApplicationController
       @data_list.map(&:custom_hash).to_json
     else
       @data_list.to_json
+    end
+  end
+
+  def current_user_rights
+    if (current_user.user_rights >= 3)
+      true
+    else
+      render html: "<strong>Не хватает прав для просмотра таблицы.</strong>".html_safe
     end
   end
 end
