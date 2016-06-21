@@ -92,6 +92,7 @@ module.exports = React.createClass({
 
 
   onSubmit: function(){
+    var _this = this;
     var data = this.props.data;
     var attribute = this.state.attribute;
     var column = ReactDOM.findDOMNode(this.refs.column).value;
@@ -110,7 +111,6 @@ module.exports = React.createClass({
           ids.push(row.id);
         }
       });       
-      
       if (ids.length > 0) { 
         $.ajax({
           url: '/api/mass_operations/update_all',
@@ -127,21 +127,44 @@ module.exports = React.createClass({
           },
           type: 'PUT',
           success: function(responce) {
-            var cols = JSON.parse(responce.data);
-            var data = this.state.data;
-            var arr = column.split('.');
-            column = arr[0];
-            cols.forEach(function (col) {
-              var idx = findIndex(data, {id: col.id});
-              data[idx][column] = col[column];
-            });
-            this.props.onReplaceDone(data);
-          //  location.reload();
-          }.bind(this),
+            var new_data = JSON.parse(responce.new_data);
+
+            if (new_data) {
+              debugger
+              
+              var lsave = confirm('Количество измененнных записей: ' + new_data.length + '. Сохранить изменения?');
+              if (lsave){
+                $.ajax({
+                  url: '/api/mass_operations/update_all_save',
+                  dataType: 'json',
+                  data: {
+                    new_data: new_data,
+                    column: attribute ? attribute : column,
+                    model: model_name,
+                  },
+                  type: 'PUT',
+                  success: function(responce) {
+                    var cols = JSON.parse(responce.data);
+                    var data = this.state.data;
+                    var arr = column.split('.');
+                    column = arr[0];
+                    cols.forEach(function (col) {
+                      var idx = findIndex(data, {id: col.id});
+                      data[idx][column] = col[column];
+                    });
+                    this.props.onReplaceDone(data);
+                  }.bind(_this),
+                  error: function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                  }.bind(_this)
+                });
+              }
+            }
+          },
           error: function(xhr, status, err) {
             console.error(this.props.url, status, err.toString());
           }.bind(this)
-        });
+        });         
       } else {
         alert("Поставьте галочки в строках, в которых желаете произвести замену!")
       }

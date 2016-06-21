@@ -109,6 +109,7 @@ Rails.application.routes.draw do
 
     controller :mass_operations, path: :mass_operations do
       put :update_all
+      put :update_all_save
     end
   end
 
