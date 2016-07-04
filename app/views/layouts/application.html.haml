@@ -43,7 +43,7 @@
           %ul.nav.navbar-nav.navbar-right
             %li.project_selector
               - if @project
-                = select(:project, :id, options_for_select([['', 0], ['ПМТ Смоленск-2', 90], ['ПМТ СмАЭС-3', 87], ['Курск-2',83], ['ПМТ КуАЭС-4',80000001], ['ПМТ БалАЭС-1',88]], selected: project.id), {}, :onchange => "changeProject()")
+                = select(:project, :id, options_for_select([['', 0], ['ПМТ Смоленск-2', 90], ['ПМТ СмАЭС-3', 87], ['Курск-2',83], ['ПМТ КуАЭС-4',80000001], ['ПМТ КуАЭС-4 2016',80000003], ['ПМТ БалАЭС-1',88]], selected: project.id), {}, :onchange => "changeProject()")
                 :javascript
                   function changeProject(){
                     var tmp = document.getElementById("project_id");
