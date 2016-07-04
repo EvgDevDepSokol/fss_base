@@ -31,6 +31,8 @@ var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');
 var PdsDocumentationsSelector = require('../selectors/pds_documentation.jsx');
 var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 
+var ReplaceConfirmContainer =  require('../components/replace_confirm.jsx');
+
 var findIndex = require('lodash').findIndex;
 
 var CustomInput = React.createClass({
@@ -45,7 +47,7 @@ var CustomInput = React.createClass({
     return {
       editor: this.props.editor,
       attribute: this.props.attribute,
-      enabled: this.props.enabled
+      enabled: this.props.enabled,
     }
   },
 
@@ -86,7 +88,8 @@ module.exports = React.createClass({
       data: data,
       disabled: this.props.disabled,
       fromIndex: 0,
-      toIndex: 0
+      toIndex: 0,
+      modalIsOpen: false,
     }
   },
 
@@ -131,8 +134,8 @@ module.exports = React.createClass({
 
             if (new_data) {
               debugger
-              
-              var lsave = confirm('Количество измененнных записей: ' + new_data.length + '. Сохранить изменения?');
+              _this.setState({modalIsOpen:true});
+              var lsave = confirm('Количество измененных записей: ' + new_data.length + '. Сохранить изменения?');
               if (lsave){
                 $.ajax({
                   url: '/api/mass_operations/update_all_save',
@@ -252,7 +255,8 @@ module.exports = React.createClass({
         </div>,
         <button  onClick = {this.onSubmit} className = 'btn btn-xs btn-default' disabled={this.props.disabled}>
           Replace
-        </button>
+        </button>,
+        <ReplaceConfirmContainer id = "replace_confirm_modal" modalIsOpen = {this.state.modalIsOpen}/>
       )
     );
   }

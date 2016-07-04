@@ -119,6 +119,7 @@ var ImportXlsxModal = React.createClass({
   },
 
   render: function() {
+    debugger
     return (
       <div>
         <a href="#" onClick={this.openStep1}>

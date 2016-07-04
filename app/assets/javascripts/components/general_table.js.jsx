@@ -69,6 +69,7 @@ var TextEditor =  require('../inputs/text_editor.jsx')();
 // var CheckboxEditor =  require('../inputs/checkbox.jsx')();
 //var BooleanEditor = require('../inputs/boolean.jsx')();
 
+var Modal = require('react-modal');
 
 var TableContainer = React.createClass({
   displayName: 'VniiaesFullTable',
@@ -623,6 +624,7 @@ var TableContainer = React.createClass({
       d[this.props.objectType] = this.state.sendData;
       if(newRow){
         idx = findIndex(this.state.data, {_id: celldata._id});
+        debugger
         d[this.props.objectType].Project = project.id;
         $.ajax({
           url: url,
@@ -954,12 +956,12 @@ var TableContainer = React.createClass({
           //    Поиск <Search columns={this.state.columns} data={this.state.data} onChange={this.onSearch} />
           //  </div>
 $(document).ready(function () {
-
+  var appElement = document.getElementById('general_table');
+  Modal.setAppElement(appElement);
   ReactDOM.render(
     <TableContainer columns={columns} data={data}
-      objectType={model_name} title={title} project={project}/>,
-    document.getElementById('general_table')
-    );
+      objectType={model_name} title={title} project={project}/>, appElement
+  );
 });
 
 function paginate(data, o) {
