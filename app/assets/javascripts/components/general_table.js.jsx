@@ -683,6 +683,9 @@ var TableContainer = React.createClass({
       var copyRow = {};
       if (copiedRow.id) {
         copyRow = $.extend({}, copiedRow);
+      } else if (this.state.showFilters){
+        alert('Добавить запись при работающих фильтрах можно только дублированием одной из записей. Либо отключите фильтры.');
+        return;
       };
       // var copyRow  = newRow || {};
       var data = this.state.data;
