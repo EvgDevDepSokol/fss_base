@@ -8,7 +8,6 @@ class BaseController < ApplicationController
   def create
     Rails.logger.warn permit_params
     @current_object = model_class.new permit_params
-
     if @current_object.save
       render json: { status: :created, data: current_object.reload.custom_hash }
     else
@@ -53,6 +52,9 @@ class BaseController < ApplicationController
   end
 
   def permit_params
+    if ((not model.attribute_names.include? 'Project') and params[model.to_s.underscore].key?('Project')) then
+      params[model.to_s.underscore].delete :Project
+    end
     params.require(model.to_s.underscore).permit!
   end
 
