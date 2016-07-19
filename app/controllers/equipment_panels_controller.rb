@@ -48,22 +48,22 @@ class EquipmentPanelsController < BaseController
 
   def pds_brus
     @data_list = PdsBru.where(Project: project.ProjectID)
-                       .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler)
+                       .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler).order('hw_ic.ref')
   end
 
   def pds_miscs
     @data_list = PdsMisc.where(Project: project.ProjectID)
-                        .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler)
+                        .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler).order('hw_ic.ref')
   end
 
   def pds_sets
     @data_list = PdsSet.where(Project: project.ProjectID)
-                       .includes({ hw_ic: [:hw_ped] }, :system)
+                       .includes({ hw_ic: [:hw_ped] }, :system).order('hw_ic.ref')
   end
 
   def pds_switch_nofixes
     @data_list = PdsSwitchNofix.where(Project: project.ProjectID)
-                   .includes({ hw_ic: [:hw_ped] }, :system)
+                   .includes({ hw_ic: [:hw_ped] }, :system).order('hw_ic.ref')
                    .pluck(
                      :KeyID,
                      'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
@@ -85,7 +85,7 @@ class EquipmentPanelsController < BaseController
 
   def pds_switch_fixes
     @data_list = PdsSwitchFix.where(Project: project.ProjectID)
-                             .includes({ hw_ic: [:hw_ped] }, :system)
+                             .includes({ hw_ic: [:hw_ped] }, :system).order('hw_ic.ref')
                    .pluck(
                      :KeyID,
                      'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
@@ -106,17 +106,17 @@ class EquipmentPanelsController < BaseController
 
   def pds_buttons
     @data_list = PdsButton.where(Project: project.ProjectID)
-                          .includes({ hw_ic: [:hw_ped] }, :system)
+                          .includes({ hw_ic: [:hw_ped] }, :system).order('hw_ic.ref')
   end
 
   def pds_buttons_lights
     @data_list = PdsButtonsLight.where(Project: project.ProjectID)
-                                .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler)
+                                .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler).order('hw_ic.ref')
   end
 
   def pds_lamps
     @data_list = PdsLamp.where(Project: project.ProjectID)
-                        .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler)
+                        .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler).order('hw_ic.ref')
                     .pluck(
                      :LampID,
                      'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
@@ -155,17 +155,17 @@ class EquipmentPanelsController < BaseController
 
   def pds_alarms
     @data_list = PdsAlarm.where(Project: project.ProjectID)
-                         .includes({ hw_ic: [:hw_ped] }, :system)
+                         .includes({ hw_ic: [:hw_ped] }, :system).order('hw_ic.ref')
   end
 
   def pds_recorders
     @data_list = PdsRecorder.where(Project: project.ProjectID)
-                            .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler)
+                            .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler).order('hw_ic.ref')
   end
 
   def pds_announciators
     @data_list = PdsAnnounciator.where(Project: project.ProjectID)
-                                .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler, :pds_detector)
+                                .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler, :pds_detector).order('hw_ic.ref')
                      .pluck(
                      :AnnouncID,
                      'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',

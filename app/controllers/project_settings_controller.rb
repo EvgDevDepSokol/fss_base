@@ -46,7 +46,7 @@ class ProjectSettingsController < BaseController
 
   # TODO: не ясно как быть с выбором
   def pds_project_units
-    @data_list = PdsProjectUnit.where(Project: project.ProjectID).includes(:pds_unit)
+    @data_list = PdsProjectUnit.where(Project: project.ProjectID).includes(:unit)
   end
 
   def pds_doc_on_sys
