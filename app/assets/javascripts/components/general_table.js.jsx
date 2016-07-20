@@ -397,7 +397,7 @@ var TableContainer = React.createClass({
           }
  
           if (idx > -1){
-          var checkBox = <span classname = 'checkbox'>
+          var checkBox = <span className = 'checkbox'>
             <input
               type = "checkbox"
               onChange = {clickCheckBox.bind(this)}
@@ -405,7 +405,7 @@ var TableContainer = React.createClass({
             />            
           </span>;
           } else {
-          var checkBox = <span classname = 'checkbox'>
+          var checkBox = <span className = 'checkbox'>
             <input
               type = "checkbox"
             />            
