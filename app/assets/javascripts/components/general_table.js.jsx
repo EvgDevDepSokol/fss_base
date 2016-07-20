@@ -933,9 +933,8 @@ var TableContainer = React.createClass({
           <Table 
             className='table table-bordered'
             columnNames={this.columnFilters}
-            columns={this.state.columns}
             data={paginated.data}
-            selectedRow={this.state.editedRow}
+            columns={this.state.columns}
             row={(d, rowIndex) => {
               var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
               if (rowIndex == this.state.editedRow)  rowClass = 'edited-row';

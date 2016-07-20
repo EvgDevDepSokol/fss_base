@@ -42,7 +42,6 @@ var TreeView = React.createClass({
 
     var arrow =
       <div
-          {...props}
         className={(props.className || '') + ' ' + arrowClassName}
         onClick={this.handleClick}>
         ▾
