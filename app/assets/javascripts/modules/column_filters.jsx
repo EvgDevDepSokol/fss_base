@@ -43,7 +43,7 @@ module.exports = React.createClass({
                 onChange = {this.ChangeFilter}
                 id={i}
                 name={column.property}
-                autocomplete = "on"
+                autoComplete = "on"
                 disabled = {this.props.disabled}
                 /> : ''}
             </td>

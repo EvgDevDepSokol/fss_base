@@ -585,34 +585,6 @@ var TableContainer = React.createClass({
     });
   },
 
-
-//  onHeaderClick: function(column){
-//    // reset edits
-//    this.setState({
-//      editedCell: null
-//    });
-//    sortColumn(
-//      this.state.columns,
-//      column,
-////      this.state.data,
-//      this.setState.bind(this),
-//      myDefaultSorter
-//    );
-//  },
-
-/*  onRemoveClick: function() {
-    // this could go through flux etc.
-    var idx = findIndex(this.state.data, {
-      id: celldata[rowIndex].id
-    });
-
-    this.state.data.splice(idx, 1);
-
-    this.setState({
-      data: this.state.data
-    });
-  },*/
-
   onSaveClick: function(celldata) {
     if(!$.isEmptyObject(this.state.sendData))
     {
@@ -674,8 +646,6 @@ var TableContainer = React.createClass({
     }
   },
 
-
-
   onAddRowClick: function(copiedRow){
     if(this.state.lockRow)
       return;
@@ -684,7 +654,7 @@ var TableContainer = React.createClass({
       if (copiedRow.id) {
         copyRow = $.extend({}, copiedRow);
       } else if (this.state.showFilters){
-        alert('Добавить запись при работающих фильтрах можно только дублированием одной из записей. Либо отключите фильтры.');
+        alert('Добавить запись при работающих фильтрах можно только дублированием одной из записей. Либо нужно отключить фильтры.');
         return;
       };
       // var copyRow  = newRow || {};

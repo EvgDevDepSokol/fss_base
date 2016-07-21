@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Modal = require('react-modal');
 
 var SystemSelector = require('../selectors/system.jsx');
 var SystemAllSelector = require('../selectors/system_all.jsx');
@@ -31,7 +32,7 @@ var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');
 var PdsDocumentationsSelector = require('../selectors/pds_documentation.jsx');
 var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 
-var ReplaceConfirmContainer =  require('../components/replace_confirm.jsx');
+//var ReplaceConfirmContainer =  require('../components/replace_confirm.jsx');
 
 var findIndex = require('lodash').findIndex;
 
@@ -78,8 +79,16 @@ module.exports = React.createClass({
     onChange: React.PropTypes.func,
     columns: React.PropTypes.array,
     data: React.PropTypes.array,
-//    disabled: React.PropTypes.boolean
+    isReplaceModalOpen: React.PropTypes.bool,
   },
+
+  openReplaceModal: function() {
+    this.setState({isReplaceModalOpen: true}); 
+  },
+
+  closeReplaceModal: function() {
+    this.setState({isReplaceModalOpen: false}); 
+  },  
 
   getInitialState:function(){
     return {
@@ -89,10 +98,9 @@ module.exports = React.createClass({
       disabled: this.props.disabled,
       fromIndex: 0,
       toIndex: 0,
-      modalIsOpen: false,
+      isReplaceModalOpen: false,      
     }
   },
-
 
   onSubmit: function(){
     var _this = this;
@@ -134,7 +142,7 @@ module.exports = React.createClass({
 
             if (new_data) {
               debugger
-              _this.setState({modalIsOpen:true});
+              _this.setState({isReplaceModalOpen:true});
               var lsave = confirm('Количество измененных записей: ' + new_data.length + '. Сохранить изменения?');
               if (lsave){
                 $.ajax({
@@ -256,7 +264,9 @@ module.exports = React.createClass({
         <button  onClick = {this.onSubmit} className = 'btn btn-xs btn-default' disabled={this.props.disabled}>
           Replace
         </button>,
-        <ReplaceConfirmContainer id = "replace_confirm_modal" modalIsOpen = {this.state.modalIsOpen}/>
+        <div>
+          <ReplaceConfirmModal id = "replace_confirm_modal" isReplaceModalOpen = {this.state.isReplaceModalOpen} onRequestClose={this.closeReplaceModal}/>
+        </div>
       )
     );
   }
@@ -264,6 +274,36 @@ module.exports = React.createClass({
 
 function id(a) {
   return a;
-}
+};
 
+var ReplaceConfirmModal = React.createClass({
+  displayName: 'ReplaceConfirmModal',
 
+  getInitialState: function() {
+    return {
+      isReplaceModalOpen: this.props.isReplaceModalOpen,
+    };
+  },
+
+  closeReplaceModal: function() {
+    this.props.onRequestClose(); 
+  },
+
+  render: function() {
+    return (
+      <div>
+        <Modal
+          isOpen={this.props.isReplaceModalOpen}
+          onRequestClose={this.closeReplaceModal}>
+    
+          <h2 ref="subtitle">Окно с предварительными результатами замены.</h2>
+          <button onClick={this.closeReplaceModal}>close</button>
+          <div>Пока не работает.</div>
+          <form>
+            <input />
+          </form>
+        </Modal>    
+      </div>
+    )
+  }
+});
