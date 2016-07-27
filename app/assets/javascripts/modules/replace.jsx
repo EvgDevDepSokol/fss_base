@@ -35,6 +35,7 @@ var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 //var ReplaceConfirmContainer =  require('../components/replace_confirm.jsx');
 
 var findIndex = require('lodash').findIndex;
+var new_data = {};
 
 var CustomInput = React.createClass({
   displayName: 'CustomInput',
@@ -138,12 +139,13 @@ module.exports = React.createClass({
           },
           type: 'PUT',
           success: function(responce) {
-            var new_data = JSON.parse(responce.new_data);
+            new_data = JSON.parse(responce.new_data);
 
             if (new_data) {
               debugger
               _this.setState({isReplaceModalOpen:true});
-              var lsave = confirm('Количество измененных записей: ' + new_data.length + '. Сохранить изменения?');
+          //    var lsave = confirm('Количество измененных записей: ' + new_data.length + '. Сохранить изменения?');
+              var lsave=false;
               if (lsave){
                 $.ajax({
                   url: '/api/mass_operations/update_all_save',
@@ -265,7 +267,12 @@ module.exports = React.createClass({
           Replace
         </button>,
         <div>
-          <ReplaceConfirmModal id = "replace_confirm_modal" isReplaceModalOpen = {this.state.isReplaceModalOpen} onRequestClose={this.closeReplaceModal}/>
+          <ReplaceConfirmModal
+            id = "replace_confirm_modal"
+            isReplaceModalOpen = {this.state.isReplaceModalOpen}
+            onRequestClose={this.closeReplaceModal}
+            new_data = {new_data}
+          />
         </div>
       )
     );
@@ -295,12 +302,13 @@ var ReplaceConfirmModal = React.createClass({
         <Modal
           isOpen={this.props.isReplaceModalOpen}
           onRequestClose={this.closeReplaceModal}>
-    
+          shouldCloseOnOverlayClick={false} 
+
           <h2 ref="subtitle">Окно с предварительными результатами замены.</h2>
           <button onClick={this.closeReplaceModal}>close</button>
           <div>Пока не работает.</div>
           <form>
-            <input />
+            {this.props.new_data}
           </form>
         </Modal>    
       </div>
