@@ -12,18 +12,12 @@ var findIndex = require('lodash').findIndex;
 var orderBy = require('lodash').orderBy;
 
 var cells = require('reactabular').cells;
-var editors = require('reactabular').editors;
 var ColumnNames = require('reactabular').ColumnNames;
 var segmentize = require('segmentize');
 var formatters = require('reactabular').formatters;
 var highlight = formatters.highlight;
 
 var titleCase = require('title-case');
-
-// form here
-//var Form = require('plexus-form');
-//var validate = require('plexus-validate');
-//var SkyLight = require('react-skylight').default;
 
 var SystemSelector = require('../selectors/system.jsx');
 var SystemAllSelector = require('../selectors/system_all.jsx');
@@ -50,8 +44,6 @@ var MalfunctionTypeSelector = require('../selectors/static_malfunction_types.jsx
 var SdSelector = require('../selectors/pds_sds.jsx');
 var UnitSelector = require('../selectors/pds_project_units.jsx');
 var UnitAllSelector = require('../selectors/pds_units.jsx');
-//var DocumentationSelector = require('../selectors/pds_man_equips.jsx');
-
 var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');
 var PdsDocumentationsSelector = require('../selectors/pds_documentation.jsx');
 var PdsValvesSelector = require('../selectors/pds_valves.jsx');
@@ -62,12 +54,9 @@ var Search = require('../modules/search.jsx');
 var Replace = require('../modules/replace.jsx');
 var ColumnFilters = require('../modules/column_filters.jsx');
 
-//var TextEditor = editors.input();
 var stringEditor =  require('../inputs/input.jsx')();
 var dateEditor =  require('../inputs/input.jsx')();
 var TextEditor =  require('../inputs/text_editor.jsx')();
-// var CheckboxEditor =  require('../inputs/checkbox.jsx')();
-//var BooleanEditor = require('../inputs/boolean.jsx')();
 
 var Modal = require('react-modal');
 
@@ -119,7 +108,7 @@ var TableContainer = React.createClass({
 
     var editableField = function(options) {
 
-      var editor = options.editor; // || editors.input();
+      var editor = options.editor; 
       var attribute = options.attribute;
       var context = this;
       var nested = options.nested;
@@ -287,8 +276,6 @@ var TableContainer = React.createClass({
               alert('У Вас недостаточно прав для удаления записи!');
             }
 
-            // this could go through flux etc.
-
           }.bind(this);
 
           var copy = function() {
@@ -366,7 +353,6 @@ var TableContainer = React.createClass({
       });
     }
 
-     // <div style= 'display: flex'>
     var mainCheckbox =
       <div className = "two-checkboxes">
         <input
@@ -561,18 +547,6 @@ var TableContainer = React.createClass({
     }
   },
 
-//  onPerPageKeyUp:function(e) {
-//    debugger
-//    if(e.keyCode == 13) {
-//      var pagination = this.state.pagination || {};
-//      pagination.perPage = parseInt(e.target.value, 10);
-//      this.setState({
-//        pagination: pagination
-//      });
-//    }
-//  },
-
-
   onPage: function(e) {
     var pagination = this.state.pagination || {};
     var pages = Math.ceil(this.state.data.length / pagination.perPage);
@@ -745,12 +719,7 @@ var TableContainer = React.createClass({
   onExportClick: function(){
     debugger
     var bookname = model_name + '_' + project.id.toString() + '.xlsx';
-  //  var lexport = confirm('OK - экспортировать с учетом фильтров, Отмена - экспортировать всю таблицу.');
-  //  if (lexport) {
       exportData(this.state.dataxls, this.props.columns, bookname);
-  //  } else {
-  //    exportData(this.props.data, this.props.columns, bookname);
-  //  }
   },
 
   onReplaceDone: function(data){
