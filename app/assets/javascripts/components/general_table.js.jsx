@@ -2,20 +2,16 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Table = require('reactabular').Table;
 var _ = require('underscore');
 
 var Paginator = require('react-pagify').default;
 
-var sortColumn = require('reactabular').sortColumn;
+import {Table,ColumnNames,sortColumn,formatters,cells,editors} from 'reactabular';
+
+var segmentize = require('segmentize');
+
 var findIndex = require('lodash').findIndex;
 var orderBy = require('lodash').orderBy;
-
-var cells = require('reactabular').cells;
-var ColumnNames = require('reactabular').ColumnNames;
-var segmentize = require('segmentize');
-var formatters = require('reactabular').formatters;
-var highlight = formatters.highlight;
 
 var titleCase = require('title-case');
 
@@ -91,7 +87,7 @@ var TableContainer = React.createClass({
     }.bind(this));
 
     var highlighter = function (column) {
-      return highlight(function (value) {
+      return formatters.highlight(function (value) {
       var columns = _this.props.columns;
       var query = null;
       columns.forEach(function (col) {
