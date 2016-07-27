@@ -10,6 +10,7 @@ gem 'mysql2'
 
 gem 'therubyracer'
 gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem 'sprockets', '3.6.3' # to delete after less-rails update
 gem 'twitter-bootstrap-rails'
 # gem "haml-rails", "~> 0.9"
 gem 'hamlit'
