@@ -103,7 +103,9 @@ class Api::MassOperationsController < ApplicationController
 
     new_data.each do |row|
       querry_row = querry.find(row[1]['id'])
-      querry_row[column] = row[1][column]
+      querry_row.attributes.each do |attr_name,attr_value|
+        querry_row[attr_name] = row[1][attr_name]
+      end
       querry_row.save;
     end
     querry = querry.find(ids)

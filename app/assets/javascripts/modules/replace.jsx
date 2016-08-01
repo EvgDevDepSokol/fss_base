@@ -143,9 +143,9 @@ module.exports = React.createClass({
 
             if (new_data) {
               debugger
-              _this.setState({isReplaceModalOpen:true});
-          //    var lsave = confirm('Количество измененных записей: ' + new_data.length + '. Сохранить изменения?');
-              var lsave=false;
+          //    _this.setState({isReplaceModalOpen:true});
+              var lsave = confirm('Количество измененных записей: ' + new_data.length + '. Сохранить изменения?');
+          //    var lsave=false;
               if (lsave){
                 $.ajax({
                   url: '/api/mass_operations/update_all_save',
