@@ -13,7 +13,8 @@
   {"property":"identif","header":"Идентификатор", editor: "stringEditor"},
   {"property":"Description","header":"Описание", editor: "stringEditor"},
   {"property":"Description_EN","header":"Описание(EN)", editor: "stringEditor"},
-  {"property":"Detector","header":"Датчик", editor: "stringEditor"}
+  {property:'pds_detector.tag',"header":"Датчик", editor: "DetectorSelector", attribute: 'pds_detector_id', nested: true}
+  //{"property":"Detector","header":"Датчик", editor: "stringEditor"}
   //{"property":"t","header":"t"},
   //{"property":"code","header":"code", editor: "stringEditor"}
   ];
