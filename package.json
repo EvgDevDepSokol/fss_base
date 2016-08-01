@@ -1,7 +1,7 @@
 {
   "name": "djet",
   "dependencies": {
-    "browserify": "13.0.0",
+    "browserify": ">=13.1.0",
     "browserify-incremental": ">=1.4.0",
     "classnames": ">=1.2.2",
     "jszip": ">=2.5.0",
@@ -11,7 +11,7 @@
     "react-localstorage": ">=0.2.3",
     "react-modal": ">=0.2.0",
     "react-pagify": ">=0.5.1",
-    "react-select": ">=1.0.0-beta12",
+    "react-select": ">=1.0.0-beta14",
     "react-skylight": ">=0.3.0",
     "reactabular": "0.14.2",
     "reactify": ">=1.1.1",
