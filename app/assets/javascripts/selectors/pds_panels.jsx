@@ -8,7 +8,7 @@ var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
 module.exports = React.createClass({
-  displayName: 'HwPedSelector',
+  displayName: 'PdsPanelSelector',
 
   getInitialState() {
     return {
@@ -40,7 +40,7 @@ module.exports = React.createClass({
     };
 
     return (
-      React.createElement(Select.Async, {name: "HwPed",
+      React.createElement(Select.Async, {name: "PdsPanel",
         loadOptions: getOptions,
         onChange: this.setValue,
         value: this.state.value,

@@ -11,7 +11,7 @@
     "react-localstorage": ">=0.2.3",
     "react-modal": ">=0.2.0",
     "react-pagify": ">=0.5.1",
-    "react-select": ">=1.0.0-beta14",
+    "react-select": "1.0.0-beta14",
     "react-skylight": ">=0.3.0",
     "reactabular": "0.14.2",
     "reactify": ">=1.1.1",
