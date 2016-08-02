@@ -46,7 +46,6 @@ var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 
 // modules
 var Search = require('../modules/search.jsx');
-//var Search = require('reactabular').Search;
 var Replace = require('../modules/replace.jsx');
 var ColumnFilters = require('../modules/column_filters.jsx');
 
