@@ -107,11 +107,46 @@ class EquipmentPanelsController < BaseController
   def pds_buttons
     @data_list = PdsButton.where(Project: project.ProjectID)
                           .includes({ hw_ic: [:hw_ped] }, :system).order('hw_ic.ref')
+                   .pluck(
+                     :ButtonID,
+                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
+                     'hw_peds.ped_N', :'hw_peds.ped',
+                     'pds_syslist.SystemID', 'pds_syslist.System',
+                     'range'
+                   )
+
+    @data_list = @data_list.each.map do |e|
+      e1 = {}
+      e1['id']               = e[0]
+      e1['hw_ic']            = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['system']           = { id: e[7], System: e[8] }
+      e1['range']            = e[9]
+      e = e1
+    end
   end
 
   def pds_buttons_lights
     @data_list = PdsButtonsLight.where(Project: project.ProjectID)
                                 .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler).order('hw_ic.ref')
+                    .pluck(
+                     :ButtonID,
+                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
+                     'hw_peds.ped_N', :'hw_peds.ped',
+                     'pds_syslist.SystemID', 'pds_syslist.System',
+                     'pds_section_assembler.section_N','pds_section_assembler.section_name',
+                     'range','Fixed'
+                   )
+                      
+    @data_list = @data_list.each.map do |e|
+      e1 = {}
+      e1['id']                    = e[0]
+      e1['hw_ic']                 = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['system']                = { id: e[7], System: e[8] }
+      e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
+      e1['range']                 = e[11]
+      e1['Fixed']                 = e[12]
+      e = e1
+    end
   end
 
   def pds_lamps
