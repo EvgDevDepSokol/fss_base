@@ -1,10 +1,12 @@
 class PdsMalfunctionDim < ActiveRecord::Base
   self.table_name = 'pds_malfunction_dim'
+  belongs_to :pds_malfunction, foreign_key: :Malfunction, class_name: 'PdsMalfunction'
+  alias_attribute :pds_malfunction_id, :Malfunction
 
-  #  def serializable_hash(options={})
-  #    super.merge({id: id})
-  #  end
   def custom_hash
-    serializable_hash.merge(id: id)
+    serializable_hash(include:{
+        pds_malfunction:{only: [:sys,:Numb], include: { system: { only: :System}}}
+      }
+    )
   end
 end

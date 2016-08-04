@@ -7,9 +7,11 @@
 
   var columns =
   [{"property":"id","header":"MalfunctDimID",hidden: true},
-  {"property":"Malfunction","header":"Отказ", editor: "stringEditor"},
+  //{"property":"Malfunction","header":"Отказ", editor: "stringEditor"},
+  {property:'pds_malfunction.system.System',"header":"Система отказа",nested:true},
+  {property:'pds_malfunction.Numb',"header":"Номер отказа",nested:true},
   {"property":"Character","header":"Литера", editor: "stringEditor"},
-  {"property":"Target_EN","header":"Объект отказа(EN)", editor: "stringEditor"},
   {"property":"Target","header":"Объект отказа", editor: "stringEditor"},
+  {"property":"Target_EN","header":"Объект отказа(EN)", editor: "stringEditor"},
   {"property":"sd_N","header":"Сим. диаграмма", editor: "stringEditor"},
   {"property":"is_main","header":"is_main", editor: "BooleanSelector", nested: true}];

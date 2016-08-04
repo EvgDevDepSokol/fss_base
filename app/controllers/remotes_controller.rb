@@ -13,5 +13,7 @@ class RemotesController < BaseController
 
   def pds_malfunction_dims
     @data_list = PdsMalfunctionDim.where(Project: project.ProjectID)
+                               .includes(pds_malfunction: :system)
+                               
   end
 end
