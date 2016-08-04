@@ -448,7 +448,7 @@ var TableContainer = React.createClass({
       },
       header: {
         onClick: function(column){
-          if (!((column.classes == 'buttons-col')||(column.classes == 'checkbox-col'))){
+          if (!((column.classes == 'buttons-col')||(column.classes == 'checkbox-col')||(this.state.lockRow))){
             sortColumn(
               this.state.columns,
               column,
@@ -625,6 +625,16 @@ var TableContainer = React.createClass({
       } else if (this.state.showFilters){
         alert('Добавить запись при работающих фильтрах можно только дублированием одной из записей. Либо нужно отключить фильтры.');
         return;
+      } else {
+        var columns=this.state.columns;
+        columns.forEach(function (col) {
+          col.sort = null;
+          col.headerClass = null;
+        }); 
+        this.setState({
+          columns: columns,
+          sortingColumn:null
+        })
       };
       // var copyRow  = newRow || {};
       var data = this.state.data;
