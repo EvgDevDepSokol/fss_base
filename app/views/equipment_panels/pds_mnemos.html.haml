@@ -2,10 +2,10 @@
 :javascript
   var columns = [
    {property: "id", header: "MnemoID", hidden: true},
+  {"property":"Code","header":"REF"},
   {property: "system.System", header: "Сист.",
     editor: "SystemSelector", attribute: 'system_id', nested: true},
-  //{"property":"Code","header":"REF", editor: "stringEditor"},
-  {"property":"Code","header":"REF"},
+  {"property":"Description","header":"Описание", editor: "stringEditor"},
   {"property":"Marker","header":"Маркировка", editor: "stringEditor"},
   {"property":"TechCode","header":"Технический код", editor: "stringEditor"},
   {"property":"Type","header":"Тип мнемосхемы", editor: "stringEditor"},
@@ -14,7 +14,6 @@
   {"property":"Control","header":"Управление", editor: "stringEditor"},
   {"property":"AutoDist","header":"Авт/Дист", editor: "stringEditor"},
   {"property":"Parameter","header":"Параметр", editor: "stringEditor"},
-  {"property":"Description","header":"Описание", editor: "stringEditor"},
   //{"property":"Description_EN","header":"Description", editor: "stringEditor"},
   //{"property":"Gr_Dreg","header":"ДРЕГ", editor: "stringEditor"},
   {"property":"pds_detector.tag","header":"Датчик",
