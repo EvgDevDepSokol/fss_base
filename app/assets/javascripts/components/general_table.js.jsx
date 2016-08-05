@@ -54,6 +54,7 @@ var dateEditor =  require('../inputs/input.jsx')();
 var TextEditor =  require('../inputs/text_editor.jsx')();
 
 var Modal = require('react-modal');
+const VALVE_TYPES = require('../selectors/data/valve_types.js');
 
 var TableContainer = React.createClass({
   displayName: 'VniiaesFullTable',
@@ -107,6 +108,14 @@ var TableContainer = React.createClass({
       var attribute = options.attribute;
       var context = this;
       var nested = options.nested;
+      function labelFromSelectorList(array, value) {
+        var tmp = array.filter(function(obj) {
+          if ( obj.value === value ) {
+            return true
+          }
+        });
+        return tmp[0].label;
+      }        
       return function(value, data, rowIndex, property) {
         var id;
         if(nested)
@@ -131,6 +140,9 @@ var TableContainer = React.createClass({
         if (editor) {
           if ((editor == BooleanNumbSelector) && (typeof(value) == "number")){
             value = (value == 0) ? "НЕТ" : "ДА";
+          }
+          if (editor == ValveTypeSelector){
+            value = labelFromSelectorList(VALVE_TYPES, value) 
           }
         }
 

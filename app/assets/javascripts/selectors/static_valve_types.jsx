@@ -5,13 +5,21 @@
 var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
+const VALVE_TYPES = require('../selectors/data/valve_types.js')
 
 module.exports = React.createClass({
   displayName: 'ValveTypeSelector',
 
   getInitialState() {
+    var value = null;
+    var label = this.props.value;
+    VALVE_TYPES.forEach(function (obj) {
+      if (obj.label == label) {
+        value = obj.value;
+      }
+    })
     return {
-      value: this.props.value
+      value: value
     };
   },
 
@@ -20,20 +28,9 @@ module.exports = React.createClass({
   },
 
   render: function() {
-
-    var options = [
-     { value: 'valve', label: 'valve', clearableValue: 'false'},
-     { value: 'vlv_cntr', label: 'vlv_cntr', clearableValue: 'false'},
-     { value: 'vlv_pneumo', label: 'vlv_pneumo', clearableValue: 'false'},
-     { value: 'vlv_hydr', label: 'vlv_hydr', clearableValue: 'false'},
-     { value: 'vlv_sol', label: 'vlv_sol', clearableValue: 'false'},
-     { value: 'vlv_check', label: 'vlv_check', clearableValue: 'false'},
-     { value: 'vlv_relief', label: 'vlv_relief', clearableValue: 'false'},
-     { value: 'R/C', label: 'R/C', clearableValue: 'false'}]
-
     return (
       React.createElement(Select, {name: "ValveType",
-        options: options,
+        options: VALVE_TYPES,
         onChange: this.setValue,
         value: this.state.value,
         simpleValue:true,
