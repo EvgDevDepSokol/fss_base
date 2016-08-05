@@ -33,8 +33,9 @@ var BooleanSelector = require('../selectors/boolean.jsx');
 var BooleanYNSelector = require('../selectors/booleanyn.jsx');
 var BooleanNumbSelector = require('../selectors/booleannumb.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
-var ValveTypeSelector = require('../selectors/static_valve_types.jsx');
-var MalfunctionTypeSelector = require('../selectors/static_malfunction_types.jsx');
+//import {ValveTypeSelector, MalfunctionTypeSelector} from '../selectors/static_selectors.jsx';
+var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
+var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSelector;
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
