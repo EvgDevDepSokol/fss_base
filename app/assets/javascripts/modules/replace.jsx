@@ -15,11 +15,12 @@ var HwPedSelector = require('../selectors/hw_ped.jsx');
 var PdsPanelSelector = require('../selectors/pds_panels.jsx');
 var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 
+//some static selectors
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
+var ProjectSelector = require('../selectors/project.jsx');
 //var BooleanSelector = require('../selectors/boolean.jsx');
 //var BooleanYNSelector = require('../selectors/booleanyn.jsx');
 //var BooleanNumbSelector = require('../selectors/booleannumb.jsx');
-var ProjectSelector = require('../selectors/project.jsx');
 //var ValveTypeSelector = require('../selectors/static_valve_types.jsx');
 //var MalfunctionTypeSelector = require('../selectors/static_malfunction_types.jsx');
 
