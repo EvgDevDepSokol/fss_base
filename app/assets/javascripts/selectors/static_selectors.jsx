@@ -5,6 +5,7 @@ var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 const DATA_VALVE_TYPES = require('../selectors/data/valve_types.js')
 const DATA_MALFUNCTION_TYPES = require('../selectors/data/malfunction_types.js')
+const DATA_RF_TYPES = require('../selectors/data/rf_types.js')
 const DATA_BOOLEAN = require('../selectors/data/boolean.js')
 const DATA_BOOLEANYN = require('../selectors/data/booleanyn.js')
 const DATA_BOOLEANNUMB = require('../selectors/data/booleannumb.js')
@@ -110,9 +111,22 @@ var BooleanNumbSelector = React.createClass({
   }
 });
 
+var RFTypeSelector = React.createClass({
+  render: function() {
+    return (
+      <StaticSelector  value = {this.props.value} _this = {this}
+        options = {DATA_RF_TYPES}
+        displayName = 'RFTypeSelector'
+        name = 'RFType'
+      />
+    )
+  }
+});
+
 
 
 module.exports.ValveTypeSelector = ValveTypeSelector;
+module.exports.RFTypeSelector = RFTypeSelector;
 module.exports.MalfunctionTypeSelector = MalfunctionTypeSelector;
 module.exports.BooleanSelector = BooleanSelector;
 module.exports.BooleanYNSelector = BooleanYNSelector;

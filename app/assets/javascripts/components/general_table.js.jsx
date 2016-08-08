@@ -36,6 +36,7 @@ var ProjectSelector = require('../selectors/project.jsx');
 //var BooleanNumbSelector = require('../selectors/booleannumb.jsx');
 //import {ValveTypeSelector, MalfunctionTypeSelector} from '../selectors/static_selectors.jsx';
 var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
+var RFTypeSelector = require('../selectors/static_selectors.jsx').RFTypeSelector;
 var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSelector;
 var BooleanSelector = require('../selectors/static_selectors.jsx').BooleanSelector;
 var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSelector;
@@ -60,6 +61,7 @@ var TextEditor =  require('../inputs/text_editor.jsx')();
 
 var Modal = require('react-modal');
 const DATA_VALVE_TYPES = require('../selectors/data/valve_types.js')
+const DATA_RF_TYPES = require('../selectors/data/rf_types.js')
 const DATA_MALFUNCTION_TYPES = require('../selectors/data/malfunction_types.js')
 const DATA_BOOLEAN = require('../selectors/data/boolean.js')
 const DATA_BOOLEANYN = require('../selectors/data/booleanyn.js')

@@ -26,6 +26,7 @@ var ProjectSelector = require('../selectors/project.jsx');
 
 //some static selectors
 var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
+var RFTypeSelector = require('../selectors/static_selectors.jsx').RFTypeSelector;
 var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSelector;
 var BooleanSelector = require('../selectors/static_selectors.jsx').BooleanSelector;
 var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSelector;
