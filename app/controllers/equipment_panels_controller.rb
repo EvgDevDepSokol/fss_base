@@ -112,7 +112,7 @@ class EquipmentPanelsController < BaseController
                      'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
                      'hw_peds.ped_N', :'hw_peds.ped',
                      'pds_syslist.SystemID', 'pds_syslist.System',
-                     'range'
+                     'range','Fixed'
                    )
 
     @data_list = @data_list.each.map do |e|
@@ -121,6 +121,7 @@ class EquipmentPanelsController < BaseController
       e1['hw_ic']            = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
       e1['system']           = { id: e[7], System: e[8] }
       e1['range']            = e[9]
+      e1['Fixed']            = e[10]
       e = e1
     end
   end
