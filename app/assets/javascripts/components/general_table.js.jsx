@@ -28,14 +28,18 @@ var HwIosignaldefSelector = require('../selectors/hw_iosignaldef.jsx');
 var PdsPanelSelector = require('../selectors/pds_panels.jsx');
 var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 
+//some static selectors
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
-var BooleanSelector = require('../selectors/boolean.jsx');
-var BooleanYNSelector = require('../selectors/booleanyn.jsx');
-var BooleanNumbSelector = require('../selectors/booleannumb.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
+//var BooleanSelector = require('../selectors/boolean.jsx');
+//var BooleanYNSelector = require('../selectors/booleanyn.jsx');
+//var BooleanNumbSelector = require('../selectors/booleannumb.jsx');
 //import {ValveTypeSelector, MalfunctionTypeSelector} from '../selectors/static_selectors.jsx';
 var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
 var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSelector;
+var BooleanSelector = require('../selectors/static_selectors.jsx').BooleanSelector;
+var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSelector;
+var BooleanNumbSelector = require('../selectors/static_selectors.jsx').BooleanNumbSelector;
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
@@ -55,7 +59,11 @@ var dateEditor =  require('../inputs/input.jsx')();
 var TextEditor =  require('../inputs/text_editor.jsx')();
 
 var Modal = require('react-modal');
-const VALVE_TYPES = require('../selectors/data/valve_types.js');
+const DATA_VALVE_TYPES = require('../selectors/data/valve_types.js')
+const DATA_MALFUNCTION_TYPES = require('../selectors/data/malfunction_types.js')
+const DATA_BOOLEAN = require('../selectors/data/boolean.js')
+const DATA_BOOLEANYN = require('../selectors/data/booleanyn.js')
+const DATA_BOOLEANNUMB = require('../selectors/data/booleannumb.js')
 
 var TableContainer = React.createClass({
   displayName: 'VniiaesFullTable',
@@ -115,7 +123,8 @@ var TableContainer = React.createClass({
             return true
           }
         });
-        return tmp[0].label;
+        debugger
+        return tmp[0] ? tmp[0].label : '';
       }        
       return function(value, data, rowIndex, property) {
         var id;
@@ -133,9 +142,6 @@ var TableContainer = React.createClass({
           value = tempVal;
         }
 
-        if(typeof(value) == "boolean"){
-          value = value ? "ДА" : "НЕТ";
-        }
         if(value==null) value = '';
 
         if (editor) {
@@ -143,7 +149,13 @@ var TableContainer = React.createClass({
             value = (value == 0) ? "НЕТ" : "ДА";
           }
           if (editor == ValveTypeSelector){
-            value = labelFromSelectorList(VALVE_TYPES, value) 
+            value = labelFromSelectorList(DATA_VALVE_TYPES, value) 
+          }
+          if (editor == BooleanSelector){
+            value = value ? "ДА" : "НЕТ";
+          }
+          if (editor == BooleanNumbSelector){
+            value = labelFromSelectorList(DATA_BOOLEANNUMB, value) 
           }
         }
 

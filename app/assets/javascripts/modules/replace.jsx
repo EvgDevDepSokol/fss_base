@@ -16,12 +16,19 @@ var PdsPanelSelector = require('../selectors/pds_panels.jsx');
 var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
-var BooleanSelector = require('../selectors/boolean.jsx');
-var BooleanYNSelector = require('../selectors/booleanyn.jsx');
-var BooleanNumbSelector = require('../selectors/booleannumb.jsx');
+//var BooleanSelector = require('../selectors/boolean.jsx');
+//var BooleanYNSelector = require('../selectors/booleanyn.jsx');
+//var BooleanNumbSelector = require('../selectors/booleannumb.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
-var ValveTypeSelector = require('../selectors/static_valve_types.jsx');
-var MalfunctionTypeSelector = require('../selectors/static_malfunction_types.jsx');
+//var ValveTypeSelector = require('../selectors/static_valve_types.jsx');
+//var MalfunctionTypeSelector = require('../selectors/static_malfunction_types.jsx');
+
+//some static selectors
+var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
+var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSelector;
+var BooleanSelector = require('../selectors/static_selectors.jsx').BooleanSelector;
+var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSelector;
+var BooleanNumbSelector = require('../selectors/static_selectors.jsx').BooleanNumbSelector;
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
