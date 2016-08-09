@@ -11,6 +11,7 @@ module.exports = React.createClass({
   displayName: 'PdsDocumentationsSelector',
 
   getInitialState() {
+    debugger
     return {
       value: this.props.id,
       disabled: this.props.disabled
@@ -27,7 +28,7 @@ module.exports = React.createClass({
       setTimeout(function() {
         var options = getSelectorOptions(
           '/api/pds_documentations',
-          {},
+          {pds_project_id:project.ProjectID},
           this
         );
         options = $.map(options , function(el){ return {value: el.id, label: el.DocTitle} } )
@@ -40,8 +41,6 @@ module.exports = React.createClass({
     };
 
     return (
-      React.createElement("div",
-        {className: 'custom-selector pds_documentation'},
         React.createElement(Select.Async, {name: "PdsDocumentation",
           loadOptions: getOptions,
           onChange: this.setValue,
@@ -51,7 +50,6 @@ module.exports = React.createClass({
           disabled: this.props.disabled,
           clearable: false
         })
-      )
     );
   }
 });

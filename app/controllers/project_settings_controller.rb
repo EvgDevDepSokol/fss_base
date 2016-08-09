@@ -50,7 +50,9 @@ class ProjectSettingsController < BaseController
   end
 
   def pds_doc_on_sys
-    @data_list = PdsDocOnSy.includes(:pds_documentation, :system)
+    @data_list = PdsDocOnSy.where.not(sys: nil)
+    .includes(:pds_documentation).where(pds_documentation: {Project: project.ProjectID})
+    .includes(:system)
   end
 
   def pds_project_sys

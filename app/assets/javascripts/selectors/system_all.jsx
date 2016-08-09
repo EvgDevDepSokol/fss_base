@@ -8,7 +8,7 @@ var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
 module.exports = React.createClass({
-  displayName: 'SystemSelector',
+  displayName: 'SystemAllSelector',
 
   getInitialState() {
     return {
