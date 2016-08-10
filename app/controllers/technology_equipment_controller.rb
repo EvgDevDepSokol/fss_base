@@ -6,23 +6,12 @@ class TechnologyEquipmentController < BaseController
   def pds_alg_types
     @data_list = PdsAlgType.where(Project: project.ProjectID)
   end
-  #  def pds_detectors
-  #    @data_list = PdsDetector.where(Project: project.ProjectID).select(
-  #      :DetID, :Project, :sys, :tag, :tag_RU, :Desc, :Desc_EN,
-  #      :ctrl_power, :low_lim, :up_lim, :LA, :HA, :LW,
-  #      :HW, :LT, :HT, :Unit, :'1coef_shift', :'2coef_scale',
-  #      :sd_N, :doc_reg_N, :t, :Type, :TypeDetec, :Room, :SCK_input,
-  #      :power,
-  #      :import_t, :mod, :eq_type).
-  #      includes(:system, :pds_section_assembler,
-  #               :pds_man_equip, :pds_sd, pds_project_unit: [:unit])
-  #  end
 
   def pds_detectors
     @data_list = PdsDetector.where(Project: project.ProjectID)
                             .includes(
                               :system, :pds_section_assembler,
-                              :pds_sd, pds_project_unit: [:unit])
+                              pds_sd: [:system], pds_project_unit: [:unit])
                             .pluck(
                               :DetID,
                               'pds_syslist.SystemID', 'pds_syslist.System',
@@ -32,7 +21,7 @@ class TechnologyEquipmentController < BaseController
                               'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
                               :'1coef_shift', :'2coef_scale', :Type, :TypeDetec, :Room, :SCK_input,
                               :mod,
-                              'pds_sd.sd_N', 'pds_sd.SdTitle')
+                              'pds_sd.sd_N', 'systems_pds_sd.System', 'pds_sd.Numb')
 
     @data_list = @data_list.each.map do |e|
       e1 = {}
@@ -59,7 +48,9 @@ class TechnologyEquipmentController < BaseController
       e1['Room']             = e[24]
       e1['SCK_input']        = e[25]
       e1['mod']              = e[26]
-      e1['pds_sd']           = { id: e[27], SdTitle: e[28] }
+      if e[28]&&e[29]
+        e1['pds_sd']           = { id: e[27], SdTitle: e[28]+e[29].rjust(2, '0') }
+      end  
 
       e = e1
     end
