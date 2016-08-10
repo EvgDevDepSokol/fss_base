@@ -5,7 +5,7 @@ class Api::PdsSdsController < ApplicationController
   # GET /pds_sds
   # GET /pds_sds.json
   def index
-    @pds_sds = PdsSd.where(Project: project.ProjectID).order(:SdTitle)
+    @pds_sds = PdsSd.includes(:system).where(Project: project.ProjectID).order('pds_syslist.System', :Numb)
   end
 
   # GET /pds_sds/1

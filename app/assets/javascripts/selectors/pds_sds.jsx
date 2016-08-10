@@ -7,6 +7,11 @@ var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
+function pad(str, max) {
+  str = str.toString();
+  return str.length < max ? pad("0" + str, max) : str;
+}
+
 module.exports = React.createClass({
   displayName: 'SdSelector',
 
@@ -31,14 +36,14 @@ module.exports = React.createClass({
           this
         );
         options = $.map(options , function(el){
-          return {value: el.id, label: el.SdTitle}
+          return {value: el.id, label: el.System + pad(el.Numb,2)}
         });
 
         callback(null, {
           options: options,
           complete: true
         });
-      }, 5);
+      }, 0);
     };
 
     return (
