@@ -148,13 +148,13 @@ var TableContainer = React.createClass({
 
         if (editor) {
           if ((editor == BooleanNumbSelector) && (typeof(value) == "number")){
-            value = (value == 0) ? "НЕТ" : "ДА";
+            value = (value == 0) ? "нет" : "да";
           }
           if (editor == ValveTypeSelector){
             value = labelFromSelectorList(DATA_VALVE_TYPES, value) 
           }
           if (editor == BooleanSelector){
-            value = value ? "ДА" : "НЕТ";
+            value = value ? "да" : "нет";
           }
           if (editor == BooleanNumbSelector){
             value = labelFromSelectorList(DATA_BOOLEANNUMB, value) 
