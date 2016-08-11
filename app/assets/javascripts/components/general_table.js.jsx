@@ -41,6 +41,7 @@ var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSe
 var BooleanSelector = require('../selectors/static_selectors.jsx').BooleanSelector;
 var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSelector;
 var BooleanNumbSelector = require('../selectors/static_selectors.jsx').BooleanNumbSelector;
+var MotorZmnSelector = require('../selectors/static_selectors.jsx').MotorZmnSelector;
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');

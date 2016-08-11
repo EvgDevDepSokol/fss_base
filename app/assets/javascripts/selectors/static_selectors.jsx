@@ -9,6 +9,7 @@ const DATA_RF_TYPES = require('../selectors/data/rf_types.js')
 const DATA_BOOLEAN = require('../selectors/data/boolean.js')
 const DATA_BOOLEANYN = require('../selectors/data/booleanyn.js')
 const DATA_BOOLEANNUMB = require('../selectors/data/booleannumb.js')
+const DATA_MOTOR_ZMNS = require('../selectors/data/motor_zmns.js')
 
 var StaticSelector = React.createClass({
 
@@ -123,6 +124,18 @@ var RFTypeSelector = React.createClass({
   }
 });
 
+var MotorZmnSelector = React.createClass({
+  render: function() {
+    return (
+      <StaticSelector  value = {this.props.value} _this = {this}
+        options = {DATA_MOTOR_ZMNS}
+        displayName = 'MotorZmnSelector'
+        name = 'MotorZmn'
+      />
+    )
+  }
+});
+
 
 
 module.exports.ValveTypeSelector = ValveTypeSelector;
@@ -131,3 +144,4 @@ module.exports.MalfunctionTypeSelector = MalfunctionTypeSelector;
 module.exports.BooleanSelector = BooleanSelector;
 module.exports.BooleanYNSelector = BooleanYNSelector;
 module.exports.BooleanNumbSelector = BooleanNumbSelector;
+module.exports.MotorZmnSelector = MotorZmnSelector;
