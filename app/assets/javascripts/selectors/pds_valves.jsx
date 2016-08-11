@@ -26,7 +26,7 @@ module.exports = React.createClass({
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = getSelectorOptions(
-          '/api/pds_valves',
+          '/selectors/pds_valves',
           {},
           this
         );

@@ -7,10 +7,10 @@ var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
-function pad(str, max) {
-  str = str.toString();
-  return str.length < max ? pad("0" + str, max) : str;
-}
+//function pad(str, max) {
+//  str = str.toString();
+//  return str.length < max ? pad("0" + str, max) : str;
+//}
 
 module.exports = React.createClass({
   displayName: 'SdSelector',
@@ -31,12 +31,15 @@ module.exports = React.createClass({
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = getSelectorOptions(
-          '/api/pds_sds',
+          //'/api/pds_sds',
+          '/selectors/sd_sys_numbs',
           {pds_project_id:project.ProjectID},
           this
         );
+        debugger
         options = $.map(options , function(el){
-          return {value: el.id, label: el.System + pad(el.Numb,2)}
+          //return {value: el.id, label: el.System + pad(el.Numb,2)}
+          return {value: el.id, label: el.sd_link}
         });
 
         callback(null, {

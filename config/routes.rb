@@ -113,6 +113,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :selectors, defaults: { format: :json }do
+    resources :sd_sys_numbs
+  end
+
   resource :select_builder
 
   resources :tblbinaries, only: [] do
