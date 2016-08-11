@@ -2,14 +2,15 @@ class ElectricEquipmentController < BaseController
   ACTIONS = [:pds_breakers, :pds_equipments, :pds_section_assemblers].freeze
 
   def pds_breakers
-    @data_list = PdsBreaker.where(Project: project.ProjectID).
-                 # includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power, :pds_sd)
-                 includes(:system, :psa_ctrl_power, :psa_anc_power, :pds_sd)
+    @data_list = PdsBreaker.where(Project: project.ProjectID)
+      .includes(:system, :psa_ctrl_power, :psa_anc_power)
+      .includes(:sd_sys_numb)
   end
 
   def pds_equipments
     @data_list = PdsEquipment.where(Project: project.ProjectID)
-                             .includes(:system, :pds_sd, :pds_man_equip)
+      .includes(:system, :pds_man_equip)
+      .includes(:sd_sys_numb)
   end
 
   def pds_section_assemblers
