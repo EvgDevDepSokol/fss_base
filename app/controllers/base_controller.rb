@@ -19,7 +19,6 @@ class BaseController < ApplicationController
   def update
     Rails.logger.warn permit_params
     if current_object.update permit_params
-
       render json: { status: :ok, data: current_object.custom_hash }
     else
       render json: { errors: current_object.errors.inspect, data: current_object.reload.custom_hash },
