@@ -11,7 +11,8 @@ class TechnologyEquipmentController < BaseController
     @data_list = PdsDetector.where(Project: project.ProjectID)
                             .includes(
                               :system, :pds_section_assembler,
-                              pds_sd: [:system], pds_project_unit: [:unit])
+                              pds_project_unit: [:unit])
+                            .includes(:sd_sys_numb)
                             .pluck(
                               :DetID,
                               'pds_syslist.SystemID', 'pds_syslist.System',
@@ -21,7 +22,7 @@ class TechnologyEquipmentController < BaseController
                               'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
                               :'1coef_shift', :'2coef_scale', :Type, :TypeDetec, :Room, :SCK_input,
                               :mod,
-                              'pds_sd.sd_N', 'systems_pds_sd.System', 'pds_sd.Numb')
+                              'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link')
 
     @data_list = @data_list.each.map do |e|
       e1 = {}
@@ -48,9 +49,7 @@ class TechnologyEquipmentController < BaseController
       e1['Room']             = e[24]
       e1['SCK_input']        = e[25]
       e1['mod']              = e[26]
-      if e[28]&&e[29]
-        e1['pds_sd']           = { id: e[27], SdTitle: e[28]+e[29].rjust(2, '0') }
-      end  
+      e1['sd_sys_numb']      = { id: e[27], sd_link: e[28]}
 
       e = e1
     end
@@ -58,19 +57,22 @@ class TechnologyEquipmentController < BaseController
 
   def pds_ejectors
     @data_list = PdsEjector.where(Project: project.ProjectID)
-                           .includes(:system, :pds_man_equip, :pds_sd)
+                           .includes(:system, :pds_man_equip)
+                           .includes(:sd_sys_numb)
                            .includes(pds_project_unit: [:unit])
   end
 
   def pds_filters
     @data_list = PdsFilter.where(Project: project.ProjectID)
-                          .includes(:system, :pds_man_equip, :pds_sd)
+                          .includes(:system, :pds_man_equip)
+                           .includes(:sd_sys_numb)
   end
 
   # TODO: проверить список возвращающихся значений
   def pds_hexes
     @data_list = PdsHex.where(Project: project.ProjectID)
-                       .includes(:system, :pds_man_equip, :pds_sd)
+                       .includes(:system, :pds_man_equip)
+                           .includes(:sd_sys_numb)
                        .includes(pds_project_unit: [:unit])
   end
 
@@ -87,28 +89,32 @@ class TechnologyEquipmentController < BaseController
     @data_list = PdsMotor.where(Project: project.ProjectID)
                          .includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power,
                                    :pds_motor_type,
-                                   :pds_man_equip, :pds_sd, :pds_documentation)
+                                   :pds_man_equip, :pds_documentation)
+                           .includes(:sd_sys_numb)
   end
 
   def pds_regulators
     @data_list = PdsRegulator.where(Project: project.ProjectID)
                              .includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power,
-                                       :pds_man_equip, :pds_sd, :pds_documentation, :value_1,
+                                       :pds_man_equip, :pds_documentation, :value_1,
                                        :value_2, :pds_detector)
+                           .includes(:sd_sys_numb)
   end
 
   def pds_valves
     @data_list = PdsValf.where(Project: project.ProjectID)
                         .includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power,
-                                  :pds_man_equip, :pds_sd, :pds_documentation)
+                                  :pds_man_equip, :pds_documentation)
+                        .includes(:sd_sys_numb)
                         .pluck(
                           :valveID, :tag_RU, :tag_EN, :Type, :Desc, :Desc_EN, :Department,
-                          :PowerTemp, :open_rate, :close_rate, :sd_N, :Algorithm,
+                          :PowerTemp, :open_rate, :close_rate, :Algorithm,
                           :model, :room, :connection,
                           'pds_syslist.SystemID', 'pds_syslist.System',
                           'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
                           'psa_ed_powers_pds_valves.section_N', 'psa_ed_powers_pds_valves.section_name',
-                          'psa_anc_powers_pds_valves.section_N', 'psa_anc_powers_pds_valves.section_name')
+                          'psa_anc_powers_pds_valves.section_N', 'psa_anc_powers_pds_valves.section_name',
+                          'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link')
 
     @data_list = @data_list.each.map do |e|
       e1 = {}
@@ -122,15 +128,15 @@ class TechnologyEquipmentController < BaseController
       e1['PowerTemp']        = e[7]
       e1['open_rate']        = e[8]
       e1['close_rate']       = e[9]
-      e1['sd_N']             = e[10]
-      e1['Algorithm']        = e[11]
-      e1['model']            = e[12]
-      e1['room']             = e[13]
-      e1['connection']       = e[14]
-      e1['system']           = { id: e[15], System: e[16] }
-      e1['psa_ctrl_power']   = { id: e[17], section_name: e[18] }
-      e1['psa_ed_power']     = { id: e[19], section_name: e[20] }
-      e1['psa_anc_power']    = { id: e[21], section_name: e[22] }
+      e1['Algorithm']        = e[10]
+      e1['model']            = e[11]
+      e1['room']             = e[12]
+      e1['connection']       = e[13]
+      e1['system']           = { id: e[14], System: e[15] }
+      e1['psa_ctrl_power']   = { id: e[16], section_name: e[17] }
+      e1['psa_ed_power']     = { id: e[18], section_name: e[19] }
+      e1['psa_anc_power']    = { id: e[20], section_name: e[21] }
+      e1['sd_sys_numb']      = { id: e[22] , sd_link: e[23]}
 
       e = e1
     end
@@ -139,7 +145,8 @@ class TechnologyEquipmentController < BaseController
 
   def pds_volumes
     @data_list = PdsVolume.where(Project: project.ProjectID)
-                          .includes(:system, :pds_man_equip, :pds_sd)
+                          .includes(:system, :pds_man_equip)
+                        .includes(:sd_sys_numb)
   end
 
   helper_method :table_header
