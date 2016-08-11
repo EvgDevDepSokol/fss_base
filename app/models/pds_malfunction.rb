@@ -4,16 +4,19 @@ class PdsMalfunction < ActiveRecord::Base
   self.table_name = 'pds_malfunction'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project_unit, foreign_key: 'regidity_unitid'
+  belongs_to :sd_sys_numb, foreign_key: 'sd_N'
 
   alias_attribute :system_id, :sys
   alias_attribute :pds_project_unit_id, :regidity_unitid
+  alias_attribute :sd_sys_numb_id, :sd_N
 
   has_many :items, class_name: 'PdsMalfunctionDim', foreign_key: :Malfunction
 
   def custom_hash
     serializable_hash(include: {
                         system: { only: :System },
-                        pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } }
+                        pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
+                        sd_sys_numb: { only: [:sd_link] }
                       })
   end
 

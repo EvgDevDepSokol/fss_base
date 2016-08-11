@@ -7,19 +7,19 @@ class PdsRf < ActiveRecord::Base
   belongs_to :pds_project_unit, foreign_key: 'Unit', class_name: 'PdsProjectUnit'
   belongs_to :psa_project_unit, foreign_key: 'unit_FB', class_name: 'PdsProjectUnit'
   belongs_to :pds_project, foreign_key: 'Project'
+  belongs_to :sd_sys_numb, foreign_key: 'sd_N'
 
   alias_attribute :system_id, :sys
   alias_attribute :pds_project_unit_id, :Unit
   alias_attribute :psa_project_unit_id, :unit_FB
-  #  def serializable_hash(options={})
-  #    super.merge({id: id, system: system.to_s})
-  #  end
+  alias_attribute :sd_sys_numb_id, :sd_N
 
   def custom_hash
     serializable_hash(include: {
                         system: { only: :System },
                         pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
-                        psa_project_unit: { only: [], include: { unit: { only: :Unit_RU } } }
+                        psa_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
+        sd_sys_numb: { only: [:sd_link] }
                       })
   end
 

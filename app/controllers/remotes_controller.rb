@@ -4,16 +4,16 @@ class RemotesController < BaseController
   def pds_malfunctions
     @data_list = PdsMalfunction.where(Project: project.ProjectID)
                                .includes(:system, pds_project_unit: :unit)
+                               .includes(:sd_sys_numb)
   end
 
   def pds_rves
     @data_list = PdsRf.where(Project: project.ProjectID)
                       .includes(:system, { pds_project_unit: :unit }, psa_project_unit: :unit)
+                      .includes(:sd_sys_numb)
   end
 
   def pds_malfunction_dims
-  #  @data_list = PdsMalfunctionDim.where(Project: project.ProjectID)
-  #                             .includes(pds_malfunction: :system)
     @data_list = PdsMalfunctionDim.where(Project: project.ProjectID)
                                .includes(pds_malfunction: [:system])
                                .includes(:sd_sys_numb)
