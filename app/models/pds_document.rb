@@ -12,6 +12,7 @@ class PdsDocument < ActiveRecord::Base
                         pds_engineer: { only: :name },
                         working_engineer_ru: { only: :name },
                         working_engineer_en: { only: :name },
-                        system: { only: [:System] } })
+                        system: { only: [:System] }
+                      })
   end
 end

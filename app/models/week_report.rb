@@ -8,6 +8,7 @@ class WeekReport < ActiveRecord::Base
   def custom_hash
     serializable_hash(include: {
                         pds_engineer: { only: :name },
-                        system: { only: [:System] } })
+                        system: { only: [:System] }
+                      })
   end
 end

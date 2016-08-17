@@ -16,9 +16,9 @@ class PdsMetersDigital < ActiveRecord::Base
                                  include: {
                                    hw_ped: { only: [:ped] },
                                    pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } }
-                                 }
-                        },
+                                 } },
                         system: { only: [:System] },
-                        pds_section_assembler: { only: [:section_name] } })
+                        pds_section_assembler: { only: [:section_name] }
+                      })
   end
 end

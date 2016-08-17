@@ -19,6 +19,7 @@ class HwWirelist < ActiveRecord::Base
     serializable_hash(include: {
                         pds_panel: { only: [:panel] },
                         hw_ic: { only: [:ref] },
-                        hw_ped: { only: [:ped]}})
+                        hw_ped: { only: [:ped] }
+                      })
   end
 end

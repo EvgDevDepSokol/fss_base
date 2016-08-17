@@ -11,6 +11,7 @@ class PdsAlarm < ActiveRecord::Base
   def custom_hash
     serializable_hash(include: {
                         hw_ic: { only: [:ref, :tag_no, :Description], include: { hw_ped: { only: [:ped] } } },
-                        system: { only: [:System] } })
+                        system: { only: [:System] }
+                      })
   end
 end

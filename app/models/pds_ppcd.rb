@@ -11,9 +11,9 @@ class PdsPpcd < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-                        system: { only: :System }, 
+                        system: { only: :System },
                         pds_detector: { only: :tag }
-                               })
+                      })
   end
 
   def serializable_hash(options = {})

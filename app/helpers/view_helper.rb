@@ -57,8 +57,7 @@ module ViewHelper
       { label: TableList[model],
         table: model,
         href: url_for([:index, project, plural_model(model)]),
-        current: params[:model] == model
-      }
+        current: params[:model] == model }
     end.to_json
   end
 

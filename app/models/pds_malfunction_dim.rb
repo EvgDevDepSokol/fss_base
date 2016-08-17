@@ -8,11 +8,11 @@ class PdsMalfunctionDim < ActiveRecord::Base
   def custom_map
     true
   end
+
   def custom_hash
-    serializable_hash(include:{
-        pds_malfunction:{only: [:sys,:Numb], include: { system: { only: :System}}},
-        sd_sys_numb: { only: [:sd_link] }
-      }
-    )
+    serializable_hash(include: {
+                        pds_malfunction: { only: [:sys, :Numb], include: { system: { only: :System } } },
+                        sd_sys_numb: { only: [:sd_link] }
+                      })
   end
 end

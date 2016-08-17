@@ -5,19 +5,16 @@ class PdsEngineer < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :rememberable, :trackable
 
+  # def login_project=(value)
+  #   @login_project=value
+  # end
 
- # def login_project=(value)
- #   @login_project=value
- # end
+  attr_reader :login_project
 
-  def login_project
-    @login_project
-  end
-
- # def self.login_project
- #   byebug
- #   @login_project
- # end
+  # def self.login_project
+  #   byebug
+  #   @login_project
+  # end
 
   def valid_password?(password)
     #      logger.info " #{password}"

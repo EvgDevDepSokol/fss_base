@@ -14,6 +14,7 @@ class PdsRecorder < ActiveRecord::Base
     serializable_hash(include: {
                         hw_ic: { only: [:ref, :tag_no, :Description], include: { hw_ped: { only: [:ped] } } },
                         system: { only: [:System] },
-                        pds_section_assembler: { only: [:section_name] } })
+                        pds_section_assembler: { only: [:section_name] }
+                      })
   end
 end

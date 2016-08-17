@@ -6,10 +6,11 @@ class HwDevtype < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-      tablelist:{only: :title}})
+                        tablelist: { only: :title }
+                      })
   end
 
-#  def serializable_hash(options = {})
-#    super options.merge(methods: :id)
-#  end
+  #  def serializable_hash(options = {})
+  #    super options.merge(methods: :id)
+  #  end
 end

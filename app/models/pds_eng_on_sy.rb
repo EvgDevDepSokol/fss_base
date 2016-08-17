@@ -11,6 +11,7 @@ class PdsEngOnSy < ActiveRecord::Base
     serializable_hash(include: {
                         pds_engineer: { only: :name },
                         pds_engineer_test: { only: :name },
-                        system: { only: [:System] } })
+                        system: { only: [:System] }
+                      })
   end
 end

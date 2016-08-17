@@ -6,6 +6,7 @@ class PdsProjectSy < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-                        system: { only: [:System] } })
+                        system: { only: [:System] }
+                      })
   end
 end

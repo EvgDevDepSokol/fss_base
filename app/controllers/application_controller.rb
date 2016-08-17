@@ -6,13 +6,13 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
 
-  def after_sign_in_path_for(resource, *args)
-    #options  = args.extract_options! 
-    if ((self.params['user'])&&(self.params['user']['login_project'])) 
-      tmp=self.params['user']['login_project']
-      '/pds_projects/'+tmp+'/hw_ics'
+  def after_sign_in_path_for(_resource, *_args)
+    # options  = args.extract_options!
+    if params['user'] && (params['user']['login_project'])
+      tmp = params['user']['login_project']
+      '/pds_projects/' + tmp + '/hw_ics'
     else
       ''
     end
-  end  
+  end
 end

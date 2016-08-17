@@ -8,6 +8,7 @@ class PdsDocOnSy < ActiveRecord::Base
   def custom_hash
     serializable_hash(include: {
                         pds_documentation: { only: [:DocTitle, :Type, :NPP_Number, :Project] },
-                        system: { only: [:System] } })
+                        system: { only: [:System] }
+                      })
   end
 end

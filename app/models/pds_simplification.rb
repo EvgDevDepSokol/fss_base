@@ -8,6 +8,7 @@ class PdsSimplification < ActiveRecord::Base
   def custom_hash
     serializable_hash(include: {
                         system: { only: [:System] },
-                        pds_query: { only: [:queryNumber] } })
+                        pds_query: { only: [:queryNumber] }
+                      })
   end
 end

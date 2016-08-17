@@ -8,8 +8,8 @@ class HwIosignal < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-                        hw_ped: { only: [:ped]},
-                        hw_iosignaldef: { only: [:ioname]},
-                     })
+                        hw_ped: { only: [:ped] },
+                        hw_iosignaldef: { only: [:ioname] }
+                      })
   end
 end

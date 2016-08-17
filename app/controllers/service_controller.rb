@@ -84,14 +84,14 @@ class ServiceController < BaseController
   def table_header
     model_class.attribute_names.map { |attr| { property: attr, header: attr } }.to_json
   end
- 
+
   private
+
   def current_user_rights
-    if (current_user.user_rights >= 3)
+    if current_user.user_rights >= 3
       true
     else
-      render html: "<strong>Не хватает прав для просмотра таблицы.</strong>".html_safe
+      render html: '<strong>Не хватает прав для просмотра таблицы.</strong>'.html_safe
     end
   end
-
 end

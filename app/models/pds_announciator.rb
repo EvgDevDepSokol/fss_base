@@ -27,6 +27,7 @@ class PdsAnnounciator < ActiveRecord::Base
                         hw_ic: { only: [:ref, :tag_no, :Description], include: { hw_ped: { only: [:ped] } } },
                         system: { only: [:System] },
                         pds_section_assembler: { only: [:section_name] },
-                        pds_detector: { only: [:tag] } })
+                        pds_detector: { only: [:tag] }
+                      })
   end
 end

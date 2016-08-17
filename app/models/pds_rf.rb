@@ -19,7 +19,7 @@ class PdsRf < ActiveRecord::Base
                         system: { only: :System },
                         pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
                         psa_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
-        sd_sys_numb: { only: [:sd_link] }
+                        sd_sys_numb: { only: [:sd_link] }
                       })
   end
 

@@ -12,10 +12,11 @@ class HardwareController < BaseController
                            .includes(:hw_ic, :hw_ped, :pds_panel)
                            .pluck(
                              'wirelist_N', 'from', 'to', 'wc', 'nc', 'io', 'm', 's', 'word', 'bit',
-                             'hw_peds.ped_N', 'hw_peds.ped', 
+                             'hw_peds.ped_N', 'hw_peds.ped',
                              'rev', 'remarks',
                              'pds_panel.pID', 'pds_panel.panel',
-                             'hw_ic.icID', 'hw_ic.ref')
+                             'hw_ic.icID', 'hw_ic.ref'
+                           )
 
     @data_list = @data_list.each.map do |e|
       e1 = {}

@@ -6,8 +6,8 @@ class Selectors::SdSysNumbsController < ApplicationController
   def index
     @sd_sys_numbs = SdSysNumb.where(Project: project.ProjectID).order(:sd_link)
     respond_to do |format|
-        format.json { render json: Oj.dump(@sd_sys_numbs.map(&:serializable_hash))}
-    end    
+      format.json { render json: Oj.dump(@sd_sys_numbs.map(&:serializable_hash)) }
+    end
   end
 
   def show
@@ -29,6 +29,7 @@ class Selectors::SdSysNumbsController < ApplicationController
   end
 
   private
+
   def project
     @project ||= PdsProject.find_by(ProjectID: params[:pds_project_id])
   end

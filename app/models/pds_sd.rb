@@ -6,7 +6,8 @@ class PdsSd < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-                        system: { only: :System } })
+                        system: { only: :System }
+                      })
   end
 
   def serializable_hash(options = {})

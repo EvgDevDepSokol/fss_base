@@ -1,7 +1,7 @@
 class PdsValf < ActiveRecord::Base
   self.inheritance_column = :_type_disabled
   TYPES = ['valve', 'vlv_cntr', 'vlv_relief', 'vlv_pneumo', 'vlv_sol', 'vlv_check', 'vlv_hydr', 'R/C', nil].freeze
-  DEPARTMENT_TYPES = ["Турбинное", "Реакторное", nil].freeze
+  DEPARTMENT_TYPES = ['Турбинное', 'Реакторное', nil].freeze
   belongs_to :pds_project, foreign_key: 'Project'
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'

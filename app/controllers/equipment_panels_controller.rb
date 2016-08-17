@@ -24,8 +24,9 @@ class EquipmentPanelsController < BaseController
                        :scaleMin, :scaleMax,
                        'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
                        :tag_no, :UniquePTAG, :un, :Description_EN, :rev,
-                       'pds_panel.pID','pds_panel.panel')
-                      
+                       'pds_panel.pID', 'pds_panel.panel'
+                     )
+
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
@@ -41,7 +42,7 @@ class EquipmentPanelsController < BaseController
       e1['un']               = e[16]
       e1['Description_EN']   = e[17]
       e1['rev']              = e[18]
-      e1['pds_panel']        = { id: e[19], panel: e[20]}
+      e1['pds_panel']        = { id: e[19], panel: e[20] }
       e = e1
     end
   end
@@ -63,41 +64,40 @@ class EquipmentPanelsController < BaseController
 
   def pds_switch_nofixes
     @data_list = PdsSwitchNofix.where(Project: project.ProjectID)
-                   .includes({ hw_ic: [:hw_ped] }, :system).order('hw_ic.ref')
-                   .pluck(
-                     :KeyID,
-                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
-                     'hw_peds.ped_N', :'hw_peds.ped',
-                     'pds_syslist.SystemID', 'pds_syslist.System',
-                     'range'
-                   )
-                      
+                               .includes({ hw_ic: [:hw_ped] }, :system).order('hw_ic.ref')
+                               .pluck(
+                                 :KeyID,
+                                 'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
+                                 'hw_peds.ped_N', :'hw_peds.ped',
+                                 'pds_syslist.SystemID', 'pds_syslist.System',
+                                 'range'
+                               )
+
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
-      e1['hw_ic']            = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['hw_ic']            = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
       e1['system']           = { id: e[7], System: e[8] }
       e1['range']            = e[9]
       e = e1
     end
-
   end
 
   def pds_switch_fixes
     @data_list = PdsSwitchFix.where(Project: project.ProjectID)
                              .includes({ hw_ic: [:hw_ped] }, :system).order('hw_ic.ref')
-                   .pluck(
-                     :KeyID,
-                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
-                     'hw_peds.ped_N', :'hw_peds.ped',
-                     'pds_syslist.SystemID', 'pds_syslist.System',
-                     'range'
-                   )
+                             .pluck(
+                               :KeyID,
+                               'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
+                               'hw_peds.ped_N', :'hw_peds.ped',
+                               'pds_syslist.SystemID', 'pds_syslist.System',
+                               'range'
+                             )
 
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
-      e1['hw_ic']            = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['hw_ic']            = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
       e1['system']           = { id: e[7], System: e[8] }
       e1['range']            = e[9]
       e = e1
@@ -107,18 +107,18 @@ class EquipmentPanelsController < BaseController
   def pds_buttons
     @data_list = PdsButton.where(Project: project.ProjectID)
                           .includes({ hw_ic: [:hw_ped] }, :system).order('hw_ic.ref')
-                   .pluck(
-                     :ButtonID,
-                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
-                     'hw_peds.ped_N', :'hw_peds.ped',
-                     'pds_syslist.SystemID', 'pds_syslist.System',
-                     'range','Fixed'
-                   )
+                          .pluck(
+                            :ButtonID,
+                            'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
+                            'hw_peds.ped_N', :'hw_peds.ped',
+                            'pds_syslist.SystemID', 'pds_syslist.System',
+                            'range', 'Fixed'
+                          )
 
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
-      e1['hw_ic']            = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['hw_ic']            = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
       e1['system']           = { id: e[7], System: e[8] }
       e1['range']            = e[9]
       e1['Fixed']            = e[10]
@@ -129,19 +129,19 @@ class EquipmentPanelsController < BaseController
   def pds_buttons_lights
     @data_list = PdsButtonsLight.where(Project: project.ProjectID)
                                 .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler).order('hw_ic.ref')
-                    .pluck(
-                     :ButtonID,
-                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
-                     'hw_peds.ped_N', :'hw_peds.ped',
-                     'pds_syslist.SystemID', 'pds_syslist.System',
-                     'pds_section_assembler.section_N','pds_section_assembler.section_name',
-                     'range','Fixed'
-                   )
-                      
+                                .pluck(
+                                  :ButtonID,
+                                  'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
+                                  'hw_peds.ped_N', :'hw_peds.ped',
+                                  'pds_syslist.SystemID', 'pds_syslist.System',
+                                  'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
+                                  'range', 'Fixed'
+                                )
+
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
-      e1['hw_ic']                 = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
       e1['system']                = { id: e[7], System: e[8] }
       e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
       e1['range']                 = e[11]
@@ -153,23 +153,22 @@ class EquipmentPanelsController < BaseController
   def pds_lamps
     @data_list = PdsLamp.where(Project: project.ProjectID)
                         .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler).order('hw_ic.ref')
-                    .pluck(
-                     :LampID,
-                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
-                     'hw_peds.ped_N', :'hw_peds.ped',
-                     'pds_syslist.SystemID', 'pds_syslist.System',
-                     'pds_section_assembler.section_N','pds_section_assembler.section_name'
-                   )
-                      
+                        .pluck(
+                          :LampID,
+                          'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
+                          'hw_peds.ped_N', :'hw_peds.ped',
+                          'pds_syslist.SystemID', 'pds_syslist.System',
+                          'pds_section_assembler.section_N', 'pds_section_assembler.section_name'
+                        )
+
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
-      e1['hw_ic']                 = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
       e1['system']                = { id: e[7], System: e[8] }
       e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
       e = e1
     end
-                       
   end
 
   def pds_mnemos
@@ -202,20 +201,20 @@ class EquipmentPanelsController < BaseController
   def pds_announciators
     @data_list = PdsAnnounciator.where(Project: project.ProjectID)
                                 .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler, :pds_detector).order('hw_ic.ref')
-                     .pluck(
-                     :AnnouncID,
-                     'hw_ic.icID','hw_ic.ref','hw_ic.tag_no','hw_ic.Description',
-                     'hw_peds.ped_N', :'hw_peds.ped',
-                     'pds_syslist.SystemID', 'pds_syslist.System',
-                     'pds_section_assembler.section_N','pds_section_assembler.section_name',
-                     'pds_detectors.DetID','pds_detectors.tag',
-                     'Type','sign'
-                   )
-                      
+                                .pluck(
+                                  :AnnouncID,
+                                  'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
+                                  'hw_peds.ped_N', :'hw_peds.ped',
+                                  'pds_syslist.SystemID', 'pds_syslist.System',
+                                  'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
+                                  'pds_detectors.DetID', 'pds_detectors.tag',
+                                  'Type', 'sign'
+                                )
+
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
-      e1['hw_ic']                 = {id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: {id: e[5], ped: e[6]}}
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
       e1['system']                = { id: e[7], System: e[8] }
       e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
       e1['pds_detector']          = { id: e[11], tag: e[12] }
@@ -223,7 +222,6 @@ class EquipmentPanelsController < BaseController
       e1['sign']                  = e[14]
       e = e1
     end
-                                
   end
 
   # TODO: add unit to scope

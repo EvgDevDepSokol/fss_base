@@ -113,7 +113,7 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :selectors, defaults: { format: :json }do
+  namespace :selectors, defaults: { format: :json } do
     resources :sd_sys_numbs
   end
 

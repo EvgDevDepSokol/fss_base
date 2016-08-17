@@ -38,9 +38,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.after_initialize do
-    #Enable bullet in your application
+    # Enable bullet in your application
     Bullet.enable = true
-    Bullet.alert = true  
+    Bullet.alert = true
   end
-
 end

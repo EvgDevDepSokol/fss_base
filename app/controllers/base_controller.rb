@@ -51,7 +51,7 @@ class BaseController < ApplicationController
   end
 
   def permit_params
-    if ((not model.attribute_names.include? 'Project') and params[model.to_s.underscore].key?('Project')) then
+    if (!model.attribute_names.include? 'Project') && params[model.to_s.underscore].key?('Project')
       params[model.to_s.underscore].delete :Project
     end
     params.require(model.to_s.underscore).permit!

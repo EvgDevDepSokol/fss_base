@@ -6,7 +6,7 @@ class Api::MassOperationsController < ApplicationController
     querry = model_class
 
     if querry.respond_to?(:Project)
-      querry = querry.where(Project: project.id) if project 
+      querry = querry.where(Project: project.id) if project
     end
 
     # querry = querry.where(id: params[:ids]) if params[:ids]
@@ -17,82 +17,94 @@ class Api::MassOperationsController < ApplicationController
       column = params[:column]
       querry = querry.find(params[:ids])
       new_data = []
-      if((fromIndex==0) && (toIndex==0))
+      if fromIndex.zero? && toIndex.zero?
         querry.each do |row|
           val = row.send(column)
-          if (val.nil?||(val==''))
-            if ((params[:from].nil?)||(params[:from]==''))
-              row.send(column+'=', params[:to])
+          if val.nil? || (val == '')
+            if params[:from].nil? || (params[:from] == '')
+              row.send(column + '=', params[:to])
               new_data.push(row)
             end
-          elsif val.is_a? Fixnum # selector 
+          elsif val.is_a? Fixnum # selector
             if val == params[:from].to_i
-              row.send(column+'=', params[:to].to_i)
+              row.send(column + '=', params[:to].to_i)
               new_data.push(row)
             end
           elsif val.is_a? String # string or textEditor
-            if ((params[:from].nil?)||(params[:from]==''))
-              if row[column]==params[:from]
-                row[column]=params[:to]
+            if params[:from].nil? || (params[:from] == '')
+              if row[column] == params[:from]
+                row[column] = params[:to]
                 new_data.push(row)
               end
             elsif row[column].include? params[:from]
-              row[column].gsub!(params[:from],params[:to]) 
+              row[column].gsub!(params[:from], params[:to])
               new_data.push(row)
             end
           elsif val.is_a? Float # string or textEditor, when value is float
-            valfrom=(Float(params[:from]) rescue nil)
-            valto=(Float(params[:to]) rescue nil)
-            if Float(row[column])==valfrom
-              row[column]=valto
+            valfrom = (begin
+                       Float(params[:from])
+                     rescue
+                       nil
+                     end)
+            valto = (begin
+                     Float(params[:to])
+                   rescue
+                     nil
+                   end)
+            if Float(row[column]) == valfrom
+              row[column] = valto
               new_data.push(row)
             end
           end
         end
-      elsif((fromIndex==1) && (toIndex==0))
+      elsif (fromIndex == 1) && toIndex.zero?
         querry.each do |row|
           val = row.send(column)
-          if (val.nil?||(val==''))
-            row.send(column+'=', params[:to])
+          if val.nil? || (val == '')
+            row.send(column + '=', params[:to])
             new_data.push(row)
           end
         end
-      elsif((fromIndex==2) && (toIndex==0)) 
+      elsif (fromIndex == 2) && toIndex.zero?
         querry.each do |row|
           val = row.send(column)
-          if (val.nil?||(val==''))
-            row.send(column+'=', params[:to])
+          if val.nil? || (val == '')
+            row.send(column + '=', params[:to])
             new_data.push(row)
-          elsif val.is_a? Fixnum # selector 
-            row.send(column+'=', params[:to].to_i)
+          elsif val.is_a? Fixnum # selector
+            row.send(column + '=', params[:to].to_i)
             new_data.push(row)
           elsif val.is_a? String # string or textEditor
-            row[column]=params[:to]
+            row[column] = params[:to]
             new_data.push(row)
           elsif val.is_a? Float # string or textEditor, when value is float
-            valto=(Float(params[:to]) rescue nil)
-            row[column]=valto
+            valto = (begin
+                     Float(params[:to])
+                   rescue
+                     nil
+                   end)
+            row[column] = valto
             new_data.push(row)
           end
         end
-      elsif((fromIndex==2) && (toIndex==1))
+      elsif (fromIndex == 2) && (toIndex == 1)
         querry.each do |row|
-          row.send(column+'=', nil)
+          row.send(column + '=', nil)
           new_data.push(row)
         end
-      end 
+      end
       # save all changes finally
-   #   querry.each do |row|
-   #     row.save
-   #   end
-      render json: { status: :ok, new_data: new_data_oj(new_data)}
+      #   querry.each do |row|
+      #     row.save
+      #   end
+      render json: { status: :ok, new_data: new_data_oj(new_data) }
     else
       render json: { status: :error }
     end
   end
 
   def update_all_save
-    new_data=params[:new_data]
+    new_data = params[:new_data]
     column = params[:column]
     ids = []
     new_data.each do |row|
@@ -103,14 +115,14 @@ class Api::MassOperationsController < ApplicationController
 
     new_data.each do |row|
       querry_row = querry.find(row[1]['id'])
-      querry_row.attributes.each do |attr_name,attr_value|
+      querry_row.attributes.each do |attr_name, _attr_value|
         querry_row[attr_name] = row[1][attr_name]
       end
-      querry_row.save;
+      querry_row.save
     end
     querry = querry.find(ids)
 
-    render json: { status: :ok, data: table_data(querry)}
+    render json: { status: :ok, data: table_data(querry) }
   end
 
   private
@@ -126,7 +138,7 @@ class Api::MassOperationsController < ApplicationController
 
   def table_data(querry)
     Oj.default_options = { mode: :compat }
-    if (model_class.method_defined? :custom_hash)
+    if model_class.method_defined? :custom_hash
       Oj.dump(querry.map(&:custom_hash))
     else
       Oj.dump(querry.map(&:serializable_hash))

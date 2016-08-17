@@ -3,14 +3,14 @@ class ElectricEquipmentController < BaseController
 
   def pds_breakers
     @data_list = PdsBreaker.where(Project: project.ProjectID)
-      .includes(:system, :psa_ctrl_power, :psa_anc_power)
-      .includes(:sd_sys_numb)
+                           .includes(:system, :psa_ctrl_power, :psa_anc_power)
+                           .includes(:sd_sys_numb)
   end
 
   def pds_equipments
     @data_list = PdsEquipment.where(Project: project.ProjectID)
-      .includes(:system, :pds_man_equip)
-      .includes(:sd_sys_numb)
+                             .includes(:system, :pds_man_equip)
+                             .includes(:sd_sys_numb)
   end
 
   def pds_section_assemblers
