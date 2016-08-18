@@ -18,11 +18,6 @@ var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 //some static selectors
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
-//var BooleanSelector = require('../selectors/boolean.jsx');
-//var BooleanYNSelector = require('../selectors/booleanyn.jsx');
-//var BooleanNumbSelector = require('../selectors/booleannumb.jsx');
-//var ValveTypeSelector = require('../selectors/static_valve_types.jsx');
-//var MalfunctionTypeSelector = require('../selectors/static_malfunction_types.jsx');
 
 //some static selectors
 var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
@@ -31,12 +26,11 @@ var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSe
 var BooleanSelector = require('../selectors/static_selectors.jsx').BooleanSelector;
 var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSelector;
 var BooleanNumbSelector = require('../selectors/static_selectors.jsx').BooleanNumbSelector;
+var MotorZmnSelector = require('../selectors/static_selectors.jsx').MotorZmnSelector;
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
 var UnitSelector = require('../selectors/pds_project_units.jsx');
-//var DocumentationSelector = require('../selectors/pds_man_equips.jsx');
-
 var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');
 var PdsDocumentationsSelector = require('../selectors/pds_documentation.jsx');
 var PdsValvesSelector = require('../selectors/pds_valves.jsx');

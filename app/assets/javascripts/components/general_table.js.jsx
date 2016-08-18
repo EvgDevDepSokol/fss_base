@@ -31,10 +31,7 @@ var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 //some static selectors
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
-//var BooleanSelector = require('../selectors/boolean.jsx');
-//var BooleanYNSelector = require('../selectors/booleanyn.jsx');
-//var BooleanNumbSelector = require('../selectors/booleannumb.jsx');
-//import {ValveTypeSelector, MalfunctionTypeSelector} from '../selectors/static_selectors.jsx';
+
 var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
 var RFTypeSelector = require('../selectors/static_selectors.jsx').RFTypeSelector;
 var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSelector;
