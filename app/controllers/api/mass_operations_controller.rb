@@ -10,14 +10,13 @@ class Api::MassOperationsController < ApplicationController
     end
 
     # querry = querry.where(id: params[:ids]) if params[:ids]
-
     if params[:ids]
       fromIndex = params[:fromIndex].to_i
       toIndex = params[:toIndex].to_i
       column = params[:column]
       querry = querry.find(params[:ids])
       new_data = []
-      if fromIndex.zero? && toIndex.zero?
+      if fromIndex.zero? && toIndex.zero?   #value to value
         querry.each do |row|
           val = row.send(column)
           if val.nil? || (val == '')
@@ -55,9 +54,14 @@ class Api::MassOperationsController < ApplicationController
               row[column] = valto
               new_data.push(row)
             end
+          elsif (val.is_a? TrueClass) || (val.is_a? FalseClass) # Boolean Selector
+            if val == !params[:from].to_i.zero?
+              row[column] = !params[:to].to_i.zero?
+              new_data.push(row)
+            end  
           end
         end
-      elsif (fromIndex == 1) && toIndex.zero?
+      elsif (fromIndex == 1) && toIndex.zero? # empty selected to value
         querry.each do |row|
           val = row.send(column)
           if val.nil? || (val == '')
@@ -65,7 +69,7 @@ class Api::MassOperationsController < ApplicationController
             new_data.push(row)
           end
         end
-      elsif (fromIndex == 2) && toIndex.zero?
+      elsif (fromIndex == 2) && toIndex.zero? # all selected to value
         querry.each do |row|
           val = row.send(column)
           if val.nil? || (val == '')
@@ -85,9 +89,12 @@ class Api::MassOperationsController < ApplicationController
                    end)
             row[column] = valto
             new_data.push(row)
+          elsif (val.is_a? TrueClass) || (val.is_a? FalseClass) # Boolean Selector
+            row[column] = !params[:to].to_i.zero?
+            new_data.push(row)
           end
         end
-      elsif (fromIndex == 2) && (toIndex == 1)
+      elsif (fromIndex == 2) && (toIndex == 1) # all selected to empty
         querry.each do |row|
           row.send(column + '=', nil)
           new_data.push(row)

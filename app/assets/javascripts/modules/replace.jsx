@@ -57,9 +57,11 @@ var CustomInput = React.createClass({
   },
 
   render: function() {
-    var attribute = this.props.attribute;
     var description = this.props.description;
-    if (attribute) {
+    var editor = this.props.editor;
+    var lpass = false;
+    if (editor) {lpass = editor.displayName.endsWith('Selector')};
+    if (lpass) {
       var editor = eval(this.props.editor.displayName);
       return (
         <div className = 'replace-selector'>
@@ -111,7 +113,11 @@ module.exports = React.createClass({
     var data = this.props.data;
     var attribute = this.state.attribute;
     var column = ReactDOM.findDOMNode(this.refs.column).value;
-    if (attribute) {
+    var editor = this.state.editor;
+    debugger
+    var lpass = false;
+    if (editor) {lpass = editor.displayName.endsWith('Selector')};
+    if (lpass) {
       var from = ReactDOM.findDOMNode(this.refs.from).firstChild.childNodes[0].defaultValue;
       var to = ReactDOM.findDOMNode(this.refs.to).firstChild.childNodes[0].defaultValue;
     } else {
@@ -149,7 +155,7 @@ module.exports = React.createClass({
           //    _this.setState({isReplaceModalOpen:true});
               var lsave = confirm('Количество измененных записей: ' + new_data.length + '. Сохранить изменения?');
           //    var lsave=false;
-              if (lsave){
+              if (lsave && new_data.length > 0){
                 $.ajax({
                   url: '/api/mass_operations/update_all_save',
                   dataType: 'json',
