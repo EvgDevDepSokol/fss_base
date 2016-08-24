@@ -39,6 +39,7 @@ var BooleanSelector = require('../selectors/static_selectors.jsx').BooleanSelect
 var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSelector;
 var BooleanNumbSelector = require('../selectors/static_selectors.jsx').BooleanNumbSelector;
 var MotorZmnSelector = require('../selectors/static_selectors.jsx').MotorZmnSelector;
+var UserRightsSelector = require('../selectors/static_selectors.jsx').UserRightsSelector;
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
@@ -64,6 +65,7 @@ const DATA_MALFUNCTION_TYPES = require('../selectors/data/malfunction_types.js')
 const DATA_BOOLEAN = require('../selectors/data/boolean.js')
 const DATA_BOOLEANYN = require('../selectors/data/booleanyn.js')
 const DATA_BOOLEANNUMB = require('../selectors/data/booleannumb.js')
+const DATA_USER_RIGHTS = require('../selectors/data/user_rights.js')
 
 var TableContainer = React.createClass({
   displayName: 'VniiaesFullTable',
@@ -156,6 +158,9 @@ var TableContainer = React.createClass({
           }
           if (editor == BooleanNumbSelector){
             value = labelFromSelectorList(DATA_BOOLEANNUMB, value) 
+          }
+          if (editor == UserRightsSelector){
+            value = labelFromSelectorList(DATA_USER_RIGHTS, value) 
           }
         }
 

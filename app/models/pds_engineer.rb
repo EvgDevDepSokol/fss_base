@@ -36,4 +36,10 @@ class PdsEngineer < ActiveRecord::Base
   def email=(v)
     self.EMail = v
   end
+
+  def custom_hash
+    serializable_hash.merge(id: id)
+  end
+
+
 end
