@@ -1,5 +1,5 @@
 class ServiceController < BaseController
-  ACTIONS = [:tablelist, :table_role_rights, :roles,
+  ACTIONS = [:tablelist, # :table_role_rights, :roles,
              :pds_project_properties, :pds_engineers, :pds_project,
              :pds_syslist, :tblbinaries, :pds_unit, :pds_blocks,
              :pds_customers, :pds_negotiators, :sign_rpt,
@@ -13,13 +13,13 @@ class ServiceController < BaseController
     @data_list = Tablelist.all
   end
 
-  def table_role_rights
-    @data_list = TableRoleRight.includes(:role, :tablelist)
-  end
+  # def table_role_rights
+  #   @data_list = TableRoleRight.includes(:role, :tablelist)
+  # end
 
-  def roles
-    @data_list = Role.all
-  end
+  # def roles
+  #   @data_list = Role.all
+  # end
 
   # TODO: не ясно нужно ли тут использовать скоуп проекта
   def pds_project_properties

@@ -61,14 +61,16 @@ gem 'web-console',    group: :development
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'capistrano'
-gem 'capistrano-rails'
-gem 'capistrano-bundler'
-gem 'capistrano-rbenv'
-# gem 'capistrano-unicorn-nginx', '~> 2.0'
-gem 'capistrano-unicorn-nginx'
-gem 'capistrano-npm'
-
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rbenv'
+  # gem 'capistrano-unicorn-nginx', '~> 2.0'
+  gem 'capistrano-unicorn-nginx'
+  gem 'capistrano-npm'
+#  gem 'capistrano-scm-local', '~> 0.1', :github => 'ekho/capistrano-scm-local'  
+end
 # Use the Unicorn app server
 
 gem 'unicorn'

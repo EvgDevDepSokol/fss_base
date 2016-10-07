@@ -4,9 +4,9 @@
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
 # Don't declare `role :all`, it's a meta role
-role :app, %w(dev@127.0.0.1:9999)
-role :web, %w(dev@127.0.0.1:9999)
-role :db,  %w(dev@127.0.0.1:9999)
+ role :app, %w(dev@127.0.0.1:9999)
+ role :web, %w(dev@127.0.0.1:9999)
+ role :db,  %w(dev@127.0.0.1:9999)
 
 # Extended Server Syntax
 # ======================
@@ -15,14 +15,15 @@ role :db,  %w(dev@127.0.0.1:9999)
 # something that quacks like a hash can be used to set
 # extended properties on the server.
 
-set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
-set :server_name, '127.0.0.1:9999'
+ set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
+ set :server_name, '127.0.0.1:9999'
 
-server '127.0.0.1', user: 'dev', roles: %w(web app db), primary: true, port: 9999
+server '127.0.0.1', user: 'deploy', roles: %w(web app db)
+# server '127.0.0.1', user: 'deploy', roles: %w(web app db), primary: true, port: 9999
 
 set :stage, :production
-set :branch, 'master'
-set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:full_app_name)}"
+# set :branch, 'master'
+# set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:full_app_name)}"
 
 set :rails_env, :production
 
