@@ -267,6 +267,7 @@ var TableContainer = React.createClass({
           var idx = findIndex(this.state.data, {id: itemId});
 
           var remove = function() {
+            if (this.props.objectType=='pds_malfunction_dim') return;
             if (current_user.user_rights >= 2){
               var res = confirm("Вы действительно желаете удалить запись?"); 
               if(!res) return;
@@ -646,8 +647,8 @@ var TableContainer = React.createClass({
   },
 
   onAddRowClick: function(copiedRow){
-    if(this.state.lockRow)
-      return;
+    if (this.state.lockRow) return;
+    if (this.props.objectType=='pds_malfunction_dim') return;
     if (current_user.user_rights >= 2 ){
       var copyRow = {};
       if (copiedRow.id) {
@@ -764,8 +765,11 @@ var TableContainer = React.createClass({
   onSystemSelectorChange: function(valueHash){
     var val = valueHash.system;
     var column = _.find(this.state.columns, function(c){ return c.property == 'system.System'; });
-    if(!column)
-      return;
+    if(!column) {
+      // condition for pds_malfunction_dims
+      column = _.find(this.state.columns, function(c){ return c.property == 'pds_malfunction.system.System'; });
+    };
+    if(!column) return;
 
     if(val){
       if(val == -1 ){

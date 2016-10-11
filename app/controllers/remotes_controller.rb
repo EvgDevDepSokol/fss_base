@@ -31,6 +31,7 @@ class RemotesController < BaseController
       e1['is_main']          = e[4]
       e1['pds_malfunction']  = { id: e[5], system: { id: e[6], System: e[7] }, Numb: e[8] }
       e1['sd_sys_numb'] = { id: e[9], sd_link: e[10] }
+      e1['system']           = { id: e[6], System: e[7] }
       e = e1
     end
   end
