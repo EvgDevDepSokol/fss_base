@@ -6,23 +6,41 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
+var LocalStorageMixin = require('react-localstorage');
 
 module.exports = React.createClass({
   displayName: 'SystemSelector',
 
+  mixins: [LocalStorageMixin],
+
   getInitialState() {
     return {
-      disabled: this.props.disabled
+      disabled: this.props.disabled,
+      value_prev: ''
     };
   },
 
   setValue(value) {
     onChange(value,this)
+    this.setState ({
+      value_prev: this.state.value
+    });
   },
 
+  getDefaultProps: function() {
+    return {
+      stateFilterKeys: ['value']
+    };
+  },
+
+  shouldComponentUpdate: function() {
+    if(this.state.value_prev !== this.state.value) {
+      this.setValue(this.state.value);
+    };
+    return true;
+  },
 
   render: function() {
-
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = getSelectorOptions(

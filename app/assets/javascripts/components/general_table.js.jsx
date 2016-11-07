@@ -125,7 +125,6 @@ var TableContainer = React.createClass({
             return true
           }
         });
-        debugger
         return tmp[0] ? tmp[0].label : '';
       }        
       return function(value, data, rowIndex, property) {
@@ -763,6 +762,7 @@ var TableContainer = React.createClass({
   },
 
   onSystemSelectorChange: function(valueHash){
+    debugger
     var val = valueHash.system;
     var column = _.find(this.state.columns, function(c){ return c.property == 'system.System'; });
     if(!column) {
