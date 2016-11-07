@@ -20,6 +20,11 @@ class PdsMalfunction < ActiveRecord::Base
                       })
   end
 
+  after_save do |pds_malfunction|
+    console
+    puts pds_malfunction.id
+  end
+
   # TODO: add with language
   # (*) – В случае, если длина описания больше 66 символов, то общая длина 2-ой строки обрезается по 72-ой символ и при этом ниже генерятся две
   # служебных строки в виде:

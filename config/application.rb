@@ -6,11 +6,14 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+
 TableList = YAML.load_file('public/data/tables.yml')
 
 module FSS_database
   class Application < Rails::Application
     config.autoload_paths << "#{config.root}/lib"
+
+    config.web_console.whitelisted_ips = '10.0.226.8'
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
