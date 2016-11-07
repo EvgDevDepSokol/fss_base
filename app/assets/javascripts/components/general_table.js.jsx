@@ -804,11 +804,7 @@ var TableContainer = React.createClass({
       })
     };
     if (this.state.search.query) {
-      // apply search to data
-      // alternatively you could hit backend `onChange`
-      // or push this part elsewhere depending on your needs
       data = Search.search(this.state.search, this.state.columns, data)
-      //data = Search.search(data,columns,this.state.search.column,this.state.search.query);
     }
     var mainCheckbox_new = this.state.mainCheckbox_new;
     if(mainCheckbox_new !== this.state.mainCheckbox_old) {

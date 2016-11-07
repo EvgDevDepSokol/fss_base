@@ -68,9 +68,7 @@ module.exports.search = function(search, columns, data) {
 
   return data.filter(function(row)
     {
-      //debugger;
       return columns.filter(isColumnVisible.bind(this, row)).length > 0;
-//    }.bind(this)
     }
   );
 
@@ -104,9 +102,6 @@ module.exports.search = function(search, columns, data) {
         formattedValue = '';
     }
 
-    // TODO: allow strategy to be passed, now just defaulting to prefix
-//    var predicate = predicates.prefix(query.toLowerCase());
-//    return predicate.matches(formattedValue.toLowerCase());
     var query_arr = query.toLowerCase().split('*');
     var searchText = formattedValue.toLowerCase();
     var currentPosition = 0;
@@ -121,8 +116,6 @@ module.exports.search = function(search, columns, data) {
       }
     }  
     return lpass;
-//   var predicate = predicates.infix(query.toLowerCase());
-//   return predicate.evaluate(formattedValue.toLowerCase());
   }
 };
 
@@ -154,15 +147,6 @@ module.exports.matches = (column, value, query, options) => {
     }
     if (!lpass) matches =[{startIndex: 0, length: 0}];
     return matches; 
-
-  //  options = options || {
-  //      strategy: predicates.infix,
-  //      transform: formatters.lowercase
-  //  };
-
-  //  var predicate = options.strategy(options.transform(query));
-
-  //  return predicate.matches(options.transform(value));
 };
 
 function id(a) {
