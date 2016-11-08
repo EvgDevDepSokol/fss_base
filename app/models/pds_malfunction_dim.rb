@@ -5,6 +5,8 @@ class PdsMalfunctionDim < ActiveRecord::Base
   alias_attribute :pds_malfunction_id, :Malfunction
   alias_attribute :sd_sys_numb_id, :sd_N
 
+  scope :ordered, -> { includes(:pds_malfunction).order('pds_malfunction.sys','pds_malfunction.Numb','pds_malfunction_dim.Character') }
+
   def custom_map
     true
   end
