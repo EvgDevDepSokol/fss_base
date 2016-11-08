@@ -281,6 +281,7 @@ var TableContainer = React.createClass({
                   sendData: {}
                 });
               }else{
+                var idx = findIndex(this.state.data, {id: itemId});
                 $.ajax({
                   url: url + '/' + itemId,
                   dataType: 'json',
