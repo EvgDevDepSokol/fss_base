@@ -294,7 +294,7 @@ var TableContainer = React.createClass({
                     });
                   }.bind(this),
                   error: function(xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
+                    console.error(xhr.responseText);
                   }.bind(this)
                 });
               }
@@ -613,7 +613,8 @@ var TableContainer = React.createClass({
             });
           }.bind(this),
           error: function(xhr, status, err) {
-            console.error(this.props.url, status, err.toString());
+            console.error(xhr.responseText);
+          //  console.error(this.props.url, status, err.toString());
           }.bind(this)
         });
       }else{
@@ -632,7 +633,8 @@ var TableContainer = React.createClass({
             });
           }.bind(this),
           error: function(xhr, status, err) {
-            console.error(this.props.url, status, err.toString());
+            console.error(xhr.responseText);
+          //  console.error(this.props.url, status, err.toString());
           }.bind(this)
         });
       }
@@ -763,7 +765,6 @@ var TableContainer = React.createClass({
   },
 
   onSystemSelectorChange: function(valueHash){
-    debugger
     var val = valueHash.system;
     var column = _.find(this.state.columns, function(c){ return c.property == 'system.System'; });
     if(!column) {

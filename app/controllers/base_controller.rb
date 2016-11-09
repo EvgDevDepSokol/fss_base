@@ -8,11 +8,11 @@ class BaseController < ApplicationController
   def create
     Rails.logger.warn permit_params
     @current_object = model_class.new permit_params
-    if @current_object.save
+    if @current_object.save permit_params
       render json: { status: :created, data: current_object.reload.custom_hash }
     else
-      render json: { errors: @current_object.errors.inspect, status: :unprocessable_entity }
-      Rails.logger.info(@current_object.errors.inspect)
+      render json: { errors: @current_object.errors.full_messages}, status: :unprocessable_entity 
+      Rails.logger.info(@current_object.errors.full_messages)
     end
   end
 
@@ -21,22 +21,22 @@ class BaseController < ApplicationController
     if current_object.update permit_params
       render json: { status: :ok, data: current_object.custom_hash }
     else
-      render json: { errors: current_object.errors.inspect, data: current_object.reload.custom_hash },
+      render json: { errors: current_object.errors.full_messages, data: current_object.reload.custom_hash },
              status: :unprocessable_entity
-      Rails.logger.info(@current_object.errors.inspect)
+      Rails.logger.info(@current_object.errors.full_messages)
     end
 
     rescue
-      render json: { errors: current_object.errors.inspect, data: current_object.reload.custom_hash },
+      render json: { errors: current_object.errors.full_messages, data: current_object.reload.custom_hash },
              status: :unprocessable_entity
-      Rails.logger.info(@current_object.errors.inspect)
+      Rails.logger.info(@current_object.errors.full_messages)
     end
 
   def destroy
     if current_object.destroy
       render json: {}, head: :no_content
     else
-      render json: { errors: current_object.errors.inspect }, status: 403
+      render json: { errors: current_object.errors.full_messages }, status: 403
     end
   end
 
