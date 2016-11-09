@@ -6,7 +6,7 @@ class BaseController < ApplicationController
   before_action :project
   helper_method :project, :table_data
   def create
-    Rails.logger.warn permit_params
+    #Rails.logger.warn permit_params
     @current_object = model_class.new permit_params
     if @current_object.save permit_params
       render json: { status: :created, data: current_object.reload.custom_hash }
@@ -17,7 +17,7 @@ class BaseController < ApplicationController
   end
 
   def update
-    Rails.logger.warn permit_params
+    #Rails.logger.warn permit_params
     if current_object.update permit_params
       render json: { status: :ok, data: current_object.custom_hash }
     else
@@ -37,6 +37,7 @@ class BaseController < ApplicationController
       render json: {}, head: :no_content
     else
       render json: { errors: current_object.errors.full_messages }, status: 403
+      Rails.logger.info(@current_object.errors.full_messages)
     end
   end
 

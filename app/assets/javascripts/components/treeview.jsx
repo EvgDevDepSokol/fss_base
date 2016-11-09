@@ -110,8 +110,6 @@ var TreeListNode = React.createClass({
 var SideMenu = React.createClass({
 
   filterData: function(pattern) {
-    //debugger;
-    //
     if (!String.prototype.includes) {
       String.prototype.includes = function() {
         'use strict';
@@ -159,29 +157,29 @@ var SideMenu = React.createClass({
         <div className="menu-tree">
           <div className="menu-tree-inner" >
 
-        {this.state.dataSource.map(function(node, i) {
-          var type = node.type;
-          var childrensList = node.children.map(function(child, j) {
-            if(child.visible)
-            {
-              return(
-                <TreeListNode label={child.label} href={child.href} current={child.current} />
-              )
-            }
-          });
-          var label = <span className="node">{node.label}</span>;
-          if(node.visible){
-            return (
-              <TreeView elem={node} key={type + '|' + i} nodeLabel={label} defaultCollapsed={false} >
-                <ul>
-                  {childrensList}
-                </ul>
-              </TreeView>
-            );
-          }else{
-            return('');
-          }
-        }, this)}
+            {this.state.dataSource.map(function(node, i) {
+              var type = node.type;
+              var childrensList = node.children.map(function(child, j) {
+                if(child.visible)
+                {
+                  return(
+                    <TreeListNode key={type + '|' + i + '|' + j} label={child.label} href={child.href} current={child.current} />
+                  )
+                }
+              });
+              var label = <span className="node">{node.label}</span>;
+              if(node.visible){
+                return (
+                  <TreeView elem={node} key={type + '|' + i} nodeLabel={label} defaultCollapsed={false} >
+                    <ul>
+                      {childrensList}
+                    </ul>
+                  </TreeView>
+                );
+              }else{
+                return('');
+              }
+            }, this)}
           </div>
 
         </div>
