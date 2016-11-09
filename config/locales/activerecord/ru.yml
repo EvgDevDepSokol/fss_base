@@ -22,7 +22,6 @@ ru:
         suffix: suffix
         version: version
         coord: coord
-
       pds_lamp:
         IC: IC
         pds_syslist: Система
@@ -38,3 +37,26 @@ ru:
         Closed: 'Откл/Закр'
         Control: Управление
         AutoDist: ''
+      pds_malfunction:
+        id: '"ID"'
+        sys: '"Сист."'
+        Numb: '"Номер"'
+        Dimension: '"Массив"'
+        shortDesc: '"Краткое описание"'
+        shortDesc_EN: '"Краткое описание(EN)"'
+        cause: '"Причина"'
+        cause_EN: '"Причина(EN)"'
+        fullDesc: '"Полное описание"'
+        fullDesc_EN: '"Полное описание(EN)"'
+        type: '"Тип"'
+        if_delete: '"Удаление отказа"'
+        if_delete_EN: '"Удаление отказа(EN)"'
+        lowlim_regidity: '"Мин."'
+        uplim_regidity: '"Макс."'
+        regidity_unitid: '"Разм. отказа"'
+        regidity_unit: '"Разм. отказа (рук)"'
+        regidity_text: '"Описание жесткости"'
+        regidity_text_EN: '"Описание жесткости(EN)"'
+        Unit_status: '"Состояние блока"'
+        scale: '"Scale (ИС)"'
+        sd_N: '"Сим. диаграмма"'

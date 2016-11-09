@@ -13,6 +13,7 @@ class PdsMalfunction < ActiveRecord::Base
   has_many :items, class_name: 'PdsMalfunctionDim', foreign_key: :Malfunction
 
   validates :Dimension, numericality: { only_integer: true, greater_than: 0 }
+  validates :Numb, numericality: { only_integer: true, greater_than: 0 }
 
   def custom_hash
     serializable_hash(include: {

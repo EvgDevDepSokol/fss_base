@@ -613,8 +613,12 @@ var TableContainer = React.createClass({
             });
           }.bind(this),
           error: function(xhr, status, err) {
-            console.error(xhr.responseText);
-          //  console.error(this.props.url, status, err.toString());
+            var jtmp = xhr.responseJSON['errors'];
+            var result="Не удалось сохранить запись. Причина:\n\n";
+            for( key in jtmp){
+              result+= jtmp[key]+'\n';
+            }
+            alert(result);
           }.bind(this)
         });
       }else{
@@ -633,8 +637,12 @@ var TableContainer = React.createClass({
             });
           }.bind(this),
           error: function(xhr, status, err) {
-            console.error(xhr.responseText);
-          //  console.error(this.props.url, status, err.toString());
+            var jtmp = xhr.responseJSON['errors'];
+            var result="Не удалось сохранить запись. Причина:\n\n";
+            for( key in jtmp){
+              result+= jtmp[key]+'\n';
+            }
+            alert(result);
           }.bind(this)
         });
       }
