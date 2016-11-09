@@ -76,6 +76,7 @@ class ProjectSettingsController < BaseController
   def pds_simplifications
     @data_list = PdsSimplification.where(Project: project.ProjectID)
                                   .includes(:pds_query, :system)
+                                  .order(:sys, :Numb)
   end
 
   def pds_sys_descriptions

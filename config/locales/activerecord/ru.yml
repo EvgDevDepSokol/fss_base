@@ -73,7 +73,7 @@ ru:
         sd_N: '"Сим. диаграмма"'
         is_main: '"Основной"'
       pds_rf:
-        id: '"rfID"'
+        id: '"ID"'
         sys: '"Сист."'
         system: '"Сист."'
         name: '"TAG"'
@@ -88,3 +88,13 @@ ru:
         unit_FB: '"Разм. FB"'
         Type_FB: '"Тип FB"'
         sd_N: '"Сим. диаграмма"'
+      pds_simplification:
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        Numb: '"Номер"'
+        Desc: '"Описание"'
+        Desc_EN: '"Описание(EN)"'
+        support: '"Обоснование"'
+        support_EN: '"Обоснование(EN)"'
+       
