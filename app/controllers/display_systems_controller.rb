@@ -50,6 +50,7 @@ class DisplaySystemsController < BaseController
   def pds_sds
     @data_list = PdsSd.where(Project: project.ProjectID)
                       .includes(:system)
+                      .order(:sys, :Numb)
   end
 
   helper_method :table_header
