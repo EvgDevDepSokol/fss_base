@@ -10,6 +10,10 @@ class PdsSd < ActiveRecord::Base
                       })
   end
 
+  before_save do |pds_sd|
+    pds_sd.Numb=pds_sd.Numb.rjust(2,'0')
+  end  
+  
   def serializable_hash(options = {})
     super options.merge(methods: :id)
   end
