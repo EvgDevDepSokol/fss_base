@@ -12,7 +12,7 @@ class PdsMotor < ActiveRecord::Base
   alias_attribute :system_id, :sys
   alias_attribute :psa_ctrl_power_id, :ctrl_power
   alias_attribute :psa_ed_power_id, :ed_power
-  # alias_attribute :psa_anc_power_id, :anc_power
+  alias_attribute :psa_anc_power_id, :anc_power
   alias_attribute :pds_man_equip_id, :eq_type
   alias_attribute :pds_documentation_id, :doc_reg_N
   alias_attribute :pds_motor_type_id, :MotorType
