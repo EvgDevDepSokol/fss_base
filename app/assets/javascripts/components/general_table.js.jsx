@@ -236,6 +236,16 @@ var TableContainer = React.createClass({
 
     var columns = this.props.columns.map(function(column){
       var h = column; //  {property: column.property, header: column.header, };
+      if (column.editor=='TextEditor') {
+        column.headerClassStyle = 'header-text-col'
+      } else if (column.property=='system.System') {
+        column.headerClassStyle = 'header-sys_sys-col'
+      } else if (!column.nested){
+        column.headerClassStyle = 'header-'+column.property+'-col'
+      } else {
+        var keys = column.property.split(".");
+        column.headerClassStyle = 'header-'+keys[keys.length-1]+'-col'
+      }
       if(column.editor) {
         column['editor'] = eval(column.editor);
         h["cell"] = [editableField(column),highlighter(h.property)]
@@ -250,15 +260,15 @@ var TableContainer = React.createClass({
     // remove hidden elements
     columns = columns.filter(function(e){return e.hidden != true});
 
+
     // add buttons
     columns = columns.concat([
       {
         header:
         <div className = 'buttons-col'>
           Кнопки
-        </div>, 
-        classes: 'buttons-col',
-        className: 'buttons-col',
+        </div>,
+        headerClassStyle: 'header-buttons-col',
         cell: function(value, celldata, rowIndex, property){
           var url = window.location.href;
           var newRow = celldata[rowIndex].newRow;
@@ -294,7 +304,12 @@ var TableContainer = React.createClass({
                     });
                   }.bind(this),
                   error: function(xhr, status, err) {
-                    console.error(xhr.responseText);
+                    var jtmp = xhr.responseJSON['errors'];
+                    var result="Не удалось удалить запись. Причина:\n\n";
+                    for( key in jtmp){
+                      result+= jtmp[key]+'\n';
+                    }
+                    alert(result);
                   }.bind(this)
                 });
               }
@@ -397,6 +412,7 @@ var TableContainer = React.createClass({
           <div>
             {mainCheckbox} 
           </div>,
+        headerClassStyle: 'header-checkbox-col',
         classes: 'checkbox-col',
         cell: function(value, celldata, rowIndex, property){
           var itemId = celldata[rowIndex].id;
@@ -670,7 +686,7 @@ var TableContainer = React.createClass({
         var columns=this.state.columns;
         columns.forEach(function (col) {
           col.sort = null;
-          col.headerClass = null;
+          //col.headerClass = null;
         }); 
         this.setState({
           columns: columns,
@@ -802,6 +818,12 @@ var TableContainer = React.createClass({
     var pagination = this.state.pagination || {};
     var header = this.state.header;
     var columns = this.state.columns;
+
+    columns.forEach(function(column){
+      if(!column.headerClass||column.headerClass.indexOf(column.headerClassStyle)==-1){
+        column.headerClass=column.headerClassStyle+' '+column.headerClass
+      } 
+    });
 
     if (this.state.showFilters){
       columns.forEach(function(column){

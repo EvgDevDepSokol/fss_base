@@ -683,9 +683,6 @@ body{
               .Select-value{
                 display: initial;
               }
-           //   .Select-input{
-           //     display: table-cell;
-           //   }
             }
           }
           span{
@@ -702,6 +699,7 @@ body{
 
           textarea{
             min-height: 100px;
+            min-width: 200px;
             height: 100%;
             width: 100%;
           }
@@ -717,11 +715,47 @@ body{
           background-color: #6DA3BD;
         }
       }
-
-      .buttons-col{
-        //min-width: 100px;
+      .header-buttons-col{
+        width:73px;
+        min-width:73px;
+        max-width:73px;
       }
-
+      .header-checkbox-col{
+        width:50px;
+        min-width:50px;
+        max-width:50px;
+      }
+      .header-sys_sys-col{
+        width:55px;
+        min-width:55px;
+        max-width:55px;
+      }
+      .header-scaleMin-col{
+        width:60px;
+        min-width:60px;
+        max-width:60px;
+      }
+      .header-scaleMax-col{
+        width:60px;
+        min-width:60px;
+        max-width:60px;
+      }
+      .header-Unit_RU-col{
+        width:80px;
+        min-width:80px;
+        max-width:80px;
+      }
+      .header-ref-col{
+        width:90px;
+        min-width:90px;
+        max-width:90px;
+      }
+      .header-text-col{
+        width:205px;
+        min-width:205px;
+        max-width:205px;
+        display:table-cell;
+      }
     }
 
   }
