@@ -25,7 +25,6 @@ class PdsMalfunction < ActiveRecord::Base
 
   after_save do |pds_malfunction|
     pds_malfunction_dim=PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
-    byebug
     icnt=pds_malfunction.Dimension-pds_malfunction_dim.size
     if (pds_malfunction.Dimension<1)
       icnt=0
@@ -42,7 +41,6 @@ class PdsMalfunction < ActiveRecord::Base
       end
     elsif(icnt<0)
       while icnt<0
-        byebug
         m_d_new=PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).last
         m_d_new.destroy
         icnt += 1
