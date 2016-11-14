@@ -7,7 +7,7 @@ var ReactDOM = require('react-dom');
 
 module.exports = function()  {
   return React.createClass({
-    displayName: 'TextEditor',
+    displayName: 'WideTextEditor',
 
     propTypes: {
       value: React.PropTypes.string,
@@ -23,7 +23,7 @@ module.exports = function()  {
     render:function() {
       return (
         React.createElement("textarea", {
-            className: "normal-text",
+            className: "wide-text",
             value: this.state.value,
             onChange: this.onChange,
             onKeyUp: this.keyUp,

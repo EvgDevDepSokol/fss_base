@@ -40,6 +40,7 @@ var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSe
 var BooleanNumbSelector = require('../selectors/static_selectors.jsx').BooleanNumbSelector;
 var MotorZmnSelector = require('../selectors/static_selectors.jsx').MotorZmnSelector;
 var UserRightsSelector = require('../selectors/static_selectors.jsx').UserRightsSelector;
+var RegidityUnitSelector = require('../selectors/static_selectors.jsx').RegidityUnitSelector;
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
@@ -57,6 +58,7 @@ var ColumnFilters = require('../modules/column_filters.jsx');
 var stringEditor =  require('../inputs/input.jsx')();
 var dateEditor =  require('../inputs/input.jsx')();
 var TextEditor =  require('../inputs/text_editor.jsx')();
+var WideTextEditor =  require('../inputs/wide_text_editor.jsx')();
 
 var Modal = require('react-modal');
 const DATA_VALVE_TYPES = require('../selectors/data/valve_types.js')
@@ -238,6 +240,8 @@ var TableContainer = React.createClass({
       var h = column; //  {property: column.property, header: column.header, };
       if (column.editor=='TextEditor') {
         column.headerClassStyle = 'header-text-col'
+      } else if (column.editor=='WideTextEditor') {
+        column.headerClassStyle = 'header-wide_text-col'
       } else if (column.property=='system.System') {
         column.headerClassStyle = 'header-sys_sys-col'
       } else if (!column.nested){
@@ -677,6 +681,7 @@ var TableContainer = React.createClass({
     if (this.props.objectType=='pds_malfunction_dim') return;
     if (current_user.user_rights >= 2 ){
       var copyRow = {};
+      debugger
       if (copiedRow.id) {
         copyRow = $.extend({}, copiedRow);
       } else if (this.state.showFilters){
@@ -686,7 +691,6 @@ var TableContainer = React.createClass({
         var columns=this.state.columns;
         columns.forEach(function (col) {
           col.sort = null;
-          //col.headerClass = null;
         }); 
         this.setState({
           columns: columns,

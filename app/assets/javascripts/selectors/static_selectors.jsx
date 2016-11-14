@@ -11,6 +11,7 @@ const DATA_BOOLEANYN = require('../selectors/data/booleanyn.js')
 const DATA_BOOLEANNUMB = require('../selectors/data/booleannumb.js')
 const DATA_MOTOR_ZMNS = require('../selectors/data/motor_zmns.js')
 const DATA_USER_RIGHTS = require('../selectors/data/user_rights.js')
+const DATA_REGIDITY_UNIT = require('../selectors/data/regidity_unit.js')
 
 var StaticSelector = React.createClass({
 
@@ -149,7 +150,17 @@ var UserRightsSelector = React.createClass({
   }
 });
 
-
+var RegidityUnitSelector = React.createClass({
+  render: function() {
+    return (
+      <StaticSelector  value = {this.props.value} _this = {this}
+        options = {DATA_REGIDITY_UNIT}
+        displayName = 'RegidityUnitSelector'
+        name = 'RegidityUnit'
+      />
+    )
+  }
+});
 
 module.exports.ValveTypeSelector = ValveTypeSelector;
 module.exports.RFTypeSelector = RFTypeSelector;
@@ -159,3 +170,4 @@ module.exports.BooleanYNSelector = BooleanYNSelector;
 module.exports.BooleanNumbSelector = BooleanNumbSelector;
 module.exports.MotorZmnSelector = MotorZmnSelector;
 module.exports.UserRightsSelector = UserRightsSelector;
+module.exports.RegidityUnitSelector = RegidityUnitSelector;

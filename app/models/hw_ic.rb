@@ -17,6 +17,9 @@ class HwIc < ActiveRecord::Base
   validates_length_of :ref, maximum: 128
   validates_length_of :rev, maximum: 1
   validates_length_of :tag_no, maximum: 330
+  validates_presence_of :ref, :pedID
+
+  validate :duplicate_exists, on: :create
 
   def custom_map
     true
@@ -29,6 +32,32 @@ class HwIc < ActiveRecord::Base
                         pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
                         hw_ped: { only: :ped, include: { hw_devtype: { only: [:RuName] } } }
                       })
+  end
+
+  def duplicate_exists
+    if (HwIc.where(ref: self.ref, Project: self.Project).count>0)
+      errors.add(:hw_ic, ' Запись с таким "REF" в этом проекте уже существует.')
+    end
+  end
+
+  after_save do |hw_ic|
+    if (hw_ic.pedID==hw_ic.pedID_was)
+      #do nothing
+    elsif(hw_ic.pedID_was.nil?)
+      #this is new record
+      Tbl = Object.const_get(table_by_pedid(hw_ic.pedID).classify)
+      e=Tbl.new
+      e.IC = hw_ic.icID
+      e.Project = hw_ic.Project
+      e.save
+    elsif(hw_ic.pedID!=hw_ic.pedID_was)
+      #this is modified record
+    end
+    byebug
+  end
+
+  def table_by_pedid(pedID)
+    Tablelist.find(HwDevtype.find(HwPed.find(pedID).type).typetable).table
   end
 
   #  def serializable_hash(options = {})

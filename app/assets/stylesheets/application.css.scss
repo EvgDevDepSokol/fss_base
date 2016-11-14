@@ -697,12 +697,19 @@ body{
            // height: 16px;
           }
 
-          textarea{
+          .normal-text{
             min-height: 100px;
             min-width: 200px;
             height: 100%;
             width: 100%;
           }
+          .wide-text{
+            min-height: 100px;
+            min-width: 800px;
+            height: 100%;
+            width: 100%;
+          }
+         
           .custom-selector{
             &.pds_documentation{
               width: 250px;
@@ -761,6 +768,14 @@ body{
         max-width:205px;
         display:table-cell;
       }
+      .header-wide_text-col{
+        width:805px;
+        min-width:805px;
+        max-width:805px;
+        display:table-cell;
+      }
+
+
     }
 
   }
