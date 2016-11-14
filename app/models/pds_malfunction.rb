@@ -23,6 +23,8 @@ class PdsMalfunction < ActiveRecord::Base
                       })
   end
 
+  CHARACTER_ARRAY=('A'..'Z').to_a+('AA'..'ZZ').to_a
+
   after_save do |pds_malfunction|
     pds_malfunction_dim=PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
     icnt=pds_malfunction.Dimension-pds_malfunction_dim.size
@@ -35,7 +37,7 @@ class PdsMalfunction < ActiveRecord::Base
         m_d_new.Project=pds_malfunction.Project
         m_d_new.Malfunction=pds_malfunction.id
         m_d_new.sd_N=pds_malfunction.sd_N
-        # m_d_new.Character=pds_malfunction_dim.last.Character
+        m_d_new.Character=CHARACTER_ARRAY[(pds_malfunction.Dimension-icnt)]
         m_d_new.save
         icnt -= 1
       end
