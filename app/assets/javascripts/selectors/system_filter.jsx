@@ -6,39 +6,42 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var LocalStorageMixin = require('react-localstorage');
+//var LocalStorageMixin = require('react-localstorage');
 
 module.exports = React.createClass({
   displayName: 'SystemSelector',
 
-  mixins: [LocalStorageMixin],
+ // mixins: [LocalStorageMixin],
 
   getInitialState() {
+    debugger
     return {
+      value: this.props.value,
       disabled: this.props.disabled,
-      value_prev: ''
+//      value_prev: ''
     };
   },
 
   setValue(value) {
+    this.state.value=value.system;
     onChange(value,this)
-    this.setState ({
-      value_prev: this.state.value
-    });
+//    this.setState ({
+//      value_prev: this.state.value
+//    });
   },
 
-  getDefaultProps: function() {
-    return {
-      stateFilterKeys: ['value']
-    };
-  },
+//  getDefaultProps: function() {
+//    return {
+//      stateFilterKeys: ['value']
+//    };
+//  },
 
-  shouldComponentUpdate: function() {
-    if(this.state.value_prev !== this.state.value) {
-      this.setValue(this.state.value);
-    };
-    return true;
-  },
+//  shouldComponentUpdate: function() {
+//    if(this.state.value_prev !== this.state.value) {
+//      this.setValue(this.state.value);
+//    };
+//    return true;
+//  },
 
   render: function() {
     var getOptions = function(input, callback) {
@@ -76,7 +79,7 @@ module.exports = React.createClass({
       React.createElement(Select.Async, {name: "System",
         loadOptions: getOptions,
         onChange: this.setValue,
-        value: this.state.value,
+        value: this.props.value,
         simpleValue:true,
         multi: false,
         clearable: false,

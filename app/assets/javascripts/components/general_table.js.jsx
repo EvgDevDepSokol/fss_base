@@ -8,6 +8,7 @@ var Paginator = require('react-pagify').default;
 
 import {Table,ColumnNames,sortColumn,formatters,cells,editors} from 'reactabular';
 
+var LocalStorageMixin = require('react-localstorage');
 var segmentize = require('segmentize');
 
 var findIndex = require('lodash').findIndex;
@@ -71,6 +72,14 @@ const DATA_USER_RIGHTS = require('../selectors/data/user_rights.js')
 
 var TableContainer = React.createClass({
   displayName: 'VniiaesFullTable',
+
+  mixins: [LocalStorageMixin],
+
+  getDefaultProps: function() {
+    return {
+      stateFilterKeys: ['systemFilter']
+    };
+  },
 
 
   getInitialState: function() {
@@ -489,6 +498,7 @@ var TableContainer = React.createClass({
       showReplace: false,
       mainCheckbox_new: false,
       mainCheckbox_old: false,
+      systemFilter: null,
       pagination: {
         page: 1,
         perPage: 20
@@ -792,29 +802,28 @@ var TableContainer = React.createClass({
     this.setState({data: data})
   },
 
-  onSystemSelectorChange: function(valueHash){
-    var val = valueHash.system;
-    var column = _.find(this.state.columns, function(c){ return c.property == 'system.System'; });
-    if(!column) {
-      // condition for pds_malfunction_dims
-      column = _.find(this.state.columns, function(c){ return c.property == 'pds_malfunction.system.System'; });
-    };
-    if(!column) return;
-
-    if(val){
-      if(val == -1 ){
-        // we reset data
-        this.setState({data: this.props.data});
-      } else {
-        var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
-        this.setState({data: data});
-      }
-    }else{
-      // we reset data
-      this.setState({data: this.props.data});
-    }
-
-    var system = valueHash.system;
+  onSystemSelectorChange: function(value){
+    debugger
+    this.setState({systemFilter: value.system});
+//    var val = valueHash.system;
+//    var column = _.find(this.state.columns, function(c){ return c.property == 'system.System'; });
+//    if(!column) {column = _.find(this.state.columns, function(c){ return c.property == 'pds_malfunction.system.System'; });};
+//    if(!column) return;
+//
+//    if(val){
+//      if(val == -1 ){
+//        // we reset data
+//        this.setState({data: this.props.data});
+//      } else {
+//        var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
+//        this.setState({data: data});
+//      }
+//    }else{
+//      // we reset data
+//      this.setState({data: this.props.data});
+//    }
+//
+//    var system = valueHash.system;
   },
 
   render: function() {
@@ -822,6 +831,7 @@ var TableContainer = React.createClass({
     var pagination = this.state.pagination || {};
     var header = this.state.header;
     var columns = this.state.columns;
+    var systemFilter = this.state.systemFilter;
 
     columns.forEach(function(column){
       if(!column.headerClass||column.headerClass.indexOf(column.headerClassStyle)==-1){
@@ -829,6 +839,10 @@ var TableContainer = React.createClass({
       } 
     });
 
+    debugger
+    if (systemFilter && systemFilter!=-1) {
+      data = _.filter(data, function(row){ return row.system && row.system.id == systemFilter; });
+    };
     if (this.state.showFilters){
       columns.forEach(function(column){
         if (column.filter){
@@ -872,7 +886,7 @@ var TableContainer = React.createClass({
                 <p>{"на " + pages + " стр."}</p>
               </div>
               <div className='system-selector'>
-                <SystemFilterSelector attribute="system" onValue={this.onSystemSelectorChange} disabled={this.state.lockRow} />
+                <SystemFilterSelector attribute="system" onValue={this.onSystemSelectorChange} disabled={this.state.lockRow} value={this.state.systemFilter}/>
                 <p>cистема</p>
               </div>
               <div className='per-page-container'>
