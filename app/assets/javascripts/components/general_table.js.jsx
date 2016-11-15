@@ -716,6 +716,8 @@ var TableContainer = React.createClass({
 
       //data.unshift({newRow: true, id: "new-" +  Date.now()});
       delete copyRow['id'];
+      copyRow.system = {};
+      copyRow.system.id = this.state.systemFilter;
       var sendData = copyRow;
       copyRow['newRow'] = true;
       copyRow['_id'] = "new-" +  Date.now();
