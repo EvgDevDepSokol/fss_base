@@ -626,7 +626,6 @@ var TableContainer = React.createClass({
       d[this.props.objectType] = this.state.sendData;
       if(newRow){
         idx = findIndex(this.state.data, {_id: celldata._id});
-        debugger
         d[this.props.objectType].Project = project.id;
         $.ajax({
           url: url,
@@ -691,7 +690,6 @@ var TableContainer = React.createClass({
     if (this.props.objectType=='pds_malfunction_dim') return;
     if (current_user.user_rights >= 2 ){
       var copyRow = {};
-      debugger
       if (copiedRow.id) {
         copyRow = $.extend({}, copiedRow);
       } else if (this.state.showFilters){
@@ -762,7 +760,7 @@ var TableContainer = React.createClass({
       if('id' == col.property)
         return;
       if( !col.nested )
-        sendData[col.property] = row[col.property];
+        sendData[col.property] = row[col.property] ? row[col.property] : null;
       if( col.attribute ){
         // мы берем первую часть property, и ищем там id
         var prop = col.property.split('.')[0];
@@ -795,7 +793,6 @@ var TableContainer = React.createClass({
   },
 
   onExportClick: function(){
-    debugger
     var bookname = model_name + '_' + project.id.toString() + '.xlsx';
       exportData(this.state.dataxls, this.props.columns, bookname);
   },
@@ -805,7 +802,6 @@ var TableContainer = React.createClass({
   },
 
   onSystemSelectorChange: function(value){
-    debugger
     this.setState({systemFilter: value.system});
 //    var val = valueHash.system;
 //    var column = _.find(this.state.columns, function(c){ return c.property == 'system.System'; });
@@ -841,7 +837,6 @@ var TableContainer = React.createClass({
       } 
     });
 
-    debugger
     if (systemFilter && systemFilter!=-1) {
       data = _.filter(data, function(row){ return row.system && row.system.id == systemFilter; });
     };
