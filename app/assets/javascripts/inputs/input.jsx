@@ -33,7 +33,8 @@ module.exports = function()  {
 
     onChange:function(e) {
       this.setState({
-        value: (e.target.value).trim()
+        //value: (e.target.value).trim()
+        value: e.target.value
       });
     },
 
