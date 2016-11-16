@@ -7,7 +7,7 @@ class BaseController < ApplicationController
   helper_method :project, :table_data
   def create
     #Rails.logger.warn permit_params
-    @current_object = model_class.new #permit_params
+    @current_object = model_class.new permit_params
     if @current_object.save permit_params
       render json: { status: :created, data: current_object.reload.custom_hash }
     else
