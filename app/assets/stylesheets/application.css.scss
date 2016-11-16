@@ -326,7 +326,6 @@ body{
       }
     }
   }
-
 }
 
 .col.main-container{
@@ -368,8 +367,6 @@ body{
        height: 100%;
        width: 100%;
        overflow: hidden;
-      //min-height: 100%;
-      //overflow:auto;
 
       .table-container{
         //min-height: 1465px;
@@ -384,7 +381,6 @@ body{
       max-width: 400px;
       border: 1px solid #6DA3BD;
       background-color: #ffffff;
-      //border-bottom: 0;
       border-bottom-color:rgb(220,220,240);
       text-align: center;
       -webkit-border-top-left-radius: 8px;
@@ -407,8 +403,6 @@ body{
         content:'';
         right: -40px;
         content: '';
-        //width: 40px;
-        //height: 10px;
         border:1px solid #6DA3BD;
         position:absolute;
         bottom: 0px;
@@ -428,7 +422,6 @@ body{
       background-color: #ffffff;
       border: 1px solid #6DA3BD;
       border-top-left-radius: 0;
-      //border-top-right-radius: 0;
       position: relative;
 
       .left{
@@ -502,7 +495,6 @@ body{
             width: 50px;
             height: 22px;
             text-align: center;
-            //font-color:black;
           }
         }
 
@@ -540,8 +532,6 @@ body{
       .right{
         float: right;
         height:100%;
-        //color: #696969;
-        //color:#0081c2;
         color: #0044cc;        
         font-size: 12px;
         cursor: pointer;
@@ -593,9 +583,6 @@ body{
     .search-container{
       float: left;
       height: 100%;      
-    }
-    .replace-radio-group{
-     // border-style: ridge;
     }
     .replace-input-container{
       margin-right: 2px;
@@ -654,8 +641,6 @@ body{
 
   .table-container{
     background-color: #ffffff;
-    //-webkit-border-radius: 10px;
-    //-moz-border-radius: 10px;
     border-radius: 10px;
     border: 1px solid #6DA3BD;
     position: absolute;
@@ -665,7 +650,6 @@ body{
     left:0px;
     right:0px;
     bottom:0px;
-    //height: 100%;    
 
     table{
       tr{
@@ -694,7 +678,6 @@ body{
             margin-left: 0px;
             margin-top: 0px;
             position: relative;
-           // height: 16px;
           }
 
           .normal-text{
@@ -774,10 +757,7 @@ body{
         max-width:805px;
         display:table-cell;
       }
-
-
     }
-
   }
 }
 
