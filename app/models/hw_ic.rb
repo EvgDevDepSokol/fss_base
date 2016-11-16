@@ -41,25 +41,37 @@ class HwIc < ActiveRecord::Base
   end
 
   after_save do |hw_ic|
-    if (hw_ic.pedID==hw_ic.pedID_was)
-      #do nothing
-    elsif(hw_ic.pedID_was.nil?)
-      #this is new record
-      Tbl = Object.const_get(table_by_pedid(hw_ic.pedID).classify)
-      e=Tbl.new
-      e.IC = hw_ic.icID
-      e.Project = hw_ic.Project
-      e.save
-    elsif(hw_ic.pedID!=hw_ic.pedID_was)
-      #this is modified record
+    if(hw_ic.pedID_was.nil?)
+      add_equipment(hw_ic)
+    elsif(hw_ic.pedID_was && (hw_ic.pedID!=hw_ic.pedID_was))
+      destroy_equipment(hw_ic)
+      add_equipment(hw_ic)
     end
-    byebug
+  end
+
+  after_destroy do |hw_ic|
+    destroy_equipment(hw_ic)
   end
 
   def table_by_pedid(pedID)
     Tablelist.find(HwDevtype.find(HwPed.find(pedID).type).typetable).table
   end
 
+  def add_equipment(hw_ic)
+    e = Object.const_get(table_by_pedid(hw_ic.pedID).classify).new
+    e.IC = hw_ic.icID
+    e.Project = hw_ic.Project
+    e.save
+  end
+
+  def destroy_equipment(hw_ic)
+    tbl = Object.const_get(table_by_pedid(hw_ic.pedID_was).classify)
+    e_was=tbl.where(IC: hw_ic.icID).to_a
+    e_was.each do |e|
+      e.destroy
+    end
+  end
+   
   #  def serializable_hash(options = {})
   #    super options.merge(methods: :id)
   #  end
