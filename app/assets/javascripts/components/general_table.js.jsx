@@ -289,6 +289,7 @@ var TableContainer = React.createClass({
           var idx = findIndex(this.state.data, {id: itemId});
 
           var remove = function() {
+            debugger
             if (this.props.objectType=='pds_malfunction_dim') return;
             if (current_user.user_rights >= 2){
               var res = confirm("Вы действительно желаете удалить запись?"); 
@@ -761,6 +762,7 @@ var TableContainer = React.createClass({
         return;
       if( !col.nested )
         sendData[col.property] = row[col.property] ? row[col.property] : null;
+        //sendData[col.property] = row[col.property];
       if( col.attribute ){
         // мы берем первую часть property, и ищем там id
         var prop = col.property.split('.')[0];
