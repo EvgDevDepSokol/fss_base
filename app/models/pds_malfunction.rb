@@ -26,25 +26,25 @@ class PdsMalfunction < ActiveRecord::Base
   CHARACTER_ARRAY=('A'..'Z').to_a+('AA'..'ZZ').to_a
 
   after_save do |pds_malfunction|
-    pds_malfunction_dim=PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
-    icnt=pds_malfunction.Dimension-pds_malfunction_dim.size
+    pds_malfunction_dims=PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
+    icnt=pds_malfunction.Dimension-pds_malfunction_dims.size
     if (pds_malfunction.Dimension<1)
       icnt=0
     end
     if (icnt>0)
       while icnt>0
-        m_d_new=PdsMalfunctionDim.new
-        m_d_new.Project=pds_malfunction.Project
-        m_d_new.Malfunction=pds_malfunction.id
-        m_d_new.sd_N=pds_malfunction.sd_N
-        m_d_new.Character=CHARACTER_ARRAY[(pds_malfunction.Dimension-icnt)]
-        m_d_new.save
+        pds_malfunction_dim=PdsMalfunctionDim.new
+        pds_malfunction_dim.Project=pds_malfunction.Project
+        pds_malfunction_dim.Malfunction=pds_malfunction.id
+        pds_malfunction_dim.sd_N=pds_malfunction.sd_N
+        pds_malfunction_dim.Character=CHARACTER_ARRAY[(pds_malfunction.Dimension-icnt)]
+        pds_malfunction_dim.save
         icnt -= 1
       end
     elsif(icnt<0)
       while icnt<0
-        m_d_new=PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).last
-        m_d_new.destroy
+        pds_malfunction_dim=PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).last
+        pds_malfunction_dim.destroy
         icnt += 1
       end
     end
