@@ -14,6 +14,11 @@ class PdsDetector < ActiveRecord::Base
   alias_attribute :pds_project_unit_id, :Unit
   alias_attribute :sd_sys_numb_id, :sd_N
 
+  has_many :pds_mnemo, dependent: :restrict_with_error, foreign_key: 'Detector'
+  has_many :pds_ppca, dependent: :restrict_with_error, foreign_key: 'Detector'
+  has_many :pds_ppcd, dependent: :restrict_with_error, foreign_key: 'Detector'
+  has_many :pds_regulators, dependent: :restrict_with_error, foreign_key: 'det_id'
+
   schema_validations
 
   def custom_map
@@ -29,8 +34,4 @@ class PdsDetector < ActiveRecord::Base
                         sd_sys_numb: { only: [:sd_link] }
                       })
   end
-
-  #  def serializable_hash(options={})
-  #    super options.merge(methods: :id)
-  #  end
 end

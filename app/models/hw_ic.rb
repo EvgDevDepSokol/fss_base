@@ -71,8 +71,4 @@ class HwIc < ActiveRecord::Base
       e.destroy
     end
   end
-   
-  #  def serializable_hash(options = {})
-  #    super options.merge(methods: :id)
-  #  end
 end

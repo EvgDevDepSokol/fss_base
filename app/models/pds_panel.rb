@@ -1,6 +1,8 @@
 class PdsPanel < ActiveRecord::Base
   self.table_name = 'pds_panel'
 
+  has_many :hw_ic, dependent: :restrict_with_error, foreign_key: 'panel_id'
+
   def to_s
     panel
   end

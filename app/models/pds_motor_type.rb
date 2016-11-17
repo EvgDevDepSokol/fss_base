@@ -1,11 +1,9 @@
 class PdsMotorType < ActiveRecord::Base
   self.table_name = 'pds_motor_type'
 
+  has_many :pds_motors, dependent: :restrict_with_error, foreign_key: 'MotorTypeID'
+
   def custom_hash
     serializable_hash
-  end
-
-  def serializable_hash(options = {})
-    super options.merge(methods: :id)
   end
 end

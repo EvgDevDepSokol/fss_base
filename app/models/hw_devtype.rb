@@ -4,13 +4,11 @@ class HwDevtype < ActiveRecord::Base
   belongs_to :tablelist, foreign_key: :typetable, class_name: 'Tablelist'
   alias_attribute :tablelist_id, :typetable
 
+  has_many :hw_peds, dependent: :restrict_with_error, foreign_key: 'typeID'
+
   def custom_hash
     serializable_hash(include: {
                         tablelist: { only: :title }
                       })
   end
-
-  #  def serializable_hash(options = {})
-  #    super options.merge(methods: :id)
-  #  end
 end

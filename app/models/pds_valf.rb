@@ -21,6 +21,9 @@ class PdsValf < ActiveRecord::Base
   alias_attribute :pds_documentation_id, :doc_reg_N
   alias_attribute :sd_sys_numb_id, :sd_N
 
+  # has_many :pds_regulators, dependent: :restrict_with_error, foreign_key: 'vlv_1'
+  # has_many :pds_regulators, dependent: :restrict_with_error, foreign_key: 'vlv_2'
+
   validates :Type, inclusion: TYPES, if: :present?
   validates :Department, inclusion: DEPARTMENT_TYPES, if: :present?
 
