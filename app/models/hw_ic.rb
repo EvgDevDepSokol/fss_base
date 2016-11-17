@@ -1,6 +1,4 @@
 class HwIc < ActiveRecord::Base
-  # belongs_to :panel
-
   self.table_name = 'hw_ic'
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
