@@ -42,6 +42,8 @@ var BooleanNumbSelector = require('../selectors/static_selectors.jsx').BooleanNu
 var MotorZmnSelector = require('../selectors/static_selectors.jsx').MotorZmnSelector;
 var UserRightsSelector = require('../selectors/static_selectors.jsx').UserRightsSelector;
 var RegidityUnitSelector = require('../selectors/static_selectors.jsx').RegidityUnitSelector;
+var AnnounciatorTypeSelector = require('../selectors/static_selectors.jsx').AnnounciatorTypeSelector;
+var AnnounciatorSignSelector = require('../selectors/static_selectors.jsx').AnnounciatorSignSelector;
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
@@ -69,6 +71,8 @@ const DATA_BOOLEAN = require('../selectors/data/boolean.js')
 const DATA_BOOLEANYN = require('../selectors/data/booleanyn.js')
 const DATA_BOOLEANNUMB = require('../selectors/data/booleannumb.js')
 const DATA_USER_RIGHTS = require('../selectors/data/user_rights.js')
+const DATA_ANNOUNCIATOR_TYPE = require('../selectors/data/announciator_type.js')
+const DATA_ANNOUNCIATOR_SIGN = require('../selectors/data/announciator_sign.js')
 
 var TableContainer = React.createClass({
   displayName: 'VniiaesFullTable',
@@ -628,11 +632,13 @@ var TableContainer = React.createClass({
       if(newRow){
         idx = findIndex(this.state.data, {_id: celldata._id});
         d[this.props.objectType].Project = project.id;
+        debugger
         $.ajax({
           url: url,
           dataType: 'json',
+          contentType: 'application/json; charset=UTF-8',
           type: 'POST',
-          data: d,
+          data: JSON.stringify(d),
           success: function(response) {
             this.state.data[idx] = response.data;
             this.setState({
@@ -716,7 +722,7 @@ var TableContainer = React.createClass({
       //data.unshift({newRow: true, id: "new-" +  Date.now()});
       delete copyRow['id'];
       copyRow.system = {};
-      copyRow.system.id = this.state.systemFilter;
+      if (this.state.systemFilter != -1) copyRow.system.id = this.state.systemFilter;
       var sendData = copyRow;
       copyRow['newRow'] = true;
       copyRow['_id'] = "new-" +  Date.now();

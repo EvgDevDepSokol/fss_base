@@ -12,11 +12,12 @@ const DATA_BOOLEANNUMB = require('../selectors/data/booleannumb.js')
 const DATA_MOTOR_ZMNS = require('../selectors/data/motor_zmns.js')
 const DATA_USER_RIGHTS = require('../selectors/data/user_rights.js')
 const DATA_REGIDITY_UNIT = require('../selectors/data/regidity_unit.js')
+const DATA_ANNOUNCIATOR_TYPE = require('../selectors/data/announciator_type.js')
+const DATA_ANNOUNCIATOR_SIGN = require('../selectors/data/announciator_sign.js')
 
 var StaticSelector = React.createClass({
 
   getInitialState() {
-    debugger
     var value = null;
     var label = this.props.value;
     const OPTIONS = this.props.options;
@@ -39,6 +40,7 @@ var StaticSelector = React.createClass({
   },
 
   render: function() {
+    var clearable = this.props.clearable ? this.props.clearable : false;
     return (
       React.createElement(Select, {
         displayName: this.props.displayName,
@@ -48,7 +50,7 @@ var StaticSelector = React.createClass({
         value: this.state.value,
         simpleValue:true,
         multi: false,
-        clearable: false
+        clearable: clearable
       })
     );
   }
@@ -162,6 +164,32 @@ var RegidityUnitSelector = React.createClass({
   }
 });
 
+var AnnounciatorTypeSelector = React.createClass({
+  render: function() {
+    return (
+      <StaticSelector  value = {this.props.value} _this = {this}
+        options = {DATA_ANNOUNCIATOR_TYPE}
+        displayName = 'AnnounciatorTypeSelector'
+        name = 'AnnounciatorType'
+        clearable = 'true'
+      />
+    )
+  }
+});
+
+var AnnounciatorSignSelector = React.createClass({
+  render: function() {
+    return (
+      <StaticSelector  value = {this.props.value} _this = {this}
+        options = {DATA_ANNOUNCIATOR_SIGN}
+        displayName = 'AnnounciatorSignSelector'
+        name = 'AnnounciatorSign'
+        clearable = 'true'
+      />
+    )
+  }
+});
+
 module.exports.ValveTypeSelector = ValveTypeSelector;
 module.exports.RFTypeSelector = RFTypeSelector;
 module.exports.MalfunctionTypeSelector = MalfunctionTypeSelector;
@@ -171,3 +199,5 @@ module.exports.BooleanNumbSelector = BooleanNumbSelector;
 module.exports.MotorZmnSelector = MotorZmnSelector;
 module.exports.UserRightsSelector = UserRightsSelector;
 module.exports.RegidityUnitSelector = RegidityUnitSelector;
+module.exports.AnnounciatorTypeSelector = AnnounciatorTypeSelector;
+module.exports.AnnounciatorSignSelector = AnnounciatorSignSelector;
