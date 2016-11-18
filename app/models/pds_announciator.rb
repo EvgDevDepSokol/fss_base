@@ -1,6 +1,7 @@
 class PdsAnnounciator < ActiveRecord::Base
   self.table_name = 'pds_announciator'
   self.inheritance_column = nil
+  schema_validations except: :hw_ic
 
   belongs_to :hw_ic, foreign_key: 'IC'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
@@ -13,10 +14,8 @@ class PdsAnnounciator < ActiveRecord::Base
   alias_attribute :pds_section_assembler_id, :ctrl_power
   alias_attribute :pds_detector_id, :Detector
 
-  schema_validations
-
-  validates :Type, inclusion: %w(AN YC), allow_nil: true
-  validates :sign, inclusion:  %w(предупр. авар.), allow_nil: true
+  validates :Type, inclusion: %w(AN YC), allow_nil: true, allow_blank: true
+  validates :sign, inclusion:  %w(предупр. авар.), allow_nil: true, allow_blank: true
 
   def custom_map
     true

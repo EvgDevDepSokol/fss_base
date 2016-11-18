@@ -1,120 +1,219 @@
 ru:
   activerecord:
     models:
-      pds_equips: "Типы оборудования эл.схем"
-      pds_bru: "БРУ"
-      pds_misc: "Вспомогательное оборудование"
-      pds_set: "Задатчики"
-      pds_switch_nofix: "Ключи возвратные"
-      pds_switch_fix: "Ключи фиксированные"
-      pds_buttons: "Кнопки"
-      pds_buttons_lights: "Кнопки с подсветкой"
-      pds_lamps: "Лампы"
-      pds_mnemo: "Мнемосхемы"
-      pds_meters: "Показывающие приборы"
-      pds_meters_digital: "Показывающие цифровые приборы"
-      pds_alarm: "Ревуны"
-      pds_recorders: "Самописцы"
-      pds_announciator: "Табло сигнализации"
-      pds_meters_channels: "Узкопрофильные показывающие приборы"
-      pds_detectors: "Датчики"
-      pds_motors: "Электродвигатели, насосы"
-      pds_valves: "Арматура"
-      pds_regulators: "Регуляторы"
-      pds_ejector: "Эжектора"
-      pds_hex: "Теплообменники"
-      pds_volume: "Баки"
-      pds_filter: "Фильтры"
-      pds_motor_type: "Типы моторов"
-      pds_man_equip: "Типы оборудования"
-      pds_alg_type: "Тип алгоритма датчиков"
-      hw_ic: '"I & C"'
-      hw_ics: '"I & C"'
-      hw_ped: '"PED"'
-      hw_peds: '"PED"'
-      hw_wirelist: "Соединения"
+      pds_equips: '"Типы оборудования эл.схем"'
+      pds_detectors: '"Датчики"'
+      pds_motors: '"Электродвигатели, насосы"'
+      pds_valves: '"Арматура"'
+      pds_regulators: '"Регуляторы"'
+      pds_ejector: '"Эжектора"'
+      pds_hex: '"Теплообменники"'
+      pds_volume: '"Баки"'
+      pds_filter: '"Фильтры"'
+      pds_motor_type: '"Типы моторов"'
+      pds_man_equip: '"Типы оборудования"'
+      pds_alg_type: '"Тип алгоритма датчиков"'
+      hw_wirelist: '"Соединения"'
       pds_iomap: iomap
-      hw_iosignaldefs: "Типы сигналов устройств ввода-вывода"
-      hw_iosignals: "Сигналы устройств ввода-вывода"
-      hw_devtypes: "Типы устройств ввода-вывода"
-      hw_iosignaldim: "Массив суффиксов сигналов"
-      pds_panels: "Панели"
-      pds_ppca: "Аналоговые точки контроля"
-      pds_ppcd: "Дискретные точки контроля"
-      pds_sd: "Симуляционные диаграммы"
-      tablelist: "Список таблиц и их описания"
-      news: "новости"
-      table_role_rights: "Права ролей в таблицах"
-      roles: "Роли"
-      pds_project_properties: "Свойства и настройки"
-      pds_engineers: "Персонал"
-      pds_project: "Данные проектов"
-      pds_syslist: "Справочник систем"
-      tblbinaries: "Бинарные объекты"
-      pds_unit: "Единицы измерения"
-      pds_blocks: "Защиты и блокировки"
-      pds_customers: "Заказчики"
-      pds_negotiators: "Согласователи"
-      sign_rpt: "Сигнатуры"
-      audit: "Аудит изменений"
-      company: "Компании"
-      pds_breakers: "Выключатели"
-      pds_equipments: "Объекты электрических схем"
-      pds_section_assemblers: "Секции, сборки, обобщенная нагрузка"
-      pds_malfunction: "Отказы"
-      pds_rf: "Дистанционное управление"
-      pds_malfunction_dim: "Массивы отказов"
-      pds_eng_on_sys: "Связь инженеров проекта с системами"
-      pds_project_unit: "Единицы измерения проектов"
-      pds_doc_on_sys: "Связь документов с системами"
-      pds_project_sys: "Соответствие систем станционным системам"
-      week_report: "Еженедельные отчеты"
-      pds_documents: "Выпускаемая документация"
-      pds_documentation: "Документация"
-      pds_simplifications: "Допущения, упрощения"
-      pds_queries: "Запросы к Заказчику"
-      pds_sys_description: "Описание систем"
-      pds_dr: "Замечания (Dr)"
-      pds_mathmodel: "Описание мат. моделей"
-      articles: "Новости"
+      hw_iosignaldefs: '"Типы сигналов устройств ввода-вывода"'
+      hw_iosignals: '"Сигналы устройств ввода-вывода"'
+      hw_devtypes: '"Типы устройств ввода-вывода"'
+      hw_iosignaldim: '"Массив суффиксов сигналов"'
+      pds_panels: '"Панели"'
+      pds_ppca: '"Аналоговые точки контроля"'
+      pds_ppcd: '"Дискретные точки контроля"'
+      pds_sd: '"Симуляционные диаграммы"'
+      tablelist: '"Список таблиц и их описания"'
+      news: '"новости"'
+      table_role_rights: '"Права ролей в таблицах"'
+      roles: '"Роли"'
+      pds_project_properties: '"Свойства и настройки"'
+      pds_engineers: '"Персонал"'
+      pds_project: '"Данные проектов"'
+      pds_syslist: '"Справочник систем"'
+      tblbinaries: '"Бинарные объекты"'
+      pds_unit: '"Единицы измерения"'
+      pds_blocks: '"Защиты и блокировки"'
+      pds_customers: '"Заказчики"'
+      pds_negotiators: '"Согласователи"'
+      sign_rpt: '"Сигнатуры"'
+      audit: '"Аудит изменений"'
+      company: '"Компании"'
+      pds_breakers: '"Выключатели"'
+      pds_equipments: '"Объекты электрических схем"'
+      pds_section_assemblers: '"Секции, сборки, обобщенная нагрузка"'
+      pds_eng_on_sys: '"Связь инженеров проекта с системами"'
+      pds_project_unit: '"Единицы измерения проектов"'
+      pds_doc_on_sys: '"Связь документов с системами"'
+      pds_project_sys: '"Соответствие систем станционным системам"'
+      week_report: '"Еженедельные отчеты"'
+      pds_documents: '"Выпускаемая документация"'
+      pds_documentation: '"Документация"'
+      pds_queries: '"Запросы к Заказчику"'
+      pds_sys_description: '"Описание систем"'
+      pds_dr: '"Замечания (Dr)"'
+      pds_mathmodel: '"Описание мат. моделей"'
+      articles: '"Новости"'
     attributes:
       hw_ic: 
-        ref: ref
-        pds_syslist: Система
-        hw_ped: ped
-        scaleMin: Шкала Мин
-        scaleMax: Шкала Макс
-        Unit: Ед. измер.
-        rev: rev
+        hw_ic: '"I & C"'
+        hw_ics: '"I & C"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        ref: '"REF"'
+        tag_no: '"TAG/KKS"'
+        Description: '"Описание"'
+        ped: '"PED"'
+        pedID: '"PED"'
+        scaleMin: '"Мин."'
+        scaleMax: '"Макс."'
+        Unit: '"Разм."'
+        Unit_RU: '"Разм."'
+        UniquePTAG: '"PTAG"'
+        un: '"Unit"'
+        panel: '"Панель"' 
+        Type: '"Тип оборудования"'
+        RuName: '"Тип оборудования"'
+        Description_EN: '"Описание(EN)"'
+        rev: '"Рев."'
         tag_no: tag_no
-        UniquePTAG: Уникальный PTAG
-        un: un
         bv: bv
-        panel: панель
         Description: Описание
-        Description_EN: Описание (EN)
         t: Модификация
         mark: Отметка
-        Type: Type
         suffix: suffix
         version: version
         coord: coord
+      pds_bru:
+        pds_bru: '"БРУ"'
+        pds_brus: '"БРУ"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+        ctrl_power: '"Питание"'
+      pds_misc:
+        pds_misc: '"Вспомогательное оборудование"'
+        pds_miscs: '"Вспомогательное оборудование"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+        ctrl_power: '"Питание"'
+      pds_set:
+        pds_set: '"Задатчики"'
+        pds_sets: '"Задатчики"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+      pds_switch_fix:
+        pds_switch_fix: '"Ключи фиксированные"'
+        pds_switch_fixs: '"Ключи фиксированные"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+      pds_switch_nofix:
+        pds_switch_nofix: '"Ключи возвратные"'
+        pds_switch_nofixs: '"Ключи возвратные"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+      pds_button:
+        pds_button: '"Кнопки"'
+        pds_buttons: '"Кнопки"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+      pds_buttons_light: 
+        pds_buttons_light: '"Кнопки с подсветкой"'
+        pds_buttons_lights: '"Кнопки с подсветкой"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
       pds_lamp:
-        IC: IC
-        pds_syslist: Система
-        Project: Project
-        ctrl_power: ctrl_power
-        t: Модификация
-      pds_mnemos:
-        Code: Тренажерный код
-        Marker: Маркировка
-        TechCode: Технический код
-        Type: Тип мнемосхемы
-        Opened: 'Вкл/Откр'
-        Closed: 'Откл/Закр'
-        Control: Управление
-        AutoDist: ''
+        pds_lamp: '"Лампы"'
+        pds_lamps: '"Лампы"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+        ctrl_power: '"Питание"'
+      pds_mnemo:
+        pds_mnemo: '"Мнемосхемы"'
+        pds_mnemos: '"Мнемосхемы"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        Code: '"REF"'
+        Description: '"Описание"'
+        Marker: '"Маркировка"'
+        TechCode: '"Технический код"'
+        Type: '"Тип мнемосхемы"'
+        Opened: '"Вкл/Откр"'
+        Closed: '"Выкл/Закр"'
+        Control: '"Управление"'
+        AutoDist: '"Авт/Дист"'
+        Parameter: '"Параметр"'
+        tag: '"Датчик"'
+      pds_meter:
+        pds_meter: '"Показывающие приборы"'
+        pds_meters: '"Показывающие приборы"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+        ctrl_power: '"Питание"'
+      pds_meters_digital:
+        pds_meters_digital: '"Показывающие цифровые приборы"'
+        pds_meters_digitals: '"Показывающие цифровые приборы"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+        ctrl_power: '"Питание"'
+      pds_alarm:
+        pds_alarm: '"Ревуны"'
+        pds_alarms: '"Ревуны"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+        ctrl_power: '"Питание"'
+      pds_recorder:
+        pds_recorder: '"Самописцы"'
+        pds_recorders: '"Самописцы"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+        ctrl_power: '"Питание"'
+      pds_announciator:
+        pds_announciator: '"Табло сигнализации"'
+        pds_announciators: '"Табло сигнализации"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+        ctrl_power: '"Питание"'
+        Type: '"Принадл."'
+        sign: '"Тип сигнала"'
+      pds_meters_channel: 
+        pds_meters_channel: '"Узкопрофильные показывающие приборы"'
+        pds_meters_channels: '"Узкопрофильные показывающие приборы"'
+        id: '"ID"'
+        sys: '"Сист."'
+        system: '"Сист."'
+        IC: '"REF"'
+        ctrl_power: '"Питание"'
       pds_malfunction:
+        pds_malfunction: '"Отказы"'
+        pds_malfunctions: '"Отказы"'
         id: '"ID"'
         sys: '"Сист."'
         system: '"Сист."'
@@ -139,6 +238,8 @@ ru:
         scale: '"Scale (ИС)"'
         sd_N: '"Сим. диаграмма"'
       pds_malfunction_dim:
+        pds_malfunction_dim: '"Массивы отказов"'
+        pds_malfunction_dims: '"Массивы отказов"'
         id: '"ID"'
         Malfunction: '"Отказ"'
         sys: '"Сист."'
@@ -150,6 +251,8 @@ ru:
         sd_N: '"Сим. диаграмма"'
         is_main: '"Основной"'
       pds_rf:
+        pds_rf: '"Дистанционное управление"'
+        ds_rves: '"Дистанционное управление"'
         id: '"ID"'
         sys: '"Сист."'
         system: '"Сист."'
@@ -166,6 +269,8 @@ ru:
         Type_FB: '"Тип FB"'
         sd_N: '"Сим. диаграмма"'
       pds_simplification:
+        pds_simplification: '"Допущения, упрощения"'
+        pds_simplifications: '"Допущения, упрощения"'
         id: '"ID"'
         sys: '"Сист."'
         system: '"Сист."'
@@ -175,6 +280,8 @@ ru:
         support: '"Обоснование"'
         support_EN: '"Обоснование(EN)"'
       hw_ped: 
+        hw_ped: '"PED"'
+        hw_peds: '"PED"'
         id: '"ID"'
         sys: '"Сист."'
         system: '"Сист."'

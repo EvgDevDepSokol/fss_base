@@ -1,5 +1,6 @@
 class PdsRecorder < ActiveRecord::Base
   self.table_name = 'pds_recorders'
+  schema_validations except: :hw_ic
 
   belongs_to :hw_ic, foreign_key: 'IC'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'

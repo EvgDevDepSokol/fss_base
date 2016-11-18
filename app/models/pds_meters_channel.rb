@@ -1,4 +1,5 @@
 class PdsMetersChannel < ActiveRecord::Base
+  schema_validations except: :hw_ic
   belongs_to :hw_ic, foreign_key: 'IC'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project, foreign_key: 'Project'
@@ -7,8 +8,6 @@ class PdsMetersChannel < ActiveRecord::Base
   alias_attribute :hw_ic_id, :IC
   alias_attribute :system_id, :sys
   alias_attribute :pds_section_assembler_id, :ctrl_power
-
-  schema_validations
 
   def custom_hash
     serializable_hash(include: {

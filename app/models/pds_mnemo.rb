@@ -6,8 +6,6 @@ class PdsMnemo < ActiveRecord::Base
   belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :pds_detector, foreign_key: 'Detector'
 
-  validates_presence_of :Code
-
   alias_attribute :system_id, :sys
   alias_attribute :pds_detector_id, :Detector
 
