@@ -93,7 +93,6 @@ Rails.application.routes.draw do
     resources :pds_syslists, only: [:index]
     resources :hw_ics, only: [:index]
     resources :pds_section_assemblers, only: [:index]
-    resources :pds_detectors, only: [:index]
     resources :pds_man_equips, only: [:index]
     resources :hw_peds, only: [:index]
     resources :pds_panels, only: [:index]
@@ -115,6 +114,8 @@ Rails.application.routes.draw do
 
   namespace :selectors, defaults: { format: :json } do
     resources :sd_sys_numbs
+    resources :pds_equips
+    resources :pds_detectors
   end
 
   resource :select_builder

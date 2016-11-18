@@ -8,7 +8,7 @@ var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
 module.exports = React.createClass({
-  displayName: 'DetectorSelector',
+  displayName: 'PdsDetectorSelector',
 
   getInitialState() {
     return {
@@ -26,11 +26,11 @@ module.exports = React.createClass({
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = getSelectorOptions(
-          '/api/pds_detectors',
+          '/selectors/pds_detectors',
           {pds_project_id:project.ProjectID},
           this
         );
-        options = $.map(options , function(el){ return {value: el.id, label: el.tag} } )
+       // options = $.map(options , function(el){ return {value: el.value, label: el.label} } )
 
         callback(null, {
           options: options,
@@ -41,7 +41,7 @@ module.exports = React.createClass({
 
 
     return (
-      React.createElement(Select.Async, {name: "Detector",
+      React.createElement(Select.Async, {name: "PdsDetector",
         loadOptions: getOptions,
         onChange: this.setValue,
         value: this.state.value,

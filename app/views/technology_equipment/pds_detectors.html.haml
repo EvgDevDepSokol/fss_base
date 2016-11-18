@@ -1,5 +1,10 @@
+#general_table
 
 :javascript
+  var title = "#{title}";
+  var data = #{table_data};
+  var model_name = "#{hash_model_name}";
+   
   var columns =[
    {property: "id",header:"DetID", hidden: true},
     {property: "system.System", header: "Сист.", editor: "SystemSelector", attribute: 'system_id', nested: true},

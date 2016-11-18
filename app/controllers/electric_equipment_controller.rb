@@ -11,6 +11,7 @@ class ElectricEquipmentController < BaseController
     @data_list = PdsEquipment.where(Project: project.ProjectID)
                              .includes(:system, :pds_man_equip)
                              .includes(:sd_sys_numb)
+                             .includes(:pds_equip)
   end
 
   def pds_section_assemblers
