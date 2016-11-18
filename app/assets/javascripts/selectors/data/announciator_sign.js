@@ -1,4 +1,4 @@
 module.exports = [
-  { value: 'авар.', label: 'авар.', clearableValue: 'true'},
-  { value: 'предупр.', label: 'предупр.', clearableValue: 'true'},
+  { value: 'авар.', label: 'авар.'},
+  { value: 'предупр.', label: 'предупр.'},
 ];
