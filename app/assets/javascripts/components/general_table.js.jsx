@@ -28,6 +28,7 @@ var HwPedSelector = require('../selectors/hw_ped.jsx');
 var HwIosignaldefSelector = require('../selectors/hw_iosignaldef.jsx');
 var PdsPanelSelector = require('../selectors/pds_panels.jsx');
 var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
+var PdsEquipSelector = require('../selectors/pds_equip.jsx');
 
 //some static selectors
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
