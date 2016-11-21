@@ -1,7 +1,6 @@
 class DisplaySystemsController < BaseController
   ACTIONS = [:pds_ppca, :pds_ppcd, :pds_sd].freeze
 
-  # TODO: сделать разбиение запроса на части, а то долго отдается
   # уродливо, но ОООЧЕНЬ быстро. Было 35-38 секунд, стало 3-5 секунд!
   def pds_ppcas
     @data_list = PdsPpca.where(Project: project.ProjectID)
@@ -27,7 +26,6 @@ class DisplaySystemsController < BaseController
     end
   end
 
-  # TODO: сделать разбиение запроса на части, а то долго отдается
   def pds_ppcds
     @data_list = PdsPpcd.where(Project: project.ProjectID)
                         .includes(:system, :pds_detector).pluck('ppcdID', 'pds_syslist.System', 'pds_syslist.SystemID', 'Shifr', 'Key', 'identif',

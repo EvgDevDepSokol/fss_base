@@ -19,8 +19,6 @@ class PdsDetector < ActiveRecord::Base
   has_many :pds_ppcd, dependent: :restrict_with_error, foreign_key: 'Detector'
   has_many :pds_regulators, dependent: :restrict_with_error, foreign_key: 'det_id'
 
-  schema_validations
-
   def custom_map
     true
   end
