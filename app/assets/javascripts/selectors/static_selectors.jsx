@@ -171,7 +171,7 @@ var AnnounciatorTypeSelector = React.createClass({
         options = {DATA_ANNOUNCIATOR_TYPE}
         displayName = 'AnnounciatorTypeSelector'
         name = 'AnnounciatorType'
-        clearable = 'true'
+        clearable = {true}
       />
     )
   }
@@ -184,7 +184,7 @@ var AnnounciatorSignSelector = React.createClass({
         options = {DATA_ANNOUNCIATOR_SIGN}
         displayName = 'AnnounciatorSignSelector'
         name = 'AnnounciatorSign'
-        clearable = 'true'
+        clearable = {true}
       />
     )
   }
