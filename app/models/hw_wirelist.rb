@@ -8,7 +8,7 @@ class HwWirelist < ActiveRecord::Base
   alias_attribute :hw_ped_id, :pedID
   alias_attribute :pds_project_unit_id, :Unit
   alias_attribute :pds_panel_id, :panel
-  alias_attribute :hw_ic_id, :ID
+  alias_attribute :hw_ic_id, :IC
 
   def custom_map
     true

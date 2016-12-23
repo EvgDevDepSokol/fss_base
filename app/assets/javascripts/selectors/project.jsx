@@ -60,7 +60,8 @@ module.exports = React.createClass({
         asyncOptions: getOptions,
         onChange: this.onChange,
         value: this.state.value,
-        clearable: false
+        clearable: false,
+        cache: false
         })
     );
   }

@@ -63,7 +63,8 @@ module.exports = React.createClass({
         simpleValue:true,
         multi: false,
         clearable: false,
-        disabled: this.props.disabled
+        disabled: this.props.disabled,
+        cache: false
         })
     );
   }

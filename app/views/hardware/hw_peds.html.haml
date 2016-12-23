@@ -6,12 +6,12 @@
   var model_name = "#{hash_model_name}";
 
   var columns = [
-  {"property":"ped_N","header":"ped_N",hidden: true},
+  {"property":"id","header":"ped_N",hidden: true},
   //{"property":"Project","header":"Project",hidden: true},
   {"property":"ped","header":"PED", editor: "stringEditor"},
   {"property":"hw_devtype.RuName","header":"Тип оборудования", nested: true, editor: "HwDevTypesSelector", attribute: "hw_devtype_id"},
   {"property":"Code","header":"Код", editor: "stringEditor"},
-  {"property":"GenExtSig","header":"Ген.доп. сигн.", editor: "BooleanYNSelector",nested: true},
+  {"property":"GenExtSig","header":"Ген.доп. сигн.", editor: "BooleanYNSelector"},
   {"property":"AI","header":"AI", editor: "stringEditor"},
   {"property":"AO","header":"AO", editor: "stringEditor"},
   {"property":"AO*","header":"AO*", editor: "stringEditor"},

@@ -48,7 +48,8 @@ module.exports = React.createClass({
         multi: false,
         matchProp: 'label',
         disabled: this.props.disabled,
-        clearable: false
+        clearable: false,
+        cache: false
         })
     );
   }

@@ -23,7 +23,7 @@ var getSelectorOptions = function(url,data,context){
       console.error(context.props.url, status, err.toString());
       options = [];
     }.bind(context),
-    async: false
+    async: false,
   });
   return options;
 };

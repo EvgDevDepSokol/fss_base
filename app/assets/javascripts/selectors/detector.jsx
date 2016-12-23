@@ -3,7 +3,10 @@
 'use strict';
 
 var React = require('react');
-var Select = require('react-select');
+//import React, { Component } from 'react'
+import VirtualizedSelect from 'react-virtualized-select';
+//import Select from 'react-select';
+//var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
@@ -30,25 +33,24 @@ module.exports = React.createClass({
           {pds_project_id:project.ProjectID},
           this
         );
-       // options = $.map(options , function(el){ return {value: el.value, label: el.label} } )
 
         callback(null, {
-          options: options,
-          complete: true
+          options: options
         });
       }, 0);
     };
 
-
     return (
-      React.createElement(Select.Async, {name: "PdsDetector",
+      React.createElement(VirtualizedSelect, {name: "PdsDetector",
+        async: true,
         loadOptions: getOptions,
         onChange: this.setValue,
         value: this.state.value,
         simpleValue:true,
         multi: false,
         disabled: this.props.disabled,
-        clearable: false
+        clearable: false,
+        cache: false
         })
     );
   }
