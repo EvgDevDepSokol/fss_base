@@ -665,6 +665,9 @@ var TableContainer = React.createClass({
           type: 'PUT',
           data: d,
           success: function(response) {
+            if (response.data.MalfunctDimID){
+              response.data.system=response.data.pds_malfunction.system
+            }
             this.state.data[idx] = response.data;
             this.setState({
               data: this.state.data,
