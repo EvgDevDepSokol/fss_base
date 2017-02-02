@@ -771,7 +771,7 @@ var TableContainer = React.createClass({
       if('id' == col.property)
         return;
       if( !col.nested )
-        sendData[col.property] = row[col.property] ? row[col.property] : null;
+        sendData[col.property] = row[col.property]!==null ? row[col.property] : null;
         //sendData[col.property] = row[col.property];
       if( col.attribute ){
         // мы берем первую часть property, и ищем там id
@@ -903,7 +903,7 @@ var TableContainer = React.createClass({
                 <p>строк</p>
               </div>
               <div className='page-container'>
-                <input type='number' defaultValue={pagination.page} onChange={this.onPage} disabled={this.state.lockRow}></input>
+                <input type='number' min='1' defaultValue={pagination.page} onChange={this.onPage} disabled={this.state.lockRow}></input>
                 <p>cтр.</p>
               </div>
               <div className={this.state.showFilters ? 'icon-filter info-buttons border-inset' : 'icon-filter info-buttons'} onClick={this.onIconFilterClick}>
