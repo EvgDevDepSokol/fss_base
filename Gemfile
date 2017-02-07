@@ -1,18 +1,20 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-# gem 'rails', '4.1.8'
-# gem 'rails', '4.2.0'
- gem 'rails'
+# gem 'rails','4.2.7'
 # gem 'rails', '5.0.0'
+gem 'rails'
 # Use sqlite3 as the database for Active Record
 # gem 'mysql2', '~> 0.3.18'
 gem 'mysql2'
 
 gem 'therubyracer'
 gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-gem 'sprockets', '3.6.3' # to delete after less-rails update
+#gem 'sprockets', '3.6.3' # to delete after less-rails update
+gem 'sprockets'
 gem 'twitter-bootstrap-rails'
+# gem "font-awesome-rails"
+gem 'font-awesome-less', '~> 4.7.0'
 # gem "haml-rails", "~> 0.9"
 gem 'hamlit'
 
@@ -119,7 +121,7 @@ gem 'redis'
 gem 'resque'
 
 gem 'simple_form'
-gem 'quiet_assets', group: :development
+# gem 'quiet_assets', group: :development
 
 group :development do
   gem 'better_errors'
