@@ -65,6 +65,8 @@ var TextEditor =  require('../inputs/text_editor.jsx')();
 var WideTextEditor =  require('../inputs/wide_text_editor.jsx')();
 
 var Modal = require('react-modal');
+var ExportXlsxModal = require('../components/xlsx-export.jsx');
+
 const DATA_VALVE_TYPES = require('../selectors/data/valve_types.js')
 const DATA_RF_TYPES = require('../selectors/data/rf_types.js')
 const DATA_MALFUNCTION_TYPES = require('../selectors/data/malfunction_types.js')
@@ -294,7 +296,6 @@ var TableContainer = React.createClass({
           var idx = findIndex(this.state.data, {id: itemId});
 
           var remove = function() {
-            debugger
             if (this.props.objectType=='pds_malfunction_dim') return;
             if (current_user.user_rights >= 2){
               var res = confirm("Вы действительно желаете удалить запись?"); 
@@ -504,6 +505,7 @@ var TableContainer = React.createClass({
       showReplace: false,
       mainCheckbox_new: false,
       mainCheckbox_old: false,
+      exportIndex: 0,
       systemFilter: null,
       pagination: {
         page: 1,
@@ -633,7 +635,6 @@ var TableContainer = React.createClass({
       if(newRow){
         idx = findIndex(this.state.data, {_id: celldata._id});
         d[this.props.objectType].Project = project.id;
-        debugger
         $.ajax({
           url: url,
           dataType: 'json',
@@ -804,9 +805,18 @@ var TableContainer = React.createClass({
     } 
   },
 
-  onExportClick: function(){
+  onExportClick: function(exportIndex){
+    debugger
     var bookname = model_name + '_' + project.id.toString() + '.xlsx';
-      exportData(this.state.dataxls, this.props.columns, bookname);
+    if (exportIndex===1) {
+      var dataxls = this.state.dataxls.filter(function(elem){
+        return elem.checked
+      });
+    } else {
+      var dataxls = this.state.dataxls;
+    };
+//    var dataxls = this.state.dataxls;
+    exportData(dataxls, this.props.columns, bookname);
   },
 
   onReplaceDone: function(data){
@@ -920,9 +930,10 @@ var TableContainer = React.createClass({
               <div className="show-filters">
                 Скрыть/ Показать поля
               </div>
-              <div className="export-to-excel" onClick={this.onExportClick}>
-                Экспорт в Excel
-              </div>
+              <ExportXlsxModal
+                data={this.state.data}
+                onExport={this.onExportClick}
+              />
             </div>
 
           </div>
