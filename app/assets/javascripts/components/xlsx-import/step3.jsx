@@ -25,10 +25,11 @@ var ImportStep3 = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className="import-from-excel-3">
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
+          style={this.props.style}
         >
           <h2>Processing</h2>
           <div>Ваш файл обрабатывается</div>

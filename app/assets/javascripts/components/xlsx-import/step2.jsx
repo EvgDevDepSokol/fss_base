@@ -57,10 +57,12 @@ var ImportStep2 = React.createClass({
       });
     }
     return (
-      <div>
+      <div className="import-from-excel-2">
         <Modal
           isOpen={this.props.isOpen}
-          onRequestClose={this.closeModal}>
+          onRequestClose={this.closeModal}
+          style={this.props.style}
+        >
           <h2>Step 2. Выберите столбцы</h2>
           <table className={"table table-bordered table-striped table-hover"}>
             <thead>

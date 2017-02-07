@@ -935,7 +935,7 @@ body{
 
 
 .ReactModal__Overlay{
-  z-index: 99;
+  z-index: 1000;
 
   .ReactModal__Content{
     &.ReactModal__Content--after-open{
@@ -1051,4 +1051,11 @@ footer{
 }
 .hidden-element{
   display: none;
+}
+.export-radio-group{
+  input{
+    vertical-align:middle;
+    margin-bottom: 4px;
+    margin-top: 4px;    
+  }
 }

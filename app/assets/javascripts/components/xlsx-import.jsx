@@ -6,7 +6,15 @@ var ImportStep1 = require('./xlsx-import/step1.jsx');
 var ImportStep2 = require('./xlsx-import/step2.jsx');
 var ImportStep3 = require('./xlsx-import/step3.jsx');
 
-
+const customStyles = {
+  content : {
+//    position              : 'absolute',
+//    top                   : '100px',
+//    left                  : '40px',
+//    right                 : '40px',
+//    bottom                : '40px'
+  }
+};
 
 var ImportXlsxModal = React.createClass({
   displayName: 'ImportXlsxModal',
@@ -74,7 +82,7 @@ var ImportXlsxModal = React.createClass({
   },
 
   step1Finished: function(file){
-//    debugger;
+    debugger;
     var tmp = rememberData();
     this.setState({
       importData: tmp[0],
@@ -121,7 +129,7 @@ var ImportXlsxModal = React.createClass({
   render: function() {
     debugger
     return (
-      <div>
+      <div className="import-from-excel">
         <a href="#" onClick={this.openStep1}>
           <img alt="Import export" src="/assets/import_export.png" />
           Экспорт/ Импорт
@@ -130,18 +138,24 @@ var ImportXlsxModal = React.createClass({
         <ImportStep1 key={"step-1"}
           isOpen={this.state.step == 1}
           onNextModal={this.step1Finished}
-          onCloseModal={this.closeAllModals} />
+          onCloseModal={this.closeAllModals}
+          style={customStyles}
+        />
         <ImportStep2
           key={"step-2"}
           isOpen={this.state.step == 2}
           onNextModal={this.step2Finished}
           onCloseModal={this.closeAllModals}
           importData={this.state.importData[0].data}
-          columns={this.state.columns} />
+          columns={this.state.columns}
+          style={customStyles}
+        />
         <ImportStep3 key={"step-3"}
           isOpen={this.state.step == 3}
           onNextModal={this.step3Finished}
-          onCloseModal={this.closeAllModals} />
+          onCloseModal={this.closeAllModals}
+          style={customStyles}
+        />
       </div>
     );
   }

@@ -122,10 +122,11 @@ var ImportStep1 = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className="import-from-excel-1">
         <Modal
           isOpen={this.props.isOpen}
           onRequestClose={this.closeModal}
+          style={this.props.style}
         >
           <h2>Step 1. Select a file</h2>
           <div>Выберите файл для продолжения</div>
