@@ -9,6 +9,7 @@ import VirtualizedSelect from 'react-virtualized-select';
 //var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
+var path = '/selectors/pds_detectors';
 
 module.exports = React.createClass({
   displayName: 'PdsDetectorSelector',
@@ -29,7 +30,7 @@ module.exports = React.createClass({
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = getSelectorOptions(
-          '/selectors/pds_detectors',
+          path,
           {pds_project_id:project.ProjectID},
           this
         );
@@ -55,3 +56,11 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports.options = function(){
+  var options = getSelectorOptions(
+    path,
+    {pds_project_id:project.ProjectID},
+    this
+  );
+};

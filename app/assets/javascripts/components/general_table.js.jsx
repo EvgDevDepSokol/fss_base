@@ -67,16 +67,6 @@ var WideTextEditor =  require('../inputs/wide_text_editor.jsx')();
 var Modal = require('react-modal');
 var ExportXlsxModal = require('../components/xlsx-export.jsx');
 
-const DATA_VALVE_TYPES = require('../selectors/data/valve_types.js')
-const DATA_RF_TYPES = require('../selectors/data/rf_types.js')
-const DATA_MALFUNCTION_TYPES = require('../selectors/data/malfunction_types.js')
-const DATA_BOOLEAN = require('../selectors/data/boolean.js')
-const DATA_BOOLEANYN = require('../selectors/data/booleanyn.js')
-const DATA_BOOLEANNUMB = require('../selectors/data/booleannumb.js')
-const DATA_USER_RIGHTS = require('../selectors/data/user_rights.js')
-const DATA_ANNOUNCIATOR_TYPE = require('../selectors/data/announciator_type.js')
-const DATA_ANNOUNCIATOR_SIGN = require('../selectors/data/announciator_sign.js')
-
 var TableContainer = React.createClass({
   displayName: 'VniiaesFullTable',
 
@@ -168,16 +158,16 @@ var TableContainer = React.createClass({
             value = (value == 0) ? "нет" : "да";
           }
           if (editor == ValveTypeSelector){
-            value = labelFromSelectorList(DATA_VALVE_TYPES, value) 
+            value = labelFromSelectorList(editor.options, value) 
           }
           if (editor == BooleanSelector){
             value = value ? "да" : "нет";
           }
           if (editor == BooleanNumbSelector){
-            value = labelFromSelectorList(DATA_BOOLEANNUMB, value) 
+            value = labelFromSelectorList(editor.options, value) 
           }
           if (editor == UserRightsSelector){
-            value = labelFromSelectorList(DATA_USER_RIGHTS, value) 
+            value = labelFromSelectorList(editor,options, value) 
           }
         }
 
@@ -806,7 +796,6 @@ var TableContainer = React.createClass({
   },
 
   onExportClick: function(exportIndex){
-    debugger
     var bookname = model_name + '_' + project.id.toString() + '.xlsx';
     if (exportIndex===1) {
       var dataxls = this.state.dataxls.filter(function(elem){

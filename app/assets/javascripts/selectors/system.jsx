@@ -6,6 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
+var path = '/api/pds_sys_descriptions';
 
 module.exports = React.createClass({
   displayName: 'SystemSelector',
@@ -26,7 +27,7 @@ module.exports = React.createClass({
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = getSelectorOptions(
-          '/api/pds_sys_descriptions',
+          path,
           {pds_project_id:project.ProjectID},
           this
         );
@@ -61,3 +62,12 @@ module.exports = React.createClass({
     );
   }
 });
+module.exports.options = function(){
+  var options = getSelectorOptions(
+    path,
+    {pds_project_id:project.ProjectID},
+    this
+  );
+  options = $.map(options , function(el){ return {value: el.id, label: el.name} } )
+  return options;
+};

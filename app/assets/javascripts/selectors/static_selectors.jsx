@@ -201,3 +201,15 @@ module.exports.UserRightsSelector = UserRightsSelector;
 module.exports.RegidityUnitSelector = RegidityUnitSelector;
 module.exports.AnnounciatorTypeSelector = AnnounciatorTypeSelector;
 module.exports.AnnounciatorSignSelector = AnnounciatorSignSelector;
+
+module.exports.AnnounciatorSignSelector.options = DATA_ANNOUNCIATOR_SIGN;
+module.exports.ValveTypeSelector.options = DATA_VALVE_TYPES;
+module.exports.RFTypeSelector.options = DATA_RF_TYPES;
+module.exports.MalfunctionTypeSelector.options = DATA_MALFUNCTION_TYPES;
+module.exports.BooleanSelector.options = DATA_BOOLEAN;
+module.exports.BooleanYNSelector.options = DATA_BOOLEANYN;
+module.exports.BooleanNumbSelector.options = DATA_BOOLEANNUMB;
+module.exports.MotorZmnSelector.options = DATA_MOTOR_ZMNS;
+module.exports.UserRightsSelector.options = DATA_USER_RIGHTS;
+module.exports.RegidityUnitSelector.options = DATA_REGIDITY_UNIT;
+module.exports.AnnounciatorTypeSelector.options = DATA_ANNOUNCIATOR_TYPE;

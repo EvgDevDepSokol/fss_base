@@ -6,6 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
+var path = '/api/pds_motor_types';
 
 module.exports = React.createClass({
   displayName: 'PdsMotorType',
@@ -26,7 +27,7 @@ module.exports = React.createClass({
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = getSelectorOptions(
-          '/api/pds_motor_types',
+          path,
           {},
           this
         );
@@ -53,3 +54,13 @@ module.exports = React.createClass({
     );
   }
 });
+module.exports.options = function(){
+  debugger
+  var options = getSelectorOptions(
+    path,
+    {pds_project_id:project.ProjectID},
+    this
+  );
+  options = $.map(options , function(el){ return {value: el.id, label: el.MotorType} });
+  return options;
+};
