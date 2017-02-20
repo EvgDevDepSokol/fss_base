@@ -80,8 +80,10 @@ var ImportStep2 = React.createClass({
           <p>Всего {this.props.importData.length} строк данных</p>
           <div>Укажите соответствия импорта колонок</div>
 
-          <button onClick={this.closeModal}>close</button>
-          <button onClick={this.nextModal}>Next</button>
+          <button onClick={this.closeModal}>Отмена</button>
+          <button onClick={this.nextModal}>Далее</button>
+          <div></div>
+          <div>В файле должны содержаться данные для текущей таблицы текущего проекта</div>
         </Modal>
       </div>
     );

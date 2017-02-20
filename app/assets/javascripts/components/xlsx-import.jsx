@@ -5,6 +5,7 @@ var _ = require('underscore');
 var ImportStep1 = require('./xlsx-import/step1.jsx');
 var ImportStep2 = require('./xlsx-import/step2.jsx');
 var ImportStep3 = require('./xlsx-import/step3.jsx');
+var ImportStep4 = require('./xlsx-import/step4.jsx');
 
 const customStyles = {
   content : {
@@ -24,6 +25,7 @@ var ImportXlsxModal = React.createClass({
       modal_1_IsOpen: false,
       modal_2_IsOpen: false,
       modal_3_IsOpen: false,
+      modal_4_IsOpen: false,
       step: 0,
       importData: [{data: {}}],
       columns: {}
@@ -32,7 +34,6 @@ var ImportXlsxModal = React.createClass({
 
   mapImportData: function(){
     var importColumns = this.state.columns;
-    debugger
     // наполняем данными importColumns
     Object.keys(importColumns).forEach(function (columnKey) {
       var toColumn = importColumns[columnKey].toColumn;
@@ -51,7 +52,6 @@ var ImportXlsxModal = React.createClass({
           if(toColumn == null){
          
           }else if(toColumn.nested == true){
-            debugger;
             var val = row[columnKey];
             var newVal = _.find(importColumns[columnKey].options, function(option){
                return option.label == val;
@@ -70,6 +70,7 @@ var ImportXlsxModal = React.createClass({
       });
       return convertedRow;
     });
+    debugger
     return data;
   },
 
@@ -81,29 +82,36 @@ var ImportXlsxModal = React.createClass({
     this.setState({step: 0});
   },
 
-  step1Finished: function(file){
-    debugger;
-    var tmp = rememberData();
+  rememberData: function(tmp){
     this.setState({
       importData: tmp[0],
       columns: tmp[1],
+    });
+  },
+
+  step1Finished: function(file){
+    this.setState({
       step: 2
     });
-    tmp=null;
   },
 
   step2Finished: function(){
+    this.setState({
+      step: 3
+    });
+  },
+
+  step3Finished: function(){
     debugger;
     var parsedData = this.mapImportData();
-    console.log(parsedData);
     this.setState({
-      step: 3,
+      step: 4,
       importData: [{data: {}}],
       parsedData: parsedData });
     this.sendDataToServer(parsedData);
   },
 
-  step3Finished: function(){
+  step4Finished: function(){
     debugger;
     this.setState({step: 0});
   },
@@ -115,19 +123,16 @@ var ImportXlsxModal = React.createClass({
       type: 'PUT',
       data: {data: data, model: model_name},
       success: function(response) {
-        //debugger;
         console.error(response);
 
       }.bind(this),
       error: function(xhr, status, err) {
-        //debugger;
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
   },
 
   render: function() {
-    debugger
     return (
       <div className="import-from-excel">
         <a href="#" onClick={this.openStep1}>
@@ -139,10 +144,10 @@ var ImportXlsxModal = React.createClass({
           isOpen={this.state.step == 1}
           onNextModal={this.step1Finished}
           onCloseModal={this.closeAllModals}
+          rememberData={this.rememberData}
           style={customStyles}
         />
-        <ImportStep2
-          key={"step-2"}
+        <ImportStep2 key={"step-2"}
           isOpen={this.state.step == 2}
           onNextModal={this.step2Finished}
           onCloseModal={this.closeAllModals}
@@ -153,6 +158,13 @@ var ImportXlsxModal = React.createClass({
         <ImportStep3 key={"step-3"}
           isOpen={this.state.step == 3}
           onNextModal={this.step3Finished}
+          onCloseModal={this.closeAllModals}
+          columns={this.state.columns}
+          style={customStyles}
+        />
+        <ImportStep4 key={"step-4"}
+          isOpen={this.state.step == 4}
+          onNextModal={this.step4Finished}
           onCloseModal={this.closeAllModals}
           style={customStyles}
         />
@@ -167,8 +179,8 @@ var getColumnOptions = function(column){
   if(!column.nested/* || !column.path*/)
     return;
 
+  debugger
   return column.editor ? column.editor.options() : [];
-
   var properties = column.property.split(".");
   if(properties.length != 2)
     return;

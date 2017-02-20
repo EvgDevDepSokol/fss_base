@@ -24,11 +24,11 @@ var ImportStep1 = React.createClass({
   },
 
   processFile: function(file){
-//    debugger;
-    findColumnData = function(colProperty){
+    var findColumnData = function(colProperty){
       return _.find(columns, function(col){
 //        return col.property == colProperty;
-        return col.header == colProperty;
+        //return col.header == colProperty;
+        return col.label == colProperty;
       });
     };
 
@@ -44,7 +44,6 @@ var ImportStep1 = React.createClass({
     }.bind(this);
 //    };
 
-    //debugger;
     var reader = new FileReader();
     this.setState({fileName: file.name});
     reader.onload = function(e) {
@@ -85,26 +84,16 @@ var ImportStep1 = React.createClass({
         selectProps['selected'] = key;
 
         var toColumnSelector = React.createElement(SimpleSelect, selectProps);
-
         importHeaders[key] = {selector: toColumnSelector, to: selectProps['value']};
         if(selectProps['value'] != null)
-          importHeaders[key]['toColumn'] = this.findColumnData(selectProps['value']);
+          importHeaders[key]['toColumn'] = findColumnData(selectProps['value']);
       });
 
-      rememberData = function(){
-        var a = [];
-        a.push(importJson);
-        a.push(importHeaders);
-        return a;
-      };
-           
-//      debugger;
-//      var context = this;
-  //    this.setState({
-  //      importData: importJson,
-  //      columns: importHeaders,
-  //    });
-      /* DO SOMETHING WITH workbook HERE */
+      var a = [];
+      a.push(importJson);
+      a.push(importHeaders);
+
+      this.props.rememberData(a);
     }.bind(this);
 
     reader.readAsBinaryString(file);
@@ -132,8 +121,11 @@ var ImportStep1 = React.createClass({
           <div>Выберите файл для продолжения</div>
 
           <input type="file" name="xlfile" id="xlf" ref="fileImport" onChange={this.onImportFile} />
-          <button onClick={this.closeModal}>close</button>
-          <button onClick={this.nextModal}>Next</button>
+          <button onClick={this.closeModal}>Отмена</button>
+          <button onClick={this.nextModal}>Далее</button>
+
+          <div></div>
+          <div>В файле должны содержаться данные для текущей таблицы текущего проекта</div>
         </Modal>
       </div>
     );
