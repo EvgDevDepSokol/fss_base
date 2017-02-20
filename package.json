@@ -9,7 +9,7 @@
     "react-localstorage": ">=0.2.3",
     "react-modal": ">=0.2.0",
     "react-pagify": ">=0.5.1",
-    "react-select": "1.0.0-rc.2",
+    "react-select": "1.0.0-rc.3",
     "react-virtualized-select": "^2.1.1",
     "reactabular": "0.14.2",
     "segmentize": ">=0.4.1",
