@@ -281,6 +281,7 @@ module.exports = React.createClass({
             isReplaceModalOpen = {this.state.isReplaceModalOpen}
             onRequestClose={this.closeReplaceModal}
             new_data = {new_data}
+            contentLabel='Замена. Подтверждение.'
           />
         </div>
       )
@@ -312,6 +313,7 @@ var ReplaceConfirmModal = React.createClass({
           isOpen={this.props.isReplaceModalOpen}
           onRequestClose={this.closeReplaceModal}>
           shouldCloseOnOverlayClick={false} 
+          contentLabel={this.props.contentLabel}
 
           <h2 ref="subtitle">Окно с предварительными результатами замены.</h2>
           <button onClick={this.closeReplaceModal}>close</button>

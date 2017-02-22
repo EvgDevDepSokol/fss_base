@@ -30,6 +30,7 @@ var ImportStep4 = React.createClass({
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           style={this.props.style}
+          contentLabel={this.props.contentLabel}
         >
           <h2>Processing</h2>
           <div>Ваш файл обрабатывается</div>
