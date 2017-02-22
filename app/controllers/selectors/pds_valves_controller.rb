@@ -5,8 +5,7 @@ class PdsValvesController < ApplicationController
     @pds_valves = PdsValf.all.order(:Type)
   end
 
-  def show
-  end
+  def show; end
 
   private
 

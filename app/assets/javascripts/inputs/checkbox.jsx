@@ -5,7 +5,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-module.exports = function()  {
+module.exports = function() {
   return React.createClass({
     displayName: 'checkbox',
 
@@ -14,32 +14,26 @@ module.exports = function()  {
       onValue: React.PropTypes.func
     },
 
-    getInitialState:function() {
-      return {
-        value: this.props.value
-      };
+    getInitialState: function() {
+      return {value: this.props.value};
     },
 
-    render:function() {
+    render: function() {
       return (
-        <span classname = 'checkbox'>
-          <input
-            type="checkbox"
-            onClick={clickCheckBox()}
-          />            
-        </span>)
+        <span classname='checkbox'>
+          <input type="checkbox" onClick={clickCheckBox()}/>
+        </span>
+      )
     },
 
-    onChange:function(e) {
-      this.setState({
-        value: e.target.value
-      });
+    onChange: function(e) {
+      this.setState({value: e.target.value});
     },
 
-    done:function() {
+    done: function() {
       var h = {};
       h[this.props.attribute] = ReactDOM.findDOMNode(this).value
       this.props.onValue(h);
-    },
+    }
   });
 }.bind(this);

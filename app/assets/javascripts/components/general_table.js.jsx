@@ -6,7 +6,14 @@ var _ = require('underscore');
 
 var Paginator = require('react-pagify').default;
 
-import {Table,ColumnNames,sortColumn,formatters,cells,editors} from 'reactabular';
+import {
+  Table,
+  ColumnNames,
+  sortColumn,
+  formatters,
+  cells,
+  editors
+} from 'reactabular';
 
 var LocalStorageMixin = require('react-localstorage');
 var segmentize = require('segmentize');
@@ -59,10 +66,10 @@ var Search = require('../modules/search.jsx');
 var Replace = require('../modules/replace.jsx');
 var ColumnFilters = require('../modules/column_filters.jsx');
 
-var stringEditor =  require('../inputs/input.jsx')();
-var dateEditor =  require('../inputs/input.jsx')();
-var TextEditor =  require('../inputs/text_editor.jsx')();
-var WideTextEditor =  require('../inputs/wide_text_editor.jsx')();
+var stringEditor = require('../inputs/input.jsx')();
+var dateEditor = require('../inputs/input.jsx')();
+var TextEditor = require('../inputs/text_editor.jsx')();
+var WideTextEditor = require('../inputs/wide_text_editor.jsx')();
 
 var Modal = require('react-modal');
 var ExportXlsxModal = require('../components/xlsx-export.jsx');
@@ -73,15 +80,11 @@ var TableContainer = React.createClass({
   mixins: [LocalStorageMixin],
 
   getDefaultProps: function() {
-    return {
-      stateFilterKeys: ['systemFilter']
-    };
+    return {stateFilterKeys: ['systemFilter']};
   },
 
-
   getInitialState: function() {
-    var _this=this;
-
+    var _this = this;
 
     var properties = augmentWithTitles({
       TEquipID: {
@@ -92,82 +95,85 @@ var TableContainer = React.createClass({
       }
     });
 
-    var editable = cells.edit.bind(this, 'editedCell',
-        function(value, celldata, rowIndex, property)  {
-      var idx = findIndex(this.state.data, {
-        tEquipID: celldata[rowIndex].tEquipID
-      });
+    var editable = cells.edit.bind(this, 'editedCell', function(value, celldata, rowIndex, property) {
+      var idx = findIndex(this.state.data, {tEquipID: celldata[rowIndex].tEquipID});
 
       this.state.data[idx][property] = value;
 
-      this.setState({
-        data: data
-      });
+      this.setState({data: data});
     }.bind(this));
 
-    var highlighter = function (column) {
-      return formatters.highlight(function (value) {
-      var columns = _this.props.columns;
-      var query = null;
-      columns.forEach(function (col) {
-        if (col.property == column) {
-          if (col.filter) {
-            query = col.filter;
+    var highlighter = function(column) {
+      return formatters.highlight(function(value) {
+        var columns = _this.props.columns;
+        var query = null;
+        columns.forEach(function(col) {
+          if (col.property == column) {
+            if (col.filter) {
+              query = col.filter;
+            }
           }
-        }
-      });
-      if(query==null) query='';
+        });
+        if (query == null)
+          query = '';
         return Search.matches(column, value, query);
       });
-    };    
+    };
 
     var editableField = function(options) {
 
-      var editor = options.editor; 
+      var editor = options.editor;
       var attribute = options.attribute;
       var context = this;
       var nested = options.nested;
       function labelFromSelectorList(array, value) {
         var tmp = array.filter(function(obj) {
-          if ( obj.value === value ) {
+          if (obj.value === value) {
             return true
           }
         });
-        return tmp[0] ? tmp[0].label : '';
-      }        
+        return tmp[0]
+          ? tmp[0].label
+          : '';
+      }
       return function(value, data, rowIndex, property) {
         var id;
-        if(nested)
-        {
+        if (nested) {
           var keys = property.split(".");
           var tempVal = data[rowIndex];
 
-          if (tempVal[keys[0]]) id = tempVal[keys[0]].id
-          keys.forEach(function(key){
-            if(tempVal){
+          if (tempVal[keys[0]])
+            id = tempVal[keys[0]].id
+          keys.forEach(function(key) {
+            if (tempVal) {
               tempVal = tempVal[key];
             };
           });
           value = tempVal;
         }
 
-        if(value==null) value = '';
+        if (value == null)
+          value = '';
 
         if (editor) {
-          if ((editor == BooleanNumbSelector) && (typeof(value) == "number")){
-            value = (value == 0) ? "нет" : "да";
+          if ((editor == BooleanNumbSelector) && (typeof(value) == "number")) {
+            value = (value == 0)
+              ? "нет"
+              : "да";
           }
-          if (editor == ValveTypeSelector){
-            value = labelFromSelectorList(editor.options, value) 
+          if (editor == ValveTypeSelector) {
+            value = labelFromSelectorList(editor.options, value)
           }
-          if (editor == BooleanSelector){
-            value = value ? "да" : "нет";
+          if (editor == BooleanSelector) {
+            value = value
+              ? "да"
+              : "нет";
           }
-          if (editor == BooleanNumbSelector){
-            value = labelFromSelectorList(editor.options, value) 
+          if (editor == BooleanNumbSelector) {
+            value = labelFromSelectorList(editor.options, value)
           }
-          if (editor == UserRightsSelector){
-            value = labelFromSelectorList(editor,options, value) 
+          if (editor == UserRightsSelector) {
+            value = labelFromSelectorList(editor, options, value)
           }
         }
 
@@ -178,32 +184,27 @@ var TableContainer = React.createClass({
               value: value,
               id: id,
               attribute: attribute || property,
-              onValue: function (valueHash) {
+              onValue: function(valueHash) {
                 var sendData = $.extend(context.state.sendData, valueHash);
                 context.setState({lockRow: true, sendData: sendData});
               },
-              onCancel: function(){
+              onCancel: function() {
                 var celldata = data[rowIndex];
-                if(celldata.newRow){
-                 var idx = findIndex(context.state.data, {_id: celldata._id});
+                if (celldata.newRow) {
+                  var idx = findIndex(context.state.data, {_id: celldata._id});
 
-                 context.state.data.splice(idx, 1);
-                 context.setState({
-                   data: context.state.data,
-                   editedRow: null,
-                   lockRow: false,
-                   sendData: {}
-                 });
+                  context.state.data.splice(idx, 1);
+                  context.setState({data: context.state.data, editedRow: null, lockRow: false, sendData: {}});
                 } else {
-                  context.setState({ editedRow: null, lockRow: false, sendData: {} });
+                  context.setState({editedRow: null, lockRow: false, sendData: {}});
                 }
               },
-              onSave: function (valueHash) {
+              onSave: function(valueHash) {
                 var celldata = data[rowIndex];
                 var sendData = $.extend(context.state.sendData, valueHash);
                 context.setState({lockRow: true, sendData: sendData});
                 context.onSaveClick(celldata);
-              },
+              }
             })
           };
         }
@@ -211,9 +212,9 @@ var TableContainer = React.createClass({
           return {
             value: value,
             props: {
-              onDoubleClick: function () {
-                if(!context.state.lockRow){
-                  if (current_user.user_rights >= 1){
+              onDoubleClick: function() {
+                if (!context.state.lockRow) {
+                  if (current_user.user_rights >= 1) {
                     context.setState({editedRow: rowIndex, lockRow: true});
                   } else {
                     alert('У Вас недостаточно прав для редактирования записи!');
@@ -231,76 +232,80 @@ var TableContainer = React.createClass({
         var keys = property.split(".");
         var tempVal = data[rowIndex];
 
-        keys.forEach(function(key){
-          if(tempVal){
+        keys.forEach(function(key) {
+          if (tempVal) {
             tempVal = tempVal[key];
           }
         });
 
-        if(tempVal==null) tempVal = '';
+        if (tempVal == null)
+          tempVal = '';
         return {value: tempVal};
       }
     }.bind(this);
 
-    var columns = this.props.columns.map(function(column){
+    var columns = this.props.columns.map(function(column) {
       var h = column; //  {property: column.property, header: column.header, };
-      if (column.editor=='TextEditor') {
+      if (column.editor == 'TextEditor') {
         column.headerClassStyle = 'header-text-col'
-      } else if (column.editor=='WideTextEditor') {
+      } else if (column.editor == 'WideTextEditor') {
         column.headerClassStyle = 'header-wide_text-col'
-      } else if (column.property=='system.System') {
+      } else if (column.property == 'system.System') {
         column.headerClassStyle = 'header-sys_sys-col'
-      } else if (!column.nested){
-        column.headerClassStyle = 'header-'+column.property+'-col'
+      } else if (!column.nested) {
+        column.headerClassStyle = 'header-' + column.property + '-col'
       } else {
         var keys = column.property.split(".");
-        column.headerClassStyle = 'header-'+keys[keys.length-1]+'-col'
+        column.headerClassStyle = 'header-' + keys[keys.length - 1] + '-col'
       }
-      if(column.editor) {
+      if (column.editor) {
         column['editor'] = eval(column.editor);
-        h["cell"] = [editableField(column),highlighter(h.property)]
+        h["cell"] = [
+          editableField(column),
+          highlighter(h.property)
+        ]
         //h["cell"] = [editableField(column)]
-      }else if(column.nested) {
-        h["cell"] = [nestedValue(column),highlighter(h.property)];
+      } else if (column.nested) {
+        h["cell"] = [
+          nestedValue(column),
+          highlighter(h.property)
+        ];
         //h["cell"] = [nestedValue(column)];
       }
       return (h);
     });
 
     // remove hidden elements
-    columns = columns.filter(function(e){return e.hidden != true});
-
+    columns = columns.filter(function(e) {
+      return e.hidden != true
+    });
 
     // add buttons
     columns = columns.concat([
       {
-        header:
-        <div className = 'buttons-col'>
+        header: <div className='buttons-col'>
           Кнопки
         </div>,
         headerClassStyle: 'header-buttons-col',
-        cell: function(value, celldata, rowIndex, property){
+        cell: function(value, celldata, rowIndex, property) {
           var url = window.location.href;
           var newRow = celldata[rowIndex].newRow;
           var itemId = celldata[rowIndex].id;
           var idx = findIndex(this.state.data, {id: itemId});
 
           var remove = function() {
-            if (this.props.objectType=='pds_malfunction_dim') return;
-            if (current_user.user_rights >= 2){
-              var res = confirm("Вы действительно желаете удалить запись?"); 
-              if(!res) return;
-              if(newRow){
+            if (this.props.objectType == 'pds_malfunction_dim')
+              return;
+            if (current_user.user_rights >= 2) {
+              var res = confirm("Вы действительно желаете удалить запись?");
+              if (!res)
+                return;
+              if (newRow) {
                 var idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
 
                 this.state.data.splice(idx, 1);
-                this.setState({
-                  data: this.state.data,
-                  editedRow: null,
-                  lockRow: false,
-                  sendData: {}
-                });
-              }else{
+                this.setState({data: this.state.data, editedRow: null, lockRow: false, sendData: {}});
+              } else {
                 var idx = findIndex(this.state.data, {id: itemId});
                 $.ajax({
                   url: url + '/' + itemId,
@@ -308,16 +313,13 @@ var TableContainer = React.createClass({
                   type: 'DELETE',
                   success: function(data) {
                     this.state.data.splice(idx, 1);
-                    this.setState({
-                      data: this.state.data,
-                      editedRow: null
-                    });
+                    this.setState({data: this.state.data, editedRow: null});
                   }.bind(this),
                   error: function(xhr, status, err) {
                     var jtmp = xhr.responseJSON['errors'];
-                    var result="Не удалось удалить запись. Причина:\n\n";
-                    for( key in jtmp){
-                      result+= jtmp[key]+'\n';
+                    var result = "Не удалось удалить запись. Причина:\n\n";
+                    for (key in jtmp) {
+                      result += jtmp[key] + '\n';
                     }
                     alert(result);
                   }.bind(this)
@@ -330,7 +332,7 @@ var TableContainer = React.createClass({
           }.bind(this);
 
           var copy = function() {
-            if (current_user.user_rights >= 2 ){
+            if (current_user.user_rights >= 2) {
               this.onAddRowClick(celldata[rowIndex]);
             } else {
               alert('У Вас недостаточно прав для дублирования записи!');
@@ -338,7 +340,7 @@ var TableContainer = React.createClass({
           }.bind(this);
 
           var editClick = function() {
-            if (current_user.user_rights >= 1 ){
+            if (current_user.user_rights >= 1) {
               this.setState({editedRow: rowIndex});
             } else {
               alert('У Вас недостаточно прав для редактирования записи!');
@@ -346,118 +348,109 @@ var TableContainer = React.createClass({
           }.bind(this);
 
           var cancelClick = function() {
-            this.setState({ editedRow: null, lockRow: false, sendData: {} });
+            this.setState({editedRow: null, lockRow: false, sendData: {}});
           }.bind(this);
 
           var saveClick = function() {
             this.onSaveClick(celldata[rowIndex]);
           }.bind(this);
 
-
-          var editButton = <span className='edit btn btn-xs btn-default' onClick={editClick.bind(this)} style={{cursor: 'pointer'}} title='Редактировать запись'>
-              <i className="fa fa-pencil"></i>
-            </span>;
-
-          var saveButton = <span className='edit btn btn-xs btn-default' onClick={saveClick.bind(this)} style={{cursor: 'pointer'}} title='Сохранить изменения'>
-              <i className="fa fa-check"></i>
+          var editButton = <span className='edit btn btn-xs btn-default' onClick={editClick.bind(this)} style={{
+            cursor: 'pointer'
+          }} title='Редактировать запись'>
+            <i className="fa fa-pencil"></i>
           </span>;
 
-          if(!newRow){
-            var cancelButton = <span className='edit btn btn-xs btn-default' onClick={cancelClick.bind(this)} style={{cursor: 'pointer'}} title='Отменить изменения'>
+          var saveButton = <span className='edit btn btn-xs btn-default' onClick={saveClick.bind(this)} style={{
+            cursor: 'pointer'
+          }} title='Сохранить изменения'>
+            <i className="fa fa-check"></i>
+          </span>;
+
+          if (!newRow) {
+            var cancelButton = <span className='edit btn btn-xs btn-default' onClick={cancelClick.bind(this)} style={{
+              cursor: 'pointer'
+            }} title='Отменить изменения'>
               <i className="fa fa-undo"></i>
             </span>;
           }
 
-          var deleteButton = <span className='remove btn btn-xs btn-danger' onClick={remove.bind(this)} style={{cursor: 'pointer'}} title='Удалить запись'>
-              <i className="fa fa-times"></i>
-            </span>;
+          var deleteButton = <span className='remove btn btn-xs btn-danger' onClick={remove.bind(this)} style={{
+            cursor: 'pointer'
+          }} title='Удалить запись'>
+            <i className="fa fa-times"></i>
+          </span>;
 
-          var copyButton = <span className='remove btn btn-xs btn-default' onClick={copy.bind(this)} style={{cursor: 'pointer'}} title='Дублировать запись'>
+          var copyButton = <span className='remove btn btn-xs btn-default' onClick={copy.bind(this)} style={{
+            cursor: 'pointer'
+          }} title='Дублировать запись'>
             <i className="fa fa-files-o"></i>
           </span>;
-          return {
-            value: (
+          return {value: (
 
-              <span style={ {width: '100px'} } >
-                { this.state["editedRow"] === rowIndex ? [ saveButton, cancelButton ] : [editButton, copyButton] }
+              <span style={{
+                width: '100px'
+              }}>
+                {this.state["editedRow"] === rowIndex
+                  ? [saveButton, cancelButton]
+                  : [editButton, copyButton]}
                 {deleteButton}
               </span>
-            )
-          };
+            )};
         }.bind(this)
       }
     ]);
 
-    var clickMainCheckboxY = function(e){
+    var clickMainCheckboxY = function(e) {
       this.state.mainCheckbox_new = true
-      this.setState({
-        mainCheckbox_new: true,
-        mainCheckbox_old: false
-      });
+      this.setState({mainCheckbox_new: true, mainCheckbox_old: false});
     }
 
-    var clickMainCheckboxN = function(e){
+    var clickMainCheckboxN = function(e) {
       this.state.mainCheckbox_new = false
-      this.setState({
-        mainCheckbox_new: false,
-        mainCheckbox_old: true
-      });
+      this.setState({mainCheckbox_new: false, mainCheckbox_old: true});
     }
 
-    var mainCheckbox =
-      <div className = "two-checkboxes">
-        <input
-          type="checkbox"
-          onChange={clickMainCheckboxY.bind(this)}
-          checked = {true}/>
-        <input
-          type="checkbox"
-          onChange={clickMainCheckboxN.bind(this)}
-          checked = {false}/>
-      </div>;
+    var mainCheckbox = <div className="two-checkboxes">
+      <input type="checkbox" onChange={clickMainCheckboxY.bind(this)} checked={true}/>
+      <input type="checkbox" onChange={clickMainCheckboxN.bind(this)} checked={false}/>
+    </div>;
 
     var column_x = ([
       {
-        header:
-          <div>
-            {mainCheckbox} 
-          </div>,
+        header: <div>
+          {mainCheckbox}
+        </div>,
         headerClassStyle: 'header-checkbox-col',
         classes: 'checkbox-col',
-        cell: function(value, celldata, rowIndex, property){
+        cell: function(value, celldata, rowIndex, property) {
           var itemId = celldata[rowIndex].id;
           var idx = findIndex(this.state.data, {id: itemId});
-          var clickCheckBox = function(){
-              this.state.data[idx].checked = !this.state.data[idx].checked;
-              this.setState({
-                data: this.state.data,
-              });
-          }
- 
-          if (idx > -1){
-          var checkBox = <span className = 'checkbox'>
-            <input
-              type = "checkbox"
-              onChange = {clickCheckBox.bind(this)}
-              checked = {this.state.data[idx].checked? this.state.data[idx].checked : false}
-            />            
-          </span>;
-          } else {
-          var checkBox = <span className = 'checkbox'>
-            <input
-              type = "checkbox"
-            />            
-          </span>;
- 
+          var clickCheckBox = function() {
+            this.state.data[idx].checked = !this.state.data[idx].checked;
+            this.setState({data: this.state.data});
           }
 
-          return {
-            value: (
-              <span style={ {width: '30px'} } >
+          if (idx > -1) {
+            var checkBox = <span className='checkbox'>
+              <input type="checkbox" onChange={clickCheckBox.bind(this)} checked={this.state.data[idx].checked
+                ? this.state.data[idx].checked
+                : false}/>
+            </span>;
+          } else {
+            var checkBox = <span className='checkbox'>
+              <input type="checkbox"/>
+            </span>;
+
+          }
+
+          return {value: (
+              <span style={{
+                width: '30px'
+              }}>
                 {checkBox}
               </span>
-            )
-          };
+            )};
 
         }.bind(this)
       }
@@ -466,20 +459,20 @@ var TableContainer = React.createClass({
     columns = column_x.concat(columns);
     column_x = null;
 
-    columns.map(function(column){
+    columns.map(function(column) {
       column.label = column.header
     });
-    var myDefaultSorter = function (data, column) {
+    var myDefaultSorter = function(data, column) {
       var property = column.property;
-  
-      data.sort(function(a, b)  {
+
+      data.sort(function(a, b) {
         var p1 = getNestedKey(a, property) || '';
         var p2 = getNestedKey(b, property) || '';
-  
-        if(p1.localeCompare) {
+
+        if (p1.localeCompare) {
           return p1.localeCompare(p2) * column.sort;
         }
-  
+
         return (p1 - p2) * column.sort;
       });
     };
@@ -506,13 +499,9 @@ var TableContainer = React.createClass({
         column: ''
       },
       header: {
-        onClick: function(column){
-          if (!((column.classes == 'buttons-col')||(column.classes == 'checkbox-col')||(this.state.lockRow))){
-            sortColumn(
-              this.state.columns,
-              column,
-              this.setState.bind(this),
-            );
+        onClick: function(column) {
+          if (!((column.classes == 'buttons-col') || (column.classes == 'checkbox-col') || (this.state.lockRow))) {
+            sortColumn(this.state.columns, column, this.setState.bind(this),);
           }
         }.bind(this)
       },
@@ -529,14 +518,16 @@ var TableContainer = React.createClass({
 
   columnFilters() {
     var headerConfig = this.state.header;
-    
+
     var columns = this.state.columns;
 
     var isEditableColumn = function(column) {
-      var className = column.editor ? 'editableColumn' : 'notEditableColumn';
+      var className = column.editor
+        ? 'editableColumn'
+        : 'notEditableColumn';
       var header = column.header;
-      if (!header.props){
-        column.header = <span className = {className}>
+      if (!header.props) {
+        column.header = <span className={className}>
           {header}
         </span>
       }
@@ -545,59 +536,40 @@ var TableContainer = React.createClass({
     columns.every(isEditableColumn);
 
     // if you don't want an header, just return;
-    return (
-        this.state.showFilters ?
-      <thead>
-        <ColumnNames
-          config={headerConfig}
-          columns={columns}
-        />
-        <ColumnFilters
-          columns={columns}
-          onUserInput={this.onFilterInput}
-          disabled={this.state.lockRow}
-          />
-      </thead> :
-      <thead>
-        <ColumnNames
-          config={headerConfig}
-          columns={columns}
-        />
-      </thead> 
-
-
-    );
-  },  
-
-  onFilterInput: function(columns) {
-    this.setState({
-      columns: columns,
-    });
+    return (this.state.showFilters
+      ? <thead>
+          <ColumnNames config={headerConfig} columns={columns}/>
+          <ColumnFilters columns={columns} onUserInput={this.onFilterInput} disabled={this.state.lockRow}/>
+        </thead>
+      : <thead>
+        <ColumnNames config={headerConfig} columns={columns}/>
+      </thead>);
   },
 
-// handlers
+  onFilterInput: function(columns) {
+    this.setState({columns: columns});
+  },
+
+  // handlers
   onSelect: function(page) {
-    if(this.state.lockRow)
+    if (this.state.lockRow)
       return;
     var pagination = this.state.pagination || {};
     var pages = Math.ceil(this.state.data.length / pagination.perPage);
 
     pagination.page = Math.min(Math.max(page, 1), pages);
 
-    this.setState({
-      pagination: pagination
-    });
+    this.setState({pagination: pagination});
   },
 
   onPerPage: function(e) {
     var pagination = this.state.pagination || {};
-    if ( parseInt(e.target.value, 10)> 200) e.target.value = '200';
+    if (parseInt(e.target.value, 10) > 200)
+      e.target.value = '200';
     var PerPage = parseInt(e.target.value, 10);
-    if (pagination.perPage !== PerPage){
+    if (pagination.perPage !== PerPage) {
       pagination.perPage = PerPage;
-      this.setState({
-        pagination: pagination
-      });
+      this.setState({pagination: pagination});
     }
   },
 
@@ -605,24 +577,22 @@ var TableContainer = React.createClass({
     var pagination = this.state.pagination || {};
     var pages = Math.ceil(this.state.data.length / pagination.perPage);
     var page = parseInt(e.target.value, 10);
-    if (isNaN(page)) page=1;
+    if (isNaN(page))
+      page = 1;
     pagination.page = Math.min(Math.max(page, 1), pages);
 
-    this.setState({
-      pagination: pagination
-    });
+    this.setState({pagination: pagination});
   },
 
   onSaveClick: function(celldata) {
-    if(!$.isEmptyObject(this.state.sendData))
-    {
+    if (!$.isEmptyObject(this.state.sendData)) {
       var newRow = celldata.newRow;
       var url = window.location.href;
       var itemId = celldata.id;
       var idx = findIndex(this.state.data, {id: itemId});
       var d = {};
       d[this.props.objectType] = this.state.sendData;
-      if(newRow){
+      if (newRow) {
         idx = findIndex(this.state.data, {_id: celldata._id});
         d[this.props.objectType].Project = project.id;
         $.ajax({
@@ -633,206 +603,188 @@ var TableContainer = React.createClass({
           data: JSON.stringify(d),
           success: function(response) {
             this.state.data[idx] = response.data;
-            this.setState({
-              data: this.state.data,
-              lockRow: false,
-              sendData: {},
-              editedRow: null
-            });
+            this.setState({data: this.state.data, lockRow: false, sendData: {}, editedRow: null});
           }.bind(this),
           error: function(xhr, status, err) {
             var jtmp = xhr.responseJSON['errors'];
-            var result="Не удалось сохранить запись. Причина:\n\n";
-            for( key in jtmp){
-              result+= jtmp[key]+'\n';
+            var result = "Не удалось сохранить запись. Причина:\n\n";
+            for (key in jtmp) {
+              result += jtmp[key] + '\n';
             }
             alert(result);
           }.bind(this)
         });
-      }else{
+      } else {
         $.ajax({
           url: url + '/' + itemId,
           dataType: 'json',
           type: 'PUT',
           data: d,
           success: function(response) {
-            if (response.data.MalfunctDimID){
-              response.data.system=response.data.pds_malfunction.system
+            if (response.data.MalfunctDimID) {
+              response.data.system = response.data.pds_malfunction.system
             }
             this.state.data[idx] = response.data;
-            this.setState({
-              data: this.state.data,
-              lockRow: false,
-              sendData: {},
-              editedRow: null
-            });
+            this.setState({data: this.state.data, lockRow: false, sendData: {}, editedRow: null});
           }.bind(this),
           error: function(xhr, status, err) {
             var jtmp = xhr.responseJSON['errors'];
-            var result="Не удалось сохранить запись. Причина:\n\n";
-            for( key in jtmp){
-              result+= jtmp[key]+'\n';
+            var result = "Не удалось сохранить запись. Причина:\n\n";
+            for (key in jtmp) {
+              result += jtmp[key] + '\n';
             }
             alert(result);
           }.bind(this)
         });
       }
-    }else
-    {
-      this.setState({
-        lockRow: false,
-        sendData: {},
-        editedRow: null
-      });
+    } else {
+      this.setState({lockRow: false, sendData: {}, editedRow: null});
     }
   },
 
-  onAddRowClick: function(copiedRow){
-    if (this.state.lockRow) return;
-    if (this.props.objectType=='pds_malfunction_dim') return;
-    if (current_user.user_rights >= 2 ){
+  onAddRowClick: function(copiedRow) {
+    if (this.state.lockRow)
+      return;
+    if (this.props.objectType == 'pds_malfunction_dim')
+      return;
+    if (current_user.user_rights >= 2) {
       var copyRow = {};
       if (copiedRow.id) {
         copyRow = $.extend({}, copiedRow);
-      } else if (this.state.showFilters){
+      } else if (this.state.showFilters) {
         alert('Добавить запись при работающих фильтрах можно только дублированием одной из записей. Либо нужно отключить фильтры.');
         return;
       } else {
-        var columns=this.state.columns;
-        columns.forEach(function (col) {
+        var columns = this.state.columns;
+        columns.forEach(function(col) {
           col.sort = null;
-        }); 
-        this.setState({
-          columns: columns,
-          sortingColumn:null
-        })
+        });
+        this.setState({columns: columns, sortingColumn: null})
       };
       // var copyRow  = newRow || {};
       var data = this.state.data;
 
       // чтобы добавить строку в начало, находим индекс первой строки
       var p = this.state.pagination;
-      var idx = (p.page-1) * p.perPage;
+      var idx = (p.page - 1) * p.perPage;
 
       //data.unshift({newRow: true, id: "new-" +  Date.now()});
       delete copyRow['id'];
       copyRow.system = {};
-      if (this.state.systemFilter != -1) copyRow.system.id = this.state.systemFilter;
+      if (this.state.systemFilter != -1)
+        copyRow.system.id = this.state.systemFilter;
       var sendData = copyRow;
       copyRow['newRow'] = true;
-      copyRow['_id'] = "new-" +  Date.now();
+      copyRow['_id'] = "new-" + Date.now();
       data.splice(idx, 0, copyRow);
-      this.setState({
-        data: data,
-        editedRow: 0,
-        lockRow: true,
-        sendData: this.getDuplicatedRowsendData(copyRow)});
+      this.setState({data: data, editedRow: 0, lockRow: true, sendData: this.getDuplicatedRowsendData(copyRow)});
     } else {
       alert('У Вас недостаточно прав для добавления записи!');
     }
   },
 
-  onIconFilterClick: function(){
+  onIconFilterClick: function() {
     var showFilters = !this.state.showFilters;
     var columns = this.state.columns;
-    if (!showFilters) columns.forEach(function (col) {
-      col.filter=null;
-    }); 
-    this.setState({
-      showFilters:showFilters,
-      columns: columns
-    });
-  },
-  onIconReplaceClick: function(){
-    if (current_user.user_rights >= 1 ){
-      var showReplace = !this.state.showReplace;
-      this.setState({
-        showReplace:showReplace
+    if (!showFilters)
+      columns.forEach(function(col) {
+        col.filter = null;
       });
+    this.setState({showFilters: showFilters, columns: columns});
+  },
+  onIconReplaceClick: function() {
+    if (current_user.user_rights >= 1) {
+      var showReplace = !this.state.showReplace;
+      this.setState({showReplace: showReplace});
     } else {
       alert('У Вас недостаточно прав для редактирования записей!');
     }
   },
 
-  getDuplicatedRowsendData: function(row){
+  getDuplicatedRowsendData: function(row) {
     var sendData = {};
-    _.each(Object.keys(columns), function (columnKey) {
+    _.each(Object.keys(columns), function(columnKey) {
       var col = columns[columnKey];
 
-      if('id' == col.property)
+      if ('id' == col.property)
         return;
-      if( !col.nested )
-        sendData[col.property] = row[col.property]!==null ? row[col.property] : null;
-        //sendData[col.property] = row[col.property];
-      if( col.attribute ){
+      if (!col.nested)
+        sendData[col.property] = row[col.property] !== null
+          ? row[col.property]
+          : null;
+
+      //sendData[col.property] = row[col.property];
+      if (col.attribute) {
         // мы берем первую часть property, и ищем там id
         var prop = col.property.split('.')[0];
-        sendData[col.attribute] = row[prop] ? row[prop].id : null;
+        sendData[col.attribute] = row[prop]
+          ? row[prop].id
+          : null;
       }
 
     });
     return sendData;
   },
 
-  onHideTreeViewClick: function(){
-    var left_menu =$('#left_menu');
-    var main_table =$('#main_table');
-    var panel_sticker =$('#panel-sticker'); 
-    var navbar_text_header =$('#navbar-text-header'); 
-    var navbar_middle_container =$('#navbar-middle-container'); 
-    if (left_menu[0].hidden==false) {
-      left_menu[0].hidden=true;
-      main_table[0].style.left='0px';
+  onHideTreeViewClick: function() {
+    var left_menu = $('#left_menu');
+    var main_table = $('#main_table');
+    var panel_sticker = $('#panel-sticker');
+    var navbar_text_header = $('#navbar-text-header');
+    var navbar_middle_container = $('#navbar-middle-container');
+    if (left_menu[0].hidden == false) {
+      left_menu[0].hidden = true;
+      main_table[0].style.left = '0px';
       panel_sticker[0].style.backgroundPosition = 'right';
-      navbar_text_header[0].hidden=true;
-      navbar_middle_container[0].style.left='380px';
+      navbar_text_header[0].hidden = true;
+      navbar_middle_container[0].style.left = '380px';
     } else {
-      left_menu[0].hidden=false;
-      main_table[0].style.left='245px';
+      left_menu[0].hidden = false;
+      main_table[0].style.left = '245px';
       panel_sticker[0].style.backgroundPosition = 'left';
-      navbar_text_header[0].hidden=false;
-      navbar_middle_container[0].style.left='520px';
-    } 
+      navbar_text_header[0].hidden = false;
+      navbar_middle_container[0].style.left = '520px';
+    }
   },
 
-  onExportClick: function(exportIndex){
+  onExportClick: function(exportIndex) {
     var bookname = model_name + '_' + project.id.toString() + '.xlsx';
-    if (exportIndex===1) {
-      var dataxls = this.state.dataxls.filter(function(elem){
+    if (exportIndex === 1) {
+      var dataxls = this.state.dataxls.filter(function(elem) {
         return elem.checked
       });
     } else {
       var dataxls = this.state.dataxls;
     };
-//    var dataxls = this.state.dataxls;
+    //    var dataxls = this.state.dataxls;
     exportData(dataxls, this.props.columns, bookname);
   },
 
-  onReplaceDone: function(data){
+  onReplaceDone: function(data) {
     this.setState({data: data})
   },
 
-  onSystemSelectorChange: function(value){
+  onSystemSelectorChange: function(value) {
     this.setState({systemFilter: value.system});
-//    var val = valueHash.system;
-//    var column = _.find(this.state.columns, function(c){ return c.property == 'system.System'; });
-//    if(!column) {column = _.find(this.state.columns, function(c){ return c.property == 'pds_malfunction.system.System'; });};
-//    if(!column) return;
-//
-//    if(val){
-//      if(val == -1 ){
-//        // we reset data
-//        this.setState({data: this.props.data});
-//      } else {
-//        var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
-//        this.setState({data: data});
-//      }
-//    }else{
-//      // we reset data
-//      this.setState({data: this.props.data});
-//    }
-//
-//    var system = valueHash.system;
+    //    var val = valueHash.system;
+    //    var column = _.find(this.state.columns, function(c){ return c.property == 'system.System'; });
+    //    if(!column) {column = _.find(this.state.columns, function(c){ return c.property == 'pds_malfunction.system.System'; });};
+    //    if(!column) return;
+    //
+    //    if(val){
+    //      if(val == -1 ){
+    //        // we reset data
+    //        this.setState({data: this.props.data});
+    //      } else {
+    //        var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
+    //        this.setState({data: data});
+    //      }
+    //    }else{
+    //      // we reset data
+    //      this.setState({data: this.props.data});
+    //    }
+    //
+    //    var system = valueHash.system;
   },
 
   render: function() {
@@ -842,18 +794,20 @@ var TableContainer = React.createClass({
     var columns = this.state.columns;
     var systemFilter = this.state.systemFilter;
 
-    columns.forEach(function(column){
-      if(!column.headerClass||column.headerClass.indexOf(column.headerClassStyle)==-1){
-        column.headerClass=column.headerClassStyle+' '+column.headerClass
-      } 
+    columns.forEach(function(column) {
+      if (!column.headerClass || column.headerClass.indexOf(column.headerClassStyle) == -1) {
+        column.headerClass = column.headerClassStyle + ' ' + column.headerClass
+      }
     });
 
-    if (systemFilter && systemFilter!=-1) {
-      data = _.filter(data, function(row){ return row.system && row.system.id == systemFilter; });
+    if (systemFilter && systemFilter != -1) {
+      data = _.filter(data, function(row) {
+        return row.system && row.system.id == systemFilter;
+      });
     };
-    if (this.state.showFilters){
-      columns.forEach(function(column){
-        if (column.filter){
+    if (this.state.showFilters) {
+      columns.forEach(function(column) {
+        if (column.filter) {
           var cfilter = {};
           cfilter['query'] = column.filter;
           cfilter['column'] = column.property;
@@ -865,21 +819,21 @@ var TableContainer = React.createClass({
       data = Search.search(this.state.search, this.state.columns, data)
     }
     var mainCheckbox_new = this.state.mainCheckbox_new;
-    if(mainCheckbox_new !== this.state.mainCheckbox_old) {
-      data.forEach(function(row){
+    if (mainCheckbox_new !== this.state.mainCheckbox_old) {
+      data.forEach(function(row) {
         row.checked = mainCheckbox_new;
-      });        
+      });
       this.state.mainCheckbox_old = mainCheckbox_new;
     };
-    
+
     data = sortColumn.sort(data, this.state.sortingColumn, orderBy);
-    this.state.dataxls = data; 
-    
+    this.state.dataxls = data;
+
     var paginated = paginate(data, pagination);
-    var pages = Math.ceil(data.length / Math.max(
-      isNaN(pagination.perPage) ? 1 : pagination.perPage, 1)
-    );
-    
+    var pages = Math.ceil(data.length / Math.max(isNaN(pagination.perPage)
+      ? 1
+      : pagination.perPage, 1));
+
     return (
       <div className="main-container-inner" key={"main-table"}>
         <div className="table-info" key={"table-info"}>
@@ -905,13 +859,19 @@ var TableContainer = React.createClass({
                 <input type='number' min='1' defaultValue={pagination.page} onChange={this.onPage} disabled={this.state.lockRow}></input>
                 <p>cтр.</p>
               </div>
-              <div className={this.state.showFilters ? 'icon-filter info-buttons border-inset' : 'icon-filter info-buttons'} onClick={this.onIconFilterClick}>
+              <div className={this.state.showFilters
+                ? 'icon-filter info-buttons border-inset'
+                : 'icon-filter info-buttons'} onClick={this.onIconFilterClick}>
                 Фильтр
               </div>
-              <div className={this.state.showReplace ? 'icon-replace info-buttons border-inset' : 'icon-replace info-buttons'} onClick={this.onIconReplaceClick}>
+              <div className={this.state.showReplace
+                ? 'icon-replace info-buttons border-inset'
+                : 'icon-replace info-buttons'} onClick={this.onIconReplaceClick}>
                 Замена
               </div>
-              <div className={false ? 'add-row info-buttons border-inset' : 'add-row info-buttons'} onClick={this.onAddRowClick}>
+              <div className={false
+                ? 'add-row info-buttons border-inset'
+                : 'add-row info-buttons'} onClick={this.onAddRowClick}>
                 Добавить запись
               </div>
             </div>
@@ -919,15 +879,14 @@ var TableContainer = React.createClass({
               <div className="show-filters">
                 Скрыть/ Показать поля
               </div>
-              <ExportXlsxModal
-                data={this.state.data}
-                onExport={this.onExportClick}
-              />
+              <ExportXlsxModal data={this.state.data} onExport={this.onExportClick}/>
             </div>
 
           </div>
         </div>
-        <div className={this.state.showReplace ? 'table-filters':'table-filters hidden-element'} key={"table-filters"}>
+        <div className={this.state.showReplace
+          ? 'table-filters'
+          : 'table-filters hidden-element'} key={"table-filters"}>
           <div className="left">
 
             <div className="replace-container">
@@ -939,81 +898,66 @@ var TableContainer = React.createClass({
         </div>
 
         <div className='pagination'>
-          <Paginator.Context className="pagify-pagination"
-            segments={segmentize({
-                  page: pagination.page,
-                  pages: pages,
-                  beginPages: 3,
-                  endPages: 3,
-                  sidePages: 2
-              })} onSelect={this.onSelect}>
-                  <Paginator.Button page={pagination.page - 1}>Предыдущая</Paginator.Button>
-                  <Paginator.Segment field="beginPages" />
-                  <Paginator.Ellipsis className="ellipsis"
-                    previousField="beginPages" nextField="previousPages" />
-                  <Paginator.Segment field="previousPages" />
-                  <Paginator.Segment field="centerPage" className="selected" />
-                  <Paginator.Segment field="nextPages" />
-                  <Paginator.Ellipsis className="ellipsis"
-                    previousField="nextPages" nextField="endPages" />
-                  <Paginator.Segment field="endPages" />
-                  <Paginator.Button page={pagination.page + 1}>Следующая</Paginator.Button>
+          <Paginator.Context className="pagify-pagination" segments={segmentize({page: pagination.page, pages: pages, beginPages: 3, endPages: 3, sidePages: 2})} onSelect={this.onSelect}>
+            <Paginator.Button page={pagination.page - 1}>Предыдущая</Paginator.Button>
+            <Paginator.Segment field="beginPages"/>
+            <Paginator.Ellipsis className="ellipsis" previousField="beginPages" nextField="previousPages"/>
+            <Paginator.Segment field="previousPages"/>
+            <Paginator.Segment field="centerPage" className="selected"/>
+            <Paginator.Segment field="nextPages"/>
+            <Paginator.Ellipsis className="ellipsis" previousField="nextPages" nextField="endPages"/>
+            <Paginator.Segment field="endPages"/>
+            <Paginator.Button page={pagination.page + 1}>Следующая</Paginator.Button>
           </Paginator.Context>
         </div>
 
-        <div className={this.state.showReplace ?'table-container table-container-replace-show' : 'table-container table-container-replace-hide'} key={"table-container"}>
+        <div className={this.state.showReplace
+          ? 'table-container table-container-replace-show'
+          : 'table-container table-container-replace-hide'} key={"table-container"}>
 
-          <Table 
-            className='table table-bordered'
-            columnNames={this.columnFilters}
-            data={paginated.data}
-            columns={this.state.columns}
-            row={(d, rowIndex) => {
-              var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
-              if (rowIndex == this.state.editedRow)  rowClass = 'edited-row';
-                return {
-                   // className: rowIndex == this.state.editedRow ? 'edited-row' : '',
-                    className: rowClass,
-                };
-            }}           
-            rowKey="id" 
-            />
+          <Table className='table table-bordered' columnNames={this.columnFilters} data={paginated.data} columns={this.state.columns} row={(d, rowIndex) => {
+            var rowClass = rowIndex % 2
+              ? 'odd-row'
+              : 'even-row';
+            if (rowIndex == this.state.editedRow)
+              rowClass = 'edited-row';
+            return { className: rowClass, }; }} rowKey="id"/>
         </div>
         <div id="panel-sticker" onClick={this.onHideTreeViewClick}>
-          <p></p> 
-        </div>    
+          <p></p>
+        </div>
       </div>
     );
   }
 });
 
-          //  <div className='search-container'>
-          //    Поиск <Search columns={this.state.columns} data={this.state.data} onChange={this.onSearch} />
-          //  </div>
-$(document).ready(function () {
+//  <div className='search-container'>
+//    Поиск <Search columns={this.state.columns} data={this.state.data} onChange={this.onSearch} />
+//  </div>
+$(document).ready(function() {
   var appElement = document.getElementById('general_table');
   Modal.setAppElement(appElement);
   ReactDOM.render(
-    <TableContainer columns={columns} data={data}
-      objectType={model_name} title={title} project={project}/>, appElement
-  );
+    <TableContainer columns={columns} data={data} objectType={model_name} title={title} project={project}/>, appElement);
 });
 
 function paginate(data, o) {
-    data = data || [];
+  data = data || [];
 
-    // adapt to zero indexed logic
-    var page = o.page - 1 || 0;
-    var perPage = o.perPage;
+  // adapt to zero indexed logic
+  var page = o.page - 1 || 0;
+  var perPage = o.perPage;
 
-    var amountOfPages = Math.ceil(data.length / perPage);
-    var startPage = page < amountOfPages? page: 0;
+  var amountOfPages = Math.ceil(data.length / perPage);
+  var startPage = page < amountOfPages
+    ? page
+    : 0;
 
-    return {
-        amount: amountOfPages,
-        data: data.slice(startPage * perPage, startPage * perPage + perPage),
-        page: startPage
-    };
+  return {
+    amount: amountOfPages,
+    data: data.slice(startPage * perPage, startPage * perPage + perPage),
+    page: startPage
+  };
 }
 
 function augmentWithTitles(o) {
@@ -1027,8 +971,8 @@ function augmentWithTitles(o) {
 function getNestedKey(obj, keys) {
   var tempVal = obj;
 
-  keys.split(".").forEach(function(key){
-    if(tempVal){
+  keys.split(".").forEach(function(key) {
+    if (tempVal) {
       tempVal = tempVal[key];
     }
   });

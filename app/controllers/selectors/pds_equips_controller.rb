@@ -5,5 +5,4 @@ class Selectors::PdsEquipsController < ApplicationController
     @pds_equips = PdsEquip.order(:typeE).pluck(:TEquipID, :typeE)
     do_format(@pds_equips)
   end
-  
 end

@@ -12,7 +12,7 @@ var TreeView = React.createClass({
 
   mixins: [LocalStorageMixin],
 
-  getLocalStorageKey: function(){
+  getLocalStorageKey: function() {
     return 'Treeview|' + this.props.elem.type;
   },
 
@@ -29,9 +29,9 @@ var TreeView = React.createClass({
 
   render: function() {
     var props = this.props;
-    var collapsed = props.collapsed != null ?
-      props.collapsed :
-      this.state.collapsed;
+    var collapsed = props.collapsed != null
+      ? props.collapsed
+      : this.state.collapsed;
 
     var arrowClassName = 'tree-view_arrow';
     var containerClassName = 'tree-view_children';
@@ -40,24 +40,19 @@ var TreeView = React.createClass({
       containerClassName += ' tree-view_children-collapsed';
     }
 
-    var arrow =
-      <div
-        className={(props.className || '') + ' ' + arrowClassName}
-        onClick={this.handleClick}>
-        ▾
-      </div>;
-    var label =
-      <div
-        onClick={this.handleClick}>
-          {props.nodeLabel}
-      </div>;
+    var arrow = <div className={(props.className || '') + ' ' + arrowClassName} onClick={this.handleClick}>
+      ▾
+    </div>;
+    var label = <div onClick={this.handleClick}>
+      {props.nodeLabel}
+    </div>;
 
     return (
       <div className="tree-view">
-          {arrow}
-          {label}
+        {arrow}
+        {label}
         <div className={containerClassName}>
-            {props.children}
+          {props.children}
         </div>
       </div>
     );
@@ -65,43 +60,43 @@ var TreeView = React.createClass({
 });
 
 var TreeSearch = React.createClass({
-  getInitialState: function(){
-    return {
-      searchValue: ''
-    }
+  getInitialState: function() {
+    return {searchValue: ''}
   },
 
   /**
    * Input box text has changed, trigger update of the autocomplete box.
    **/
-  changeInput: function () {
+  changeInput: function() {
     var searchValue = ReactDOM.findDOMNode(this.refs.searchInput).value;
     this.setState({searchValue: searchValue});
     this.props.changeInput(searchValue);
   },
 
-  render: function(){
+  render: function() {
 
     return (
       <div className="react-search">
-        <input type="text" className="input-text" ref="searchInput" onKeyUp={this.changeInput} />
+        <input type="text" className="input-text" ref="searchInput" onKeyUp={this.changeInput}/>
         <i className="fa fa-search fa-lg"></i>
       </div>
     );
   }
 });
 
-      //  <i className="fa fa-times fa-lg" ></i>
+//  <i className="fa fa-times fa-lg" ></i>
 var TreeListNode = React.createClass({
 
-  openLink: function(){
+  openLink: function() {
     location.href = this.props.href;
   },
 
-  render: function(){
+  render: function() {
     return (
-      <li className={this.props.current ? "node current" : "node"} >
-        <a href={this.props.href} >{this.props.label}</a>
+      <li className={this.props.current
+        ? "node current"
+        : "node"}>
+        <a href={this.props.href}>{this.props.label}</a>
       </li>
     );
   }
@@ -117,67 +112,66 @@ var SideMenu = React.createClass({
       };
     };
     var data = $.merge([], this.props.dataSource);
-    var newData = data.map(function(elem){
-      if( !pattern || elem.label.toLowerCase().includes(pattern)){
+    var newData = data.map(function(elem) {
+      if (!pattern || elem.label.toLowerCase().includes(pattern)) {
         var newChildrens = elem.children.map(function(child) {
           return $.extend(child, {visible: true});
         });
-        return $.extend(elem, {children: newChildrens, visible: true});
-      }else if(elem.children){
+        return $.extend(elem, {
+          children: newChildrens,
+          visible: true
+        });
+      } else if (elem.children) {
         var countVisibleChildren = 0;
         var newChildrens = elem.children.map(function(child) {
-          if ( !pattern || child.label.toLowerCase().includes(pattern)) {
+          if (!pattern || child.label.toLowerCase().includes(pattern)) {
             countVisibleChildren++;
             return $.extend(child, {visible: true});
-          }else
-          {
+          } else {
             return $.extend(child, {visible: false});
           }
         });
-        return $.extend(elem, {children: newChildrens,
-        visible: countVisibleChildren > 0});
+        return $.extend(elem, {
+          children: newChildrens,
+          visible: countVisibleChildren > 0
+        });
       }
       return $.extend(elem, {visible: false});
     });
     this.setState({dataSource: newData});
   },
 
-  getInitialState: function(){
+  getInitialState: function() {
     this.filterData("");
-    return {
-      dataSource: this.props.dataSource
-    }
+    return {dataSource: this.props.dataSource}
   },
 
   render: function() {
 
     return (
       <div>
-        <TreeSearch changeInput={this.filterData} key={"menu-search"} />
+        <TreeSearch changeInput={this.filterData} key={"menu-search"}/>
         <div className="menu-tree">
-          <div className="menu-tree-inner" >
+          <div className="menu-tree-inner">
 
             {this.state.dataSource.map(function(node, i) {
               var type = node.type;
               var childrensList = node.children.map(function(child, j) {
-                if(child.visible)
-                {
-                  return(
-                    <TreeListNode key={type + '|' + i + '|' + j} label={child.label} href={child.href} current={child.current} />
-                  )
+                if (child.visible) {
+                  return (<TreeListNode key={type + '|' + i + '|' + j} label={child.label} href={child.href} current={child.current}/>)
                 }
               });
               var label = <span className="node">{node.label}</span>;
-              if(node.visible){
+              if (node.visible) {
                 return (
-                  <TreeView elem={node} key={type + '|' + i} nodeLabel={label} defaultCollapsed={false} >
+                  <TreeView elem={node} key={type + '|' + i} nodeLabel={label} defaultCollapsed={false}>
                     <ul>
                       {childrensList}
                     </ul>
                   </TreeView>
                 );
-              }else{
-                return('');
+              } else {
+                return ('');
               }
             }, this)}
           </div>

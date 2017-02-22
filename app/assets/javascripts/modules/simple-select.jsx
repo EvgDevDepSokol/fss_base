@@ -2,34 +2,35 @@ var React = require('react');
 
 var _ = require('underscore');
 
-module.exports = React.createClass({
-  displayName: 'SimpleSelect',
-  getInitialState: function() {
-    return {
-      selected: this.props.selected
-    }
-  },
-  onChange: function(event){
-    debugger
-    this.setState({value: event.target.value});
-    //this.props.onChange();
-  },
+class SimpleSelect extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.value
+    };
+    this.onChange = this.onChange.bind(this);
+  }
 
-  render: function() {
+  onChange(event) {
+    // this.setState({value: event.target.value});
+    this.props.onChange(event.target.value);
+  }
 
-    //debugger;
-    var selected_option = this.state.selected;
-    var options = this.props.options.map(function(option){
-      var selected = selected_option == this.value || selected_option == option.label ? 'selected' : null;
-      return(<option value={option.value} selected={selected} >{option.label}</option>);
+  render() {
+
+    var options = this.props.options.map(function(option) {
+      return (
+        <option value={option.value}>{option.label}</option>
+      );
     });
-    options.unshift(<option value="" >Не выбрано</option>);
-    //debugger;
-
+    options.unshift(
+      <option value="">Не выбрано</option>
+    );
     return (
-      <select onChange={this.onChange} >
+      <select value={this.state.value} onChange={this.onChange}>
         {options}
       </select>
     );
   }
-});
+};
+module.exports = SimpleSelect.bind(this);

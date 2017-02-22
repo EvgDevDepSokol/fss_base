@@ -7,5 +7,4 @@ class Selectors::PdsDetectorsController < ApplicationController
                                 .pluck(:DetID, :tag)
     do_format(@pds_detectors)
   end
-
 end
