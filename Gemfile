@@ -59,6 +59,7 @@ gem 'spring',         group: :development
 gem 'web-console',    group: :development
 # gem 'web-console', '~> 3.0',    group: :development
 
+
 # gem 'wice_grid', '3.4.2'
 
 # Use ActiveModel has_secure_password
@@ -66,6 +67,8 @@ gem 'web-console',    group: :development
 
 # gem 'rails-i18n', '~> 4.0.0' # For 4.0.x
 # gem 'rails-i18n', :github => 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
+
+gem 'puma'
 
 group :development do
   gem 'capistrano'
