@@ -22,6 +22,20 @@ var ImportStep2 = React.createClass({
   nextModal: function() {
     debugger
     var importHeaders = this.state.importHeaders;
+
+  //  var options = [];
+  //  Object.keys(importHeaders).forEach(function(key) {
+  //    if (isEmptyObj(context.state.importHeaders)) {
+  //      var selectVal = '';
+  //      options.forEach(function(opt) {
+  //        if (opt['label'] == key)
+  //          selectVal = opt['value'];
+  //        }
+  //      );
+  //    } else {
+  //      var selectVal = context.state.importHeaders[key]['to'];
+  //    };
+   
     this.props.rememberColumns(importHeaders);
     //var importHeaders = this.props.columns;
     this.props.onNextModal();
