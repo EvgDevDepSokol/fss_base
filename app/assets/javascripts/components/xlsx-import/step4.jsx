@@ -6,9 +6,7 @@ var ImportStep4 = React.createClass({
   displayName: 'ImportStep4',
 
   getInitialState: function() {
-    return {
-      modalIsOpen: false
-    };
+    return {modalIsOpen: false};
   },
 
   openModal: function() {
@@ -26,16 +24,11 @@ var ImportStep4 = React.createClass({
   render: function() {
     return (
       <div className="import-from-excel-3">
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onRequestClose={this.closeModal}
-          style={this.props.style}
-          contentLabel={this.props.contentLabel}
-        >
+        <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal} style={this.props.style} contentLabel={this.props.contentLabel}>
           <h2>Processing</h2>
           <div>Ваш файл обрабатывается</div>
 
-          <input type="file" name="xlfile" id="xlf" ref="fileImport" onChange={this.onImportFile} />
+          <input type="file" name="xlfile" id="xlf" ref="fileImport" onChange={this.onImportFile}/>
           <button onClick={this.closeModal}>Отмена</button>
           <button onClick={this.nextModal}>Завершить</button>
         </Modal>
