@@ -9,12 +9,13 @@ gem 'rails'
 gem 'mysql2'
 
 gem 'therubyracer'
-gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-#gem 'sprockets', '3.6.3' # to delete after less-rails update
+gem 'sassc-rails'
+#gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'sprockets'
 gem 'twitter-bootstrap-rails'
-# gem "font-awesome-rails"
-gem 'font-awesome-less', '~> 4.7.0'
+#gem "font-awesome-rails"
+gem 'font-awesome-less'
+#gem 'font-awesome-sass'
 # gem "haml-rails", "~> 0.9"
 gem 'hamlit'
 
