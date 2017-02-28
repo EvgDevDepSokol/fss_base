@@ -25,7 +25,7 @@
 
 // require ../node_modules/xlsx/dist/xlsx
 
-//= require xlsx-djet
+// require xlsx-djet
 
 //= require components
 

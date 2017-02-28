@@ -93,7 +93,7 @@ function s2ab(s) {
 }
 
 
-function exportData(data, columns, bookname){
+var exportData = function(data, columns, bookname){
 
   //debugger;
   /* original data */
@@ -116,12 +116,11 @@ function exportData(data, columns, bookname){
 
   var wbout = XLSX.write(wb,wopts);
 
-  debugger
   /* the saveAs call downloads a file on the local machine */
   saveAs(new Blob([s2ab(wbout)],{type:""}), bookname);
 }
 
-function workbook_to_json(workbook) {
+var workbook_to_json =function(workbook) {
   var result = [];
   workbook.SheetNames.forEach(function(sheetName) {
     var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
@@ -146,3 +145,6 @@ function importFileData(file){
   };
   reader.readAsBinaryString(file);
 }
+
+module.exports.exportData = exportData;
+module.exports.workbook_to_json = workbook_to_json;

@@ -1,5 +1,6 @@
 var React = require('react');
 var Modal = require('react-modal');
+var workbook_to_json = require('../../xlsx-djet.js.jsx').workbook_to_json;
 
 var ImportStep1 = React.createClass({
   displayName: 'ImportStep1',
@@ -59,7 +60,7 @@ var ImportStep1 = React.createClass({
     return (
       <div className="import-from-excel-1">
         <Modal isOpen={this.props.isOpen} onRequestClose={this.closeModal} style={this.props.style} contentLabel={this.props.contentLabel}>
-          <h2>Step 1. Select a file</h2>
+          <h2>Шаг 1. Выберите файл</h2>
           <div>Выберите файл для продолжения</div>
 
           <input type="file" name="xlfile" id="xlf" ref="fileImport" onChange={this.onImportFile}/>

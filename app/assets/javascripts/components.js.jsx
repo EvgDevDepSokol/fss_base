@@ -1,10 +1,8 @@
-// require_tree ./components
 //= require ./components/xlsx-import
 //= require ./components/general_table
 
 //= require react
 //= require react_ujs
-//= require components
 
 var React = require('react');
 var ReactDOM = require('react-dom');

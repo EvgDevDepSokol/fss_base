@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var _ = require('underscore');
+var exportData = require('../xlsx-djet.js.jsx').exportData;
 
 var Paginator = require('react-pagify').default;
 
