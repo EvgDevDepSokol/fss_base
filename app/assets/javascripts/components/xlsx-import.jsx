@@ -132,6 +132,11 @@ var ImportXlsxModal = React.createClass({
     this.sendDataToServer(parsedData);
   },
 
+  step3Back: function() {
+    this.setState({step: 2});
+  },
+
+
   step4Finished: function() {
     this.setState({step: 0});
   },
@@ -187,6 +192,7 @@ var ImportXlsxModal = React.createClass({
           key={"step-3"}
           isOpen={this.state.step == 3}
           onNextModal={this.step3Finished}
+          onPrevModal={this.step3Back}
           onCloseModal={this.closeAllModals}
           columns={this.state.columns}
           style={customStyles}
