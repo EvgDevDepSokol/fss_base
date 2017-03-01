@@ -6,7 +6,10 @@ var ImportStep1 = React.createClass({
   displayName: 'ImportStep1',
 
   getInitialState: function() {
-    return {file: null};
+    return {
+      message:[],
+      file: null
+    };
   },
 
   closeModal: function() {
@@ -27,24 +30,28 @@ var ImportStep1 = React.createClass({
     this.setState({fileName: file.name});
     reader.onload = function(e) {
       var importData = e.target.result;
-      var workbook = XLSX.read(importData, {type: 'binary'});
-
-      var importJson = workbook_to_json(workbook);
-      var importHeaders = {};
-      importJson[0].data.forEach(function(row) {
-        Object.keys(row).forEach(function(key) {
-          if (importHeaders[key] == null) {
-            importHeaders[key] = {};
-          }
+      var message = [];
+      try{
+        var workbook = XLSX.read(importData, {type: 'binary'});
+        var importJson = workbook_to_json(workbook);
+        var importHeaders = {};
+        importJson[0].data.forEach(function(row) {
+          Object.keys(row).forEach(function(key) {
+            if (importHeaders[key] == null) {
+              importHeaders[key] = {};
+            }
+          });
         });
-      });
-
+      } catch(er){
+        message.push('Ошибка при чтении файла. ');
+        message.push('Сообщение:' + er.message);
+        message.push('Выберите другой файл или нажмите на кнопку \'Отмена\'.');
+      };
+      this.setState({message:message});
       this.props.rememberData(importJson);
       this.props.rememberColumns(importHeaders);
     }.bind(this);
-
     reader.readAsBinaryString(file);
-
   },
 
   onImportFile: function(e) {
@@ -57,6 +64,13 @@ var ImportStep1 = React.createClass({
   },
 
   render: function() {
+    var message=this.state.message;
+    var message = $.map(message,function(m,i){
+      return(
+        <p key={i+'-message'}>{m}</p>
+      )
+    });
+    
     return (
       <div className="import-from-excel-1">
         <Modal isOpen={this.props.isOpen} onRequestClose={this.closeModal} style={this.props.style} contentLabel={this.props.contentLabel}>
@@ -69,6 +83,7 @@ var ImportStep1 = React.createClass({
 
           <div></div>
           <div>В файле должны содержаться данные для текущей таблицы текущего проекта</div>
+          <div className={'modal-warning'}>{message}</div>
         </Modal>
       </div>
     );
