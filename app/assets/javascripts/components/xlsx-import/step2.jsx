@@ -4,13 +4,11 @@ var SimpleSelect = require('../../modules/simple-select.jsx');
 var XlsxImport = require('../xlsx-import.jsx');
 var _ = require('underscore');
 
-// preview data
 var ImportStep2 = React.createClass({
   displayName: 'ImportStep2',
 
   getInitialState: function() {
     return {
-      importHeaders: this.props.columns,
       message:[],
       options:[]
     };
@@ -21,7 +19,7 @@ var ImportStep2 = React.createClass({
   },
 
   nextModal: function() {
-    var importHeaders = this.state.importHeaders;
+    var importHeaders = this.props.columns;
     var options = [];
     var message = [];
     Object.keys(importHeaders).forEach(function(key) {
@@ -44,19 +42,17 @@ var ImportStep2 = React.createClass({
           n[options[i].label].col = n[options[i].label].col + ', \'' + options[i].key+'\''; 
         }
       }
+      Object.keys(n).forEach(function(key) {
+        if (n[key].cnt>1) {
+          message.push('Поле импорта \''+key+'\' выбрано несколько раз. Проверьте столбцы: '+n[key].col+'.');
+        }
+      });
     };
-
-    Object.keys(n).forEach(function(key) {
-      if (n[key].cnt>1) {
-        message.push('Поле импорта \''+key+'\' выбрано несколько раз. Проверьте столбцы: '+n[key].col+'.');
-      }
-    });
 
     if (message > '') {
       this.setState({message:message});
     } else {
       this.setState({
-        importHeaders:{},
         message:[],
         options:[]
       });
@@ -90,20 +86,15 @@ var ImportStep2 = React.createClass({
       }
     });
 
-    //var importHeaders = (isEmptyObj(this.state.importHeaders))? this.props.columns : this.state.importHeaders; 
     var importHeaders = this.props.columns; 
     var context=this;
     Object.keys(importHeaders).forEach(function(key) {
-      if (isEmptyObj(context.state.importHeaders)) {
-        var selectVal = '';
-        options.forEach(function(opt) {
-          if (opt['label'] == key)
-            selectVal = opt['value'];
-          }
-        );
-      } else {
-        var selectVal = context.state.importHeaders[key]['to'];
-      };      
+      var selectVal = '';
+      options.forEach(function(opt) {
+        if (opt['label'] == key)
+          selectVal = opt['value'];
+        }
+      );
 
       importHeaders[key] = {
         to: selectVal
@@ -113,29 +104,27 @@ var ImportStep2 = React.createClass({
     });
 
     this.setState({
-      importHeaders: importHeaders,
       options:options,
       message: []
     });
+    this.props.rememberColumns(importHeaders);
   },  
 
   render: function() {
-    var importHeaders = this.state.importHeaders; 
+    var importHeaders = this.props.columns; 
     var options = this.state.options;
     var context=this;
     var message=this.state.message;
     Object.keys(importHeaders).forEach(function(key) {
-      var selectVal = context.state.importHeaders[key]['to'];
+      var selectVal = context.props.columns[key]['to'];
       var toColumnSelector = React.createElement(SimpleSelect, {
         onSelectChange: function(value) {
-          //var importHeaders = (isEmptyObj(context.state.importHeaders))? context.props.columns : context.state.importHeaders; 
-          var importHeaders =  context.state.importHeaders; 
+          var importHeaders =  context.props.columns; 
           var findColumnData = context.findColumnData;
           var columnKey = this.columnKey;
           importHeaders[columnKey]['to'] = value;
           importHeaders[columnKey]['toColumn'] = context.findColumnData(value);
-          context.setState({importHeaders: importHeaders})
-          //context.props.rememberColumns(importHeaders);
+          context.props.rememberColumns(importHeaders);
         },
         value: selectVal,
         options: options,
