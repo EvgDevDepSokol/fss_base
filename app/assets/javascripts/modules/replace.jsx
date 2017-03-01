@@ -306,10 +306,8 @@ var ReplaceConfirmModal = React.createClass({
   render: function() {
     return (
       <div>
-        <Modal isOpen={this.props.isReplaceModalOpen} onRequestClose={this.closeReplaceModal}>
+        <Modal isOpen={this.props.isReplaceModalOpen} onRequestClose={this.closeReplaceModal} contentLabel={this.props.contentLabel}>
           shouldCloseOnOverlayClick={false}
-          contentLabel={this.props.contentLabel}
-
           <h2 ref="subtitle">Окно с предварительными результатами замены.</h2>
           <button onClick={this.closeReplaceModal}>close</button>
           <div>Пока не работает.</div>
