@@ -6,7 +6,21 @@ var ImportStep3 = React.createClass({
   displayName: 'ImportStep3',
 
   getInitialState: function() {
-    return {modalIsOpen: false};
+    return {
+      modalIsOpen: false,
+      options:[]
+    };
+  },
+
+  afterOpenModal() {
+    var options = [];
+    var importHeaders = this.props.columns; 
+    Object.keys(importHeaders).forEach(function(key) {
+      if (importHeaders[key]['to']) {
+        options.push({value: importHeaders[key]['to'], label: importHeaders[key]['toColumn']['label']})
+      }
+    });
+    this.setState({options:options});
   },
 
   closeModal: function() {
@@ -25,12 +39,11 @@ var ImportStep3 = React.createClass({
     var importColumns = this.props.columns;
     return (
       <div className="import-from-excel-3">
-        <Modal isOpen={this.props.isOpen} onRequestClose={this.closeModal} style={this.props.style} contentLabel={this.props.contentLabel}>
+        <Modal isOpen={this.props.isOpen} onRequestClose={this.closeModal} style={this.props.style} contentLabel={this.props.contentLabel} onAfterOpen={this.afterOpenModal}>
           <h2>Шаг 3. Выберите ключевое поле</h2>
 
           <div>Выберите ключевое поле</div>
 
-          <input type="file" name="xlfile" id="xlf" ref="fileImport" onChange={this.onImportFile}/>
           <button onClick={this.closeModal}>Отмена</button>
           <button onClick={this.prevModal}>Назад</button>
           <button onClick={this.nextModal}>Далее</button>

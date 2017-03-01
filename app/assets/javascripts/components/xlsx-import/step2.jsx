@@ -10,8 +10,8 @@ var ImportStep2 = React.createClass({
 
   getInitialState: function() {
     return {
-      modalIsOpen: false,
       importHeaders: this.props.columns,
+      message:[],
       options:[]
     };
   },
@@ -22,9 +22,47 @@ var ImportStep2 = React.createClass({
 
   nextModal: function() {
     var importHeaders = this.state.importHeaders;
+    var options = [];
+    var message = [];
+    Object.keys(importHeaders).forEach(function(key) {
+      if (importHeaders[key]['to']) {
+        options.push({label: importHeaders[key]['toColumn']['label'], key: key})
+      }
+    });
 
-    this.props.rememberColumns(importHeaders);
-    this.props.onNextModal();
+    if (options.length <= 0) {
+      message.push('Выберите столбцы для импорта. Сейчас выбрано 0 столбцов.');
+    } else {  
+      var n = {},r=[];
+      for(var i = 0; i < options.length; i++) 
+      {
+        if (!n[options[i].label]) 
+        {
+          n[options[i].label] = {cnt:1, col:'\''+options[i].key+'\''};
+        } else {
+          n[options[i].label].cnt++; 
+          n[options[i].label].col = n[options[i].label].col + ', \'' + options[i].key+'\''; 
+        }
+      }
+    };
+
+    Object.keys(n).forEach(function(key) {
+      if (n[key].cnt>1) {
+        message.push('Поле импорта \''+key+'\' выбрано несколько раз. Проверьте столбцы: '+n[key].col+'.');
+      }
+    });
+
+    if (message > '') {
+      this.setState({message:message});
+    } else {
+      this.setState({
+        importHeaders:{},
+        message:[],
+        options:[]
+      });
+      this.props.rememberColumns(importHeaders);
+      this.props.onNextModal();
+    };
   },
 
   findColumnData: function(colProperty) {
@@ -52,7 +90,8 @@ var ImportStep2 = React.createClass({
       }
     });
 
-    var importHeaders = (isEmptyObj(this.state.importHeaders))? this.props.columns : this.state.importHeaders; 
+    //var importHeaders = (isEmptyObj(this.state.importHeaders))? this.props.columns : this.state.importHeaders; 
+    var importHeaders = this.props.columns; 
     var context=this;
     Object.keys(importHeaders).forEach(function(key) {
       if (isEmptyObj(context.state.importHeaders)) {
@@ -75,7 +114,8 @@ var ImportStep2 = React.createClass({
 
     this.setState({
       importHeaders: importHeaders,
-      options:options
+      options:options,
+      message: []
     });
   },  
 
@@ -83,6 +123,7 @@ var ImportStep2 = React.createClass({
     var importHeaders = this.state.importHeaders; 
     var options = this.state.options;
     var context=this;
+    var message=this.state.message;
     Object.keys(importHeaders).forEach(function(key) {
       var selectVal = context.state.importHeaders[key]['to'];
       var toColumnSelector = React.createElement(SimpleSelect, {
@@ -145,6 +186,11 @@ var ImportStep2 = React.createClass({
           );
         });
       }
+      var message = $.map(message,function(m,i){
+        return(
+          <p key={i+'-message'}>{m}</p>
+        )
+      });
       return (
         <div className="import-from-excel-2">
           <Modal isOpen={this.props.isOpen} onRequestClose={this.closeModal} style={this.props.style} contentLabel={this.props.contentLabel} onAfterOpen={this.afterOpenModal}>
@@ -162,14 +208,13 @@ var ImportStep2 = React.createClass({
                 {rows}
               </tbody>
             </table>
-            <p>Всего {this.props.importData.length}
-              строк данных</p>
-            <div>Укажите соответствия импорта колонок</div>
+            <p>Всего {this.props.importData.length} строк данных.</p>
+            <div>Укажите соответствия импорта колонок.</div>
 
             <button onClick={this.closeModal}>Отмена</button>
             <button onClick={this.nextModal}>Далее</button>
-            <div></div>
-            <div>В файле должны содержаться данные для текущей таблицы текущего проекта</div>
+            <p>В файле должны содержаться данные для текущей таблицы текущего проекта.</p>
+            <div className={'modal-warning'}>{message}</div>
           </Modal>
         </div>
       );
