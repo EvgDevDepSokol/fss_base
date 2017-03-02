@@ -12,7 +12,6 @@ module.exports = React.createClass({
   displayName: 'SystemSelector',
 
   getInitialState() {
-    debugger
     return {
       value: this.props.value,
       disabled: this.props.disabled,

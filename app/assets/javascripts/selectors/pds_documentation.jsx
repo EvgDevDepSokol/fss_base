@@ -56,7 +56,6 @@ module.exports = React.createClass({
   }
 });
 module.exports.options = function(){
-  debugger
   var options = getSelectorOptions(
     path,
     {pds_project_id:project.ProjectID},

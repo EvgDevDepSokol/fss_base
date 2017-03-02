@@ -23,7 +23,6 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    debugger
     var getOptions = function(input, callback) {
       setTimeout(function() {
 
@@ -36,7 +35,6 @@ module.exports = React.createClass({
             options = data;
           }.bind(this),
           error: function(xhr, status, err) {
-            //debugger;
             console.error(this.props.url, status, err.toString());
             options = [];
           }.bind(this),
