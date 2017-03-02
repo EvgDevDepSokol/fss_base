@@ -31,7 +31,7 @@ var ImportStep2 = React.createClass({
     if (options.length <= 0) {
       message.push('Выберите столбцы для импорта. Сейчас выбрано 0 столбцов.');
     } else {  
-      var n = {},r=[];
+      var n = {};
       for(var i = 0; i < options.length; i++) 
       {
         if (!n[options[i].label]) 

@@ -32,7 +32,8 @@ var ImportXlsxModal = React.createClass({
           data: {}
         }
       ],
-      columns: {}
+      columns: {},
+      keyColumn:''
     };
   },
 
@@ -88,7 +89,8 @@ var ImportXlsxModal = React.createClass({
           data: {}
         }
       ],
-      columns: {}
+      columns: {},
+      keyColumn:''
     });
   },
 
@@ -98,6 +100,10 @@ var ImportXlsxModal = React.createClass({
 
   rememberColumns: function(columns) {
     this.setState({columns: columns});
+  },
+
+  rememberKeyColumn: function(keyColumn) {
+    this.setState({keyColumn: keyColumn});
   },
 
   onSelectChange: function(columnKey) {
@@ -129,7 +135,8 @@ var ImportXlsxModal = React.createClass({
       ],
       parsedData: parsedData
     });
-    this.sendDataToServer(parsedData);
+    debugger
+    //this.sendDataToServer(parsedData);
   },
 
   step3Back: function() {
@@ -195,6 +202,9 @@ var ImportXlsxModal = React.createClass({
           onPrevModal={this.step3Back}
           onCloseModal={this.closeAllModals}
           columns={this.state.columns}
+          keyColumn={this.state.keyColumn}
+          importData={this.state.importData[0].data}
+          rememberKeyColumn={this.rememberKeyColumn}
           style={customStyles}
           contentLabel='Импорт. Выбор ключевого поля.'/>
         <ImportStep4
