@@ -80,6 +80,7 @@ var ImportStep2 = React.createClass({
       if (col.nested) {
         if (col.attribute)
           options.push({value: col.property, label: label});
+          //options.push({value: col.attribute, label: label});
         }
       else {
         options.push({value: col.property, label: label});

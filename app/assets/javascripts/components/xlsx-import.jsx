@@ -39,6 +39,7 @@ var ImportXlsxModal = React.createClass({
 
   mapImportData: function() {
     var importColumns = this.state.columns;
+    debugger
     // наполняем данными importColumns
     Object.keys(importColumns).forEach(function(columnKey) {
       var toColumn = importColumns[columnKey].toColumn;
@@ -61,7 +62,7 @@ var ImportXlsxModal = React.createClass({
               return option.label == val;
             });
             if (newVal) {
-              convertedRow[to] = newVal.value;
+              convertedRow[importColumns[columnKey].toColumn.attribute] = newVal.value;
             } else {
               // report error
             };
@@ -135,8 +136,7 @@ var ImportXlsxModal = React.createClass({
       ],
       parsedData: parsedData
     });
-    debugger
-    //this.sendDataToServer(parsedData);
+    this.sendDataToServer(parsedData);
   },
 
   step3Back: function() {
@@ -155,7 +155,9 @@ var ImportXlsxModal = React.createClass({
       type: 'PUT',
       data: {
         data: data,
-        model: model_name
+        model: model_name,
+        pds_project_id: project.id,
+        keyColumn: this.state.keyColumn
       },
       success: function(response) {
         console.error(response);

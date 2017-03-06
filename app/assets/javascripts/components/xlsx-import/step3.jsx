@@ -16,11 +16,14 @@ var ImportStep3 = React.createClass({
   },
 
   afterOpenModal() {
+    debugger
     var options = [];
     var importHeaders = this.props.columns; 
     Object.keys(importHeaders).forEach(function(key) {
       if (importHeaders[key]['to']) {
-        options.push({value: importHeaders[key]['to'], label: importHeaders[key]['toColumn']['label']})
+        options.push({
+          value: importHeaders[key]['toColumn']['attribute']?importHeaders[key]['toColumn']['attribute']:importHeaders[key]['to'],
+          label: importHeaders[key]['toColumn']['label']?importHeaders[key]['toColumn']['label']:importHeaders[key]['to']})
       }
     });
     this.setState({
