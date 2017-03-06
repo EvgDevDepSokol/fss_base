@@ -16,9 +16,9 @@ var ImportStep3 = React.createClass({
   },
 
   afterOpenModal() {
-    debugger
     var options = [];
-    var importHeaders = this.props.columns; 
+    var importHeaders = this.props.columns;
+   debugger 
     Object.keys(importHeaders).forEach(function(key) {
       if (importHeaders[key]['to']) {
         options.push({
@@ -43,7 +43,6 @@ var ImportStep3 = React.createClass({
     var importData = this.props.importData;
     var keyImport = '';
     var message = [];
-    debugger
     if(keyColumn){
       Object.keys(importHeaders).forEach(function(key) {
         if (importHeaders[key]['to']) {

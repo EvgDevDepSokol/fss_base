@@ -74,16 +74,16 @@ var ImportStep2 = React.createClass({
     var options = [];
     columns.forEach(function(col) {
       var label = col.label;
-      if (col.property == 'id') {
+      var property = col.property;
+      if (property == 'id') {
         label = 'id';
       }
       if (col.nested) {
         if (col.attribute)
-          options.push({value: col.property, label: label});
-          //options.push({value: col.attribute, label: label});
+          options.push({value: property, label: label});
         }
       else {
-        options.push({value: col.property, label: label});
+        options.push({value: property, label: label});
       }
     });
 

@@ -56,7 +56,10 @@ var ImportXlsxModal = React.createClass({
         var toColumn = importColumns[columnKey].toColumn;
 
         if (to != null) {
-          if (toColumn == null) {} else if (toColumn.nested == true) {
+          if (toColumn == null) {
+          //} else if (to == 'id') {
+          //  convertedRow[importColumns[columnKey].toColumn.header] = row[columnKey];
+          } else if (toColumn.nested == true) {
             var val = row[columnKey];
             var newVal = _.find(importColumns[columnKey].options, function(option) {
               return option.label == val;
