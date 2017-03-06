@@ -69,7 +69,7 @@ gem 'web-console',    group: :development
 # gem 'rails-i18n', '~> 4.0.0' # For 4.0.x
 # gem 'rails-i18n', :github => 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
 
-gem 'puma'
+# gem 'puma'
 
 group :development do
   gem 'capistrano'

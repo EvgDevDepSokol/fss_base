@@ -1,1 +1,1 @@
-sudo -H -u serega bash -c 'cd ~/denstepa-djet && rails s Puma --port=3000 --binding=0.0.0.0'
+sudo -H -u serega bash -c 'cd ~/denstepa-djet && rails s --port=3000 --binding=0.0.0.0'
