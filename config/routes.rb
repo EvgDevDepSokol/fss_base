@@ -75,9 +75,11 @@ Rails.application.routes.draw do
     resources table.to_s.pluralize, only: [:edit, :update], controller: :general, model: table
   end
 
-  controller :import do
-    put :update_all
-  end
+  #controller :import do
+  #  put :update_all
+  #end
+  
+  put 'update_all', to: 'import#update_all' 
 
   resources :users
 

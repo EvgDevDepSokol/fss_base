@@ -175,7 +175,7 @@ var ImportXlsxModal = React.createClass({
   render: function() {
     return (
       <div className="import-from-excel">
-        <a href="#" onClick={this.openStep1}>
+        <a onClick={this.openStep1}>
           <img alt="Import export" src="/assets/import_export.png"/>
           Экспорт/ Импорт
         </a>
