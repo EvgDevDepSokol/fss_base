@@ -22,10 +22,6 @@ var ImportXlsxModal = React.createClass({
 
   getInitialState: function() {
     return {
-      modal_1_IsOpen: false,
-      modal_2_IsOpen: false,
-      modal_3_IsOpen: false,
-      modal_4_IsOpen: false,
       step: 0,
       importData: [
         {
@@ -163,11 +159,12 @@ var ImportXlsxModal = React.createClass({
         keyColumn: this.state.keyColumn
       },
       success: function(response) {
-        console.error(response);
+
+        //console.error(response);
 
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
+        //console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
   },

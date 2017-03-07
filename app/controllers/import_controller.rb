@@ -2,42 +2,31 @@ class ImportController < ApplicationController
   include GeneralControllerHelper
 
   before_action :project, :key_column
-  helper_method :project, :key_column, :key_column_val
+  helper_method :project, :key_column
 
   def update_all
-    #@key_name = model.primary_key
-    params[:data].each do |i,row|
-      byebug
-      #@key_val = row[1][@key_column]
-      #@ind = row[0]
-      #logger.debug "@key_name                 : #{@key_name}"
-      #logger.debug "@key_val                  : #{@key_val}"
-      #logger.debug "@ind                      : #{@ind}"
-      #logger.debug "row[1]                    : #{row[1]}"
-      #logger.debug "current_object            : #{current_object}"
-      #logger.debug "current_object.custom_hash: #{current_object.custom_hash}"
-      if current_object(row[@key_column]).update(permit_params(row))
-        logger.debug 'ok'
-      #        render json: {status: :ok } # , data: current_object.custom_hash}
+    message = []
+    params[:data].each do |_i, row|
+      if !!current_object(row[@key_column])
+        permit_params(row)
+        if @current_object.update(@permitted)
+          message.push(row[@key_column] + ' updated successfully!')
+        else
+          message.push(row[@key_column] + ' has some wrong parameters:' + current_object.errors)
+        end
       else
-        logger.warning 'Error'
-        #        render json: {errors: current_object.errors, data: current_object.reload.custom_hash},
-        #          status: :unprocessable_entity
+        message.push(row[@key_column] + ' does not exist!')
       end
     end
-    render json: { status: :ok }
-    rescue
-      logger.error 'Import_all Rescue'
-      #    render json: {(errors: current_object.errors , data: current_object.reload.custom_hash})if current_object,
-      render json: { status: :unprocessable_entity }
-    end
+    render json: { status: :ok, message: message}
+  rescue
+    render json: { status: :unprocessable_entity, message: message}
+  end
 
   private
 
   def current_object(val)
-    #@current_object = model.where({@key_column=>val,Project:@project})
-    byebug
-    @current_object = model.find_by({@key_column=>val,Project:@project})
+    @current_object = model.find_by(@key_column => val, Project: @project)
   end
 
   def key_column
@@ -49,9 +38,7 @@ class ImportController < ApplicationController
   end
 
   def permit_params(row)
-    byebug
-    params[model.to_s.underscore] = row #params[:data][@ind]
-    params.require(model.to_s.underscore).permit!
+    @permitted = row.permit!
   end
 
   def table_data

@@ -75,6 +75,7 @@ var ImportStep2 = React.createClass({
     columns.forEach(function(col) {
       var label = col.label;
       var property = col.property;
+      debugger
       if (property == 'id') {
         label = 'id';
       }
