@@ -1,5 +1,6 @@
 class PdsMotorType < ActiveRecord::Base
   self.table_name = 'pds_motor_type'
+  alias_attribute :id, self.primary_key
 
   has_many :pds_motors, dependent: :restrict_with_error, foreign_key: 'MotorType'
 

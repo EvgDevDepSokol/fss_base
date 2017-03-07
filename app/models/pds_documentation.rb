@@ -1,5 +1,6 @@
 class PdsDocumentation < ActiveRecord::Base
   self.table_name = 'pds_documentation'
+  alias_attribute :id, self.primary_key
 
   has_many :pds_blocks, dependent: :restrict_with_error, foreign_key: 'doc'
   has_many :pds_doc_on_sys, dependent: :restrict_with_error, foreign_key: 'Doc'

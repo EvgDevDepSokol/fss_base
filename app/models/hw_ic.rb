@@ -1,5 +1,6 @@
 class HwIc < ActiveRecord::Base
   self.table_name = 'hw_ic'
+  alias_attribute :id, self.primary_key
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :hw_ped, foreign_key: :pedID, class_name: 'HwPed'
@@ -7,7 +8,6 @@ class HwIc < ActiveRecord::Base
   belongs_to :pds_panel, foreign_key: :panel_id
   # delegate :unit, to: :pds_project_unit
 
-  alias_attribute :id, :icID
   alias_attribute :system_id, :sys
   alias_attribute :hw_ped_id, :pedID
   alias_attribute :pds_project_unit_id, :Unit

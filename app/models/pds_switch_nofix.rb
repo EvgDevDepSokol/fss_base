@@ -1,5 +1,6 @@
 class PdsSwitchNofix < ActiveRecord::Base
   self.table_name = 'pds_switch_nofix'
+  alias_attribute :id, self.primary_key
   schema_validations except: :hw_ic
 
   belongs_to :hw_ic, foreign_key: 'IC'

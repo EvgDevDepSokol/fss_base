@@ -1,5 +1,6 @@
 class PdsProjectUnit < ActiveRecord::Base
   self.table_name = 'pds_project_unit'
+  alias_attribute :id, self.primary_key
   belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :unit, foreign_key: 'Unit', class_name: 'PdsUnit'
 

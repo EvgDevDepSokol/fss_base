@@ -1,4 +1,5 @@
 class PdsButton < ActiveRecord::Base
+  alias_attribute :id, self.primary_key
   schema_validations except: :hw_ic
   belongs_to :hw_ic, foreign_key: 'IC'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'

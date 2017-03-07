@@ -1,6 +1,7 @@
 class PdsMnemo < ActiveRecord::Base
   self.table_name = 'pds_mnemo'
   self.inheritance_column = nil
+  alias_attribute :id, self.primary_key
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project, foreign_key: 'Project'

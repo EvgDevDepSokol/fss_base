@@ -1,5 +1,6 @@
 class PdsMalfunctionDim < ActiveRecord::Base
   self.table_name = 'pds_malfunction_dim'
+  alias_attribute :id, self.primary_key
   belongs_to :pds_malfunction, foreign_key: :Malfunction, class_name: 'PdsMalfunction'
   belongs_to :sd_sys_numb, foreign_key: 'sd_N'
   alias_attribute :pds_malfunction_id, :Malfunction

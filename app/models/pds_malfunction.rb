@@ -2,6 +2,7 @@ class PdsMalfunction < ActiveRecord::Base
   # self.inheritance_column = nil
   self.inheritance_column = :_type_disabled
   self.table_name = 'pds_malfunction'
+  alias_attribute :id, self.primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project_unit, foreign_key: 'regidity_unitid'
   belongs_to :sd_sys_numb, foreign_key: 'sd_N'

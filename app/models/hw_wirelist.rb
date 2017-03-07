@@ -1,5 +1,6 @@
 class HwWirelist < ActiveRecord::Base
   self.table_name = 'hw_wirelist'
+  alias_attribute :id, self.primary_key
   belongs_to :pds_panel, foreign_key: :panel
   belongs_to :hw_ped, foreign_key: :pedID, class_name: 'HwPed'
   belongs_to :pds_project_unit, foreign_key: :Unit, class_name: 'PdsProjectUnit'

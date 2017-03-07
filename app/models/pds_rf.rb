@@ -2,6 +2,7 @@ class PdsRf < ActiveRecord::Base
   # self.inheritance_column = nil
   self.inheritance_column = :_type_disabled
   self.table_name = 'pds_rf'
+  alias_attribute :id, self.primary_key
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project_unit, foreign_key: 'Unit', class_name: 'PdsProjectUnit'

@@ -1,6 +1,7 @@
 class TableRoleRight < ActiveRecord::Base
   self.table_name = 'table_role_rights'
   self.primary_key = 'tableID'
+  alias_attribute :id, self.primary_key
 
   belongs_to :role, foreign_key: 'roleID'
   belongs_to :tablelist, foreign_key: 'tableID'

@@ -1,5 +1,6 @@
 class PdsPpcd < ActiveRecord::Base
   self.table_name = 'pds_ppcd'
+  alias_attribute :id, self.primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_detector, foreign_key: :Detector
   alias_attribute :system_id, :sys

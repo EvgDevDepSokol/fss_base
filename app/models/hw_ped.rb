@@ -1,6 +1,7 @@
 class HwPed < ActiveRecord::Base
   self.inheritance_column = nil
   self.table_name = 'hw_peds'
+  alias_attribute :id, self.primary_key
 
   belongs_to :hw_devtype, foreign_key: :type
 

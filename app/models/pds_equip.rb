@@ -1,5 +1,6 @@
 class PdsEquip < ActiveRecord::Base
   self.primary_key = 'TEquipID'
+  alias_attribute :id, self.primary_key
 
   validate :test
 

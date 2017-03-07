@@ -1,5 +1,6 @@
 class Tblbinary < ActiveRecord::Base
   self.table_name = 'tblbinaries'
+  alias_attribute :id, self.primary_key
 
   def serializable_hash(_options = {})
     super(except: :binObj)

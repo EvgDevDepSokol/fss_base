@@ -1,5 +1,6 @@
 class PdsMeter < ActiveRecord::Base
   schema_validations except: :hw_ic
+  alias_attribute :id, self.primary_key
   belongs_to :hw_ic, foreign_key: 'IC'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project, foreign_key: 'Project'

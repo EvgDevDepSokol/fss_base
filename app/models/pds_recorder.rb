@@ -1,5 +1,6 @@
 class PdsRecorder < ActiveRecord::Base
   self.table_name = 'pds_recorders'
+  alias_attribute :id, self.primary_key
   schema_validations except: :hw_ic
 
   belongs_to :hw_ic, foreign_key: 'IC'

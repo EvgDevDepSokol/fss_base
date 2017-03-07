@@ -1,5 +1,6 @@
 class PdsAnnounciator < ActiveRecord::Base
   self.table_name = 'pds_announciator'
+  alias_attribute :id, self.primary_key
   self.inheritance_column = nil
   schema_validations except: :hw_ic
 

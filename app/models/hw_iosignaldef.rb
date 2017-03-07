@@ -1,5 +1,6 @@
 class HwIosignaldef < ActiveRecord::Base
   self.table_name = 'hw_iosignaldef'
+  alias_attribute :id, self.primary_key
 
   has_many :hw_iosignal, dependent: :restrict_with_error, foreign_key: 'signID'
 

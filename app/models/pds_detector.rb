@@ -1,4 +1,5 @@
 class PdsDetector < ActiveRecord::Base
+  alias_attribute :id, self.primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :pds_section_assembler, foreign_key: 'ctrl_power'

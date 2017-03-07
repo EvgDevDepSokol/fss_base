@@ -1,5 +1,6 @@
 class PdsManEquip < ActiveRecord::Base
   self.table_name = 'pds_man_equip'
+  alias_attribute :id, self.primary_key
 
   alias_attribute :type, :Type
   alias_attribute :id, :EquipN

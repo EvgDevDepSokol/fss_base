@@ -1,5 +1,6 @@
 class HwIosignal < ActiveRecord::Base
   self.table_name = 'hw_iosignal'
+  alias_attribute :id, self.primary_key
 
   belongs_to :hw_ped, foreign_key: :pedID, class_name: 'HwPed'
   belongs_to :hw_iosignaldef, foreign_key: :signID, class_name: 'HwIosignaldef'

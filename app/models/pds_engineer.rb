@@ -5,6 +5,7 @@ class PdsEngineer < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :rememberable, :trackable
 
+  alias_attribute :id, self.primary_key
   has_many :pds_documents, dependent: :restrict_with_error, foreign_key: 'Author'
   has_many :pds_documents, dependent: :restrict_with_error, foreign_key: 'CheckOutEn'
   has_many :pds_documents, dependent: :restrict_with_error, foreign_key: 'CheckOutRu'

@@ -1,5 +1,6 @@
 class HwDevtype < ActiveRecord::Base
   self.table_name = 'hw_devtype'
+  alias_attribute :id, self.primary_key
 
   belongs_to :tablelist, foreign_key: :typetable, class_name: 'Tablelist'
   alias_attribute :tablelist_id, :typetable

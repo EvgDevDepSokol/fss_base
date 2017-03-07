@@ -1,4 +1,5 @@
 class PdsDocOnSy < ActiveRecord::Base
+  alias_attribute :id, self.primary_key
   self.table_name = 'pds_doc_on_sys'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_documentation, foreign_key: :Doc

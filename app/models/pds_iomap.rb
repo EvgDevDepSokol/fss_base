@@ -1,5 +1,6 @@
 class PdsIomap < ActiveRecord::Base
   self.table_name = 'pds_iomap'
+  alias_attribute :id, self.primary_key
 
   def custom_hash
     serializable_hash

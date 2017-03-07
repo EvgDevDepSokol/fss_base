@@ -1,5 +1,6 @@
 class PdsLamp < ActiveRecord::Base
   self.primary_key = 'LampID'
+  alias_attribute :id, self.primary_key
   schema_validations except: :hw_ic
 
   belongs_to :hw_ic, foreign_key: 'IC'
