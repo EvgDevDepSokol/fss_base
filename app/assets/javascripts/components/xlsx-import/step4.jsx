@@ -8,20 +8,33 @@ var ImportStep4 = React.createClass({
   getInitialState: function() {
     return{
       filter_add:0,
-      filter_err:0
+      filter_err:0,
+      to_exit:false
     };
   },
 
-  openModal: function() {
-    this.setState({modalIsOpen: true});
+  afterOpenModal() {
+    this.setState({
+      filter_add:0,
+      filter_err:0,
+      to_exit:false
+    });
   },
 
   closeModal: function() {
+    this.setState({
+      filter_add:0,
+      filter_err:0,
+      to_exit:false
+    });
     this.props.onCloseModal();
   },
 
   nextModal: function() {
-    this.props.onNextModal();
+    this.props.onNextModal(this.state.to_exit);
+    this.setState({
+      to_exit:true
+    })
   },
 
   onFilterErrChange: function(e) {
@@ -57,6 +70,7 @@ var ImportStep4 = React.createClass({
 
       importHeaders['Статус'] = '';
       importHeaders['Ошибки'] = '';
+      importHeaders['Результат'] = '';
 
       if (importHeaders != null) {
         var headersFrom = Object.keys(importHeaders).map(function(key, i) {
@@ -78,6 +92,7 @@ var ImportStep4 = React.createClass({
         rows = importData.map(function(row, i) {
           row['Статус']=msg[i].add;
           row['Ошибки']=msg[i].err;
+          row['Результат']=msg[i].result;
           return row;
         });
 
@@ -128,12 +143,14 @@ var ImportStep4 = React.createClass({
       } else {
         var filters = <div>Ваш файл обрабатывается</div>;
       }
+      var next_button=this.state.to_exit?null:<button onClick={this.nextModal}>Подтвердить</button>
+      var exit_button=this.state.to_exit?<button onClick={this.nextModal}>Выход</button>:<button onClick={this.nextModal}>Отмена</button>
     };
 
 
     return (
       <div className="import-from-excel-3">
-        <Modal isOpen={this.props.isOpen} onRequestClose={this.closeModal} style={this.props.style} contentLabel={this.props.contentLabel}>
+        <Modal isOpen={this.props.isOpen} onRequestClose={this.closeModal} style={this.props.style} contentLabel={this.props.contentLabel} onAfterOpen={this.afterOpenModal}>
           <h2>Предварительные результаты</h2>
           {filters}
           <div className="modal-table-container" key={"modal-table"}>
@@ -149,9 +166,9 @@ var ImportStep4 = React.createClass({
             </table>
           </div>
           <p>Всего {!!rows?rows.length:0} строк данных.</p>
- 
-          <button onClick={this.closeModal}>Отмена</button>
-          <button onClick={this.nextModal}>Завершить</button>
+
+          {exit_button} 
+          {next_button} 
         </Modal>
       </div>
     );

@@ -137,7 +137,7 @@ var ImportXlsxModal = React.createClass({
      // ],
       parsedData: parsedData
     });
-    this.sendDataToServer(parsedData);
+    this.sendDataToServer(parsedData,'/update_all_check');
   },
 
   step3Back: function() {
@@ -145,13 +145,28 @@ var ImportXlsxModal = React.createClass({
   },
 
 
-  step4Finished: function() {
-    this.setState({step: 0});
+  step4Finished: function(to_exit) {
+    if(to_exit) {
+      this.setState({
+        step: 0,
+         importData: [
+          {
+            data: {}
+          }
+        ],
+        columns: {},
+        keyColumn:'',
+        msg:[]
+      });
+    } else {
+      var parsedData = this.state.parsedData;
+      this.sendDataToServer(parsedData,'/update_all_finish');
+    }
   },
 
-  sendDataToServer: function(data) {
+  sendDataToServer: function(data, path) {
     $.ajax({
-      url: '/update_all',
+      url: path,
       dataType: 'json',
       type: 'PUT',
       data: {
@@ -161,17 +176,11 @@ var ImportXlsxModal = React.createClass({
         keyColumn: this.state.keyColumn
       },
       success: function(response) {
-        debugger
         this.setState({
           msg: response.message,
         });
-
-        //console.error(response);
-
       }.bind(this),
       error: function(xhr, status, err) {
-        debugger
-        //console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
   },

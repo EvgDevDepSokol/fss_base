@@ -79,7 +79,8 @@ Rails.application.routes.draw do
   #  put :update_all
   #end
   
-  put 'update_all', to: 'import#update_all' 
+  put 'update_all_check',  to: 'import#update_all_check' 
+  put 'update_all_finish', to: 'import#update_all_finish' 
 
   resources :users
 
