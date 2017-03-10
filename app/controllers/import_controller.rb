@@ -6,17 +6,21 @@ class ImportController < ApplicationController
 
   def update_all
     message = []
-    params[:data].each do |_i, row|
-      if !!current_object(row[@key_column])
-        permit_params(row)
-        if @current_object.update(@permitted)
-          message.push(row[@key_column] + ' updated successfully!')
-        else
-          message.push(row[@key_column] + ' has some wrong parameters:' + current_object.errors)
-        end
-      else
-        message.push(row[@key_column] + ' does not exist!')
+    params[:data].each do |i, row|
+      msg={add: false, err: ''}
+      @permitted = row.permit!
+      unless !!current_object(row[@key_column])
+        msg[:add]=true
+        @current_object=model.new
       end
+      @current_object.attributes=@permitted
+      if (!!@project) then
+        @current_object.Project=@project.id
+      end
+      unless (@current_object.valid?) then
+        msg[:err]=@current_object.errors.messages
+      end
+      message.push(msg)
     end
     render json: { status: :ok, message: message}
   rescue
@@ -26,7 +30,11 @@ class ImportController < ApplicationController
   private
 
   def current_object(val)
-    @current_object = model.find_by(@key_column => val, Project: @project)
+    if !!@project
+      @current_object = model.find_by(@key_column => val, Project: @project)
+    else
+      @current_object = model.find_by(@key_column => val)
+    end
   end
 
   def key_column
@@ -34,11 +42,7 @@ class ImportController < ApplicationController
   end
 
   def project
-    @project ||= PdsProject.find(params[:pds_project_id]) if params[:pds_project_id]
-  end
-
-  def permit_params(row)
-    @permitted = row.permit!
+    @project = PdsProject.find(params[:pds_project_id]) if (params[:pds_project_id]&&(model.has_attribute? :Project))
   end
 
   def table_data

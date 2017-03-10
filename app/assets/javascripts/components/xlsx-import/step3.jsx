@@ -18,7 +18,6 @@ var ImportStep3 = React.createClass({
   afterOpenModal() {
     var options = [];
     var importHeaders = this.props.columns;
-   debugger 
     Object.keys(importHeaders).forEach(function(key) {
       if (importHeaders[key]['to']) {
         options.push({

@@ -75,7 +75,6 @@ var ImportStep2 = React.createClass({
     columns.forEach(function(col) {
       var label = col.label;
       var property = col.property;
-      debugger
       if (property == 'id') {
         label = 'id';
       }
@@ -117,88 +116,93 @@ var ImportStep2 = React.createClass({
     var options = this.state.options;
     var context=this;
     var message=this.state.message;
-    Object.keys(importHeaders).forEach(function(key) {
-      var selectVal = context.props.columns[key]['to'];
-      var toColumnSelector = React.createElement(SimpleSelect, {
-        onSelectChange: function(value) {
-          var importHeaders =  context.props.columns; 
-          var findColumnData = context.findColumnData;
-          var columnKey = this.columnKey;
-          importHeaders[columnKey]['to'] = value;
-          importHeaders[columnKey]['toColumn'] = context.findColumnData(value);
-          context.props.rememberColumns(importHeaders);
-        },
-        value: selectVal,
-        options: options,
-        columnKey: key
+
+    if(this.props.isOpen) {
+      Object.keys(importHeaders).forEach(function(key) {
+        var selectVal = context.props.columns[key]['to'];
+        var toColumnSelector = React.createElement(SimpleSelect, {
+          onSelectChange: function(value) {
+            var importHeaders =  context.props.columns; 
+            var findColumnData = context.findColumnData;
+            var columnKey = this.columnKey;
+            importHeaders[columnKey]['to'] = value;
+            importHeaders[columnKey]['toColumn'] = context.findColumnData(value);
+            context.props.rememberColumns(importHeaders);
+          },
+          value: selectVal,
+          options: options,
+          columnKey: key
+        });
+
+        importHeaders[key] = {
+          selector: toColumnSelector,
+          to: selectVal
+        };
+        if (selectVal != null)
+          importHeaders[key]['toColumn'] = context.findColumnData(selectVal);
       });
 
-      importHeaders[key] = {
-        selector: toColumnSelector,
-        to: selectVal
-      };
-      if (selectVal != null)
-        importHeaders[key]['toColumn'] = context.findColumnData(selectVal);
-    });
-
-    if (importHeaders != null) {
-      var headersFrom = Object.keys(importHeaders).map(function(key, i) {
-
-        return (
-          <th key={i + '-header'} className={"static-header"}>
-            {key}
-          </th>
-        );
-      });
-      var headersTo = Object.keys(importHeaders).map(function(key, i) {
-        return (
-          <th key={i + '-header'} className={"select-header"}>
-            {importHeaders[key].selector}
-          </th>
-        );
-      });
-
-      var rows = null;
-      if (this.props.importData.length > 0) {
-        rows = this.props.importData.slice(0, 10).map(function(row, i) {
-
-          var cells = Object.keys(importHeaders).map(function(key, j) {
-            return (
-              <td key={i + '-' + j + '-cell'}>
-                {row[key]}
-              </td>
-            );
-          });
+      if (importHeaders != null) {
+        var headersFrom = Object.keys(importHeaders).map(function(key, i) {
 
           return (
-            <tr key={i + '-row'}>
-              {cells}
-            </tr>
+            <th key={i + '-header'} className={"static-header"}>
+              {key}
+            </th>
           );
         });
+        var headersTo = Object.keys(importHeaders).map(function(key, i) {
+          return (
+            <th key={i + '-header'} className={"select-header"}>
+              {importHeaders[key].selector}
+            </th>
+          );
+        });
+
+        var rows = null;
+        if (this.props.importData.length > 0) {
+          rows = this.props.importData.slice(0, 20).map(function(row, i) {
+
+            var cells = Object.keys(importHeaders).map(function(key, j) {
+              return (
+                <td key={i + '-' + j + '-cell'}>
+                  {row[key]}
+                </td>
+              );
+            });
+
+            return (
+              <tr key={i + '-row'}>
+                {cells}
+              </tr>
+            );
+          });
+        }
+        var message = $.map(message,function(m,i){
+          return(
+            <p key={i+'-message'}>{m}</p>
+          )
+        });
       }
-      var message = $.map(message,function(m,i){
-        return(
-          <p key={i+'-message'}>{m}</p>
-        )
-      });
       return (
         <div className="import-from-excel-2">
           <Modal isOpen={this.props.isOpen} onRequestClose={this.closeModal} style={this.props.style} contentLabel={this.props.contentLabel} onAfterOpen={this.afterOpenModal}>
             <h2>Шаг 2. Выберите столбцы</h2>
-            <table className={"table table-bordered table-striped table-hover"}>
-              <thead>
-                <tr>
-                  {headersFrom}
-                </tr>
-                <tr className="selector-header">
-                  {headersTo}
-                </tr>
-              </thead>
-              <tbody>
-                {rows}
-              </tbody>
-            </table>
+            <div className="modal-table-container" key={"modal-table"}>
+              <table className={"table table-bordered table-striped table-hover"}>
+                <thead>
+                  <tr>
+                    {headersFrom}
+                  </tr>
+                  <tr className="selector-header">
+                    {headersTo}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows}
+                </tbody>
+              </table>
+            </div>
             <p>Всего {this.props.importData.length} строк данных.</p>
             <div>Укажите соответствия импорта колонок.</div>
 

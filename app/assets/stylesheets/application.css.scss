@@ -1102,6 +1102,12 @@ footer {
   }
 }
 
+.modal-table-container{
+  overflow: auto;
+  height: 70%;
+  border: 1px solid #dddddd;
+  width: inherit;
+}
 .modal-warning {
   p {
     padding-top: 5px;
@@ -1109,5 +1115,19 @@ footer {
     color: #b12d03;
     font-size: larger;
     margin-bottom: 0;
+  }
+}
+.modal-filter-container {
+  display: inline-flex;
+  margin-bottom: 5px;
+  .modal-filter{
+    border: 1px solid #dddddd;
+    p{
+      font-style: italic;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 0px;      
+      border: 1px solid #dddddd;
+    }
   }
 }

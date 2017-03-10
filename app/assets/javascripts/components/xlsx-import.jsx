@@ -29,7 +29,8 @@ var ImportXlsxModal = React.createClass({
         }
       ],
       columns: {},
-      keyColumn:''
+      keyColumn:'',
+      msg:[]
     };
   },
 
@@ -90,7 +91,8 @@ var ImportXlsxModal = React.createClass({
         }
       ],
       columns: {},
-      keyColumn:''
+      keyColumn:'',
+      msg:[]
     });
   },
 
@@ -128,11 +130,11 @@ var ImportXlsxModal = React.createClass({
     var parsedData = this.mapImportData();
     this.setState({
       step: 4,
-      importData: [
-        {
-          data: {}
-        }
-      ],
+     // importData: [
+     //   {
+     //     data: {}
+     //   }
+     // ],
       parsedData: parsedData
     });
     this.sendDataToServer(parsedData);
@@ -159,11 +161,16 @@ var ImportXlsxModal = React.createClass({
         keyColumn: this.state.keyColumn
       },
       success: function(response) {
+        debugger
+        this.setState({
+          msg: response.message,
+        });
 
         //console.error(response);
 
       }.bind(this),
       error: function(xhr, status, err) {
+        debugger
         //console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
@@ -214,6 +221,9 @@ var ImportXlsxModal = React.createClass({
           isOpen={this.state.step == 4}
           onNextModal={this.step4Finished}
           onCloseModal={this.closeAllModals}
+          columns={this.state.columns}
+          importData={this.state.importData[0].data}
+          msg={this.state.msg}
           style={customStyles}
           contentLabel='Импорт. Обработка.'/>
       </div>
