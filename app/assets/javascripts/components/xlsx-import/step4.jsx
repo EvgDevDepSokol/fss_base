@@ -144,7 +144,7 @@ var ImportStep4 = React.createClass({
         var filters = <div>Ваш файл обрабатывается</div>;
       }
       var next_button=this.state.to_exit?null:<button onClick={this.nextModal}>Подтвердить</button>
-      var exit_button=this.state.to_exit?<button onClick={this.nextModal}>Выход</button>:<button onClick={this.nextModal}>Отмена</button>
+      var exit_button=this.state.to_exit?<button onClick={this.closeModal}>Выход</button>:<button onClick={this.closeModal}>Отмена</button>
     };
 
 

@@ -174,7 +174,7 @@ var TableContainer = React.createClass({
             value = labelFromSelectorList(editor.options, value)
           }
           if (editor == UserRightsSelector) {
-            value = labelFromSelectorList(editor, options, value)
+            value = labelFromSelectorList(editor.options, value)
           }
         }
 
