@@ -79,7 +79,11 @@ var ImportXlsxModal = React.createClass({
   },
 
   openStep1: function() {
-    this.setState({step: 1});
+    if (current_user.user_rights >= 1) {
+      this.setState({step: 1});
+    } else {
+      alert('У Вас недостаточно прав для выполнения импорта из файла!');
+    }
   },
 
   closeAllModals: function() {
