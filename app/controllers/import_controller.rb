@@ -17,8 +17,10 @@ class ImportController < ApplicationController
       if (!!@project) then
         @current_object.Project=@project.id
       end
-      unless (@current_object.valid?) then
+      if (!@current_object.valid?) then
         msg[:err]=@current_object.errors.messages
+      elsif(!@current_object.changed?) then
+        msg[:err]='Аттрибуты не меняются!'
       end
       message.push(msg)
     end
@@ -41,7 +43,9 @@ class ImportController < ApplicationController
       if (!!@project) then
         @current_object.Project=@project.id
       end
-      unless (@current_object.save) then
+      if(@current_object.changed?) then
+        msg[:err]= 'Аттрибуты не меняются!'
+      elsif (!@current_object.save) then
         msg[:err]=@current_object.errors.messages
       else  
         msg[:result]=msg[:add]?'Запись успешно добавлена':'Запись успешно изменена'
