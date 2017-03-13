@@ -285,7 +285,7 @@ var TableContainer = React.createClass({
     columns = columns.concat([
       {
         header: <div className='buttons-col'>
-          Кнопки
+          Опции
         </div>,
         headerClassStyle: 'header-buttons-col',
         cell: function(value, celldata, rowIndex, property) {
