@@ -57,7 +57,7 @@ var ImportStep2 = React.createClass({
         message:[],
       });
       this.props.rememberColumns(importHeaders);
-      this.nextModal3();
+      this.checkKeyColumn();
     };
   },
 
@@ -109,10 +109,10 @@ var ImportStep2 = React.createClass({
       message: []
     });
     this.props.rememberColumns(importHeaders);
-    this.afterOpenModal3();
+    this.refreshKeyColumnSelector();
   }, 
 
-  afterOpenModal3() {
+  refreshKeyColumnSelector() {
     var options3 = [];
     var importHeaders = this.props.columns;
     Object.keys(importHeaders).forEach(function(key) {
@@ -135,7 +135,7 @@ var ImportStep2 = React.createClass({
     this.props.rememberKeyColumn(value);
   },
 
-  nextModal3: function() {
+  checkKeyColumn: function() {
     var keyColumn = this.props.keyColumn;
     var importHeaders = this.props.columns;
     var importData = this.props.importData;
@@ -221,7 +221,7 @@ var ImportStep2 = React.createClass({
             importHeaders[columnKey]['to'] = value;
             importHeaders[columnKey]['toColumn'] = context.findColumnData(value);
             context.props.rememberColumns(importHeaders);
-            context.afterOpenModal3();
+            context.refreshKeyColumnSelector();
           },
           value: selectVal,
           options: options,
