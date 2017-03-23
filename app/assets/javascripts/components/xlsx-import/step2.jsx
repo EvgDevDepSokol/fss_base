@@ -11,7 +11,6 @@ var ImportStep2 = React.createClass({
     return {
       message:[],
       options:[],
-      message3:[],
       options3:[]
     };
   },
@@ -56,11 +55,9 @@ var ImportStep2 = React.createClass({
     } else {
       this.setState({
         message:[],
-      //  options:[]
       });
       this.props.rememberColumns(importHeaders);
       this.nextModal3();
-      //this.props.onNextModal();
     };
   },
 
@@ -127,7 +124,6 @@ var ImportStep2 = React.createClass({
     });
     this.setState({
       options3:options3,
-      message3: []
     });
   },
 
@@ -144,7 +140,7 @@ var ImportStep2 = React.createClass({
     var importHeaders = this.props.columns;
     var importData = this.props.importData;
     var keyImport = '';
-    var message3 = [];
+    var message = [];
     if(keyColumn){
       Object.keys(importHeaders).forEach(function(key) {
         if (importHeaders[key]['to']) {
@@ -168,25 +164,24 @@ var ImportStep2 = React.createClass({
       };
 
       if (n['undefined']){
-        message3.push('В некоторых записях файла ключевое поле является пустым.')
-        message3.push(' Проверьте записи: '+n['undefined'].col+'.');
+        message.push('В некоторых записях файла ключевое поле является пустым.')
+        message.push(' Проверьте записи: '+n['undefined'].col+'.');
       };
 
       Object.keys(n).forEach(function(key) {
         if ((n[key].cnt>1)&&(key!=='undefined')) {
-          message3.push('В файле встречаются записи с одинаковым ключом: \''+key+'\'.')
-          message3.push(' Проверьте записи: '+n[key].col+'.');
+          message.push('В файле встречаются записи с одинаковым ключом: \''+key+'\'.')
+          message.push(' Проверьте записи: '+n[key].col+'.');
         }
       });
     } else {
-      message3.push('Выберите ключевое поле импорта. Сейчас поле не выбрано.');
+      message.push('Выберите ключевое поле импорта. Сейчас поле не выбрано.');
     };
 
-    if (message3 > '') {
-      this.setState({message3:message3});
+    if (message > '') {
+      this.setState({message:message});
     } else {
       this.setState({
-        message3:[],
         options3:[],
         message:[],
         options:[]
@@ -202,11 +197,10 @@ var ImportStep2 = React.createClass({
     var message=this.state.message;
 
     var options3 = this.state.options3;
-    var message3=this.state.message3;
     if(this.props.isOpen) {
-      var message3 = $.map(message3,function(m,i){
+      var message = $.map(message,function(m,i){
         return(
-          <p key={i+'-message3'}>{m}</p>
+          <p key={i+'-message'}>{m}</p>
         )
       });
    
@@ -319,7 +313,6 @@ var ImportStep2 = React.createClass({
             <button onClick={this.nextModal}>Далее</button>
             <p>В файле должны содержаться данные для текущей таблицы текущего проекта.</p>
             <div className={'modal-warning'}>{message}</div>
-            <div className={'modal-warning'}>{message3}</div>
           </Modal>
         </div>
       );
