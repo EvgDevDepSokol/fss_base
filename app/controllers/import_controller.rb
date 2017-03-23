@@ -8,7 +8,7 @@ class ImportController < ApplicationController
     message = []
     if key_column_unique? then
       params[:data].each do |i, row|
-        msg={add: false, result: '', err: ''}
+        msg={add: false, result: '', err: '', warn: ''}
         @permitted = row.permit!
         unless !!current_object(row[@key_column])
           msg[:add]=true
@@ -21,7 +21,7 @@ class ImportController < ApplicationController
         if (!@current_object.valid?) then
           msg[:err]=@current_object.errors.messages
         elsif(!@current_object.changed?) then
-          msg[:err]='Аттрибуты не меняются!'
+          msg[:warn]='Аттрибуты не меняются!'
         end
         message.push(msg)
       end
@@ -36,7 +36,7 @@ class ImportController < ApplicationController
   def update_all_finish
     message = []
     params[:data].each do |i, row|
-      msg={add: false, result: '', err:''}
+      msg={add: false, result: '', err: '', warn: ''}
       @permitted = row.permit!
       unless !!current_object(row[@key_column])
         msg[:add]=true
@@ -47,7 +47,7 @@ class ImportController < ApplicationController
         @current_object.Project=@project.id
       end
       if(@current_object.changed?) then
-        msg[:err]= 'Аттрибуты не меняются!'
+        msg[:warn]= 'Аттрибуты не меняются!'
       elsif (!@current_object.save) then
         msg[:err]=@current_object.errors.messages
       else  

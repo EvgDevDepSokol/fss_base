@@ -9,6 +9,7 @@ var ImportStep4 = React.createClass({
     return{
       filter_add:0,
       filter_err:0,
+      filter_warn:0,
       to_exit:false
     };
   },
@@ -17,6 +18,7 @@ var ImportStep4 = React.createClass({
     this.setState({
       filter_add:0,
       filter_err:0,
+      filter_warn:0,
       to_exit:false
     });
   },
@@ -25,6 +27,7 @@ var ImportStep4 = React.createClass({
     this.setState({
       filter_add:0,
       filter_err:0,
+      filter_warn:0,
       to_exit:false
     });
     this.props.onCloseModal();
@@ -47,6 +50,11 @@ var ImportStep4 = React.createClass({
     this.setState({filter_add: filter_add})
   },
 
+  onFilterWarnChange: function(e) {
+    var filter_warn = parseInt(e.target.value, 10);
+    this.setState({filter_warn: filter_warn})
+  },
+
   render: function() {
     var importHeaders = this.props.columns;
     var importData = this.props.importData; 
@@ -64,21 +72,30 @@ var ImportStep4 = React.createClass({
         to_exit = true;
       } else {
 
+        var radio_add = < div className = 'filter-add-radio-group modal-filter' >
+          <p> Статус</p>
+          <input type='radio' name='filter-add' value='0' checked={this.state.filter_add === 0} onChange={this.onFilterAddChange}/>Показать все < br />
+          <input type='radio' name='filter-add' value='1' checked={this.state.filter_add === 1} onChange={this.onFilterAddChange}/>Показать только записи на добавление < br />
+          <input type='radio' name='filter-add' value='2' checked={this.state.filter_add === 2} onChange={this.onFilterAddChange}/>Показать только записи на обновление < br />
+        </div>
+
+        var radio_warn = < div className = 'filter-warn-radio-group modal-filter' >
+          <p> Предупреждение</p>
+          <input type='radio' name='filter-warn' value='0' checked={this.state.filter_warn === 0} onChange={this.onFilterWarnChange}/>Показать все < br />
+          <input type='radio' name='filter-warn' value='1' checked={this.state.filter_warn === 1} onChange={this.onFilterWarnChange}/>Показать только записи с предупреждениями < br />
+          <input type='radio' name='filter-warn' value='2' checked={this.state.filter_warn === 2} onChange={this.onFilterWarnChange}/>Показать только записи без предупреждений < br />
+        </div> 
+
         var radio_err = < div className = 'filter-err-radio-group modal-filter' >
           <p> Ошибки</p>
           <input type='radio' name='filter-err' value='0' checked={this.state.filter_err === 0} onChange={this.onFilterErrChange}/>Показать все < br />
           <input type='radio' name='filter-err' value='1' checked={this.state.filter_err === 1} onChange={this.onFilterErrChange}/>Показать только записи с ошибками < br />
           <input type='radio' name='filter-err' value='2' checked={this.state.filter_err === 2} onChange={this.onFilterErrChange}/>Показать только записи без ошибок < br />
         </div> 
-
-        var radio_add = < div className = 'filter-add-radio-group modal-filter' >
-          <p> Статус</p>
-          <input type='radio' name='filter-add' value='0' checked={this.state.filter_add === 0} onChange={this.onFilterAddChange}/>Показать все < br />
-          <input type='radio' name='filter-add' value='1' checked={this.state.filter_add === 1} onChange={this.onFilterAddChange}/>Показать только записи на добавление < br />
-          <input type='radio' name='filter-add' value='2' checked={this.state.filter_add === 2} onChange={this.onFilterAddChange}/>Показать только записи на обновление < br />
-        </div> 
+       
 
         importHeaders['Статус'] = '';
+        importHeaders['Предупреждение'] = '';
         importHeaders['Ошибки'] = '';
         importHeaders['Результат'] = '';
 
@@ -96,11 +113,13 @@ var ImportStep4 = React.createClass({
         var filtered = [];
         var filter_add = this.state.filter_add;
         var filter_err = this.state.filter_err;
+        var filter_warn = this.state.filter_warn;
 
         var rows = null;
         if (importData.length > 0 && msg.length > 0) {
           rows = importData.map(function(row, i) {
             row['Статус']=msg[i].add;
+            row['Предупреждение'] = msg[i].warn;
             row['Ошибки']=msg[i].err;
             row['Результат']=msg[i].result;
             return row;
@@ -115,6 +134,19 @@ var ImportStep4 = React.createClass({
             case 2:
               rows = rows.filter(function(row){
                 return !row['Статус'];
+              });
+              break;
+          };
+
+          switch(filter_warn){
+            case 1:
+              rows = rows.filter(function(row){
+                return !!row['Предупреждение'];
+              });
+              break;
+            case 2:
+              rows = rows.filter(function(row){
+                return !row['Предупреждение'];
               });
               break;
           };
@@ -149,7 +181,7 @@ var ImportStep4 = React.createClass({
               </tr>
             );
           });
-          filters = !!msg?<div className='modal-filter-container'>{radio_add}{radio_err}</div>:<div></div>;
+          filters = !!msg?<div className='modal-filter-container'>{radio_add}{radio_warn}{radio_err}</div>:<div></div>;
         } else {
           filters = <div>Ваш файл обрабатывается</div>;
         }
