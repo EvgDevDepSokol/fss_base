@@ -6,8 +6,6 @@ var SimpleSelect = require('../../modules/simple-select.jsx');
 var ImportStep3 = React.createClass({
   displayName: 'ImportStep3',
 
-  //options:[],
-
   getInitialState: function() {
     return {
       message:[],
@@ -29,7 +27,6 @@ var ImportStep3 = React.createClass({
       options:options,
       message: []
     });
-    //this.options = options;
   },
 
   closeModal: function() {
@@ -101,7 +98,6 @@ var ImportStep3 = React.createClass({
   render: function() {
     var importColumns = this.props.columns;
     var options = this.state.options;
-    //var options = this.options;
     var message=this.state.message;
     var message = $.map(message,function(m,i){
       return(
