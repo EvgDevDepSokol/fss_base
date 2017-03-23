@@ -120,7 +120,7 @@ var ImportStep4 = React.createClass({
           rows = importData.map(function(row, i) {
             row['Статус']=msg[i].add;
             row['Предупреждение'] = msg[i].warn;
-            row['Ошибки']=msg[i].err;
+            row['Ошибки']=(!!row['Ошибки']?row['Ошибки'] +' ':'')+ msg[i].err;
             row['Результат']=msg[i].result;
             return row;
           });
@@ -154,7 +154,7 @@ var ImportStep4 = React.createClass({
           switch(filter_err){
             case 1:
               rows = rows.filter(function(row){
-                return !!row['Ошибки'];
+                return !!row['Ошибки']&&row['Ошибки'].length>0;
               });
               break;
             case 2:

@@ -33,19 +33,21 @@ var ImportXlsxModal = React.createClass({
     };
   },
 
-  mapImportData: function() {
+  mapImportData: function(data) {
     var importColumns = this.state.columns;
     // наполняем данными importColumns
     Object.keys(importColumns).forEach(function(columnKey) {
       var toColumn = importColumns[columnKey].toColumn;
-      if (toColumn)
+      if (toColumn){
         importColumns[columnKey]['options'] = getColumnOptions(toColumn);
-      }
-    );
+      } else {
+        delete importColumns[columnKey];
+      };
+    });
 
-    var data = this.state.importData[0].data.map(function(row) {
+    var parsedData = this.state.importData[0].data.map(function(row, i) {
       var convertedRow = {};
-
+      var err = [];
       Object.keys(importColumns).forEach(function(columnKey) {
         var to = importColumns[columnKey].to;
         var toColumn = importColumns[columnKey].toColumn;
@@ -59,7 +61,8 @@ var ImportXlsxModal = React.createClass({
             });
             if (newVal) {
               convertedRow[importColumns[columnKey].toColumn.attribute] = newVal.value;
-            } else {
+            } else if (!!val) {
+              err.push(columnKey + ': ' + data[i][columnKey] + ' не найдено')
             };
 
           } else {
@@ -68,9 +71,11 @@ var ImportXlsxModal = React.createClass({
         };
 
       });
+      debugger
+      data[i]['Ошибки'] = err.length>0?err:null;
       return convertedRow;
     });
-    return data;
+    return parsedData;
   },
 
   openStep1: function() {
@@ -122,12 +127,12 @@ var ImportXlsxModal = React.createClass({
   },
 
   step2Finished: function() {
-    var parsedData = this.mapImportData();
     var data = this.state.importData[0].data;
-    debugger
+    var parsedData=this.mapImportData(data);
     this.setState({
       step: 4,
-      parsedData: parsedData
+      parsedData: parsedData,
+      data: data
     });
     this.sendDataToServer(parsedData,'/update_all_check');
   },
