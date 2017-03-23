@@ -4,7 +4,6 @@ var _ = require('underscore');
 
 var ImportStep1 = require('./xlsx-import/step1.jsx');
 var ImportStep2 = require('./xlsx-import/step2.jsx');
-var ImportStep3 = require('./xlsx-import/step3.jsx');
 var ImportStep4 = require('./xlsx-import/step4.jsx');
 
 const customStyles = {
@@ -123,29 +122,15 @@ var ImportXlsxModal = React.createClass({
   },
 
   step2Finished: function() {
-    this.setState({step: 3});
-  },
-
-  step3Finished: function() {
     var parsedData = this.mapImportData();
     var data = this.state.importData[0].data;
     debugger
     this.setState({
       step: 4,
-     // importData: [
-     //   {
-     //     data: {}
-     //   }
-     // ],
       parsedData: parsedData
     });
     this.sendDataToServer(parsedData,'/update_all_check');
   },
-
-  step3Back: function() {
-    this.setState({step: 2});
-  },
-
 
   step4Finished: function(to_exit) {
     if(to_exit) {
@@ -210,23 +195,13 @@ var ImportXlsxModal = React.createClass({
           isOpen={this.state.step == 2}
           onNextModal={this.step2Finished}
           onCloseModal={this.closeAllModals}
-          importData={this.state.importData[0].data}
-          columns={this.state.columns}
-          rememberColumns={this.rememberColumns}
-          style={customStyles}
-          contentLabel='Импорт. Выбор соответствия столбцов.'/>
-        <ImportStep3
-          key={"step-3"}
-          isOpen={this.state.step == 3}
-          onNextModal={this.step3Finished}
-          onPrevModal={this.step3Back}
-          onCloseModal={this.closeAllModals}
           columns={this.state.columns}
           keyColumn={this.state.keyColumn}
           importData={this.state.importData[0].data}
+          rememberColumns={this.rememberColumns}
           rememberKeyColumn={this.rememberKeyColumn}
           style={customStyles}
-          contentLabel='Импорт. Выбор ключевого поля.'/>
+          contentLabel='Импорт. Выбор соответствия столбцов.'/>
         <ImportStep4
           key={"step-4"}
           isOpen={this.state.step == 4}

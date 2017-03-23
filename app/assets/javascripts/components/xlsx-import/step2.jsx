@@ -10,7 +10,9 @@ var ImportStep2 = React.createClass({
   getInitialState: function() {
     return {
       message:[],
-      options:[]
+      options:[],
+      message3:[],
+      options3:[]
     };
   },
 
@@ -54,10 +56,11 @@ var ImportStep2 = React.createClass({
     } else {
       this.setState({
         message:[],
-        options:[]
+      //  options:[]
       });
       this.props.rememberColumns(importHeaders);
-      this.props.onNextModal();
+      this.nextModal3();
+      //this.props.onNextModal();
     };
   },
 
@@ -109,7 +112,88 @@ var ImportStep2 = React.createClass({
       message: []
     });
     this.props.rememberColumns(importHeaders);
-  },  
+    this.afterOpenModal3();
+  }, 
+
+  afterOpenModal3() {
+    var options3 = [];
+    var importHeaders = this.props.columns;
+    Object.keys(importHeaders).forEach(function(key) {
+      if (importHeaders[key]['to']) {
+        options3.push({
+          value: importHeaders[key]['toColumn']['attribute']?importHeaders[key]['toColumn']['attribute']:importHeaders[key]['to'],
+          label: importHeaders[key]['toColumn']['label']?importHeaders[key]['toColumn']['label']:importHeaders[key]['to']})
+      }
+    });
+    this.setState({
+      options3:options3,
+      message3: []
+    });
+  },
+
+  prevModal: function() {
+    this.props.onPrevModal();
+  },
+
+  onKeyColumnChange: function(value) {
+    this.props.rememberKeyColumn(value);
+  },
+
+  nextModal3: function() {
+    var keyColumn = this.props.keyColumn;
+    var importHeaders = this.props.columns;
+    var importData = this.props.importData;
+    var keyImport = '';
+    var message3 = [];
+    if(keyColumn){
+      Object.keys(importHeaders).forEach(function(key) {
+        if (importHeaders[key]['to']) {
+          if ((importHeaders[key]['to']==keyColumn)||(importHeaders[key]['toColumn']['attribute']==keyColumn)) {
+            keyImport = key;
+          }
+        }
+      });
+      var n = {},r='';
+      for(var i = 0; i < importData.length; i++) 
+      {
+        r=importData[i][keyImport];
+        if (!r) r='undefined';
+        if (!n[r]) 
+        {
+          n[r] = {cnt:1, col:'\''+(i+1)+'\''};
+        } else {
+          n[r].cnt++; 
+          n[r].col = n[r].col + ', \'' + (i+1) +'\''; 
+        }
+      };
+
+      if (n['undefined']){
+        message3.push('В некоторых записях файла ключевое поле является пустым.')
+        message3.push(' Проверьте записи: '+n['undefined'].col+'.');
+      };
+
+      Object.keys(n).forEach(function(key) {
+        if ((n[key].cnt>1)&&(key!=='undefined')) {
+          message3.push('В файле встречаются записи с одинаковым ключом: \''+key+'\'.')
+          message3.push(' Проверьте записи: '+n[key].col+'.');
+        }
+      });
+    } else {
+      message3.push('Выберите ключевое поле импорта. Сейчас поле не выбрано.');
+    };
+
+    if (message3 > '') {
+      this.setState({message3:message3});
+    } else {
+      this.setState({
+        message3:[],
+        options3:[],
+        message:[],
+        options:[]
+      });
+      this.props.onNextModal();
+    };
+  },
 
   render: function() {
     var importHeaders = this.props.columns; 
@@ -117,7 +201,22 @@ var ImportStep2 = React.createClass({
     var context=this;
     var message=this.state.message;
 
+    var options3 = this.state.options3;
+    var message3=this.state.message3;
     if(this.props.isOpen) {
+      var message3 = $.map(message3,function(m,i){
+        return(
+          <p key={i+'-message3'}>{m}</p>
+        )
+      });
+   
+      if(options3) {
+        var keyColumnSelector = <SimpleSelect 
+          onSelectChange={ this.onKeyColumnChange}
+          value={ this.props.keyColumn}
+          options= {options3}/>
+      }
+
       Object.keys(importHeaders).forEach(function(key) {
         var selectVal = context.props.columns[key]['to'];
         var toColumnSelector = React.createElement(SimpleSelect, {
@@ -128,6 +227,7 @@ var ImportStep2 = React.createClass({
             importHeaders[columnKey]['to'] = value;
             importHeaders[columnKey]['toColumn'] = context.findColumnData(value);
             context.props.rememberColumns(importHeaders);
+            context.afterOpenModal3();
           },
           value: selectVal,
           options: options,
@@ -206,10 +306,20 @@ var ImportStep2 = React.createClass({
             <p>Всего {this.props.importData.length} строк данных.</p>
             <div>Укажите соответствия импорта колонок.</div>
 
+            <h2>Шаг 3. Выберите ключевое поле</h2>
+  
+            <div>Выберите ключевое поле, по которому запись будет искаться в базе.</div>
+            <div>Значение поля для каждой записи из импортируемого файла должно быть уникальным и не должно быть пустым.</div>
+            <div>При возникновении сообщения об ошибке, внесите исправления в импортруемый файл и начните импорт заново.</div>
+            <div>
+              {keyColumnSelector}
+            </div>
+
             <button onClick={this.closeModal}>Отмена</button>
             <button onClick={this.nextModal}>Далее</button>
             <p>В файле должны содержаться данные для текущей таблицы текущего проекта.</p>
             <div className={'modal-warning'}>{message}</div>
+            <div className={'modal-warning'}>{message3}</div>
           </Modal>
         </div>
       );
