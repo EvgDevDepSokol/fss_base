@@ -5,6 +5,7 @@ var _ = require('underscore');
 var ImportStep1 = require('./xlsx-import/step1.jsx');
 var ImportStep2 = require('./xlsx-import/step2.jsx');
 var ImportStep4 = require('./xlsx-import/step4.jsx');
+const HEADER_ERR='Ошибки';
 
 const customStyles = {
   content: {
@@ -41,7 +42,7 @@ var ImportXlsxModal = React.createClass({
       if (toColumn){
         importColumns[columnKey]['options'] = getColumnOptions(toColumn);
       } else {
-        delete importColumns[columnKey];
+        //delete importColumns[columnKey];
       };
     });
 
@@ -72,7 +73,7 @@ var ImportXlsxModal = React.createClass({
 
       });
       debugger
-      data[i]['Ошибки'] = err.length>0?err:null;
+      data[i][HEADER_ERR] = err.length>0?err:[];
       return convertedRow;
     });
     return parsedData;

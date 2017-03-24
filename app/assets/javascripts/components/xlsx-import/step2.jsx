@@ -238,9 +238,9 @@ var ImportStep2 = React.createClass({
 
       if (importHeaders != null) {
         var headersFrom = Object.keys(importHeaders).map(function(key, i) {
-
+        var className = importHeaders[key]['to']?"static-header":"static-header not-editable";
           return (
-            <th key={i + '-header'} className={"static-header"}>
+            <th key={i + '-header'} className={className}>
               {key}
             </th>
           );

@@ -1107,7 +1107,12 @@ footer {
   overflow: auto;
   border: 1px solid #dddddd;
   width: inherit;
+  .not-editable {
+    font-style: italic;
+    COLOR: #687077;
+  }
 }
+ 
 .modal-warning {
   p {
     padding-top: 5px;

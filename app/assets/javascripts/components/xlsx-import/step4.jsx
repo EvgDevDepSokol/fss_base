@@ -1,6 +1,11 @@
 var React = require('react');
 var Modal = require('react-modal');
 
+const HEADER_STATE='Статус';
+const HEADER_WARN='Предупреждение';
+const HEADER_ERR='Ошибки';
+const HEADER_RESULT='Результат';
+
 // preview results
 var ImportStep4 = React.createClass({
   displayName: 'ImportStep4',
@@ -94,16 +99,16 @@ var ImportStep4 = React.createClass({
         </div> 
        
 
-        importHeaders['Статус'] = '';
-        importHeaders['Предупреждение'] = '';
-        importHeaders['Ошибки'] = '';
-        importHeaders['Результат'] = '';
+        importHeaders[HEADER_STATE] = '';
+        importHeaders[HEADER_WARN] = '';
+        importHeaders[HEADER_ERR] = '';
+        importHeaders[HEADER_RESULT] = '';
 
         if (importHeaders != null) {
           var headersFrom = Object.keys(importHeaders).map(function(key, i) {
-
+          var className = importHeaders[key]['to']?"static-header":"static-header not-editable";
             return (
-              <th key={i + '-header'} className={"static-header"}>
+              <th key={i + '-header'} className={className}>
                 {key}
               </th>
             );
@@ -118,22 +123,30 @@ var ImportStep4 = React.createClass({
         var rows = null;
         if (importData.length > 0 && msg.length > 0) {
           rows = importData.map(function(row, i) {
-            row['Статус']=msg[i].add;
-            row['Предупреждение'] = msg[i].warn;
-            row['Ошибки']=(!!row['Ошибки']?row['Ошибки'] +' ':'')+ msg[i].err;
-            row['Результат']=msg[i].result;
+            row[HEADER_STATE]=msg[i].add;
+            row[HEADER_WARN] = msg[i].warn;
+            row[HEADER_RESULT]=msg[i].result;
+            var err=[];
+            for(var j=0; j<row[HEADER_ERR].length; j++){
+              err.push(<p>{row[HEADER_ERR][j]}</p>);
+            }
+            for(var j=0; j<msg[i].err.length; j++){
+              err.push(<p>{msg[i].err[j]}</p>);
+            }
+            msg[i].err=[];
+            row[HEADER_ERR]=err;
             return row;
           });
 
           switch(filter_add){
             case 1:
               rows = rows.filter(function(row){
-                return row['Статус'];
+                return row[HEADER_STATE];
               });
               break;
             case 2:
               rows = rows.filter(function(row){
-                return !row['Статус'];
+                return !row[HEADER_STATE];
               });
               break;
           };
@@ -141,12 +154,12 @@ var ImportStep4 = React.createClass({
           switch(filter_warn){
             case 1:
               rows = rows.filter(function(row){
-                return !!row['Предупреждение'];
+                return !!row[HEADER_WARN];
               });
               break;
             case 2:
               rows = rows.filter(function(row){
-                return !row['Предупреждение'];
+                return !row[HEADER_WARN];
               });
               break;
           };
@@ -154,18 +167,18 @@ var ImportStep4 = React.createClass({
           switch(filter_err){
             case 1:
               rows = rows.filter(function(row){
-                return !!row['Ошибки']&&row['Ошибки'].length>0;
+                return !!row[HEADER_ERR]&&row[HEADER_ERR].length>0;
               });
               break;
             case 2:
               rows = rows.filter(function(row){
-                return !row['Ошибки'];
+                return !row[HEADER_ERR];
               });
               break;
           };
 
           rows = rows.map(function(row, i) {
-            row['Статус']=row['Статус']?'Новая запись':'Существующая запись';
+            row[HEADER_STATE]=row[HEADER_STATE]?'Новая запись':'Существующая запись';
 
             var cells = Object.keys(importHeaders).map(function(key, j) {
               return (

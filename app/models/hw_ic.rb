@@ -13,10 +13,10 @@ class HwIc < ActiveRecord::Base
   alias_attribute :pds_project_unit_id, :Unit
   alias_attribute :pds_panel_id, :panel_id
 
-  validates_length_of :ref, maximum: 128
-  validates_length_of :rev, maximum: 1
-  validates_length_of :tag_no, maximum: 330
-  validates_presence_of :ref, :pedID
+  #validates_length_of :ref, maximum: 128
+  #validates_length_of :rev, maximum: 1
+  #validates_length_of :tag_no, maximum: 330
+  #validates_presence_of :ref, :pedID
 
   validate :duplicate_exists, on: :create
 
