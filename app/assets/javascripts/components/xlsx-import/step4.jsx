@@ -4,6 +4,7 @@ var Modal = require('react-modal');
 const HEADER_STATE='Статус';
 const HEADER_WARN='Предупреждение';
 const HEADER_ERR='Ошибки';
+const HEADER_ERR0='err0';
 const HEADER_RESULT='Результат';
 
 // preview results
@@ -127,13 +128,12 @@ var ImportStep4 = React.createClass({
             row[HEADER_WARN] = msg[i].warn;
             row[HEADER_RESULT]=msg[i].result;
             var err=[];
-            for(var j=0; j<row[HEADER_ERR].length; j++){
-              err.push(<p>{row[HEADER_ERR][j]}</p>);
+            for(var j=0; j<row[HEADER_ERR0].length; j++){
+              err.push(<p>{row[HEADER_ERR0][j]}</p>);
             }
             for(var j=0; j<msg[i].err.length; j++){
               err.push(<p>{msg[i].err[j]}</p>);
             }
-            msg[i].err=[];
             row[HEADER_ERR]=err;
             return row;
           });

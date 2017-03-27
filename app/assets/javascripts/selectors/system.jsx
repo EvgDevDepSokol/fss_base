@@ -68,6 +68,6 @@ module.exports.options = function(){
     {pds_project_id:project.ProjectID},
     this
   );
-  options = $.map(options , function(el){ return {value: el.id, label: el.name} } )
+  options = $.map(options , function(el){ return {value: el.id, label: el.System} } )
   return options;
 };

@@ -5,7 +5,7 @@ var _ = require('underscore');
 var ImportStep1 = require('./xlsx-import/step1.jsx');
 var ImportStep2 = require('./xlsx-import/step2.jsx');
 var ImportStep4 = require('./xlsx-import/step4.jsx');
-const HEADER_ERR='Ошибки';
+const HEADER_ERR0='err0';
 
 const customStyles = {
   content: {
@@ -36,6 +36,7 @@ var ImportXlsxModal = React.createClass({
 
   mapImportData: function(data) {
     var importColumns = this.state.columns;
+    debugger
     // наполняем данными importColumns
     Object.keys(importColumns).forEach(function(columnKey) {
       var toColumn = importColumns[columnKey].toColumn;
@@ -63,7 +64,7 @@ var ImportXlsxModal = React.createClass({
             if (newVal) {
               convertedRow[importColumns[columnKey].toColumn.attribute] = newVal.value;
             } else if (!!val) {
-              err.push(columnKey + ': ' + data[i][columnKey] + ' не найдено')
+              err.push(columnKey + ': ' + data[i][columnKey] + ' не найдено.')
             };
 
           } else {
@@ -72,8 +73,8 @@ var ImportXlsxModal = React.createClass({
         };
 
       });
-      debugger
-      data[i][HEADER_ERR] = err.length>0?err:[];
+      data[i][HEADER_ERR0] = err.length>0?err:[];
+      convertedRow[HEADER_ERR0] = err.length>0?err:[];
       return convertedRow;
     });
     return parsedData;

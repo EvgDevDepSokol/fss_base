@@ -1,24 +1,29 @@
 class ImportController < ApplicationController
+  #Import data from excel module
   include GeneralControllerHelper
 
-  before_action :project, :key_column
-  helper_method :project, :key_column
+  before_action :current_project, :key_column
+  helper_method :current_project, :key_column
 
   def update_all_check
     message = []
+    byebug
     if key_column_unique? then
       params[:data].each do |i, row|
-        msg={add: false, result: '', err: '', warn: ''}
-        @permitted = row.permit!
-        unless !!current_object(row[@key_column])
+        msg={add: false, result: '', err: [], warn: ''}
+        unless !!current_object(row[key_column])
           msg[:add]=true
           @current_object=model.new
         end
-        @current_object.attributes=@permitted
-        if (!!@project) then
-          @current_object.Project=@project.id
+        @current_object.attributes=row.except(:err0).permit!
+        if (@current_project) then
+          @current_object.Project=@current_project
         end
-        if (!@current_object.valid?) then
+        if (!!row[:err0]) then
+          #msg[:err]=row[:err0]
+        elsif (msg[:add]&&(current_user.user_rights<=1)) then
+          msg[:err]=['Нет прав на добавление записи!']
+        elsif (!@current_object.valid?) then
           msg[:err]=@current_object.errors.full_messages
         elsif(!@current_object.changed?) then
           msg[:warn]='Аттрибуты не меняются!'
@@ -36,17 +41,20 @@ class ImportController < ApplicationController
   def update_all_finish
     message = []
     params[:data].each do |i, row|
-      msg={add: false, result: '', err: '', warn: ''}
-      @permitted = row.permit!
-      unless !!current_object(row[@key_column])
+      msg={add: false, result: '', err: [], warn: ''}
+      unless !!current_object(row[key_column])
         msg[:add]=true
         @current_object=model.new
       end
-      @current_object.attributes=@permitted
-      if (!!@project) then
-        @current_object.Project=@project.id
+      @current_object.attributes=row.except(:err0).permit!
+      if (@current_project) then
+        @current_object.Project=@current_project
       end
-      if(@current_object.changed?) then
+      if (!!row[:err0]) then
+        #msg[:err]=row[:err0]
+      elsif (msg[:add]&&(current_user.user_rights<=1)) then
+        msg[:err]=['Нет прав на добавление записи!']
+      elsif(@current_object.changed?) then
         msg[:warn]= 'Аттрибуты не меняются!'
       elsif (!@current_object.save) then
         msg[:err]=@current_object.errors.full_messages
@@ -62,39 +70,39 @@ class ImportController < ApplicationController
 
   private
 
+  def initialize
+    @current_object = nil
+    @current_project = nil
+  end
+
   def current_object(val)
-    if !!@project
-      @current_object = model.find_by(@key_column => val, Project: @project)
-      #@current_object = model.where(@key_column => val, Project: @project).first
+    if !!@current_project
+      @current_object = model.find_by(key_column => val, Project: @current_project)
+      #@current_object = model.where(key_column => val, Project: @current_project).first
     else
-      @current_object = model.find_by(@key_column => val)
+      @current_object = model.find_by(key_column => val)
     end
   end
 
   def key_column
-    @key_column = (params[:keyColumn] if params[:keyColumn])
+    params[:keyColumn]
   end
 
   def key_column_unique?
-   if !!@project
-      cnt_all  = model.where(Project: @project).count(@key_column)
-      cnt_dist = model.where(Project: @project).count('distinct('+@key_column+')')
+    column_name=params[:keyColumn]
+    column_name=model.attribute_alias?(column_name)?model.attribute_alias(column_name):column_name
+    if !!@current_project
+      cnt_all  = model.where(Project: @current_project).count(column_name)
+      cnt_dist = model.where(Project: @current_project).distinct.count(column_name)
     else
-      cnt_all  = model.count(@key_column)
-      cnt_dist = model.count('distinct('+@key_column+')')
+      cnt_all  = model.count(column_name)
+      cnt_dist = model.distinct.count(column_name)
     end
     return cnt_all==cnt_dist
   end
 
-  def project
-    @project = PdsProject.find(params[:pds_project_id]) if (params[:pds_project_id]&&(model.has_attribute? :Project))
-  end
-
-  def table_data
-    if model_class.method_defined? :custom_hash
-      @data_list.map(&:custom_hash).to_json
-    else
-      @data_list.to_json
-    end
+  def current_project
+    project_id=params[:pds_project_id]
+    @current_project=PdsProject.find(project_id).id if (project_id&&(model.has_attribute? :Project))
   end
 end

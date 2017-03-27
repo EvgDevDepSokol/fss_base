@@ -72,6 +72,7 @@ var ImportStep2 = React.createClass({
       return Object.keys(obj).length === 0 && obj.constructor === Object;
     };
     var options = [];
+    debugger
     columns.forEach(function(col) {
       var label = col.label;
       var property = col.property;
