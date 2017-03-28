@@ -6,7 +6,6 @@ class PdsValf < ActiveRecord::Base
   belongs_to :pds_project, foreign_key: 'Project'
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
-  belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :psa_ctrl_power, foreign_key: 'ctrl_power', primary_key: 'section_N', class_name: 'PdsSectionAssembler'
   belongs_to :psa_ed_power, foreign_key: 'ed_power', primary_key: 'section_N', class_name: 'PdsSectionAssembler'
   belongs_to :psa_anc_power, foreign_key: 'anc_power', primary_key: 'section_N', class_name: 'PdsSectionAssembler'

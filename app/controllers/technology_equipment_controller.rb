@@ -97,10 +97,42 @@ class TechnologyEquipmentController < BaseController
 
   def pds_regulators
     @data_list = PdsRegulator.where(Project: project.ProjectID)
+                             .includes(:system)
                              .includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power,
-                                       :pds_man_equip, :pds_documentation, :value_1,
-                                       :value_2, :pds_detector)
-                             .includes(:sd_sys_numb)
+                                       :pds_man_equip, :pds_detector, :sd_sys_numb)
+                             .pluck(:RegID,:tag_RU,:tag_EN,:station_sys,:Desc,:open_rate,
+                                    :close_rate,:Algorithm,:model,:Desc_EN,:det_id,:par_val,
+                          'pds_syslist.SystemID', 'pds_syslist.System',
+                          'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
+                          'psa_ed_powers_pds_regulators.section_N', 'psa_ed_powers_pds_regulators.section_name',
+                          'psa_anc_powers_pds_regulators.section_N', 'psa_anc_powers_pds_regulators.section_name',
+                          'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link',
+                          'pds_man_equip.EquipN', 'pds_man_equip.Type'
+                        )
+
+    @data_list = @data_list.each.map do |e|
+      e1 = {}
+      e1['id']               = e[0]
+      e1['tag_RU']           = e[1]
+      e1['tag_EN']           = e[2]
+      e1['station_sys']      = e[3]
+      e1['Desc']             = e[4]
+      e1['open_rate']        = e[5]
+      e1['close_rate']       = e[6]
+      e1['Algorithm']        = e[7]
+      e1['model']            = e[8]
+      e1['Desc_EN']          = e[9]
+      e1['det_id']           = e[10]
+      e1['par_val']          = e[11]
+      e1['system']           = { id: e[12], System: e[13] }
+      e1['psa_ctrl_power']   = { id: e[14], section_name: e[15] }
+      e1['psa_ed_power']     = { id: e[16], section_name: e[17] }
+      e1['psa_anc_power']    = { id: e[18], section_name: e[19] }
+      e1['sd_sys_numb']      = { id: e[20], sd_link: e[21] }
+      e1['pds_man_equip']    = { id: e[22], Type: e[23] }
+
+      e = e1
+    end
   end
 
   def pds_valves

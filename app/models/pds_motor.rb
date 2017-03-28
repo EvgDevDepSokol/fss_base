@@ -1,10 +1,11 @@
 class PdsMotor < ActiveRecord::Base
+  self.inheritance_column = :_type_disabled
   alias_attribute :id, self.primary_key
-  belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project, foreign_key: 'Project'
-  belongs_to :psa_ctrl_power, foreign_key: 'ctrl_power', class_name: 'PdsSectionAssembler'
-  belongs_to :psa_ed_power, foreign_key: 'ed_power', class_name: 'PdsSectionAssembler'
-  belongs_to :psa_anc_power, foreign_key: 'anc_power', class_name: 'PdsSectionAssembler'
+  belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
+  belongs_to :psa_ctrl_power, foreign_key: 'ctrl_power', primary_key: 'section_N', class_name: 'PdsSectionAssembler'
+  belongs_to :psa_ed_power, foreign_key: 'ed_power', primary_key: 'section_N', class_name: 'PdsSectionAssembler'
+  belongs_to :psa_anc_power, foreign_key: 'anc_power', primary_key: 'section_N', class_name: 'PdsSectionAssembler'
   belongs_to :pds_man_equip, foreign_key: 'eq_type'
   belongs_to :pds_documentation, foreign_key: 'doc_reg_N'
   belongs_to :pds_motor_type, foreign_key: 'MotorType'
