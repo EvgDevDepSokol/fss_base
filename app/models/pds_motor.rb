@@ -8,7 +8,7 @@ class PdsMotor < ActiveRecord::Base
   belongs_to :psa_anc_power, foreign_key: 'anc_power', primary_key: 'section_N', class_name: 'PdsSectionAssembler'
   belongs_to :pds_man_equip, foreign_key: 'eq_type'
   belongs_to :pds_documentation, foreign_key: 'doc_reg_N'
-  belongs_to :pds_motor_type, foreign_key: 'MotorType'
+  belongs_to :pds_motor_type, foreign_key: 'MotorType', primary_key: 'MotorTypeID', class_name: 'PdsMotorType'
   belongs_to :sd_sys_numb, foreign_key: 'sd_N'
 
   alias_attribute :system_id, :sys
@@ -20,6 +20,10 @@ class PdsMotor < ActiveRecord::Base
   alias_attribute :pds_motor_type_id, :MotorType
   alias_attribute :sd_sys_numb_id, :sd_N
 
+  def custom_map
+    true
+  end
+
   def custom_hash
     serializable_hash(include: {
                         system: { only: :System },
@@ -27,8 +31,8 @@ class PdsMotor < ActiveRecord::Base
                         psa_ed_power: { only: :section_name },
                         psa_anc_power: { only: :section_name },
                         pds_motor_type: { only: :MotorType },
-                        pds_man_equip: { only: :Type },
-                        pds_documentation: { only: :DocTitle },
+  #                      pds_man_equip: { only: :Type },
+  #                      pds_documentation: { only: :DocTitle },
                         sd_sys_numb: { only: [:sd_link] }
                       })
   end
