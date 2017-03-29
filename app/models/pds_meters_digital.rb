@@ -12,6 +12,10 @@ class PdsMetersDigital < ActiveRecord::Base
   alias_attribute :system_id, :sys
   alias_attribute :pds_section_assembler_id, :ctrl_power
 
+  def custom_map
+    true
+  end
+
   def custom_hash
     serializable_hash(include: {
                         hw_ic: { only: [:ref, :tag_no, :Description, :scaleMin, :scaleMax],
