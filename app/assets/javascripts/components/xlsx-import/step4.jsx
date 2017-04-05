@@ -349,7 +349,7 @@ var ImportStep4 = React.createClass(
                   case 2:
                     rows = rows.filter(function (row)
                     {
-                      return !row[HEADER_ERR];
+                      return !row[HEADER_ERR] || row[HEADER_ERR].length == 0;
                     });
                     break;
                   };
