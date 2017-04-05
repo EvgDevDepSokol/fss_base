@@ -13,10 +13,10 @@ set :repo_url, '/home/serega/denstepa-djet'
 
 set :deploy_to, '/home/deploy/fss_db'
 
-#set :linked_files, %w{config/database.yml}
-#set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+# set :linked_files, %w{config/database.yml}
+# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-#namespace :deploy do
+# namespace :deploy do
 #
 #  desc 'Restart application'
 #  task :restart do
@@ -27,10 +27,7 @@ set :deploy_to, '/home/deploy/fss_db'
 #
 #  after :publishing, 'deploy:restart'
 #  after :finishing, 'deploy:cleanup'
-#end
-
-
-
+# end
 
 # set :repo_url, 'git@example.com:me/my_repo.git'
 
@@ -54,13 +51,13 @@ set :deploy_to, '/home/deploy/fss_db'
 # set :pty, true
 
 # Default value for :linked_files is []
- append :linked_files, 'config/database.yml', 'config/secrets.yml'
+append :linked_files, 'config/database.yml', 'config/secrets.yml'
 
 # Default value for linked_dirs is []
- append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 
 # Default value for default_env is {}
- set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :default_env, path: '/opt/ruby/bin:$PATH'
 
 # Default value for keep_releases is 5
- set :keep_releases, 5
+set :keep_releases, 5

@@ -1,6 +1,6 @@
 class PdsEngOnSy < ActiveRecord::Base
   self.table_name = 'pds_eng_on_sys'
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_engineer, foreign_key: :engineer_N
   belongs_to :pds_engineer_test, foreign_key: :TestOperator_N, class_name: PdsEngineer

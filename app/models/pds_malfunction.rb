@@ -2,7 +2,7 @@ class PdsMalfunction < ActiveRecord::Base
   # self.inheritance_column = nil
   self.inheritance_column = :_type_disabled
   self.table_name = 'pds_malfunction'
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project_unit, foreign_key: 'regidity_unitid'
   belongs_to :sd_sys_numb, foreign_key: 'sd_N'
@@ -24,27 +24,25 @@ class PdsMalfunction < ActiveRecord::Base
                       })
   end
 
-  CHARACTER_ARRAY=('A'..'Z').to_a+('AA'..'ZZ').to_a
+  CHARACTER_ARRAY = ('A'..'Z').to_a + ('AA'..'ZZ').to_a
 
   after_save do |pds_malfunction|
-    pds_malfunction_dims=PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
-    icnt=pds_malfunction.Dimension-pds_malfunction_dims.size
-    if (pds_malfunction.Dimension<1)
-      icnt=0
-    end
-    if (icnt>0)
-      while icnt>0
-        pds_malfunction_dim=PdsMalfunctionDim.new
-        pds_malfunction_dim.Project=pds_malfunction.Project
-        pds_malfunction_dim.Malfunction=pds_malfunction.id
-        pds_malfunction_dim.sd_N=pds_malfunction.sd_N
-        pds_malfunction_dim.Character=CHARACTER_ARRAY[(pds_malfunction.Dimension-icnt)]
+    pds_malfunction_dims = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
+    icnt = pds_malfunction.Dimension - pds_malfunction_dims.size
+    icnt = 0 if pds_malfunction.Dimension < 1
+    if icnt > 0
+      while icnt > 0
+        pds_malfunction_dim = PdsMalfunctionDim.new
+        pds_malfunction_dim.Project = pds_malfunction.Project
+        pds_malfunction_dim.Malfunction = pds_malfunction.id
+        pds_malfunction_dim.sd_N = pds_malfunction.sd_N
+        pds_malfunction_dim.Character = CHARACTER_ARRAY[(pds_malfunction.Dimension - icnt)]
         pds_malfunction_dim.save
         icnt -= 1
       end
-    elsif(icnt<0)
-      while icnt<0
-        pds_malfunction_dim=PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).last
+    elsif icnt < 0
+      while icnt < 0
+        pds_malfunction_dim = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).last
         pds_malfunction_dim.destroy
         icnt += 1
       end
@@ -52,10 +50,8 @@ class PdsMalfunction < ActiveRecord::Base
   end
 
   before_destroy do |pds_malfunction|
-    pds_malfunction_dim=PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
-    pds_malfunction_dim.each do |m_d_new|
-      m_d_new.destroy
-    end
+    pds_malfunction_dim = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
+    pds_malfunction_dim.each(&:destroy)
   end
 
   # TODO: add with language

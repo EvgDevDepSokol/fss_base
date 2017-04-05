@@ -1,5 +1,5 @@
 class Api::PdsManEquipsController < ApplicationController
-  before_action :set_pds_man_equip, only: [:show, :edit, :update, :destroy]
+  before_action :set_pds_man_equip, only: %i[show edit update destroy]
 
   # GET /pds_man_equips
   # GET /pds_man_equips.json
@@ -9,8 +9,7 @@ class Api::PdsManEquipsController < ApplicationController
 
   # GET /pds_man_equips/1
   # GET /pds_man_equips/1.json
-  def show
-  end
+  def show; end
 
   # GET /pds_man_equips/new
   def new
@@ -18,8 +17,7 @@ class Api::PdsManEquipsController < ApplicationController
   end
 
   # GET /pds_man_equips/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pds_man_equips
   # POST /pds_man_equips.json

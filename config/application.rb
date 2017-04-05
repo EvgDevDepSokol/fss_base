@@ -10,14 +10,13 @@ TableList = YAML.load_file('public/data/tables.yml')
 
 module FSS_database
   class Application < Rails::Application
-
     # config.app_generators.stylesheet_engine :less
 
     config.autoload_paths << "#{config.root}/lib"
 
     # config.web_console.whitelisted_ips = '10.0.226.8'
 
-    config.browserify_rails.commandline_options = ["--fast"]
+    config.browserify_rails.commandline_options = ['--fast']
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

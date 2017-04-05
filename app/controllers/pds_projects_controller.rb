@@ -1,5 +1,5 @@
 class PdsProjectsController < ApplicationController
-  before_action :set_pds_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_pds_project, only: %i[show edit update destroy]
   # GET /pds_projects
   # GET /pds_projects.json
   def select

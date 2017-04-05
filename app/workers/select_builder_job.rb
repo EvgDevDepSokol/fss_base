@@ -8,11 +8,9 @@ class SelectBuilderJob
   TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'select_builder')
   FILE_PATH = Rails.root.join('public', 'select_builders', 'pds_rf.sel')
 
-  def work
-  end
+  def work; end
 
-  def data
-  end
+  def data; end
 
   def render_pds_rf(select_builder)
     pds_rfs = PdsRf.where(Project: select_builder.project_id).includes(:system)
@@ -26,6 +24,5 @@ class SelectBuilderJob
     File.open(FILE_PATH, 'w:KOI8-R') { |f| f << data.encode('koi8-r', invalid: :replace, undef: :replace, replace: '') }
   end
 
-  def select_builder
-  end
+  def select_builder; end
 end

@@ -5,8 +5,7 @@ class Api::PdsMotorTypesController < ApplicationController
     @pds_motor_types = PdsMotorType.all.order(:MotorType)
   end
 
-  def show
-  end
+  def show; end
 
   private
 

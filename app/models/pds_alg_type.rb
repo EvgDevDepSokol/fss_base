@@ -1,6 +1,6 @@
 class PdsAlgType < ActiveRecord::Base
   self.table_name = 'pds_alg_type'
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'
 
   def custom_hash

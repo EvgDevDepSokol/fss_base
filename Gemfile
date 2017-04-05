@@ -8,14 +8,14 @@ gem 'rails'
 # gem 'mysql2', '~> 0.3.18'
 gem 'mysql2'
 
-gem 'therubyracer'
 gem 'sassc-rails'
-#gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem 'therubyracer'
+# gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'sprockets'
 gem 'twitter-bootstrap-rails'
-#gem "font-awesome-rails"
+# gem "font-awesome-rails"
 gem 'font-awesome-less'
-#gem 'font-awesome-sass'
+# gem 'font-awesome-sass'
 # gem "haml-rails", "~> 0.9"
 gem 'hamlit'
 
@@ -52,14 +52,13 @@ gem 'kaminari'
 # gem 'passenger'
 # gem 'localtunnel'
 
-gem 'nokogiri', require: false
 gem 'mechanize', require: false
+gem 'nokogiri', require: false
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',         group: :development
 gem 'web-console',    group: :development
 # gem 'web-console', '~> 3.0',    group: :development
-
 
 # gem 'wice_grid', '3.4.2'
 
@@ -73,13 +72,13 @@ gem 'web-console',    group: :development
 
 group :development do
   gem 'capistrano'
-  gem 'capistrano-rails'
   gem 'capistrano-bundler'
+  gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   # gem 'capistrano-unicorn-nginx', '~> 2.0'
-  gem 'capistrano-unicorn-nginx'
   gem 'capistrano-npm'
-#  gem 'capistrano-scm-local', '~> 0.1', :github => 'ekho/capistrano-scm-local'  
+  gem 'capistrano-unicorn-nginx'
+  #  gem 'capistrano-scm-local', '~> 0.1', :github => 'ekho/capistrano-scm-local'
 end
 # Use the Unicorn app server
 
@@ -95,7 +94,7 @@ group :production do
 end
 
 # Use debugger
-gem 'byebug', group: [:development, :test]
+gem 'byebug', group: %i[development test]
 
 gem 'schema_to_scaffold'
 
@@ -129,12 +128,12 @@ gem 'simple_form'
 
 group :development do
   gem 'better_errors'
-  gem 'traceroute'
-  gem 'rack-mini-profiler'
-  gem 'flamegraph'
-  gem 'stackprof'
   gem 'bullet'
+  gem 'flamegraph'
+  gem 'rack-mini-profiler'
   gem 'rails_best_practices'
   gem 'rubocop', require: false
   gem 'rubycritic', require: false
+  gem 'stackprof'
+  gem 'traceroute'
 end

@@ -1,6 +1,6 @@
 class PdsLamp < ActiveRecord::Base
   self.primary_key = 'LampID'
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
   schema_validations except: :hw_ic
 
   belongs_to :hw_ic, foreign_key: 'IC'
@@ -18,7 +18,7 @@ class PdsLamp < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-                        hw_ic: { only: [:ref, :tag_no, :Description], include: { hw_ped: { only: [:ped] } } },
+                        hw_ic: { only: %i[ref tag_no Description], include: { hw_ped: { only: [:ped] } } },
                         system: { only: [:System] },
                         pds_section_assembler: { only: [:section_name] }
                       })

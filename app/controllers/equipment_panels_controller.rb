@@ -1,8 +1,8 @@
 class EquipmentPanelsController < BaseController
-  ACTIONS = [:hw_ic, :pds_bru, :pds_misc, :pds_set, :pds_switch_nofix, :pds_switch_fix,
-             :pds_buttons, :pds_buttons_lights, :pds_lamps, :pds_mnemo, :pds_meters,
-             :pds_meters_digital, :pds_alarm, :pds_recorders, :pds_announciator,
-             :pds_meters_channels].freeze
+  ACTIONS = %i[hw_ic pds_bru pds_misc pds_set pds_switch_nofix pds_switch_fix
+               pds_buttons pds_buttons_lights pds_lamps pds_mnemo pds_meters
+               pds_meters_digital pds_alarm pds_recorders pds_announciator
+               pds_meters_channels].freeze
 
   #  def hw_ics
   #    @data_list = HwIc.where(Project: project.ProjectID).select(
@@ -187,21 +187,20 @@ class EquipmentPanelsController < BaseController
     @data_list = PdsMetersDigital.where(Project: project.ProjectID)
                                  .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system, :pds_section_assembler)
                                  .pluck(:MetDigID,
-                                  'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
-                                  'hw_peds.ped_N', 'hw_peds.ped',
-                                  'pds_syslist.SystemID', 'pds_syslist.System',
-                                  'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
-                                  'hw_ic.scaleMin', 'hw_ic.scaleMax',
-                                  'pds_project_unit.ProjUnitID','pds_unit.UnitID','pds_unit.Unit_RU')
-     @data_list = @data_list.each.map do |e|
+                                        'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
+                                        'hw_peds.ped_N', 'hw_peds.ped',
+                                        'pds_syslist.SystemID', 'pds_syslist.System',
+                                        'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
+                                        'hw_ic.scaleMin', 'hw_ic.scaleMax',
+                                        'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU')
+    @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
-      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] }, scaleMin: e[11], scaleMax: e[12], pds_project_unit: { id: e[13], unit: { id: e[14], Unit_RU: e[15]} }}
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] }, scaleMin: e[11], scaleMax: e[12], pds_project_unit: { id: e[13], unit: { id: e[14], Unit_RU: e[15] } } }
       e1['system']                = { id: e[7], System: e[8] }
       e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
       e = e1
     end
-                                
   end
 
   def pds_alarms

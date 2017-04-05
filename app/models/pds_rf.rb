@@ -2,7 +2,7 @@ class PdsRf < ActiveRecord::Base
   # self.inheritance_column = nil
   self.inheritance_column = :_type_disabled
   self.table_name = 'pds_rf'
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project_unit, foreign_key: 'Unit', class_name: 'PdsProjectUnit'
@@ -37,15 +37,15 @@ class PdsRf < ActiveRecord::Base
   end
 
   def type_b?(t)
-    %w(B VB).include?(t)
+    %w[B VB].include?(t)
   end
 
   def type_i?(t)
-    %w(I VI).include?(t)
+    %w[I VI].include?(t)
   end
 
   def type_r?(t)
-    %w(R VR).include?(t)
+    %w[R VR].include?(t)
   end
 
   # selection functions

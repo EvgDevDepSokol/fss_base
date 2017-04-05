@@ -1,6 +1,6 @@
 class PdsAnnounciator < ActiveRecord::Base
   self.table_name = 'pds_announciator'
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
   self.inheritance_column = nil
   schema_validations except: :hw_ic
 
@@ -15,8 +15,8 @@ class PdsAnnounciator < ActiveRecord::Base
   alias_attribute :pds_section_assembler_id, :ctrl_power
   alias_attribute :pds_detector_id, :Detector
 
-  validates :Type, inclusion: %w(AN YC), allow_nil: true, allow_blank: true
-  validates :sign, inclusion:  %w(предупр. авар.), allow_nil: true, allow_blank: true
+  validates :Type, inclusion: %w[AN YC], allow_nil: true, allow_blank: true
+  validates :sign, inclusion: %w[предупр. авар.], allow_nil: true, allow_blank: true
 
   def custom_map
     true
@@ -24,7 +24,7 @@ class PdsAnnounciator < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-                        hw_ic: { only: [:ref, :tag_no, :Description], include: { hw_ped: { only: [:ped] } } },
+                        hw_ic: { only: %i[ref tag_no Description], include: { hw_ped: { only: [:ped] } } },
                         system: { only: [:System] },
                         pds_section_assembler: { only: [:section_name] },
                         pds_detector: { only: [:tag] }

@@ -1,5 +1,5 @@
 class Api::PdsSyslistsController < ApplicationController
-  before_action :set_pds_syslist, only: [:show, :edit, :update, :destroy]
+  before_action :set_pds_syslist, only: %i[show edit update destroy]
 
   # GET /pds_syslists
   # GET /pds_syslists.json
@@ -9,8 +9,7 @@ class Api::PdsSyslistsController < ApplicationController
 
   # GET /pds_syslists/1
   # GET /pds_syslists/1.json
-  def show
-  end
+  def show; end
 
   # GET /pds_syslists/new
   def new
@@ -18,8 +17,7 @@ class Api::PdsSyslistsController < ApplicationController
   end
 
   # GET /pds_syslists/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pds_syslists
   # POST /pds_syslists.json

@@ -1,5 +1,5 @@
 class Api::PdsPanelsController < ApplicationController
-  before_action :set_pds_panel, only: [:show, :edit, :update, :destroy]
+  before_action :set_pds_panel, only: %i[show edit update destroy]
   before_action :project, only: :index
 
   # GET /pds_panels
@@ -10,8 +10,7 @@ class Api::PdsPanelsController < ApplicationController
 
   # GET /pds_panels/1
   # GET /pds_panels/1.json
-  def show
-  end
+  def show; end
 
   # GET /pds_panels/new
   def new
@@ -19,8 +18,7 @@ class Api::PdsPanelsController < ApplicationController
   end
 
   # GET /pds_panels/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pds_panels
   # POST /pds_panels.json

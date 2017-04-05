@@ -1,6 +1,6 @@
 class PdsSwitchFix < ActiveRecord::Base
   self.table_name = 'pds_switch_fix'
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
   schema_validations except: :hw_ic
 
   belongs_to :hw_ic, foreign_key: 'IC'
@@ -17,7 +17,7 @@ class PdsSwitchFix < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-                        hw_ic: { only: [:ref, :tag_no, :Description], include: { hw_ped: { only: [:ped] } } },
+                        hw_ic: { only: %i[ref tag_no Description], include: { hw_ped: { only: [:ped] } } },
                         system: { only: [:System] }
                       })
   end

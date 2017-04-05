@@ -1,5 +1,5 @@
 class Api::HwPedsController < ApplicationController
-  before_action :set_hw_ped, only: [:show, :edit, :update, :destroy]
+  before_action :set_hw_ped, only: %i[show edit update destroy]
   before_action :project, only: :index
 
   # GET /hw_peds
@@ -10,8 +10,7 @@ class Api::HwPedsController < ApplicationController
 
   # GET /hw_peds/1
   # GET /hw_peds/1.json
-  def show
-  end
+  def show; end
 
   # GET /hw_peds/new
   def new
@@ -19,8 +18,7 @@ class Api::HwPedsController < ApplicationController
   end
 
   # GET /hw_peds/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /hw_peds
   # POST /hw_peds.json

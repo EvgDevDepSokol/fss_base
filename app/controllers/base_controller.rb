@@ -25,7 +25,6 @@ class BaseController < ApplicationController
              status: :unprocessable_entity
       Rails.logger.info(@current_object.errors.full_messages)
     end
-
     rescue
       render json: { errors: current_object.errors.full_messages, data: current_object.reload.custom_hash },
              status: :unprocessable_entity

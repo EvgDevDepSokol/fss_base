@@ -16,8 +16,7 @@ class Api::HwIcsController < ApplicationController
 
   # GET /pds_buttons/1
   # GET /pds_buttons/1.json
-  def show
-  end
+  def show; end
 
   private
 

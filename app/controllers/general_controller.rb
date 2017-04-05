@@ -37,8 +37,7 @@ class GeneralController < ApplicationController
 
   # GET /pds_buttons/1
   # GET /pds_buttons/1.json
-  def show
-  end
+  def show; end
 
   # GET /pds_buttons/new
   def new
@@ -46,8 +45,7 @@ class GeneralController < ApplicationController
   end
 
   # GET /pds_buttons/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pds_buttons
   # POST /pds_buttons.json
@@ -80,7 +78,6 @@ class GeneralController < ApplicationController
         end
       end
     end
-
   rescue
     respond_to do |format|
       format.html { render :edit }

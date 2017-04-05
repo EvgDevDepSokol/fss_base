@@ -1,5 +1,5 @@
 class ElectricEquipmentController < BaseController
-  ACTIONS = [:pds_breakers, :pds_equipments, :pds_section_assemblers].freeze
+  ACTIONS = %i[pds_breakers pds_equipments pds_section_assemblers].freeze
 
   def pds_breakers
     @data_list = PdsBreaker.where(Project: project.ProjectID)

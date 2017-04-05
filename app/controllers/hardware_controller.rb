@@ -1,6 +1,6 @@
 class HardwareController < BaseController
-  ACTIONS = [:hw_peds, :hw_wirelist, :pds_iomap, :hw_iosignaldefs,
-             :hw_iosignals, :hw_devtypes, :hw_iosignaldim, :pds_panels].freeze
+  ACTIONS = %i[hw_peds hw_wirelist pds_iomap hw_iosignaldefs
+               hw_iosignals hw_devtypes hw_iosignaldim pds_panels].freeze
 
   def hw_peds
     @data_list = HwPed.where(Project: project.ProjectID)

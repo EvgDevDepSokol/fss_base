@@ -1,5 +1,5 @@
 class TblbinariesController < ApplicationController
-  before_action :set_tblbinary, only: [:show, :edit, :update, :destroy]
+  before_action :set_tblbinary, only: %i[show edit update destroy]
   # GET /tblbinaries
   # GET /tblbinaries.json
   def index
@@ -8,8 +8,7 @@ class TblbinariesController < ApplicationController
 
   # GET /tblbinaries/1
   # GET /tblbinaries/1.json
-  def show
-  end
+  def show; end
 
   # GET /tblbinaries/new
   def new
@@ -17,8 +16,7 @@ class TblbinariesController < ApplicationController
   end
 
   # GET /tblbinaries/1/edit
-  def edit
-  end
+  def edit; end
 
   # ('<img src="data:image/jpg;base64,%s">' % Base64.encode64(@the_data)).html_safe
   def get_file

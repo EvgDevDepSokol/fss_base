@@ -1,5 +1,5 @@
 class Api::PdsSectionAssemblersController < ApplicationController
-  before_action :set_pds_section_assembler, only: [:show, :edit, :update, :destroy]
+  before_action :set_pds_section_assembler, only: %i[show edit update destroy]
   before_action :project, only: :index
 
   # GET /pds_section_assemblers
@@ -10,8 +10,7 @@ class Api::PdsSectionAssemblersController < ApplicationController
 
   # GET /pds_section_assemblers/1
   # GET /pds_section_assemblers/1.json
-  def show
-  end
+  def show; end
 
   # GET /pds_section_assemblers/new
   def new
@@ -19,8 +18,7 @@ class Api::PdsSectionAssemblersController < ApplicationController
   end
 
   # GET /pds_section_assemblers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pds_section_assemblers
   # POST /pds_section_assemblers.json

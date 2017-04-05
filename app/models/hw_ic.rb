@@ -1,6 +1,6 @@
 class HwIc < ActiveRecord::Base
   self.table_name = 'hw_ic'
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :hw_ped, foreign_key: :pedID, class_name: 'HwPed'
@@ -13,10 +13,10 @@ class HwIc < ActiveRecord::Base
   alias_attribute :pds_project_unit_id, :Unit
   alias_attribute :pds_panel_id, :panel_id
 
-  #validates_length_of :ref, maximum: 128
-  #validates_length_of :rev, maximum: 1
-  #validates_length_of :tag_no, maximum: 330
-  #validates_presence_of :ref, :pedID
+  # validates_length_of :ref, maximum: 128
+  # validates_length_of :rev, maximum: 1
+  # validates_length_of :tag_no, maximum: 330
+  # validates_presence_of :ref, :pedID
 
   validate :duplicate_exists, on: :create
 
@@ -34,15 +34,15 @@ class HwIc < ActiveRecord::Base
   end
 
   def duplicate_exists
-    if (HwIc.where(ref: self.ref, Project: self.Project).count>0)
+    if HwIc.where(ref: ref, Project: self.Project).count > 0
       errors.add(:hw_ic, ' Запись с таким "REF" в этом проекте уже существует.')
     end
   end
 
   after_save do |hw_ic|
-    if(hw_ic.pedID_was.nil?)
+    if hw_ic.pedID_was.nil?
       add_equipment(hw_ic)
-    elsif(hw_ic.pedID_was && (hw_ic.pedID!=hw_ic.pedID_was))
+    elsif hw_ic.pedID_was && (hw_ic.pedID != hw_ic.pedID_was)
       destroy_equipment(hw_ic)
       add_equipment(hw_ic)
     end
@@ -65,9 +65,7 @@ class HwIc < ActiveRecord::Base
 
   def destroy_equipment(hw_ic)
     tbl = Object.const_get(table_by_pedid(hw_ic.pedID_was).classify)
-    e_was=tbl.where(IC: hw_ic.icID).to_a
-    e_was.each do |e|
-      e.destroy
-    end
+    e_was = tbl.where(IC: hw_ic.icID).to_a
+    e_was.each(&:destroy)
   end
 end

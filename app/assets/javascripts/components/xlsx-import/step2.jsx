@@ -25,16 +25,14 @@ var ImportStep2 = React.createClass({
         var importHeaders = this.props.columns;
         var options = [];
         var message = [];
-        Object
-          .keys(importHeaders)
-          .forEach(function (key) {
-            if(importHeaders[key]['to']) {
-              options.push({
-                label: importHeaders[key]['toColumn']['label'],
-                key: key
-              })
-            }
-          });
+        Object.keys(importHeaders).forEach(function (key) {
+          if(importHeaders[key]['to']) {
+            options.push({
+              label: importHeaders[key]['toColumn']['label'],
+              key: key
+            })
+          }
+        });
 
         if(options.length <= 0) {
           message.push('Выберите столбцы для импорта. Сейчас выбрано 0 столбцов.');
@@ -252,16 +250,10 @@ var ImportStep2 = React.createClass({
               });
 
             if(options3) {
-              var keyColumnSelector = < SimpleSelect >
-                onSelectChange = {
-                  this.onKeyColumnChange
-                }
-              value = {
-                this.props.keyColumn
-              }
-              options = {
-                options3
-              } < /SimpleSelect>}
+              var keyColumnSelector = < SimpleSelect 
+                onSelectChange = {this.onKeyColumnChange}
+                value = {this.props.keyColumn}
+                options = {options3} />}
 
               Object
                 .keys(importHeaders)

@@ -1,6 +1,6 @@
 class PdsMotor < ActiveRecord::Base
   self.inheritance_column = :_type_disabled
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :psa_ctrl_power, foreign_key: 'ctrl_power', primary_key: 'section_N', class_name: 'PdsSectionAssembler'
@@ -31,8 +31,8 @@ class PdsMotor < ActiveRecord::Base
                         psa_ed_power: { only: :section_name },
                         psa_anc_power: { only: :section_name },
                         pds_motor_type: { only: :MotorType },
-  #                      pds_man_equip: { only: :Type },
-  #                      pds_documentation: { only: :DocTitle },
+                        #                      pds_man_equip: { only: :Type },
+                        #                      pds_documentation: { only: :DocTitle },
                         sd_sys_numb: { only: [:sd_link] }
                       })
   end

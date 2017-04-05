@@ -1,5 +1,5 @@
 class Api::HwIosignaldefsController < ApplicationController
-  before_action :set_hw_iosignaldef, only: [:show, :edit, :update, :destroy]
+  before_action :set_hw_iosignaldef, only: %i[show edit update destroy]
   before_action :project, only: :index
 
   # GET /hw_iosignaldefs
@@ -10,8 +10,7 @@ class Api::HwIosignaldefsController < ApplicationController
 
   # GET /hw_iosignaldefs/1
   # GET /hw_iosignaldefs/1.json
-  def show
-  end
+  def show; end
 
   # GET /hw_iosignaldefs/new
   def new
@@ -19,8 +18,7 @@ class Api::HwIosignaldefsController < ApplicationController
   end
 
   # GET /hw_iosignaldefs/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /hw_iosignaldefs
   # POST /hw_iosignaldefs.json

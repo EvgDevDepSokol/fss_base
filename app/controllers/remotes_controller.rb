@@ -1,5 +1,5 @@
 class RemotesController < BaseController
-  ACTIONS = [:pds_malfunction, :pds_malfunction_dim, :pds_rf].freeze
+  ACTIONS = %i[pds_malfunction pds_malfunction_dim pds_rf].freeze
 
   def pds_malfunctions
     @data_list = PdsMalfunction.where(Project: project.ProjectID)
@@ -12,13 +12,12 @@ class RemotesController < BaseController
     @data_list = PdsRf.where(Project: project.ProjectID)
                       .includes(:system, { pds_project_unit: :unit }, psa_project_unit: :unit)
                       .includes(:sd_sys_numb)
-                      .pluck(:rfID, :name, :Ptag,:tag_RU,:Desc,:Desc_EN,:range,:type,:range_FB,
+                      .pluck(:rfID, :name, :Ptag, :tag_RU, :Desc, :Desc_EN, :range, :type, :range_FB,
                              :Type_FB,
                              'pds_syslist.SystemID', 'pds_syslist.System',
                              'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
                              'psa_project_units_pds_rf.ProjUnitID', 'units_pds_project_unit.UnitID', 'units_pds_project_unit.Unit_RU',
-                             'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link',
-                      )
+                             'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link')
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
@@ -37,7 +36,6 @@ class RemotesController < BaseController
       e1['sd_sys_numb']      = { id: e[18], sd_link: e[19] }
       e = e1
     end
-
   end
 
   def pds_malfunction_dims
@@ -58,7 +56,7 @@ class RemotesController < BaseController
       e1['is_main']          = e[4]
       e1['pds_malfunction']  = { id: e[5], system: { id: e[6], System: e[7] }, Numb: e[8] }
       e1['sd_sys_numb'] = { id: e[9], sd_link: e[10] }
-      e1['system']           = { id: e[6], System: e[7] }
+      e1['system'] = { id: e[6], System: e[7] }
       e = e1
     end
   end

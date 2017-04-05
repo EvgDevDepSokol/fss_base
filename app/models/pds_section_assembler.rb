@@ -1,6 +1,6 @@
 class PdsSectionAssembler < ActiveRecord::Base
   self.table_name = 'pds_section_assembler'
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'
 
   has_many :pds_announciator, dependent: :restrict_with_error, foreign_key: 'ctrl_power'

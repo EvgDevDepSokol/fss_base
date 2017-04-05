@@ -2,9 +2,9 @@ module SelectorControllerHelper
   def do_format(hash)
     hash = hash.each.map do |tmp|
       tmp1 = {}
-      tmp1['value']=tmp[0]
-      tmp1['label']=tmp[1]
-      tmp=tmp1
+      tmp1['value'] = tmp[0]
+      tmp1['label'] = tmp[1]
+      tmp = tmp1
     end
 
     respond_to do |format|

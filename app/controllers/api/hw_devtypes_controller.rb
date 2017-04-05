@@ -1,5 +1,5 @@
 class Api::HwDevtypesController < ApplicationController
-  before_action :set_hw_devtype, only: [:show, :edit, :update, :destroy]
+  before_action :set_hw_devtype, only: %i[show edit update destroy]
 
   # GET /hw_devtypes
   # GET /hw_devtypes.json
@@ -9,8 +9,7 @@ class Api::HwDevtypesController < ApplicationController
 
   # GET /hw_devtypes/1
   # GET /hw_devtypes/1.json
-  def show
-  end
+  def show; end
 
   # GET /hw_devtypes/new
   def new
@@ -18,8 +17,7 @@ class Api::HwDevtypesController < ApplicationController
   end
 
   # GET /hw_devtypes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /hw_devtypes
   # POST /hw_devtypes.json

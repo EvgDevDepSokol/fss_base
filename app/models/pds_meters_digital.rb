@@ -1,5 +1,5 @@
 class PdsMetersDigital < ActiveRecord::Base
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
   self.table_name = 'pds_meters_digital'
   schema_validations except: :hw_ic
 
@@ -18,7 +18,7 @@ class PdsMetersDigital < ActiveRecord::Base
 
   def custom_hash
     serializable_hash(include: {
-                        hw_ic: { only: [:ref, :tag_no, :Description, :scaleMin, :scaleMax],
+                        hw_ic: { only: %i[ref tag_no Description scaleMin scaleMax],
                                  include: {
                                    hw_ped: { only: [:ped] },
                                    pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } }

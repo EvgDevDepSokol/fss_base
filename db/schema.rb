@@ -1,4 +1,5 @@
 # encoding: UTF-8
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -354,7 +355,7 @@ ActiveRecord::Schema.define(version: 20_150_405_160_632) do
 
   create_table 'hw_iosignaldim', primary_key: 'ID', force: :cascade do |t|
     t.integer 'Project', limit: 4, null: false, index: { name: 'FK_hw_iosignaldim1', using: :btree }
-    t.integer 'signID',  limit: 4, null: false, index: { name: 'signID', with: %w(num type Project), unique: true, using: :btree }
+    t.integer 'signID',  limit: 4, null: false, index: { name: 'signID', with: %w[num type Project], unique: true, using: :btree }
     t.integer 'num',     limit: 4
     t.string  'type',    limit: 3, default: 'ALL', null: false
     t.string  'suff',    limit: 32, default: ''
@@ -779,7 +780,7 @@ ActiveRecord::Schema.define(version: 20_150_405_160_632) do
     t.string   'Disparity',        limit: 1024
     t.string   'CommingResult',    limit: 1024
   end
-  add_index 'pds_dr', %w(Project drNum), name: 'UniqueDrnum', unique: true, using: :btree
+  add_index 'pds_dr', %w[Project drNum], name: 'UniqueDrnum', unique: true, using: :btree
   add_index 'pds_dr', ['drID'], name: 'drID', unique: true, using: :btree
 
   create_table 'pds_dr_binobj', primary_key: 'objID', force: :cascade do |t|
@@ -1567,7 +1568,7 @@ ActiveRecord::Schema.define(version: 20_150_405_160_632) do
     t.text    'shortDesc',      limit: 65_535
     t.text    'shortDesc_EN',   limit: 65_535
   end
-  add_index 'pds_sys_description', %w(Project sys), name: 'Project_sys', unique: true, using: :btree
+  add_index 'pds_sys_description', %w[Project sys], name: 'Project_sys', unique: true, using: :btree
   add_index 'pds_sys_description', ['SysID'], name: 'SystemID', unique: true, using: :btree
 
   create_table 'pds_syslist', primary_key: 'SystemID', force: :cascade do |t|
@@ -1621,7 +1622,7 @@ ActiveRecord::Schema.define(version: 20_150_405_160_632) do
     t.string   'connection',    limit: 16
     t.integer  'power_section', limit: 4, index: { name: 'power_section', using: :btree }
   end
-  add_index 'pds_valves', %w(ed_power ctrl_power anc_power), name: 'ed_power_2', using: :btree
+  add_index 'pds_valves', %w[ed_power ctrl_power anc_power], name: 'ed_power_2', using: :btree
   add_index 'pds_valves', ['valveID'], name: 'valveID', unique: true, using: :btree
 
   create_table 'pds_valves_59', id: false, force: :cascade do |t|

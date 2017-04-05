@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'pds_projects#select'
-  resources :pds_projects, only: [:new, :show] do
+  resources :pds_projects, only: %i[new show] do
     get :select
 
     resources :general
@@ -72,15 +72,15 @@ Rails.application.routes.draw do
 
   # TableList
   YAML.load_file('public/data/tables.yml').each do |table, _name|
-    resources table.to_s.pluralize, only: [:edit, :update], controller: :general, model: table
+    resources table.to_s.pluralize, only: %i[edit update], controller: :general, model: table
   end
 
-  #controller :import do
+  # controller :import do
   #  put :update_all
-  #end
-  
-  put 'update_all_check',  to: 'import#update_all_check' 
-  put 'update_all_finish', to: 'import#update_all_finish' 
+  # end
+
+  put 'update_all_check',  to: 'import#update_all_check'
+  put 'update_all_finish', to: 'import#update_all_finish'
 
   resources :users
 
@@ -127,8 +127,7 @@ Rails.application.routes.draw do
     get 'get_file', on: :member
   end
 
-  get "*path" => redirect("/")
-
+  get '*path' => redirect('/')
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

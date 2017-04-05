@@ -1,6 +1,6 @@
 class PdsSd < ActiveRecord::Base
   self.table_name = 'pds_sd'
-  alias_attribute :id, self.primary_key
+  alias_attribute :id, primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   alias_attribute :system_id, :sys
   alias_attribute :title, :SdTitle
@@ -26,6 +26,6 @@ class PdsSd < ActiveRecord::Base
   end
 
   before_save do |pds_sd|
-    pds_sd.Numb=pds_sd.Numb.rjust(2,'0')
-  end  
+    pds_sd.Numb = pds_sd.Numb.rjust(2, '0')
+  end
 end

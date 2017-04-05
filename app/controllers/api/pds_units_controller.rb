@@ -1,5 +1,5 @@
 class Api::PdsUnitsController < ApplicationController
-  before_action :set_pds_unit, only: [:show, :edit, :update, :destroy]
+  before_action :set_pds_unit, only: %i[show edit update destroy]
   before_action :project, only: :index
   # GET /pds_project_units
   # GET /pds_project_units.json
@@ -11,8 +11,7 @@ class Api::PdsUnitsController < ApplicationController
 
   # GET /pds_project_units/1
   # GET /pds_project_units/1.json
-  def show
-  end
+  def show; end
 
   # GET /pds_project_units/new
   def new
@@ -20,8 +19,7 @@ class Api::PdsUnitsController < ApplicationController
   end
 
   # GET /pds_project_units/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pds_project_units
   # POST /pds_project_units.json

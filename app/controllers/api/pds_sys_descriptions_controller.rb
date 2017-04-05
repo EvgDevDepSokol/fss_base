@@ -1,5 +1,5 @@
 class Api::PdsSysDescriptionsController < ApplicationController
-  before_action :set_pds_sys_description, only: [:show, :edit, :update, :destroy]
+  before_action :set_pds_sys_description, only: %i[show edit update destroy]
   before_action :project, only: :index
 
   # GET /pds_sys_descriptions
@@ -10,8 +10,7 @@ class Api::PdsSysDescriptionsController < ApplicationController
 
   # GET /pds_sys_descriptions/1
   # GET /pds_sys_descriptions/1.json
-  def show
-  end
+  def show; end
 
   # GET /pds_sys_descriptions/new
   def new
@@ -19,8 +18,7 @@ class Api::PdsSysDescriptionsController < ApplicationController
   end
 
   # GET /pds_sys_descriptions/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pds_sys_descriptions
   # POST /pds_sys_descriptions.json

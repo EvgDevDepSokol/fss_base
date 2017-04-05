@@ -8,8 +8,7 @@ class UsersController < ApplicationController
 
   # GET /pds_engineers/1
   # GET /pds_engineers/1.json
-  def show
-  end
+  def show; end
 
   # GET /pds_engineers/new
   def new
@@ -17,8 +16,7 @@ class UsersController < ApplicationController
   end
 
   # GET /pds_engineers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pds_engineers
   # POST /pds_engineers.json

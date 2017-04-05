@@ -16,7 +16,7 @@ class Api::MassOperationsController < ApplicationController
       column = params[:column]
       querry = querry.find(params[:ids])
       new_data = []
-      if fromIndex.zero? && toIndex.zero?   #value to value
+      if fromIndex.zero? && toIndex.zero? # value to value
         querry.each do |row|
           val = row.send(column)
           if val.nil? || (val == '')
@@ -24,7 +24,7 @@ class Api::MassOperationsController < ApplicationController
               row.send(column + '=', params[:to])
               new_data.push(row)
             end
-          elsif val.is_a? Fixnum # selector
+          elsif val.is_a? Integer # selector
             if val == params[:from].to_i
               row.send(column + '=', params[:to].to_i)
               new_data.push(row)
@@ -58,7 +58,7 @@ class Api::MassOperationsController < ApplicationController
             if val == !params[:from].to_i.zero?
               row[column] = !params[:to].to_i.zero?
               new_data.push(row)
-            end  
+            end
           end
         end
       elsif (fromIndex == 1) && toIndex.zero? # empty selected to value
@@ -75,7 +75,7 @@ class Api::MassOperationsController < ApplicationController
           if val.nil? || (val == '')
             row.send(column + '=', params[:to])
             new_data.push(row)
-          elsif val.is_a? Fixnum # selector
+          elsif val.is_a? Integer # selector
             row.send(column + '=', params[:to].to_i)
             new_data.push(row)
           elsif val.is_a? String # string or textEditor

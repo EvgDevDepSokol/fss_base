@@ -1,9 +1,8 @@
 class ProjectSettingsController < BaseController
-
-  ACTIONS = [:pds_eng_on_sys, :pds_project_unit, :pds_doc_on_sys,
-             :pds_project_sys, :week_report, :pds_documents,
-             :pds_documentation, :pds_simplifications, :pds_queries,
-             :pds_sys_description, :pds_dr, :pds_mathmodel].freeze
+  ACTIONS = %i[pds_eng_on_sys pds_project_unit pds_doc_on_sys
+               pds_project_sys week_report pds_documents
+               pds_documentation pds_simplifications pds_queries
+               pds_sys_description pds_dr pds_mathmodel].freeze
 
   def pds_eng_on_sys
     @data_list = PdsEngOnSy.where(Project: project.ProjectID)
