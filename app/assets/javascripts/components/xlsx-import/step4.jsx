@@ -1,5 +1,7 @@
 var React = require('react');
 var Modal = require('react-modal');
+var Paginator = require('react-pagify').default;
+var segmentize = require('segmentize');
 
 const HEADER_STATE='Статус';
 const HEADER_WARN='Предупреждение';
@@ -16,7 +18,11 @@ var ImportStep4 = React.createClass({
       filter_add:0,
       filter_err:0,
       filter_warn:0,
-      to_exit:false
+      to_exit:false,
+      pagination: {
+        page: 1,
+        perPage: 20
+      }
     };
   },
 
@@ -61,6 +67,16 @@ var ImportStep4 = React.createClass({
     this.setState({filter_warn: filter_warn})
   },
 
+  onSelect: function(page) {
+    var pagination = this.state.pagination || {};
+    var pages = Math.ceil(this.props.importData.length / pagination.perPage);
+
+    pagination.page = Math.min(Math.max(page, 1), pages);
+
+    this.setState({pagination: pagination});
+  },
+
+
   render: function() {
     var importHeaders = this.props.columns;
     var importData = this.props.importData; 
@@ -69,8 +85,11 @@ var ImportStep4 = React.createClass({
     var filters = null; 
     var to_exit = this.state.to_exit;
     var modalTableContainerClass = "modal-table-container"
+    var pagination = this.state.pagination || {};
 
     if(this.props.isOpen) {
+      debugger
+
       if (msg.length==1 && msg[0].not_unique) {
         filters = <div>Файл обработан.</div>;
         message = <p>'Значение выбранного ключевого поля в базе для этой таблицы не уникально! Записи для импорта не могут быть определены однозначно. Импорт не может быть продолжен.'</p>;
@@ -122,17 +141,19 @@ var ImportStep4 = React.createClass({
         var filter_warn = this.state.filter_warn;
 
         var rows = null;
-        if (importData.length > 0 && msg.length > 0) {
+        if (importData.length > 0) {
           rows = importData.map(function(row, i) {
-            row[HEADER_STATE]=msg[i].add;
-            row[HEADER_WARN] = msg[i].warn;
-            row[HEADER_RESULT]=msg[i].result;
             var err=[];
             for(var j=0; j<row[HEADER_ERR0].length; j++){
               err.push(<p>{row[HEADER_ERR0][j]}</p>);
             }
-            for(var j=0; j<msg[i].err.length; j++){
-              err.push(<p>{msg[i].err[j]}</p>);
+            if(typeof msg[i] !== 'undefined') {
+              row[HEADER_STATE]=msg[i].add;
+              row[HEADER_WARN] = msg[i].warn;
+              row[HEADER_RESULT]=msg[i].result;
+              for(var j=0; j<msg[i].err.length; j++){
+                err.push(<p>{msg[i].err[j]}</p>);
+              }
             }
             row[HEADER_ERR]=err;
             return row;
@@ -194,6 +215,12 @@ var ImportStep4 = React.createClass({
               </tr>
             );
           });
+
+
+          var paginated = paginate(rows, pagination);
+          var pages = Math.ceil(rows.length / Math.max(isNaN(pagination.perPage)
+            ? 1
+            : pagination.perPage, 1));
           filters = !!msg?<div className='modal-filter-container'>{radio_add}{radio_warn}{radio_err}</div>:<div></div>;
         } else {
           filters = <div>Ваш файл обрабатывается</div>;
@@ -209,6 +236,7 @@ var ImportStep4 = React.createClass({
         <Modal isOpen={this.props.isOpen} onRequestClose={this.closeModal} style={this.props.style} contentLabel={this.props.contentLabel} onAfterOpen={this.afterOpenModal}>
           <h2>Предварительные результаты</h2>
           {filters}
+
           <div className={modalTableContainerClass} key={"modal-table"}>
             <table className={"table table-bordered table-striped table-hover"}>
               <thead>
@@ -217,10 +245,25 @@ var ImportStep4 = React.createClass({
                 </tr>
               </thead>
               <tbody>
-                {rows}
+                {!!rows?paginated.data:null}
               </tbody>
             </table>
           </div>
+
+          <div className='pagination'>
+            <Paginator.Context className="pagify-pagination" segments={segmentize({page: pagination.page, pages: pages, beginPages: 3, endPages: 3, sidePages: 2})} onSelect={this.onSelect}>
+              <Paginator.Button page={pagination.page - 1}>Предыдущая</Paginator.Button>
+              <Paginator.Segment field="beginPages"/>
+              <Paginator.Ellipsis className="ellipsis" previousField="beginPages" nextField="previousPages"/>
+              <Paginator.Segment field="previousPages"/>
+              <Paginator.Segment field="centerPage" className="selected"/>
+              <Paginator.Segment field="nextPages"/>
+              <Paginator.Ellipsis className="ellipsis" previousField="nextPages" nextField="endPages"/>
+              <Paginator.Segment field="endPages"/>
+              <Paginator.Button page={pagination.page + 1}>Следующая</Paginator.Button>
+            </Paginator.Context>
+          </div>
+
           <p>Всего {!!rows?rows.length:0} строк данных.</p>
 
           <div className={'modal-warning'}>{message}</div>
@@ -231,5 +274,24 @@ var ImportStep4 = React.createClass({
     );
   }
 });
+
+function paginate(data, o) {
+  data = data || [];
+
+  // adapt to zero indexed logic
+  var page = o.page - 1 || 0;
+  var perPage = o.perPage;
+
+  var amountOfPages = Math.ceil(data.length / perPage);
+  var startPage = page < amountOfPages
+    ? page
+    : 0;
+
+  return {
+    amount: amountOfPages,
+    data: data.slice(startPage * perPage, startPage * perPage + perPage),
+    page: startPage
+  };
+}
 
 module.exports = ImportStep4;

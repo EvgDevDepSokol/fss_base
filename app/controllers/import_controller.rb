@@ -7,25 +7,25 @@ class ImportController < ApplicationController
 
   def update_all_check
     message = []
-    byebug
     if key_column_unique? then
       params[:data].each do |i, row|
         msg={add: false, result: '', err: [], warn: ''}
-        unless !!current_object(row[key_column])
+        current_object = get_current_object(row[key_column])
+        unless !!current_object
           msg[:add]=true
-          @current_object=model.new
+          current_object=model.new
         end
-        @current_object.attributes=row.except(:err0).permit!
+        current_object.attributes=row.except(:err0).permit!
         if (@current_project) then
-          @current_object.Project=@current_project
+          current_object.Project=@current_project
         end
         if (!!row[:err0]) then
           #msg[:err]=row[:err0]
         elsif (msg[:add]&&(current_user.user_rights<=1)) then
           msg[:err]=['Нет прав на добавление записи!']
-        elsif (!@current_object.valid?) then
-          msg[:err]=@current_object.errors.full_messages
-        elsif(!@current_object.changed?) then
+        elsif (!current_object.valid?) then
+          msg[:err]=current_object.errors.full_messages
+        elsif(!current_object.changed?) then
           msg[:warn]='Аттрибуты не меняются!'
         end
         message.push(msg)
@@ -33,7 +33,7 @@ class ImportController < ApplicationController
     else
       message.push({not_unique: true, err: ''})
     end
-    render json: { status: :ok, message: message}
+    render json: { status: :ok, message: message, i1: params[:i1], i2: params[:i2]}
   rescue
     render json: { status: :unprocessable_entity, message: message}
   end
@@ -42,28 +42,29 @@ class ImportController < ApplicationController
     message = []
     params[:data].each do |i, row|
       msg={add: false, result: '', err: [], warn: ''}
-      unless !!current_object(row[key_column])
+      current_object = get_current_object(row[key_column])
+      unless !!current_object
         msg[:add]=true
-        @current_object=model.new
+        current_object=model.new
       end
-      @current_object.attributes=row.except(:err0).permit!
+      current_object.attributes=row.except(:err0).permit!
       if (@current_project) then
-        @current_object.Project=@current_project
+        current_object.Project=@current_project
       end
       if (!!row[:err0]) then
         #msg[:err]=row[:err0]
       elsif (msg[:add]&&(current_user.user_rights<=1)) then
         msg[:err]=['Нет прав на добавление записи!']
-      elsif(@current_object.changed?) then
+      elsif(current_object.changed?) then
         msg[:warn]= 'Аттрибуты не меняются!'
-      elsif (!@current_object.save) then
-        msg[:err]=@current_object.errors.full_messages
+      elsif (!current_object.save) then
+        msg[:err]=current_object.errors.full_messages
       else  
         msg[:result]=msg[:add]?'Запись успешно добавлена':'Запись успешно изменена'
       end
       message.push(msg)
     end
-    render json: { status: :ok, message: message}
+    render json: { status: :ok, message: message, i1: params[:i1], i2: params[:i2]}
   rescue
     render json: { status: :unprocessable_entity, message: message}
   end
@@ -71,16 +72,14 @@ class ImportController < ApplicationController
   private
 
   def initialize
-    @current_object = nil
     @current_project = nil
   end
 
-  def current_object(val)
+  def get_current_object(val)
     if !!@current_project
-      @current_object = model.find_by(key_column => val, Project: @current_project)
-      #@current_object = model.where(key_column => val, Project: @current_project).first
+      model.find_by(key_column => val, Project: @current_project)
     else
-      @current_object = model.find_by(key_column => val)
+      model.find_by(key_column => val)
     end
   end
 

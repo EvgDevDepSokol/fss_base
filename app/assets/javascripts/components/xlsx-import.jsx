@@ -134,7 +134,8 @@ var ImportXlsxModal = React.createClass({
     this.setState({
       step: 4,
       parsedData: parsedData,
-      data: data
+      data: data,
+      msg: []
     });
     this.sendDataToServer(parsedData,'/update_all_check');
   },
@@ -150,7 +151,7 @@ var ImportXlsxModal = React.createClass({
         ],
         columns: {},
         keyColumn:'',
-        msg:[]
+        msg: []
       });
     } else {
       var parsedData = this.state.parsedData;
@@ -159,24 +160,40 @@ var ImportXlsxModal = React.createClass({
   },
 
   sendDataToServer: function(data, path) {
-    $.ajax({
-      url: path,
-      dataType: 'json',
-      type: 'PUT',
-      data: {
-        data: data,
-        model: model_name,
-        pds_project_id: project.id,
-        keyColumn: this.state.keyColumn
-      },
-      success: function(response) {
-        this.setState({
-          msg: response.message,
-        });
-      }.bind(this),
-      error: function(xhr, status, err) {
-      }.bind(this)
-    });
+    var i1,i2,msg;
+    var n = Math.floor(data.length/1000);
+    for (var i=0; i <= n; i++){
+      debugger
+      i1 = i*1000;
+      i2 = Math.min(data.length, (i+1)*1000);
+      $.ajax({
+        async: false,
+        url: path,
+        dataType: 'json',
+        type: 'PUT',
+        data: {
+          data: data.slice(i1,i2),
+          model: model_name,
+          pds_project_id: project.id,
+          i1: i1,
+          i2: i2,
+          keyColumn: this.state.keyColumn
+        },
+        success: function(response) {
+          msg = this.state.msg;
+          i1 = Number(response.i1);
+          i2 = Number(response.i2);
+          for (var j=i1; j<i2; j++) {
+            msg[j] = response.message[j-i1]
+          };
+          this.setState({
+            msg: msg,
+          });
+        }.bind(this),
+        error: function(xhr, status, err) {
+        }.bind(this)
+      });
+    }
   },
 
   render: function() {

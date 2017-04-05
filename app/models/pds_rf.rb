@@ -15,6 +15,10 @@ class PdsRf < ActiveRecord::Base
   alias_attribute :psa_project_unit_id, :unit_FB
   alias_attribute :sd_sys_numb_id, :sd_N
 
+  def custom_map
+    true
+  end
+
   def custom_hash
     serializable_hash(include: {
                         system: { only: :System },

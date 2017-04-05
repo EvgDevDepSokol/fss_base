@@ -24,9 +24,7 @@ class TechnologyEquipmentController < BaseController
                               :'1coef_shift', :'2coef_scale', :Type, :TypeDetec, :Room, :SCK_input,
                               :mod,
                               'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link'
-                            )
-
-    @data_list = @data_list.each.map do |e|
+                            ).map do |e|
       e1 = {}
       e1['id']               = e[0]
       e1['system']           = { id: e[1], System: e[2] }
