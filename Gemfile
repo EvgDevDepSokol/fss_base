@@ -124,6 +124,7 @@ gem 'redis'
 gem 'resque'
 
 gem 'simple_form'
+gem 'nilify_blanks'
 # gem 'quiet_assets', group: :development
 
 group :development do

@@ -114,16 +114,16 @@ class Api::MassOperationsController < ApplicationController
     new_data = params[:new_data]
     column = params[:column]
     ids = []
-    new_data.each do |row|
-      ids.push(row[1]['id'].to_i)
+    new_data.each do |i,row|
+      ids.push(row[:id].to_i)
     end
 
     querry = model_class
 
-    new_data.each do |row|
-      querry_row = querry.find(row[1]['id'])
+    new_data.each do |i,row|
+      querry_row = querry.find(row[:id])
       querry_row.attributes.each do |attr_name, _attr_value|
-        querry_row[attr_name] = row[1][attr_name]
+        querry_row[attr_name] = row[attr_name]
       end
       querry_row.save
     end
