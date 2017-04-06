@@ -1,4 +1,4 @@
-class PdsSwitchNofix < ActiveRecord::Base
+class PdsSwitchNofix < ApplicationRecord
   self.table_name = 'pds_switch_nofix'
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic

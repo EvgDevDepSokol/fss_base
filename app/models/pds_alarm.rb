@@ -1,4 +1,4 @@
-class PdsAlarm < ActiveRecord::Base
+class PdsAlarm < ApplicationRecord
   self.table_name = 'pds_alarm'
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic

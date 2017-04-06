@@ -1,4 +1,4 @@
-class WeekReport < ActiveRecord::Base
+class WeekReport < ApplicationRecord
   self.table_name = 'week_report'
   alias_attribute :id, primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'

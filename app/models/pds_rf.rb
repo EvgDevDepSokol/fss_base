@@ -1,4 +1,4 @@
-class PdsRf < ActiveRecord::Base
+class PdsRf < ApplicationRecord
   # self.inheritance_column = nil
   self.inheritance_column = :_type_disabled
   self.table_name = 'pds_rf'

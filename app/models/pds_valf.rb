@@ -1,4 +1,4 @@
-class PdsValf < ActiveRecord::Base
+class PdsValf < ApplicationRecord
   self.inheritance_column = :_type_disabled
   alias_attribute :id, primary_key
   TYPES = ['valve', 'vlv_cntr', 'vlv_relief', 'vlv_pneumo', 'vlv_sol', 'vlv_check', 'vlv_hydr', 'R/C', nil].freeze

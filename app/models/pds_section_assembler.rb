@@ -1,4 +1,4 @@
-class PdsSectionAssembler < ActiveRecord::Base
+class PdsSectionAssembler < ApplicationRecord
   self.table_name = 'pds_section_assembler'
   alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'

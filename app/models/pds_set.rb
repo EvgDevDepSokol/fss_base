@@ -1,4 +1,4 @@
-class PdsSet < ActiveRecord::Base
+class PdsSet < ApplicationRecord
   self.table_name = 'pds_set'
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic

@@ -1,4 +1,4 @@
-class PdsMalfunctionDim < ActiveRecord::Base
+class PdsMalfunctionDim < ApplicationRecord
   self.table_name = 'pds_malfunction_dim'
   alias_attribute :id, primary_key
   belongs_to :pds_malfunction, foreign_key: :Malfunction, class_name: 'PdsMalfunction'

@@ -1,4 +1,4 @@
-class PdsDocument < ActiveRecord::Base
+class PdsDocument < ApplicationRecord
   alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'

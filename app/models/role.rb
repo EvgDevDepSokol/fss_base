@@ -1,4 +1,4 @@
-class Role < ActiveRecord::Base
+class Role < ApplicationRecord
   self.table_name = 'roles'
   self.primary_key = 'roleID'
   alias_attribute :id, primary_key

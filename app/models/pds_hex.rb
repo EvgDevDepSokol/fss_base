@@ -1,4 +1,4 @@
-class PdsHex < ActiveRecord::Base
+class PdsHex < ApplicationRecord
   self.table_name = 'pds_hex'
   alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'

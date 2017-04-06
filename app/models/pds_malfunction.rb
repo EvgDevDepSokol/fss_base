@@ -1,4 +1,4 @@
-class PdsMalfunction < ActiveRecord::Base
+class PdsMalfunction < ApplicationRecord
   # self.inheritance_column = nil
   self.inheritance_column = :_type_disabled
   self.table_name = 'pds_malfunction'

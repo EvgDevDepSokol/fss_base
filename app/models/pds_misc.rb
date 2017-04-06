@@ -1,4 +1,4 @@
-class PdsMisc < ActiveRecord::Base
+class PdsMisc < ApplicationRecord
   self.table_name = 'pds_misc'
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic

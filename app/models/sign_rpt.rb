@@ -1,4 +1,4 @@
-class SignRpt < ActiveRecord::Base
+class SignRpt < ApplicationRecord
   self.table_name = 'sign_rpt'
   alias_attribute :id, primary_key
   def custom_hash

@@ -1,4 +1,4 @@
-class PdsProject < ActiveRecord::Base
+class PdsProject < ApplicationRecord
   self.table_name = 'pds_project'
   alias_attribute :id, primary_key
   belongs_to :company, foreign_key: :companyID

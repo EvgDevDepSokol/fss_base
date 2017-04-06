@@ -1,4 +1,4 @@
-class PdsAlgType < ActiveRecord::Base
+class PdsAlgType < ApplicationRecord
   self.table_name = 'pds_alg_type'
   alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'

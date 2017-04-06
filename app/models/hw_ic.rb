@@ -1,4 +1,4 @@
-class HwIc < ActiveRecord::Base
+class HwIc < ApplicationRecord
   self.table_name = 'hw_ic'
   alias_attribute :id, primary_key
 

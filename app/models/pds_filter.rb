@@ -1,4 +1,4 @@
-class PdsFilter < ActiveRecord::Base
+class PdsFilter < ApplicationRecord
   self.table_name = 'pds_filter'
   alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'

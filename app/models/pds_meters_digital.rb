@@ -1,4 +1,4 @@
-class PdsMetersDigital < ActiveRecord::Base
+class PdsMetersDigital < ApplicationRecord
   self.table_name = 'pds_meters_digital'
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic

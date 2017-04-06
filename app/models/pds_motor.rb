@@ -1,4 +1,4 @@
-class PdsMotor < ActiveRecord::Base
+class PdsMotor < ApplicationRecord
   self.inheritance_column = :_type_disabled
   alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'

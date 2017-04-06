@@ -1,4 +1,4 @@
-class Article < ActiveRecord::Base
+class Article < ApplicationRecord
   self.table_name = 'news'
   alias_attribute :id, primary_key
 

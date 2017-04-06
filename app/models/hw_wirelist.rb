@@ -1,4 +1,4 @@
-class HwWirelist < ActiveRecord::Base
+class HwWirelist < ApplicationRecord
   self.table_name = 'hw_wirelist'
   alias_attribute :id, primary_key
   belongs_to :pds_panel, foreign_key: :panel

@@ -1,4 +1,4 @@
-class PdsRegulator < ActiveRecord::Base
+class PdsRegulator < ApplicationRecord
   alias_attribute :id, primary_key
   # belongs_to :det
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'

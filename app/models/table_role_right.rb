@@ -1,4 +1,4 @@
-class TableRoleRight < ActiveRecord::Base
+class TableRoleRight < ApplicationRecord
   self.table_name = 'table_role_rights'
   self.primary_key = 'tableID'
   alias_attribute :id, primary_key

@@ -1,4 +1,4 @@
-class PdsEquip < ActiveRecord::Base
+class PdsEquip < ApplicationRecord
   self.primary_key = 'TEquipID'
   alias_attribute :id, primary_key
 

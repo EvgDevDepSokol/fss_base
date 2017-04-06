@@ -1,4 +1,4 @@
-class PdsDocOnSy < ActiveRecord::Base
+class PdsDocOnSy < ApplicationRecord
   alias_attribute :id, primary_key
   self.table_name = 'pds_doc_on_sys'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'

@@ -1,4 +1,4 @@
-class HwIosignal < ActiveRecord::Base
+class HwIosignal < ApplicationRecord
   self.table_name = 'hw_iosignal'
   alias_attribute :id, primary_key
 

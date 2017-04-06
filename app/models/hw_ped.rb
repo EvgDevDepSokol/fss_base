@@ -1,4 +1,4 @@
-class HwPed < ActiveRecord::Base
+class HwPed < ApplicationRecord
   self.inheritance_column = nil
   self.table_name = 'hw_peds'
   alias_attribute :id, primary_key

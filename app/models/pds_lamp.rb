@@ -1,4 +1,4 @@
-class PdsLamp < ActiveRecord::Base
+class PdsLamp < ApplicationRecord
   self.primary_key = 'LampID'
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic

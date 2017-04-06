@@ -1,4 +1,4 @@
-class PdsButton < ActiveRecord::Base
+class PdsButton < ApplicationRecord
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic
   belongs_to :hw_ic, foreign_key: 'IC'

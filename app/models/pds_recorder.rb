@@ -1,4 +1,4 @@
-class PdsRecorder < ActiveRecord::Base
+class PdsRecorder < ApplicationRecord
   self.table_name = 'pds_recorders'
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic

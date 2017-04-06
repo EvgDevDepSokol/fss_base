@@ -1,4 +1,4 @@
-class PdsEjector < ActiveRecord::Base
+class PdsEjector < ApplicationRecord
   self.table_name = 'pds_ejector'
   alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'

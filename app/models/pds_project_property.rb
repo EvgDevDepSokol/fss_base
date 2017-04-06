@@ -1,4 +1,4 @@
-class PdsProjectProperty < ActiveRecord::Base
+class PdsProjectProperty < ApplicationRecord
   belongs_to :pds_project, foreign_key: 'ProjectID'
   alias_attribute :id, primary_key
 

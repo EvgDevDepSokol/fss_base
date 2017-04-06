@@ -1,4 +1,4 @@
-class PdsManEquip < ActiveRecord::Base
+class PdsManEquip < ApplicationRecord
   self.table_name = 'pds_man_equip'
   alias_attribute :id, primary_key
 

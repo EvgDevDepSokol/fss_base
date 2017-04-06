@@ -1,4 +1,4 @@
-class PdsEngineer < ActiveRecord::Base
+class PdsEngineer < ApplicationRecord
   # attr_accessible :login_project
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable and :omniauthable

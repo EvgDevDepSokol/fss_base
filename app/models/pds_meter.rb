@@ -1,4 +1,4 @@
-class PdsMeter < ActiveRecord::Base
+class PdsMeter < ApplicationRecord
   schema_validations except: :hw_ic
   alias_attribute :id, primary_key
   belongs_to :hw_ic, foreign_key: 'IC'

@@ -1,4 +1,4 @@
-class Company < ActiveRecord::Base
+class Company < ApplicationRecord
   self.table_name = 'company'
   alias_attribute :id, primary_key
   has_many :pds_projects

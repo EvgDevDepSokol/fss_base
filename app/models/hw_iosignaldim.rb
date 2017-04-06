@@ -1,4 +1,4 @@
-class HwIosignaldim < ActiveRecord::Base
+class HwIosignaldim < ApplicationRecord
   self.table_name = 'hw_iosignaldim'
   self.inheritance_column = nil
   alias_attribute :id, primary_key

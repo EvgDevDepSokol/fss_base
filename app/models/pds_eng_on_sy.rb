@@ -1,4 +1,4 @@
-class PdsEngOnSy < ActiveRecord::Base
+class PdsEngOnSy < ApplicationRecord
   self.table_name = 'pds_eng_on_sys'
   alias_attribute :id, primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'

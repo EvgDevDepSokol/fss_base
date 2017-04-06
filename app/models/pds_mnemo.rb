@@ -1,4 +1,4 @@
-class PdsMnemo < ActiveRecord::Base
+class PdsMnemo < ApplicationRecord
   self.table_name = 'pds_mnemo'
   self.inheritance_column = nil
   alias_attribute :id, primary_key

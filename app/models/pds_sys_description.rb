@@ -1,4 +1,4 @@
-class PdsSysDescription < ActiveRecord::Base
+class PdsSysDescription < ApplicationRecord
   self.table_name = 'pds_sys_description'
   alias_attribute :id, primary_key
 

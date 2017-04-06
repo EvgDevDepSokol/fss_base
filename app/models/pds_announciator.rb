@@ -1,4 +1,4 @@
-class PdsAnnounciator < ActiveRecord::Base
+class PdsAnnounciator < ApplicationRecord
   self.table_name = 'pds_announciator'
   alias_attribute :id, primary_key
   #self.inheritance_column = nil

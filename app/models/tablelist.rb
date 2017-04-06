@@ -1,4 +1,4 @@
-class Tablelist < ActiveRecord::Base
+class Tablelist < ApplicationRecord
   self.table_name = 'tablelist'
   alias_attribute :id, primary_key
   def custom_hash

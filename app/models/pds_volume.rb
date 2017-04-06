@@ -1,4 +1,4 @@
-class PdsVolume < ActiveRecord::Base
+class PdsVolume < ApplicationRecord
   self.table_name = 'pds_volume'
   alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'
