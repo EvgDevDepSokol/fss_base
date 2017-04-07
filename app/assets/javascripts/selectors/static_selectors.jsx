@@ -14,7 +14,19 @@ const DATA_USER_RIGHTS = require('../selectors/data/user_rights.js')
 const DATA_REGIDITY_UNIT = require('../selectors/data/regidity_unit.js')
 const DATA_ANNOUNCIATOR_TYPE = require('../selectors/data/announciator_type.js')
 const DATA_ANNOUNCIATOR_SIGN = require('../selectors/data/announciator_sign.js')
-
+const DATA_SYSLIST_DESCRIPTOR = [
+  { value: 'TH', label: 'TH'},
+  { value: 'L', label: 'L'},
+  { value: 'EL', label: 'EL'},
+  { value: 'CR', label: 'CR'},
+  { value: 'D', label: 'D'},
+  { value: 'addl', label: 'addl'},
+]; 
+const DATA_SYSLIST_CATEGORY = [
+  { value: '1', label: '1'},
+  { value: '2', label: '2'},
+  { value: '3', label: '3'},
+]; 
 var StaticSelector = React.createClass({
 
   getInitialState() {
@@ -190,6 +202,32 @@ var AnnounciatorSignSelector = React.createClass({
   }
 });
 
+var SyslistDescriptorSelector = React.createClass({
+  render: function() {
+    return (
+      <StaticSelector  value = {this.props.value} _this = {this}
+        options = {DATA_SYSLIST_DESCRIPTOR}
+        displayName = 'SyslistDescriptorSelector'
+        name = 'SyslistDescriptor'
+        clearable = {true}
+      />
+    )
+  }
+});
+
+var SyslistCategorySelector = React.createClass({
+  render: function() {
+    return (
+      <StaticSelector  value = {this.props.value} _this = {this}
+        options = {DATA_SYSLIST_CATEGORY}
+        displayName = 'SyslistCategorySelector'
+        name = 'SyslistCategory'
+        clearable = {true}
+      />
+    )
+  }
+});
+
 module.exports.ValveTypeSelector = ValveTypeSelector;
 module.exports.RFTypeSelector = RFTypeSelector;
 module.exports.MalfunctionTypeSelector = MalfunctionTypeSelector;
@@ -201,6 +239,8 @@ module.exports.UserRightsSelector = UserRightsSelector;
 module.exports.RegidityUnitSelector = RegidityUnitSelector;
 module.exports.AnnounciatorTypeSelector = AnnounciatorTypeSelector;
 module.exports.AnnounciatorSignSelector = AnnounciatorSignSelector;
+module.exports.SyslistDescriptorSelector = SyslistDescriptorSelector;
+module.exports.SyslistCategorySelector = SyslistCategorySelector;
 
 module.exports.AnnounciatorSignSelector.options = DATA_ANNOUNCIATOR_SIGN;
 module.exports.ValveTypeSelector.options = DATA_VALVE_TYPES;
@@ -213,3 +253,5 @@ module.exports.MotorZmnSelector.options = DATA_MOTOR_ZMNS;
 module.exports.UserRightsSelector.options = DATA_USER_RIGHTS;
 module.exports.RegidityUnitSelector.options = DATA_REGIDITY_UNIT;
 module.exports.AnnounciatorTypeSelector.options = DATA_ANNOUNCIATOR_TYPE;
+module.exports.SyslistDescriptorSelector.options = DATA_SYSLIST_DESCRIPTOR;
+module.exports.SyslistCategorySelector.options = DATA_SYSLIST_CATEGORY;

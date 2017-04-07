@@ -53,6 +53,8 @@ var UserRightsSelector = require('../selectors/static_selectors.jsx').UserRights
 var RegidityUnitSelector = require('../selectors/static_selectors.jsx').RegidityUnitSelector;
 var AnnounciatorTypeSelector = require('../selectors/static_selectors.jsx').AnnounciatorTypeSelector;
 var AnnounciatorSignSelector = require('../selectors/static_selectors.jsx').AnnounciatorSignSelector;
+var SyslistDescriptorSelector = require('../selectors/static_selectors.jsx').SyslistDescriptorSelector;
+var SyslistCategorySelector = require('../selectors/static_selectors.jsx').SyslistCategorySelector;
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
