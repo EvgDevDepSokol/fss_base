@@ -1,1 +1,0 @@
-json.extract! @pds_valf, :id, :Project, :sys, :tag_RU, :tag_EN, :PowerTemp, :Type, :station_sys, :Desc, :Desc_EN, :Department, :ed_power, :ctrl_power, :anc_power, :nom_state, :open_rate, :close_rate, :sd_N, :doc_reg_N, :Algorithm, :t, :model, :import_t, :mod, :eq_type, :level, :room, :panels, :connection, :created_at, :updated_at
