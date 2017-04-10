@@ -6,7 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/api/pds_syslists';
+var path = '/selectors/pds_syslists';
 
 module.exports = React.createClass({
   displayName: 'SystemAllSelector',
@@ -31,7 +31,6 @@ module.exports = React.createClass({
           {},
           this
         );
-        options = $.map(options , function(el){ return {value: el.id, label: el.System} } )
         callback(null, {
           options: options,
           complete: true,
@@ -60,6 +59,5 @@ module.exports.options = function(){
     {pds_project_id:project.ProjectID},
     this
   );
-  options = $.map(options , function(el){ return {value: el.id, label: el.System} } )
   return options;
 };
