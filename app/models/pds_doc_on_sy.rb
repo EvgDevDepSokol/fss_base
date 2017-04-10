@@ -1,10 +1,15 @@
 class PdsDocOnSy < ApplicationRecord
-  alias_attribute :id, primary_key
   self.table_name = 'pds_doc_on_sys'
+  alias_attribute :id, primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
-  belongs_to :pds_documentation, foreign_key: :Doc
+  belongs_to :pds_documentation, foreign_key: :Doc, class_name: 'PdsDocumentation'
+
   alias_attribute :system_id, :sys
   alias_attribute :pds_documentation_id, :Doc
+
+  def custom_map
+    true
+  end
 
   def custom_hash
     serializable_hash(include: {
