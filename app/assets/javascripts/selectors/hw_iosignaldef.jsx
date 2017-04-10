@@ -6,7 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/api/hw_iosignaldefs';
+var path = '/selectors/hw_iosignaldefs';
 
 module.exports = React.createClass({
   displayName: 'HwIosignaldefSelector',
@@ -31,7 +31,6 @@ module.exports = React.createClass({
           {pds_project_id:project.ProjectID},
           this
         );
-        options = $.map(options , function(el){ return {value: el.id, label: el.ioname} } )
 
         callback(null, {
           options: options,
@@ -60,6 +59,5 @@ module.exports.options = function(){
     {pds_project_id:project.ProjectID},
     this
   );
-  options = $.map(options , function(el){ return {value: el.id, label: el.ioname} } )
   return options;
 };
