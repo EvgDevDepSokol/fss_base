@@ -31,9 +31,6 @@ module.exports = React.createClass({
           {pds_project_id:project.ProjectID},
           this
         );
-        options = $.map(options , function(el){
-          return {value: el.value, label: el.label}
-        });
 
         callback(null, {
           options: options,
@@ -62,6 +59,5 @@ module.exports.options = function(){
     {pds_project_id:project.ProjectID},
     this
   );
-  options = $.map(options , function(el){ return {value: el.value, label: el.label}  });
   return options;
 };
