@@ -6,7 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/api/pds_units';
+var path = '/selectors/pds_units';
 
 module.exports = React.createClass({
   displayName: 'UnitAllSelector',
@@ -31,7 +31,6 @@ module.exports = React.createClass({
           {pds_project_id:project.ProjectID},
           this
         );
-        options = $.map(options , function(el){ return {value: el.id, label: el.Unit_RU} } )
 
         callback(null, {
           options: options,
@@ -61,6 +60,5 @@ module.exports.options = function(){
     {pds_project_id:project.ProjectID},
     this
   );
-  options = $.map(options , function(el){ return {value: el.id, label: el.Unit_RU} } )
   return options;
 };
