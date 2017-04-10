@@ -100,7 +100,6 @@ Rails.application.routes.draw do
     resources :pds_engineers, only: [:index]
     resources :pds_documentations, only: [:index]
     resources :pds_motor_types, only: [:index]
-    resources :pds_project_units, only: [:index]
     resources :pds_units, only: [:index]
     resources :hw_iosignaldefs, only: [:index]
 
@@ -119,6 +118,7 @@ Rails.application.routes.draw do
     resources :pds_section_assemblers, only: [:index]
     resources :hw_peds, only: [:index]
     resources :pds_panels, only: [:index]
+    resources :pds_project_units, only: [:index]
   end
 
   resource :select_builder
