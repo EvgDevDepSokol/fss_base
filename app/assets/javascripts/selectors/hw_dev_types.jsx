@@ -6,7 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/api/hw_devtypes';
+var path = '/selectors/hw_devtypes';
 
 module.exports = React.createClass({
   displayName: 'HwDevTypesSelector',
@@ -31,7 +31,6 @@ module.exports = React.createClass({
           {},
           this
         );
-        options = $.map(options , function(el){ return {value: el.id, label: el.RuName} } )
 
         callback(null, {
           options: options,
@@ -62,6 +61,5 @@ module.exports.options = function(){
     {pds_project_id:project.ProjectID},
     this
   );
-  options = $.map(options , function(el){ return {value: el.id, label: el.RuName} } )
   return options;
 };

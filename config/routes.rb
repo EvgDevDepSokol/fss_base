@@ -94,7 +94,6 @@ Rails.application.routes.draw do
   scope :api, module: :api, defaults: { format: :json } do
     # scope :api, format: true, constraints: { format: 'json' }, module: :api do
     resources :hw_ics, only: [:index]
-    resources :hw_devtypes, only: [:index]
     resources :pds_engineers, only: [:index]
     resources :pds_documentations, only: [:index]
     resources :hw_iosignaldefs, only: [:index]
@@ -118,6 +117,7 @@ Rails.application.routes.draw do
     resources :pds_units, only: [:index]
     resources :pds_motor_types, only: [:index]
     resources :pds_man_equips, only: [:index]
+    resources :hw_devtypes, only: [:index]
   end
 
   resource :select_builder

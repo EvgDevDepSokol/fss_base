@@ -16,7 +16,7 @@ class PdsRf < ApplicationRecord
   alias_attribute :sd_sys_numb_id, :sd_N
 
   enum Type_FB: {'B'=>'B','I'=>'I','R'=>'R','VR'=>'VR','VB'=>'VB','VI'=>'VI','PI'=>'PI'}
-  enum type:    {'B'=>'B','I'=>'I','R'=>'R','VR'=>'VR','VB'=>'VB','VI'=>'VI','PI'=>'PI'}
+  # enum type:    {'B'=>'B','I'=>'I','R'=>'R','VR'=>'VR','VB'=>'VB','VI'=>'VI','PI'=>'PI'}
   enum typerf:  {'v'=>'v','p'=>'p','p1'=>'p1'}
   enum scale:   {'1'=>'1','2'=>'2'}
 
