@@ -4,6 +4,7 @@ var isNumber = require('lodash').isNumber;
 var isString = require('lodash').isString;
 var React = require('react');
 var ReactDOM = require('react-dom');
+import PropTypes from 'prop-types';
 
 var formatters = require('reactabular').formatters;
 var predicates = require('reactabular').predicates;

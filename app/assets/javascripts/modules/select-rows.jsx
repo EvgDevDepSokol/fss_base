@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+import PropTypes from 'prop-types';
 
 module.exports = React.createClass({
   displayName: 'SelectRows',

@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react');
 var ReactDOM = require('react-dom');
+import PropTypes from 'prop-types';
 var Modal = require('react-modal');
 
 var SystemSelector = require('../selectors/system.jsx');

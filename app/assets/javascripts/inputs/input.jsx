@@ -4,6 +4,7 @@
 //var React = require('react-addons-{addon}');
 var React = require('react');
 var ReactDOM = require('react-dom');
+import PropTypes from 'prop-types';
 
 module.exports = function() {
   return React.createClass({

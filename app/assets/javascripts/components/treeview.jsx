@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var LocalStorageMixin = require('react-localstorage');
+import PropTypes from 'prop-types';
 var TreeView = React.createClass({
   propTypes: {
     collapsed: React.PropTypes.bool,

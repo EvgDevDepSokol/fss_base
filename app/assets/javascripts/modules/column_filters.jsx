@@ -4,6 +4,7 @@ var _ = require('lodash');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+import PropTypes from 'prop-types';
 
 module.exports = React.createClass({
   displayName: 'ColumnFilters',
