@@ -6,7 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/api/pds_panels';
+var path = '/selectors/pds_panels';
 
 module.exports = React.createClass({
   displayName: 'PdsPanelSelector',
@@ -31,7 +31,6 @@ module.exports = React.createClass({
           {pds_project_id:project.ProjectID},
           this
         );
-        options = $.map(options , function(el){ return {value: el.id, label: el.panel} } )
 
         callback(null, {
           options: options,
@@ -61,6 +60,5 @@ module.exports.options = function(){
     {pds_project_id:project.ProjectID},
     this
   );
-  options = $.map(options , function(el){ return {value: el.id, label: el.panel} } )
   return options;
 };
