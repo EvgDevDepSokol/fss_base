@@ -99,9 +99,9 @@ Rails.application.routes.draw do
   end
 
   namespace :selectors, defaults: { format: :json } do
-    resources :sd_sys_numbs
-    resources :pds_equips
-    resources :pds_detectors
+    resources :sd_sys_numbs, only: [:index]
+    resources :pds_equips, only: [:index]
+    resources :pds_detectors, only: [:index]
     resources :pds_syslists, only: [:index]
     resources :pds_sys_descriptions, only: [:index]
     resources :pds_section_assemblers, only: [:index]
