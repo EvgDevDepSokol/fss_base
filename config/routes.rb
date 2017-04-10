@@ -92,9 +92,6 @@ Rails.application.routes.draw do
   resources :tablelist
 
   scope :api, module: :api, defaults: { format: :json } do
-    resources :pds_engineers, only: [:index]
-    resources :pds_documentations, only: [:index]
-
     controller :mass_operations, path: :mass_operations do
       put :update_all
       put :update_all_save
@@ -117,6 +114,8 @@ Rails.application.routes.draw do
     resources :hw_devtypes, only: [:index]
     resources :hw_ics, only: [:index]
     resources :hw_iosignaldefs, only: [:index]
+    resources :pds_engineers, only: [:index]
+    resources :pds_documentations, only: [:index]
   end
 
   resource :select_builder

@@ -6,13 +6,12 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/api/pds_documentations';
+var path = '/selectors/pds_documentations';
 
 module.exports = React.createClass({
   displayName: 'PdsDocumentationsSelector',
 
   getInitialState() {
-    debugger
     return {
       value: this.props.id,
       disabled: this.props.disabled
@@ -32,7 +31,6 @@ module.exports = React.createClass({
           {pds_project_id:project.ProjectID},
           this
         );
-        options = $.map(options , function(el){ return {value: el.id, label: el.DocTitle} } )
 
         callback(null, {
           options: options,
@@ -61,6 +59,5 @@ module.exports.options = function(){
     {pds_project_id:project.ProjectID},
     this
   );
-  options = $.map(options , function(el){ return {value: el.id, label: el.DocTitle} } )
   return options;
 };
