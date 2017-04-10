@@ -3,7 +3,7 @@ class Selectors::PdsPanelsController < ApplicationController
 
   def index
     @pds_panels = PdsPanel.where(Project: project.ProjectID).order(:panel)
-    .pluck(:pID, :panel)
+                          .pluck(:pID, :panel)
     do_format(@pds_panels)
   end
 end

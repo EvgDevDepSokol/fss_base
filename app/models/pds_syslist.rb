@@ -50,8 +50,8 @@ class PdsSyslist < ApplicationRecord
   has_many :pds_volume, dependent: :restrict_with_error, foreign_key: 'sys'
   has_many :week_report, dependent: :restrict_with_error, foreign_key: 'sys'
 
-  enum Descriptor: {'TH'=>'TH','L'=>'L','EL'=>'EL','CR'=>'CR','D'=>'D','addl'=>'addl'}
-  enum Category:   {'1'=>'1','2'=>'2','3'=>'3'}
+  enum Descriptor: { 'TH' => 'TH', 'L' => 'L', 'EL' => 'EL', 'CR' => 'CR', 'D' => 'D', 'addl' => 'addl' }
+  enum Category:   { '1' => '1', '2' => '2', '3' => '3' }
 
   def to_s
     self.System

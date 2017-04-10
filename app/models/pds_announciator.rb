@@ -1,8 +1,8 @@
 class PdsAnnounciator < ApplicationRecord
   self.table_name = 'pds_announciator'
   alias_attribute :id, primary_key
-  #self.inheritance_column = nil
-  self.inheritance_column = "inheritance_type"
+  # self.inheritance_column = nil
+  self.inheritance_column = 'inheritance_type'
   schema_validations except: :hw_ic
 
   belongs_to :hw_ic, foreign_key: 'IC'

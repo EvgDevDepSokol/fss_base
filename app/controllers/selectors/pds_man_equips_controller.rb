@@ -3,7 +3,7 @@ class Selectors::PdsManEquipsController < ApplicationController
 
   def index
     @pds_man_equips = PdsManEquip.order(:Type)
-    .pluck(:EquipN, :Type)
+                                 .pluck(:EquipN, :Type)
     do_format(@pds_man_equips)
   end
 end
