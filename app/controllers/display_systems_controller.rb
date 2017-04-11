@@ -3,11 +3,14 @@ class DisplaySystemsController < BaseController
 
   # уродливо, но ОООЧЕНЬ быстро. Было 35-38 секунд, стало 3-5 секунд!
   def pds_ppcas
-    @data_list = PdsPpca.where(Project: project.ProjectID)
-                        .includes(:system, :pds_detector).pluck('ppcID', 'pds_syslist.SystemID', 'pds_syslist.System', 'Shifr', 'Key', 'identif',
-                                                                'Description', 'Description_EN',
-                                                                'L_lim', 'U_lim', 'Unit', 'nom',
-                                                                'pds_detectors.DetID', 'pds_detectors.tag')
+    @data_list = PdsPpca
+      .where(Project: project.ProjectID)
+      .includes(:system, :pds_detector)
+      .pluck('ppcID', 'pds_syslist.SystemID', 'pds_syslist.System',
+             'Shifr', 'Key', 'identif',
+             'Description', 'Description_EN',
+             'L_lim', 'U_lim', 'Unit', 'nom',
+             'pds_detectors.DetID', 'pds_detectors.tag')
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
@@ -27,14 +30,17 @@ class DisplaySystemsController < BaseController
   end
 
   def pds_ppcds
-    @data_list = PdsPpcd.where(Project: project.ProjectID)
-                        .includes(:system, :pds_detector).pluck('ppcdID', 'pds_syslist.System', 'pds_syslist.SystemID', 'Shifr', 'Key', 'identif',
-                                                                'Description', 'Description_EN',
-                                                                'pds_detectors.DetID', 'pds_detectors.tag')
+    @data_list = PdsPpcd
+      .where(Project: project.ProjectID)
+      .includes(:system, :pds_detector)
+      .pluck('ppcdID', 'pds_syslist.SystemID', 'pds_syslist.System',
+             'Shifr', 'Key', 'identif',
+             'Description', 'Description_EN',
+             'pds_detectors.DetID', 'pds_detectors.tag')
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
-      e1['system']           = { System: e[1], id: e[2] }
+      e1['system']           = { System: e[2], id: e[1] }
       e1['Shifr']            = e[3]
       e1['Key']              = e[4]
       e1['identif']          = e[5]
@@ -46,9 +52,26 @@ class DisplaySystemsController < BaseController
   end
 
   def pds_sds
-    @data_list = PdsSd.where(Project: project.ProjectID)
-                      .includes(:system)
-                      .order(:sys, :Numb)
+    @data_list = PdsSd
+      .where(Project: project.ProjectID)
+      .includes(:system)
+      .order(:sys, :Numb)
+      .pluck(:id, :SdTitle, :BlobObj, :Numb,
+        :title_EN,
+        'pds_syslist.SystemID', 'pds_syslist.System')
+      .map do |e|
+        {
+          id: e[0],
+          SdTitle: e[1],
+          BlobObj: e[2],
+          Numb: e[3],
+          title_EN: e[4],
+          system: {
+            id: e[5],
+            System: e[6]
+          }
+        }
+      end
   end
 
   helper_method :table_header
