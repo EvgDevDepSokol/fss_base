@@ -6,7 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/selectors/pds_sys_descriptions';
+var path = '/selectors/pds_syslists';
 
 module.exports = React.createClass({
   displayName: 'SystemSelector',
