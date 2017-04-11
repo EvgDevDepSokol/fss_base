@@ -103,7 +103,6 @@ Rails.application.routes.draw do
     resources :pds_equips, only: [:index]
     resources :pds_detectors, only: [:index]
     resources :pds_syslists, only: [:index]
-    resources :pds_sys_descriptions, only: [:index]
     resources :pds_section_assemblers, only: [:index]
     resources :hw_peds, only: [:index]
     resources :pds_panels, only: [:index]

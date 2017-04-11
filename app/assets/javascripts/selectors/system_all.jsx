@@ -6,7 +6,7 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/selectors/pds_syslists';
+var path = '/selectors/pds_sys_descriptions';
 
 module.exports = React.createClass({
   displayName: 'SystemAllSelector',
@@ -28,7 +28,7 @@ module.exports = React.createClass({
       setTimeout(function() {
         var options = getSelectorOptions(
           path,  
-          {},
+          {pds_project_id:project.ProjectID},
           this
         );
         callback(null, {
