@@ -577,7 +577,7 @@ var TableContainer = React.createClass({
   },
 
   onPage: function(e) {
-    var pagination = this.state.pagination || {};
+    var pagination = this.state.pagination;
     var pages = Math.ceil(this.state.data.length / pagination.perPage);
     var page = parseInt(e.target.value, 10);
     if (isNaN(page))
@@ -859,7 +859,7 @@ var TableContainer = React.createClass({
                 <p>строк</p>
               </div>
               <div className='page-container'>
-                <input type='number' min='1' defaultValue={pagination.page} onChange={this.onPage} disabled={this.state.lockRow}></input>
+                <input type='number' min='1' value={this.state.pagination.page} onChange={this.onPage} disabled={this.state.lockRow}></input>
                 <p>cтр.</p>
               </div>
               <div className={this.state.showFilters
