@@ -279,32 +279,25 @@ var ImportStep4 = React.createClass(
             numberOfRows = importData.length;
             if(importData.length > 0)
             {
-              rows = importData.map(function (row, i)
+              rows = importData.map(function (row, i){
+                var err = [];
+                for(var j = 0; j < row[HEADER_ERR0].length; j++)
                 {
-                  var err = [];
-                  for(var j = 0; j < row[HEADER_ERR0].length; j++)
+                  err.push( <p>{row[HEADER_ERR0][j]}</p>);
+                }
+                if(typeof msg[i] !== 'undefined')
+                {
+                  row[HEADER_STATE] = msg[i].add;
+                  row[HEADER_WARN] = msg[i].warn;
+                  row[HEADER_RESULT] = msg[i].result;
+                  for(var j = 0; j < msg[i].err.length; j++)
                   {
-                    err.push( < p >
-                      {
-                        row[HEADER_ERR0][j]
-                      } < /p>);
-                    }
-                    if(typeof msg[i] !== 'undefined')
-                    {
-                      row[HEADER_STATE] = msg[i].add;
-                      row[HEADER_WARN] = msg[i].warn;
-                      row[HEADER_RESULT] = msg[i].result;
-                      for(var j = 0; j < msg[i].err.length; j++)
-                      {
-                        err.push( < p >
-                          {
-                            msg[i].err[j]
-                          } < /p>);
-                        }
-                      }
-                      row[HEADER_ERR] = err;
-                      return row;
-                    });
+                    err.push(<p>{msg[i].err[j]}</p>);
+                  }
+                }
+                row[HEADER_ERR] = err;
+                return row;
+              });
 
                   switch(filter_add)
                   {
@@ -363,41 +356,15 @@ var ImportStep4 = React.createClass(
                   rows = paginated.data.map(function (row, i)
                   {
                     row[HEADER_STATE] = row[HEADER_STATE] ? 'Новая запись' : 'Существующая запись';
-
                     var cells = Object.keys(importHeaders).map(function (key, j)
                     {
-                      return( <
-                        td key = {
-                          i + '-' + j + '-cell'
-                        } >
-                        {
-                          row[key]
-                        } <
-                        /td>
-                      );
+                      return(<td key = {i + '-' + j + '-cell'}>{row[key]}</td>);
                     });
-
-                    return( <
-                      tr key = {
-                        i + '-row'
-                      } >
-                      {
-                        cells
-                      } <
-                      /tr>
+                    return( <tr key = {i + '-row'}>{cells}</tr>
                     );
                   });
-
                   filters = !!msg ? < div className = 'modal-filter-container' >
-                  {
-                    radio_add
-                  }
-                  {
-                    radio_warn
-                  }
-                  {
-                    radio_err
-                  } < /div>:<div></div > ;
+                  {radio_add}{radio_warn}{radio_err}</div>:<div></div>;
                 }
                 else
                 {
@@ -437,32 +404,17 @@ var ImportStep4 = React.createClass(
                 filters
               }
 
-              <
-              div className = {
-                modalTableContainerClass
-              }
-              key = {
-                "modal-table"
-              } >
-              <
-              table className = {
-                "table table-bordered table-striped table-hover"
-              } >
-              <
-              thead >
-              <
-              tr >
-              {
-                headersFrom
-              } <
-              /tr> < /
-              thead > <
-              tbody >
-              {!!rows ? rows : null
-              } <
-              /tbody> < /
-              table > <
-              /div>
+              <div className = {modalTableContainerClass}
+                key = {"modal-table"}>
+                <table className = {
+                  "table table-bordered table-striped table-hover"
+                } >
+                <thead >
+                  <tr>{headersFrom}</tr>
+                </thead >
+                <tbody >{!!rows ? rows : null}</tbody>
+                </table >
+              </div>
 
               <
               div className = 'pagination' >
@@ -510,33 +462,13 @@ var ImportStep4 = React.createClass(
               Paginator.Context > <
               /div>
 
-              <
-              p > Обработано
-              {
-                this.props.processed
-              }
-              строк данных. < /p> <
-              p > Всего
-              {
-                numberOfRows
-              }
-              строк данных. < /p>
+              <p > Обработано {this.props.processed} строк данных. </p>
+              <p > Всего {numberOfRows} строк данных. </p>
 
-              <
-              div className = {
-                'modal-warning'
-              } >
-              {
-                message
-              } < /div>
-              {
-                exit_button
-              }
-              {
-                next_button
-              } <
-              /Modal> < /
-              div >
+              <div className = {'modal-warning'}> {message} </div>
+              {exit_button}{next_button}
+              </Modal>
+            </div>
             );
           }
         });

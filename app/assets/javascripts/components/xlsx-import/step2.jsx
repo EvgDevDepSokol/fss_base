@@ -80,13 +80,13 @@ var ImportStep2 = React.createClass({
       },
 
       afterOpenModal() {
+        debugger
         var isEmptyObj = function (obj) {
           return Object
             .keys(obj)
             .length === 0 && obj.constructor === Object;
         };
         var options = [];
-        debugger
         columns.forEach(function (col) {
           var label = col.label;
           var property = col.property;
@@ -285,110 +285,69 @@ var ImportStep2 = React.createClass({
                 });
 
               if(importHeaders != null) {
-                var headersFrom = Object
-                  .keys(importHeaders)
-                  .map(function (key, i) {
-                    var className = importHeaders[key]['to'] ?
-                      "static-header" :
-                      "static-header not-editable";
-                    return( < th key = {
-                        i + '-header'
-                      }
-                      className = {
-                        className
-                      } > {
-                        key
-                      } < /th>
-                    );
+                var headersFrom = Object.keys(importHeaders).map(function (key, i) {
+                  var className = importHeaders[key]['to'] ?
+                    "static-header" :
+                    "static-header not-editable";
+                  return(<th key = {i + '-header'} className = {className}>{key}</th>);
+                });
+                var headersTo = Object.keys(importHeaders).map(function (key, i) {
+                  return(<th key = {i + '-header'} className = {"select-header"}>{importHeaders[key].selector}</th>);
+                });
+
+                var rows = null;
+                if(this.props.importData.length > 0) {
+                  rows = this.props.importData.slice(0, 20).map(function (row, i) {
+                    var cells = Object.keys(importHeaders).map(function (key, j) {
+                      return(<td key = {i + '-' + j + '-cell'}>{row[key]}</td>);
+                    });
+
+                    return(<tr key = {i + '-row'}>{cells}</tr>);
                   });
-                var headersTo = Object.keys(importHeaders)
-                  .map(function (key, i) {
-                      return( <
-                        th key = {
-                          i + '-header'
-                        }
-                        className = {
-                          "select-header"
-                        } > {
-                          importHeaders[key].selector
-                        } < /th >);
-                      });
-
-                    var rows = null;
-                    if(this.props.importData.length > 0) {
-                      rows = this
-                        .props
-                        .importData
-                        .slice(0, 20)
-                        .map(function (row, i) {
-
-                            var cells = Object.keys(importHeaders).map(function (key, j) {
-                                return( < td key = {
-                                    i + '-' + j + '-cell'
-                                  } > {
-                                    row[key]
-                                  } < /td>);
-                                });
-
-                              return( < tr key = {
-                                  i + '-row'
-                                } > {
-                                  cells
-                                } < /tr >);
-                              });
-                          }
-                          var message = $.map(message, function (m, i) {
-                              return( < p key = {
-                                  i + '-message'
-                                } > {
-                                  m
-                                } < /p>)
-                              });
-                          }
-                          return( <
-                            div className = "import-from-excel-2" >
-                            <
-                            Modal isOpen = {
-                              this.props.isOpen
-                            }
-                            onRequestClose = {
-                              this.closeModal
-                            }
-                            style = {
-                              this.props.style
-                            }
-                            contentLabel = {
-                              this.props.contentLabel
-                            }
-                            onAfterOpen = {
-                              this.afterOpenModal
-                            } >
-                            <
-                            h2 > Шаг 2. Выберите столбцы < /h2 > < div className = "modal-table-container" key = {
-                            "modal-table"
-                          } > < table className = {
-                            "table table-bordered table-striped table-hover"
-                          } > < thead > < tr > {
-                            headersFrom
-                          } < /tr> <tr className = "selector-header" > { headersTo } </tr > < /thead > < tbody > {
-                          rows
-                        } < /tbody > < /
-                      table > < /div > < p > Всего {
-                      this.props.importData.length
-                    }
-                    строк данных. < /p > < div > Укажите соответствия импорта колонок. < /div > < h2 > Шаг 3. Выберите ключевое поле < /h2 > < div > Выберите ключевое поле,
-                    по которому запись будет искаться в базе. < /div > < div > Значение поля для каждой записи из импортируемого файла должно быть уникальным и не должно быть пустым. < /div > < div > При возникновении сообщения об ошибке,
-                    внесите исправления в импортруемый файл и начните импорт заново. < /div > < div > {
-                    keyColumnSelector
-                  } < /div > < button onClick = {
-                this.closeModal
-              } > Отмена < /button > < button onClick = {
-              this.nextModal
-            } > Далее < /button > < p > В файле должны содержаться данные для текущей таблицы текущего проекта. < /p > < div className = {
-              'modal-warning'
-            } > {
-              message
-            } < /div > < /Modal > < /div >);
+                }
+                var message = $.map(message, function (m, i) {
+                  return(<p key = {i + '-message'}>{m}</p>)
+                });
+              }
+              return( <div className = "import-from-excel-2" >
+                <Modal isOpen = {
+                  this.props.isOpen
+                }
+                onRequestClose = {
+                  this.closeModal
+                }
+                style = {
+                  this.props.style
+                }
+                contentLabel = {
+                  this.props.contentLabel
+                }
+                onAfterOpen = {
+                  this.afterOpenModal
+                } >
+                < h2 > Шаг 2. Выберите столбцы < /h2 > < div className = "modal-table-container" key = {
+                "modal-table"
+              } > < table className = {"table table-bordered table-striped table-hover"} >
+                    <thead>
+                      <tr>{headersFrom}</tr><tr className = "selector-header">{headersTo}</tr>
+                    </thead>
+                    < tbody >{rows}< /tbody >
+                  < /table > < /div > < p > Всего {this.props.importData.length} строк данных. < /p > < div > Укажите соответствия импорта колонок. < /div >
+                  < h2 > Шаг 3. Выберите ключевое поле < /h2 >
+                  < div > Выберите ключевое поле, по которому запись будет искаться в базе. < /div >
+                  < div > Значение поля для каждой записи из импортируемого файла должно быть уникальным и не должно быть пустым. < /div >
+                  < div > При возникновении сообщения об ошибке, внесите исправления в импортруемый файл и начните импорт заново. < /div >
+                  < div >
+                    {keyColumnSelector}
+                  < /div >
+                  < button onClick = {this.closeModal} > Отмена < /button >
+                  < button onClick = {this.nextModal } > Далее < /button >
+                  < p > В файле должны содержаться данные для текущей таблицы текущего проекта. < /p >
+                  < div className = {'modal-warning'} >
+                    {message}
+                  < /div >
+                < /Modal >
+              < /div >);
           }
           else {
             return( < div / > );

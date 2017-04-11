@@ -36,6 +36,7 @@ var ImportXlsxModal = React.createClass(
       {},
       keyColumn: '',
       msg: [],
+      parsedData: [],
       processed: 0
     };
   },
@@ -132,6 +133,7 @@ var ImportXlsxModal = React.createClass(
       {},
       keyColumn: '',
       msg: [],
+      parsedData:[],
       processed: 0
     });
   },
@@ -195,7 +197,7 @@ var ImportXlsxModal = React.createClass(
       msg: [],
       processed: 0
     });
-    this.sendDataToServer(parsedData, '/update_all_check');
+    this.sendDataToServer(parsedData, '/import_prepare');
   },
 
   step4Finished: function (to_exit)
@@ -214,13 +216,14 @@ var ImportXlsxModal = React.createClass(
         {},
         keyColumn: '',
         msg: [],
+        parsedData: [], 
         processed: 0
       });
     }
     else
     {
       var parsedData = this.state.parsedData;
-      this.sendDataToServer(parsedData, '/update_all_finish');
+      this.sendDataToServer(parsedData, '/import_finish');
     }
   },
 

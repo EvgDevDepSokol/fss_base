@@ -79,8 +79,11 @@ Rails.application.routes.draw do
   #  put :update_all
   # end
 
-  put 'update_all_check',  to: 'import#update_all_check'
-  put 'update_all_finish', to: 'import#update_all_finish'
+  put :import_prepare, to: 'import#import_prepare'
+  put :import_finish,  to: 'import#import_finish'
+
+  put :replace_prepare, to: 'mass_operations#replace_prepare'
+  put :replace_finish,  to: 'mass_operations#replace_finish'
 
   resources :users
 
@@ -90,13 +93,6 @@ Rails.application.routes.draw do
                      path: '/'
 
   resources :tablelist
-
-  scope :api, module: :api, defaults: { format: :json } do
-    controller :mass_operations, path: :mass_operations do
-      put :update_all
-      put :update_all_save
-    end
-  end
 
   namespace :selectors, defaults: { format: :json } do
     resources :sd_sys_numbs, only: [:index]

@@ -5,7 +5,7 @@ class ImportController < ApplicationController
   before_action :current_project, :key_column
   helper_method :current_project, :key_column
 
-  def update_all_check
+  def import_prepare
     message = []
     if key_column_unique?
       params[:data].each do |_i, row|
@@ -36,7 +36,7 @@ class ImportController < ApplicationController
     render json: { status: :unprocessable_entity, message: message }
   end
 
-  def update_all_finish
+  def import_finish
     message = []
     params[:data].each do |_i, row|
       msg = { add: false, result: '', err: [], warn: '' }

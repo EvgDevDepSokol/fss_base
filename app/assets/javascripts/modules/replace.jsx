@@ -138,7 +138,7 @@ module.exports = React.createClass({
       });
       if (ids.length > 0) {
         $.ajax({
-          url: '/api/mass_operations/update_all',
+          url: '/replace_prepare',
           dataType: 'json',
           data: {
             pds_project_id: project
@@ -165,7 +165,7 @@ module.exports = React.createClass({
               //    var lsave=false;
               if (lsave && new_data.length > 0) {
                 $.ajax({
-                  url: '/api/mass_operations/update_all_save',
+                  url: '/replace_finish',
                   dataType: 'json',
                   data: {
                     new_data: new_data,
