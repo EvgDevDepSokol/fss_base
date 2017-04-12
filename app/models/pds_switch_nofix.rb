@@ -11,7 +11,7 @@ class PdsSwitchNofix < ApplicationRecord
   alias_attribute :hw_ic_id, :IC
   alias_attribute :system_id, :sys
 
-  def plucked
+  def self.plucked
     true
   end
 

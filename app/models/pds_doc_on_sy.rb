@@ -7,7 +7,7 @@ class PdsDocOnSy < ApplicationRecord
   alias_attribute :system_id, :sys
   alias_attribute :pds_documentation_id, :Doc
 
-  def plucked
+  def self.plucked
     true
   end
 

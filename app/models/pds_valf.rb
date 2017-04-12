@@ -27,7 +27,7 @@ class PdsValf < ApplicationRecord
   validates :Type, inclusion: TYPES, if: :present?
   validates :Department, inclusion: DEPARTMENT_TYPES, if: :present?
 
-  def plucked
+  def self.plucked
     true
   end
 

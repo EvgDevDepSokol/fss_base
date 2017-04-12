@@ -6,7 +6,7 @@ class PdsPpcd < ApplicationRecord
   alias_attribute :system_id, :sys
   alias_attribute :pds_detector_id, :Detector
 
-  def plucked
+  def self.plucked
     true
   end
 

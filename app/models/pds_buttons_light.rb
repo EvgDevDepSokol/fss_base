@@ -10,7 +10,7 @@ class PdsButtonsLight < ApplicationRecord
   alias_attribute :system_id, :sys
   alias_attribute :pds_section_assembler_id, :ctrl_power
 
-  def plucked
+  def self.plucked
     true
   end
 

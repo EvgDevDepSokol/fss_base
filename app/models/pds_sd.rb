@@ -20,7 +20,7 @@ class PdsSd < ApplicationRecord
   has_many :pds_valves, dependent: :restrict_with_error, foreign_key: 'sd_N'
   has_many :pds_volume, dependent: :restrict_with_error, foreign_key: 'sd_N'
 
-  def plucked
+  def self.plucked
     true
   end
 

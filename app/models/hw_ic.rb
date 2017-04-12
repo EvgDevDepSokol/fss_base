@@ -20,7 +20,7 @@ class HwIc < ApplicationRecord
 
   validate :duplicate_exists, on: :create
 
-  def plucked
+  def self.plucked
     true
   end
 

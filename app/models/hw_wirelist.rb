@@ -11,7 +11,7 @@ class HwWirelist < ApplicationRecord
   alias_attribute :pds_panel_id, :panel
   alias_attribute :hw_ic_id, :IC
 
-  def plucked
+  def self.plucked
     true
   end
 

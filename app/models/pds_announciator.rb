@@ -19,7 +19,7 @@ class PdsAnnounciator < ApplicationRecord
   validates :Type, inclusion: %w[AN YC], allow_nil: true, allow_blank: true
   validates :sign, inclusion: %w[предупр. авар.], allow_nil: true, allow_blank: true
 
-  def plucked
+  def self.plucked
     true
   end
 
