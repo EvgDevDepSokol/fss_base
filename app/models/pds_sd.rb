@@ -4,7 +4,6 @@ class PdsSd < ApplicationRecord
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   alias_attribute :system_id, :sys
-  # alias_attribute :title, :SdTitle
 
   has_many :pds_breakers, dependent: :restrict_with_error, foreign_key: 'sd_N'
   has_many :pds_detectors, dependent: :restrict_with_error, foreign_key: 'sd_N'
@@ -21,7 +20,22 @@ class PdsSd < ApplicationRecord
   has_many :pds_volume, dependent: :restrict_with_error, foreign_key: 'sd_N'
 
   def self.plucked
-    true
+    pluck(:id, :SdTitle, :BlobObj, :Numb,
+      :title_EN,
+      'pds_syslist.SystemID', 'pds_syslist.System')
+      .map do |e|
+      {
+        id: e[0],
+        SdTitle: e[1],
+        BlobObj: e[2],
+        Numb: e[3],
+        title_EN: e[4],
+        system: {
+          id: e[5],
+          System: e[6]
+        }
+      }
+    end
   end
 
   def custom_hash

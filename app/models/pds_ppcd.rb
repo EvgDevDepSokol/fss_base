@@ -7,7 +7,21 @@ class PdsPpcd < ApplicationRecord
   alias_attribute :pds_detector_id, :Detector
 
   def self.plucked
-    true
+    pluck('ppcdID', 'pds_syslist.SystemID', 'pds_syslist.System',
+      'Shifr', 'Key', 'identif',
+      'Description', 'Description_EN',
+      'pds_detectors.DetID', 'pds_detectors.tag').map do |e|
+      {
+        'id' => e[0],
+        'system'           => { System: e[2], id: e[1] },
+        'Shifr'            => e[3],
+        'Key'              => e[4],
+        'identif'          => e[5],
+        'Description'      => e[6],
+        'Description_EN'   => e[7],
+        'pds_detector'     => { id: e[8], tag: e[9] }
+      }
+    end
   end
 
   def custom_hash
