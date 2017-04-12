@@ -23,6 +23,7 @@ class PdsSd < ApplicationRecord
   def custom_map
     true
   end
+
   def custom_hash
     serializable_hash(include: {
                         system: { only: :System }
