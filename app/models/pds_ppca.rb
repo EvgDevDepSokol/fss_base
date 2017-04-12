@@ -20,4 +20,29 @@ class PdsPpca < ApplicationRecord
   def serializable_hash(options = {})
     super options.merge(methods: :id)
   end
+
+  private
+
+  def self.plucked
+    pluck('ppcID', 'pds_syslist.SystemID', 'pds_syslist.System',
+      'Shifr', 'Key', 'identif',
+      'Description', 'Description_EN',
+      'L_lim', 'U_lim', 'Unit', 'nom',
+      'pds_detectors.DetID', 'pds_detectors.tag').map do |e|
+        {
+          id:                e[0],
+          system:            { id: e[1], System: e[2] },
+          Shifr:             e[3],
+          Key:               e[4],
+          identif:           e[5],
+          Description:       e[6],
+          Description_EN:    e[7],
+          L_lim:             e[8],
+          U_lim:             e[9],
+          Unit:              e[10],
+          nom:               e[11],
+          pds_detector:      { id: e[12], tag: e[13] }
+        }
+    end
+  end
 end

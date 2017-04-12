@@ -6,27 +6,7 @@ class DisplaySystemsController < BaseController
     @data_list = PdsPpca
                  .where(Project: project.ProjectID)
                  .includes(:system, :pds_detector)
-                 .pluck('ppcID', 'pds_syslist.SystemID', 'pds_syslist.System',
-                   'Shifr', 'Key', 'identif',
-                   'Description', 'Description_EN',
-                   'L_lim', 'U_lim', 'Unit', 'nom',
-                   'pds_detectors.DetID', 'pds_detectors.tag')
-    @data_list = @data_list.each.map do |e|
-      e1 = {}
-      e1['id']               = e[0]
-      e1['system']           = { id: e[1], System: e[2] }
-      e1['Shifr']            = e[3]
-      e1['Key']              = e[4]
-      e1['identif']          = e[5]
-      e1['Description']      = e[6]
-      e1['Description_EN']   = e[7]
-      e1['L_lim']            = e[8]
-      e1['U_lim']            = e[9]
-      e1['Unit']             = e[10]
-      e1['nom']              = e[11]
-      e1['pds_detector']     = { id: e[12], tag: e[13] }
-      e = e1
-    end
+                 .plucked
   end
 
   def pds_ppcds
