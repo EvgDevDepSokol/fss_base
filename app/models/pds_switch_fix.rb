@@ -11,7 +11,7 @@ class PdsSwitchFix < ApplicationRecord
   alias_attribute :hw_ic_id, :IC
   alias_attribute :system_id, :sys
 
-  def custom_map
+  def plucked
     true
   end
 

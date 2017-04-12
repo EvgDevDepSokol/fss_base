@@ -6,7 +6,7 @@ class PdsPpca < ApplicationRecord
   alias_attribute :system_id, :sys
   alias_attribute :pds_detector_id, :Detector
 
-  def custom_map
+  def plucked
     true
   end
 

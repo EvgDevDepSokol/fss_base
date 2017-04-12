@@ -20,7 +20,7 @@ class PdsMotor < ApplicationRecord
   alias_attribute :pds_motor_type_id, :MotorType
   alias_attribute :sd_sys_numb_id, :sd_N
 
-  def custom_map
+  def plucked
     true
   end
 

@@ -20,7 +20,7 @@ class PdsDetector < ApplicationRecord
   has_many :pds_ppcd, dependent: :restrict_with_error, foreign_key: 'Detector'
   has_many :pds_regulators, dependent: :restrict_with_error, foreign_key: 'det_id'
 
-  def custom_map
+  def plucked
     true
   end
 

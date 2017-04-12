@@ -22,7 +22,7 @@ class PdsRegulator < ApplicationRecord
   alias_attribute :pds_detector_id, :det_id
   alias_attribute :sd_sys_numb_id, :sd_N
 
-  def custom_map
+  def plucked
     true
   end
 

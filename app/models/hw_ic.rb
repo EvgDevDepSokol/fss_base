@@ -20,7 +20,7 @@ class HwIc < ApplicationRecord
 
   validate :duplicate_exists, on: :create
 
-  def custom_map
+  def plucked
     true
   end
 

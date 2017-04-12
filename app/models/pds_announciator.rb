@@ -19,7 +19,7 @@ class PdsAnnounciator < ApplicationRecord
   validates :Type, inclusion: %w[AN YC], allow_nil: true, allow_blank: true
   validates :sign, inclusion: %w[предупр. авар.], allow_nil: true, allow_blank: true
 
-  def custom_map
+  def plucked
     true
   end
 

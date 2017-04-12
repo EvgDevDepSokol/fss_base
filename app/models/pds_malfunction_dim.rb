@@ -8,7 +8,7 @@ class PdsMalfunctionDim < ApplicationRecord
 
   scope :ordered, -> { includes(:pds_malfunction).order('pds_malfunction.sys', 'pds_malfunction.Numb', 'pds_malfunction_dim.Character') }
 
-  def custom_map
+  def plucked
     true
   end
 

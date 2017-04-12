@@ -20,7 +20,7 @@ class PdsRf < ApplicationRecord
   enum typerf:  { 'v' => 'v', 'p' => 'p', 'p1' => 'p1' }
   enum scale:   { '1' => '1', '2' => '2' }
 
-  def custom_map
+  def plucked
     true
   end
 
