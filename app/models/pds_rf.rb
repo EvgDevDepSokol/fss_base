@@ -21,7 +21,29 @@ class PdsRf < ApplicationRecord
   enum scale:   { '1' => '1', '2' => '2' }
 
   def self.plucked
-    true
+    pluck(:rfID, :name, :Ptag, :tag_RU, :Desc, :Desc_EN, :range, :type, :range_FB,
+      :Type_FB,
+      'pds_syslist.SystemID', 'pds_syslist.System',
+      'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
+      'psa_project_units_pds_rf.ProjUnitID', 'units_pds_project_unit.UnitID', 'units_pds_project_unit.Unit_RU',
+      'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link').map do |e|
+      {
+        id:                e[0],
+        name:              e[1],
+        Ptag:              e[2],
+        tag_RU:            e[3],
+        Desc:              e[4],
+        Desc_EN:           e[5],
+        range:             e[6],
+        type:              e[7],
+        range_FB:          e[8],
+        Type_FB:           e[9],
+        system:            { id: e[10], System: e[11] },
+        pds_project_unit:  { id: e[12], unit: { id: e[13], Unit_RU: e[14] } },
+        psa_project_unit:  { id: e[15], unit: { id: e[16], Unit_RU: e[17] } },
+        sd_sys_numb:       { id: e[18], sd_link: e[19] }
+      }
+    end
   end
 
   def custom_hash

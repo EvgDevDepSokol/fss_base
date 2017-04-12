@@ -9,7 +9,22 @@ class PdsMalfunctionDim < ApplicationRecord
   scope :ordered, -> { includes(:pds_malfunction).order('pds_malfunction.sys', 'pds_malfunction.Numb', 'pds_malfunction_dim.Character') }
 
   def self.plucked
-    true
+    pluck(
+      :MalfunctDimID, :Character, :Target, :Target_EN, :is_main,
+      'pds_malfunction.MalfID', 'pds_syslist.SystemID', 'pds_syslist.System', 'pds_malfunction.Numb',
+      'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link'
+    ).map do |e|
+      {
+        id:                e[0],
+        Character:         e[1],
+        Target:            e[2],
+        Target_EN:         e[3],
+        is_main:           e[4],
+        pds_malfunction:   { id: e[5], system: { id: e[6], System: e[7] }, Numb: e[8] },
+        sd_sys_numb:       { id: e[9], sd_link: e[10] },
+        system:            { id: e[6], System: e[7] }
+      }
+    end
   end
 
   def custom_hash
