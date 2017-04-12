@@ -3,7 +3,7 @@ class PdsEngineer < ApplicationRecord
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :rememberable, :trackable
+    :rememberable, :trackable
 
   alias_attribute :id, primary_key
   has_many :pds_documents, dependent: :restrict_with_error, foreign_key: 'Author'

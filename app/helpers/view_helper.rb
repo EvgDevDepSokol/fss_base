@@ -1,8 +1,8 @@
 module ViewHelper
   def edit_button(object)
     content_tag(:button,
-                content_tag(:span, '', class: 'fa fa-pencil'),
-                class: 'btn btn-default edit btn-xs') +
+      content_tag(:span, '', class: 'fa fa-pencil'),
+      class: 'btn btn-default edit btn-xs') +
       content_tag(:button, 'save', class: 'btn btn-primary btn-xs save',
                                    style: 'display:none', 'data-url' => url_for(object))
   end

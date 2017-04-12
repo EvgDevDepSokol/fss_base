@@ -89,15 +89,15 @@ class TechnologyEquipmentController < BaseController
   def pds_motors
     @data_list = PdsMotor.where(Project: project.ProjectID)
                          .includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power,
-                                   :sd_sys_numb, :pds_motor_type)
+                           :sd_sys_numb, :pds_motor_type)
                          .pluck('MotID', 'tag_RU', :tag_EN, 'Desc_RU', 'Desc_EN', 'up_rate', 'down_rate', 'zmn',
-                                'model', 'voltage', 'p_ust', 'i_nom', 'connection',
-                                'pds_syslist.SystemID', 'pds_syslist.System',
-                                'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
-                                'psa_ed_powers_pds_motors.section_N', 'psa_ed_powers_pds_motors.section_name',
-                                'psa_anc_powers_pds_motors.section_N', 'psa_anc_powers_pds_motors.section_name',
-                                'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link',
-                                'pds_motor_type.MotorTypeID', 'pds_motor_type.MotorType as PMotorType')
+                           'model', 'voltage', 'p_ust', 'i_nom', 'connection',
+                           'pds_syslist.SystemID', 'pds_syslist.System',
+                           'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
+                           'psa_ed_powers_pds_motors.section_N', 'psa_ed_powers_pds_motors.section_name',
+                           'psa_anc_powers_pds_motors.section_N', 'psa_anc_powers_pds_motors.section_name',
+                           'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link',
+                           'pds_motor_type.MotorTypeID', 'pds_motor_type.MotorType as PMotorType')
 
     @data_list = @data_list.each.map do |e|
       e1 = {}
@@ -128,15 +128,15 @@ class TechnologyEquipmentController < BaseController
     @data_list = PdsRegulator.where(Project: project.ProjectID)
                              .includes(:system)
                              .includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power,
-                                       :pds_man_equip, :pds_detector, :sd_sys_numb)
+                               :pds_man_equip, :pds_detector, :sd_sys_numb)
                              .pluck(:RegID, :tag_RU, :tag_EN, :station_sys, :Desc, :open_rate,
-                                    :close_rate, :Algorithm, :model, :Desc_EN, :det_id, :par_val,
-                                    'pds_syslist.SystemID', 'pds_syslist.System',
-                                    'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
-                                    'psa_ed_powers_pds_regulators.section_N', 'psa_ed_powers_pds_regulators.section_name',
-                                    'psa_anc_powers_pds_regulators.section_N', 'psa_anc_powers_pds_regulators.section_name',
-                                    'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link',
-                                    'pds_man_equip.EquipN', 'pds_man_equip.Type')
+                               :close_rate, :Algorithm, :model, :Desc_EN, :det_id, :par_val,
+                               'pds_syslist.SystemID', 'pds_syslist.System',
+                               'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
+                               'psa_ed_powers_pds_regulators.section_N', 'psa_ed_powers_pds_regulators.section_name',
+                               'psa_anc_powers_pds_regulators.section_N', 'psa_anc_powers_pds_regulators.section_name',
+                               'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link',
+                               'pds_man_equip.EquipN', 'pds_man_equip.Type')
 
     @data_list = @data_list.each.map do |e|
       e1 = {}
@@ -166,7 +166,7 @@ class TechnologyEquipmentController < BaseController
   def pds_valves
     @data_list = PdsValf.where(Project: project.ProjectID)
                         .includes(:system, :psa_ctrl_power, :psa_ed_power, :psa_anc_power,
-                                  :pds_man_equip, :pds_documentation)
+                          :pds_man_equip, :pds_documentation)
                         .includes(:sd_sys_numb)
                         .pluck(
                           :valveID, :tag_RU, :tag_EN, :Type, :Desc, :Desc_EN, :Department,

@@ -7,10 +7,10 @@ class DisplaySystemsController < BaseController
                  .where(Project: project.ProjectID)
                  .includes(:system, :pds_detector)
                  .pluck('ppcID', 'pds_syslist.SystemID', 'pds_syslist.System',
-                        'Shifr', 'Key', 'identif',
-                        'Description', 'Description_EN',
-                        'L_lim', 'U_lim', 'Unit', 'nom',
-                        'pds_detectors.DetID', 'pds_detectors.tag')
+                   'Shifr', 'Key', 'identif',
+                   'Description', 'Description_EN',
+                   'L_lim', 'U_lim', 'Unit', 'nom',
+                   'pds_detectors.DetID', 'pds_detectors.tag')
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
@@ -34,9 +34,9 @@ class DisplaySystemsController < BaseController
                  .where(Project: project.ProjectID)
                  .includes(:system, :pds_detector)
                  .pluck('ppcdID', 'pds_syslist.SystemID', 'pds_syslist.System',
-                        'Shifr', 'Key', 'identif',
-                        'Description', 'Description_EN',
-                        'pds_detectors.DetID', 'pds_detectors.tag')
+                   'Shifr', 'Key', 'identif',
+                   'Description', 'Description_EN',
+                   'pds_detectors.DetID', 'pds_detectors.tag')
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
@@ -57,8 +57,8 @@ class DisplaySystemsController < BaseController
                  .includes(:system)
                  .order(:sys, :Numb)
                  .pluck(:id, :SdTitle, :BlobObj, :Numb,
-                        :title_EN,
-                        'pds_syslist.SystemID', 'pds_syslist.System')
+                   :title_EN,
+                   'pds_syslist.SystemID', 'pds_syslist.System')
                  .map do |e|
       {
         id: e[0],

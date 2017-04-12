@@ -13,11 +13,11 @@ class RemotesController < BaseController
                       .includes(:system, { pds_project_unit: :unit }, psa_project_unit: :unit)
                       .includes(:sd_sys_numb)
                       .pluck(:rfID, :name, :Ptag, :tag_RU, :Desc, :Desc_EN, :range, :type, :range_FB,
-                             :Type_FB,
-                             'pds_syslist.SystemID', 'pds_syslist.System',
-                             'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
-                             'psa_project_units_pds_rf.ProjUnitID', 'units_pds_project_unit.UnitID', 'units_pds_project_unit.Unit_RU',
-                             'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link')
+                        :Type_FB,
+                        'pds_syslist.SystemID', 'pds_syslist.System',
+                        'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
+                        'psa_project_units_pds_rf.ProjUnitID', 'units_pds_project_unit.UnitID', 'units_pds_project_unit.Unit_RU',
+                        'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link')
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]

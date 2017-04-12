@@ -187,12 +187,12 @@ class EquipmentPanelsController < BaseController
     @data_list = PdsMetersDigital.where(Project: project.ProjectID)
                                  .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system, :pds_section_assembler)
                                  .pluck(:MetDigID,
-                                        'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
-                                        'hw_peds.ped_N', 'hw_peds.ped',
-                                        'pds_syslist.SystemID', 'pds_syslist.System',
-                                        'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
-                                        'hw_ic.scaleMin', 'hw_ic.scaleMax',
-                                        'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU')
+                                   'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
+                                   'hw_peds.ped_N', 'hw_peds.ped',
+                                   'pds_syslist.SystemID', 'pds_syslist.System',
+                                   'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
+                                   'hw_ic.scaleMin', 'hw_ic.scaleMax',
+                                   'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU')
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
