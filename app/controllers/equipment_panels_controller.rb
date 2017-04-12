@@ -1,4 +1,5 @@
 class EquipmentPanelsController < BaseController
+  # Controller for Equipment panels
   ACTIONS = %i[hw_ic pds_bru pds_misc pds_set pds_switch_nofix pds_switch_fix
                pds_buttons pds_buttons_lights pds_lamps pds_mnemo pds_meters
                pds_meters_digital pds_alarm pds_recorders pds_announciator

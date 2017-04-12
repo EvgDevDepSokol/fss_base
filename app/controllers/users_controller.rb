@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  # Users controller
   # before_action :set_pds_engineer, only: [:show, :edit, :update, :destroy]
   # GET /pds_engineers
   # GET /pds_engineers.json

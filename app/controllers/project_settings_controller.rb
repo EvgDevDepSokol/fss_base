@@ -1,4 +1,5 @@
 class ProjectSettingsController < BaseController
+  # Project settings controller
   ACTIONS = %i[pds_eng_on_sys pds_project_unit pds_doc_on_sys
                pds_project_sys week_report pds_documents
                pds_documentation pds_simplifications pds_queries

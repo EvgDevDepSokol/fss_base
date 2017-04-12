@@ -1,4 +1,5 @@
 class TblbinariesController < ApplicationController
+  # Tblbinaries controller
   before_action :set_tblbinary, only: %i[show edit update destroy]
   # GET /tblbinaries
   # GET /tblbinaries.json

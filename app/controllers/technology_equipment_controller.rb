@@ -1,4 +1,5 @@
 class TechnologyEquipmentController < BaseController
+  # Technology equipment controller
   ACTIONS = %i[pds_detectors pds_motors pds_valves pds_regulators
                pds_ejector pds_hex pds_volume pds_filter pds_motor_type
                pds_man_equip pds_alg_type].freeze

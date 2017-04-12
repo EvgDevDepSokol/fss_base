@@ -1,4 +1,5 @@
 class ServiceController < BaseController
+  # Service controller
   ACTIONS = [:tablelist, # :table_role_rights, :roles,
              :pds_project_properties, :pds_engineers, :pds_project,
              :pds_syslist, :tblbinaries, :pds_unit, :pds_blocks,

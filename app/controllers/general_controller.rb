@@ -1,4 +1,5 @@
 class GeneralController < ApplicationController
+  # General controller
   include GeneralControllerHelper
   require 'csv'
 

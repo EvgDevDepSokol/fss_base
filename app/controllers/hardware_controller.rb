@@ -1,4 +1,5 @@
 class HardwareController < BaseController
+  # Hardware controller
   ACTIONS = %i[hw_peds hw_wirelist pds_iomap hw_iosignaldefs
                hw_iosignals hw_devtypes hw_iosignaldim pds_panels].freeze
 

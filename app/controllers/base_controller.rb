@@ -1,4 +1,5 @@
 class BaseController < ApplicationController
+  # Base controller, methods for all models defined here
   include GeneralControllerHelper
 
   layout 'layouts/table'
