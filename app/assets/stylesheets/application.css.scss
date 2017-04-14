@@ -1102,17 +1102,18 @@ footer {
   }
 }
 
-.modal-table-container{
+.modal-table-container {
   height: 50%;
   overflow: auto;
   border: 1px solid #dddddd;
   width: inherit;
+
   .not-editable {
     font-style: italic;
     COLOR: #687077;
   }
 }
- 
+
 .modal-warning {
   p {
     padding-top: 5px;
@@ -1122,16 +1123,19 @@ footer {
     margin-bottom: 0;
   }
 }
+
 .modal-filter-container {
   display: inline-flex;
   margin-bottom: 5px;
-  .modal-filter{
+
+  .modal-filter {
     border: 1px solid #dddddd;
-    p{
+
+    p {
       font-style: italic;
       font-weight: bold;
       text-align: center;
-      margin-bottom: 0px;      
+      margin-bottom: 0;
       border: 1px solid #dddddd;
     }
   }

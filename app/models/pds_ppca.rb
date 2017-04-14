@@ -17,8 +17,6 @@ class PdsPpca < ApplicationRecord
     super options.merge(methods: :id)
   end
 
-  private
-
   def self.plucked
     pluck('ppcID', 'pds_syslist.SystemID', 'pds_syslist.System',
       'Shifr', 'Key', 'identif',

@@ -16,10 +16,10 @@ module.exports = React.createClass({
   },
 
   getInitialState() {
-    return {columns: this.props.columns, disabled: this.props.disabled};
+    return { columns: this.props.columns, disabled: this.props.disabled };
   },
 
-  ChangeFilter: function(e) {
+  ChangeFilter: function (e) {
     debugger
     var columns = this.props.columns;
     columns[e.target.id].filter = e.target.value;
@@ -30,7 +30,7 @@ module.exports = React.createClass({
   // inputs does nothing right now (but we can implement filtering or insertion here)
   render() {
     var columns = this.props.columns;
-    return (
+    return(
       <tr>
         {columns.map((column, i) => {
           return (
