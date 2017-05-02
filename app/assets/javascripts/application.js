@@ -18,7 +18,7 @@
 // require wice_grid
 // require turbolinks
 
-//= require libs/select2-3
+//  require libs/select2-3
 //= require libs/bootstrap3-editable/bootstrap-editable
 
 //=  require libs/xlsx.core.min
