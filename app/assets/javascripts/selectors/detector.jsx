@@ -3,10 +3,8 @@
 'use strict';
 
 var React = require('react');
-//import React, { Component } from 'react'
 import VirtualizedSelect from 'react-virtualized-select';
 //import Select from 'react-select';
-//var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 var path = '/selectors/pds_detectors';

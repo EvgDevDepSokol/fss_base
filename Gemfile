@@ -105,24 +105,25 @@ gem 'oj'
 gem 'jquery-ui-rails'
 
 # Authorizations and Authentication gems
-gem 'devise'
+gem 'devise', '>= 4.0.0'
 gem 'pundit'
 
 gem 'select2-rails'
 
 gem 'browserify-rails'
 
-gem 'react-rails', '1.11.0'
+# gem 'react-rails', '1.11.0'
+gem 'react-rails'
 # gem 'lodash-rails'
 
 # custom validations
 gem 'schema_validations'
 
 # workers for select exports
+gem 'flay'
 gem 'redis'
 gem 'resque'
-gem 'flay', '2.8.1'
-gem 'ruby_parser', '3.8.4'
+gem 'ruby_parser'
 
 gem 'simple_form'
 # gem 'quiet_assets', group: :development
