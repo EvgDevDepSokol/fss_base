@@ -286,3 +286,10 @@ ru:
         sys: '"Сист."'
         system: '"Сист."'
         ped: '"PED"'
+    errors:
+      models:
+        hw_iosignal:
+          attributes:
+            base:
+              check_for_genextsig_err: 'Нельзя добавлять/удалять сигналы для PED с автоматической генерацией. Проверьте PED: %{ped}'
+              check_for_genextsig_signid_err: 'Нельзя менять тип сигналов для PED с автоматической генерацией. Проверьте PED: %{ped}'
