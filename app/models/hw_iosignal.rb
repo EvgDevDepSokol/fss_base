@@ -18,23 +18,25 @@ class HwIosignal < ApplicationRecord
                       })
   end
 
+  def skip_check_ped
+    @skip_check_ped = true
+  end
+
   private
 
   def check_for_genextsig
     hw_ped = HwPed.where(id: hw_ped_id).first
-    if hw_ped.GenExtSig == 'да'
-      errors.add(:base, :check_for_genextsig_err, { ped: hw_ped.ped } )
+    if (hw_ped.GenExtSig == 'да') && !@skip_check_ped
+      errors.add(:base, :check_for_genextsig_err, ped: hw_ped.ped)
       throw(:abort)
     end
   end
 
   def check_for_genextsig_signid
     hw_ped = HwPed.where(id: hw_ped_id).first
-    if ((hw_ped.GenExtSig == 'да') && (signID!=signID_was))
-      errors.add(:base, :check_for_genextsig_signid_err, { ped: hw_ped.ped } )
+    if (hw_ped.GenExtSig == 'да') && (signID != signID_was) && !@skip_check_ped
+      errors.add(:base, :check_for_genextsig_signid_err, ped: hw_ped.ped)
       throw(:abort)
     end
   end
-
-
 end
