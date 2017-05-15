@@ -53,4 +53,21 @@ class HwPed < ApplicationRecord
       end
     end
   end
+
+  after_save do |hw_ped|
+    if hw_ped.type_was && (hw_ped.type != hw_ped.type_was)
+      tbl_old = Object.const_get(Tablelist.find(HwDevtype.find(hw_ped.type_was).typetable).table.classify)
+      tbl_new = Object.const_get(Tablelist.find(HwDevtype.find(hw_ped.type).typetable).table.classify)
+      hw_ics = HwIc.where(Project: self.Project, pedID: id).to_a
+      hw_ics.each do |hw_ic|
+        e_old = tbl_old.where(IC: hw_ic.icID).to_a
+        e_old.each(&:destroy)
+
+        e_new = tbl_new.new
+        e_new.IC = hw_ic.icID
+        e_new.Project = hw_ic.Project
+        e_new.save
+      end
+    end
+  end
 end
