@@ -23,10 +23,13 @@ class PdsSectionAssembler < ApplicationRecord
   has_many :pds_regulators_ed, dependent: :restrict_with_error, foreign_key: 'ed_power', class_name: 'PdsRegulator'
   has_many :pds_regulators_ctrl, dependent: :restrict_with_error, foreign_key: 'ctrl_power', class_name: 'PdsRegulator'
   has_many :pds_regulators_anc, dependent: :restrict_with_error, foreign_key: 'anc_power', class_name: 'PdsRegulator'
-  has_many :pds_valves_ed, dependent: :restrict_with_error, primary_key: 'section_N', foreign_key: 'ed_power', class_name: 'PdsValf'
+  has_many :pds_valves_ed, dependent: :restrict_with_error, primary_key: 'section_N', foreign_key: 'ed_power',
+                           class_name: 'PdsValf'
   has_many :pds_valves, dependent: :restrict_with_error, foreign_key: 'power_section'
-  has_many :pds_valves_anc, dependent: :restrict_with_error, primary_key: 'section_N', foreign_key: 'anc_power', class_name: 'PdsValf'
-  has_many :pds_valves_ctrl, dependent: :restrict_with_error, primary_key: 'section_N', foreign_key: 'ctrl_power', class_name: 'PdsValf'
+  has_many :pds_valves_anc, dependent: :restrict_with_error, primary_key: 'section_N', foreign_key: 'anc_power',
+                            class_name: 'PdsValf'
+  has_many :pds_valves_ctrl, dependent: :restrict_with_error, primary_key: 'section_N', foreign_key: 'ctrl_power',
+                             class_name: 'PdsValf'
 
   def custom_hash
     serializable_hash.merge(id: id)

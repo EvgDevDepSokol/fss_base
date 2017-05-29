@@ -49,7 +49,9 @@ class HardwareController < BaseController
   end
 
   def hw_iosignals
-    @data_list = HwIosignal.where(Project: project.ProjectID).includes(:hw_ped, :hw_iosignaldef)
+    @data_list = HwIosignal.where(Project: project.ProjectID)
+                 .includes(:hw_ped, :hw_iosignaldef)
+                 .order(:pedID,:signID,:id)
   end
 
   def hw_devtypes

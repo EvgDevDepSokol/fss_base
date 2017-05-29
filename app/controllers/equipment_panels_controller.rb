@@ -142,7 +142,8 @@ class EquipmentPanelsController < BaseController
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
-      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4],
+                                      hw_ped: { id: e[5], ped: e[6] } }
       e1['system']                = { id: e[7], System: e[8] }
       e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
       e1['range']                 = e[11]
@@ -165,7 +166,8 @@ class EquipmentPanelsController < BaseController
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
-      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4],
+                                      hw_ped: { id: e[5], ped: e[6] } }
       e1['system']                = { id: e[7], System: e[8] }
       e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
       e = e1
@@ -186,7 +188,8 @@ class EquipmentPanelsController < BaseController
   # TODO: add unit to scope
   def pds_meters_digitals
     @data_list = PdsMetersDigital.where(Project: project.ProjectID)
-                                 .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system, :pds_section_assembler)
+                                 .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system,
+                                   :pds_section_assembler)
                                  .pluck(:MetDigID,
                                    'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
                                    'hw_peds.ped_N', 'hw_peds.ped',
@@ -197,7 +200,9 @@ class EquipmentPanelsController < BaseController
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
-      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] }, scaleMin: e[11], scaleMax: e[12], pds_project_unit: { id: e[13], unit: { id: e[14], Unit_RU: e[15] } } }
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4],
+                                      hw_ped: { id: e[5], ped: e[6] }, scaleMin: e[11], scaleMax: e[12],
+                                      pds_project_unit: { id: e[13], unit: { id: e[14], Unit_RU: e[15] } } }
       e1['system']                = { id: e[7], System: e[8] }
       e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
       e = e1
@@ -216,7 +221,8 @@ class EquipmentPanelsController < BaseController
 
   def pds_announciators
     @data_list = PdsAnnounciator.where(Project: project.ProjectID)
-                                .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler, :pds_detector).order('hw_ic.ref')
+                                .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler, :pds_detector)
+                                .order('hw_ic.ref')
                                 .pluck(
                                   :AnnouncID,
                                   'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
@@ -230,7 +236,8 @@ class EquipmentPanelsController < BaseController
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
-      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4],
+                                      hw_ped: { id: e[5], ped: e[6] } }
       e1['system']                = { id: e[7], System: e[8] }
       e1['pds_section_assembler'] = { id: e[9], section_name: e[10] }
       e1['pds_detector']          = { id: e[11], tag: e[12] }
@@ -243,6 +250,7 @@ class EquipmentPanelsController < BaseController
   # TODO: add unit to scope
   def pds_meters_channels
     @data_list = PdsMetersChannel.where(Project: project.ProjectID)
-                                 .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system, :pds_section_assembler)
+                                 .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system,
+                                   :pds_section_assembler)
   end
 end
