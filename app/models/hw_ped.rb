@@ -23,6 +23,10 @@ class HwPed < ApplicationRecord
     serializable_hash(include: { hw_devtype: { only: [:RuName] } })
   end
 
+  def gen_ext?
+    self.GenExtSig == 'да'
+  end
+
   SIGNAL_ARRAY = ['AI', 'AO', 'AO*', 'DI', 'LO', 'LO*', 'LO+', 'LO220', 'RO', 'DO'].freeze
 
   after_save do |hw_ped|
@@ -70,4 +74,5 @@ class HwPed < ApplicationRecord
       end
     end
   end
+
 end

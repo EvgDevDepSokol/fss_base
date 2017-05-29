@@ -26,7 +26,7 @@ class HwIosignal < ApplicationRecord
 
   def check_for_genextsig
     hw_ped = HwPed.where(id: hw_ped_id).first
-    if (hw_ped.GenExtSig == 'да') && !@skip_check_ped
+    if hw_ped.gen_ext? && !@skip_check_ped
       errors.add(:base, :check_for_genextsig_err, ped: hw_ped.ped)
       throw(:abort)
     end
@@ -34,7 +34,7 @@ class HwIosignal < ApplicationRecord
 
   def check_for_genextsig_signid
     hw_ped = HwPed.where(id: hw_ped_id).first
-    if (hw_ped.GenExtSig == 'да') && (signID != signID_was) && !@skip_check_ped
+    if hw_ped.gen_ext? && (signID != signID_was) && !@skip_check_ped
       errors.add(:base, :check_for_genextsig_signid_err, ped: hw_ped.ped)
       throw(:abort)
     end
