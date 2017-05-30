@@ -7,6 +7,19 @@ class HwPed < ApplicationRecord
   has_many :hw_ic, dependent: :restrict_with_error, foreign_key: 'pedID'
   has_many :hw_wirelist, dependent: :restrict_with_error, foreign_key: 'pedID'
 
+  validates :AI, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :AO, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates 'AO*', numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :DI, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :LO, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates 'LO*', numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates 'LO+', numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :LO220, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :RO, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :DO, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+
+
   before_destroy do |hw_ped|
     if hw_ped.GenExtSig == 'да'
       hw_iosignals = HwIosignal.where(pedID: hw_ped.id).to_a
@@ -35,7 +48,7 @@ class HwPed < ApplicationRecord
         sig_id = HwIosignaldef.where(ioname: sig_name).first.id
         hw_iosignals = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).to_a
         icnt = hw_ped[sig_name] - hw_iosignals.size
-        icnt = 0 if hw_ped[sig_name] < 1
+        icnt = 0 if hw_ped[sig_name] < 0
         if icnt > 0
           while icnt > 0
             hw_iosignal = HwIosignal.new
