@@ -281,6 +281,7 @@ var ImportXlsxModal = React.createClass(
 
   render: function ()
   {
+    debugger
     return( <
       div className = "import-from-excel" >
       <

@@ -122,9 +122,9 @@ var ImportStep1 = React.createClass(
       contentLabel = {
         this.props.contentLabel
       } >
-      <
-      h2 > Шаг 1. Выберите файл < /h2> <
-      div > Выберите файл для продолжения < /div>
+      < h1 > Импорт в таблицу: {title} < /h1>
+      < h2 > Шаг 1. Выберите файл < /h2>
+      < div > Выберите файл для продолжения < /div>
 
       <
       input type = "file"

@@ -325,6 +325,7 @@ var ImportStep2 = React.createClass({
                 onAfterOpen = {
                   this.afterOpenModal
                 } >
+                < h1 > Импорт в таблицу: {title} < /h1>
                 < h2 > Шаг 2. Выберите столбцы < /h2 > < div className = "modal-table-container" key = {
                 "modal-table"
               } > < table className = {"table table-bordered table-striped table-hover"} >

@@ -398,8 +398,8 @@ var ImportStep4 = React.createClass(
               onAfterOpen = {
                 this.afterOpenModal
               } >
-              <
-              h2 > Предварительные результаты < /h2>
+              < h1 > Импорт в таблицу: {title} < /h1>
+              < h2 > Предварительные результаты < /h2>
               {
                 filters
               }
