@@ -37,14 +37,14 @@ var ImportXlsxModal = React.createClass(
       keyColumn: '',
       msg: [],
       parsedData: [],
-      processed: 0
+      processed: 0,
+      isProcessing: true
     };
   },
 
   mapImportData: function (data)
   {
     var importColumns = this.state.columns;
-    debugger
     // наполняем данными importColumns
     Object.keys(importColumns).forEach(function (columnKey)
     {
@@ -134,7 +134,8 @@ var ImportXlsxModal = React.createClass(
       keyColumn: '',
       msg: [],
       parsedData:[],
-      processed: 0
+      processed: 0,
+      isProcessing: true
     });
   },
 
@@ -202,6 +203,10 @@ var ImportXlsxModal = React.createClass(
 
   step4Finished: function (to_exit)
   {
+    this.setState({
+      processed: 0,
+      isProcessing: true
+    });
     if(to_exit)
     {
       this.setState(
@@ -216,8 +221,7 @@ var ImportXlsxModal = React.createClass(
         {},
         keyColumn: '',
         msg: [],
-        parsedData: [], 
-        processed: 0
+        parsedData: [] 
       });
     }
     else
@@ -270,7 +274,8 @@ var ImportXlsxModal = React.createClass(
             context.setState(
             {
               msg: msg,
-              processed: i2
+              processed: i2,
+              isProcessing: i2!=data.length
             });
           }.bind(context),
           error: function (xhr, status, err) {}.bind(context)
@@ -281,7 +286,6 @@ var ImportXlsxModal = React.createClass(
 
   render: function ()
   {
-    debugger
     return( <
       div className = "import-from-excel" >
       <
@@ -376,6 +380,9 @@ var ImportXlsxModal = React.createClass(
       }
       processed = {
         this.state.processed
+      }
+      isProcessing = {
+        this.state.isProcessing
       }
       style = {
         customStyles

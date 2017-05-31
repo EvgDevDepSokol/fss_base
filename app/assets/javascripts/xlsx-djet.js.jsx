@@ -123,11 +123,10 @@ var exportData = function(data, columns, bookname){
 var workbook_to_json =function(workbook) {
   var result = [];
   workbook.SheetNames.forEach(function(sheetName) {
-    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-    //debugger;
+    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName],{raw: true});
+    debugger;
     if(roa.length > 0){
       result.push({sheetName: sheetName, data: roa});
-      //result[sheetName] = roa;
     }
   });
   return result;

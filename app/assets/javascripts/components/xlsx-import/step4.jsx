@@ -115,6 +115,7 @@ var ImportStep4 = React.createClass(
         var pagination = this.state.pagination ||
         {};
         var numberOfRows = 0;
+        var isProcessing = this.props.isProcessing;
 
         if(this.props.isOpen)
         {
@@ -371,12 +372,26 @@ var ImportStep4 = React.createClass(
                   filters = < div > Ваш файл обрабатывается < /div>;
                 }
               }
-              var next_button = to_exit ? null : < button onClick = {
-                this.nextModal
-              } > Подтвердить < /button>
-              var exit_button = to_exit ? < button onClick = {
-                this.closeModal
-              } > Выход < /button>:<button onClick={this.closeModal}>Отмена</button >
+              if (isProcessing) {
+                var next_button = null;
+                var exit_button = null;
+              } else {
+                var next_button = to_exit ? null : < button onClick = {this.nextModal} > Подтвердить < /button>
+                var exit_button = to_exit ? < button onClick = {this.closeModal}> Выход < /button>:
+              <button onClick={this.closeModal}>Отмена</button >
+              }
+
+              var wait_message = isProcessing?
+                  <h3 > Обработано: {(this.props.processed/numberOfRows*100).toFixed(0)}%, ждите... < /h3>:
+                  <div></div>;
+              var success_message = <div></div>;
+              if (to_exit&&!isProcessing) {
+              var success_message = 
+                <div> 
+                  <h3 > Импорт завершен, внесенные изменения сохранены в базе. < /h3>
+                  <h3 > После выхода из диалога импорта не забудьте обновить таблицу. < /h3>
+                </div>
+              }
             };
 
 
@@ -466,6 +481,8 @@ var ImportStep4 = React.createClass(
               <p > Всего {numberOfRows} строк данных. </p>
 
               <div className = {'modal-warning'}> {message} </div>
+              {wait_message}
+              {success_message}
               {exit_button}{next_button}
               </Modal>
             </div>
