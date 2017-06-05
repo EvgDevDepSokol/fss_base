@@ -111,6 +111,7 @@ Rails.application.routes.draw do
     resources :hw_iosignaldefs, only: [:index]
     resources :pds_engineers, only: [:index]
     resources :pds_documentations, only: [:index]
+    resources :pds_sys_descriptions, only: [:index]
   end
 
   resource :select_builder
