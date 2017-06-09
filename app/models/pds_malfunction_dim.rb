@@ -23,7 +23,8 @@ class PdsMalfunctionDim < ApplicationRecord
         Target:            e[2],
         Target_EN:         e[3],
         is_main:           e[4],
-        pds_malfunction:   { id: e[5], system: { id: e[6], System: e[7] }, Numb: e[8] },
+        # pds_malfunction:   { id: e[5], system: { id: e[6], System: e[7] }, Numb: e[8] },
+        pds_malfunction:   { id: e[5], Numb: e[8] },
         sd_sys_numb:       { id: e[9], sd_link: e[10] },
         system:            { id: e[6], System: e[7] }
       }
@@ -31,9 +32,13 @@ class PdsMalfunctionDim < ApplicationRecord
   end
 
   def custom_hash
-    serializable_hash(include: {
-                        pds_malfunction: { only: %i[sys Numb], include: { system: { only: :System } } },
-                        sd_sys_numb: { only: [:sd_link] }
-                      })
+    a = serializable_hash(include: {
+                            # pds_malfunction: { only: :Numb, include: { system: { only: :System } } },
+                            pds_malfunction: { only: :Numb, include: { system: { only: :System } } },
+                            # pds_malfunction: { only: %i[Numb] },
+                            sd_sys_numb: { only: [:sd_link] }
+                          })
+    a['system'] = a['pds_malfunction']['system']
+    a
   end
 end
