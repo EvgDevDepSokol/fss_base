@@ -18,8 +18,6 @@ class HwPed < ApplicationRecord
   validates :RO, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :DO, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-
-
   before_destroy do |hw_ped|
     if hw_ped.GenExtSig == 'да'
       hw_iosignals = HwIosignal.where(pedID: hw_ped.id).to_a
@@ -87,5 +85,4 @@ class HwPed < ApplicationRecord
       end
     end
   end
-
 end
