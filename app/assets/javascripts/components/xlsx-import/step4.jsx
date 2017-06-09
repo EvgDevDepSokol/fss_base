@@ -477,8 +477,9 @@ var ImportStep4 = React.createClass(
               Paginator.Context > <
               /div>
 
+              <p > Отображено {!!rows ? rows.length : 0} строк данных. </p>
               <p > Обработано {this.props.processed} строк данных. </p>
-              <p > Всего {numberOfRows} строк данных. </p>
+              <p > Всего импортируется {numberOfRows} строк данных. </p>
 
               <div className = {'modal-warning'}> {message} </div>
               {wait_message}
