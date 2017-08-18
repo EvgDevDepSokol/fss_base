@@ -1,5 +1,5 @@
 var React = require('react');
-var Modal = require('react-modal');
+import Modal from 'react-modal';
 var workbook_to_json = require('../../xlsx-djet.js.jsx').workbook_to_json;
 
 var ImportStep1 = React.createClass(

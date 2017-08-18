@@ -10,7 +10,7 @@ var SideMenu = require('components/treeview.jsx');
 var XlsxImport = require('components/xlsx-import.jsx');
 var App = require('components/xlsx-export.jsx');
 //var ReplaceConfirm = require('components/replace_confirm.jsx');
-var Modal = require('react-modal');
+import Modal from 'react-modal';
 
 $(document).ready(function () {
   ReactDOM.render(

@@ -74,7 +74,8 @@ var dateEditor = require('../inputs/input.jsx')();
 var TextEditor = require('../inputs/text_editor.jsx')();
 var WideTextEditor = require('../inputs/wide_text_editor.jsx')();
 
-var Modal = require('react-modal');
+import Modal from 'react-modal';
+
 var ExportXlsxModal = require('../components/xlsx-export.jsx');
 
 var TableContainer = React.createClass({

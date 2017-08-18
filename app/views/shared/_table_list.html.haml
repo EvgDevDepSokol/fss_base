@@ -34,6 +34,11 @@
         label: "Системы отображения",
         type: 'display_systems',
         children: #{controller_actions_list(DisplaySystemsController, @project)}
+      },
+      {
+        label: "Данные проектов",
+        type: 'project_settings',
+        children: #{controller_actions_list(ProjectSettingsController, @project)}
       }
     ];
     var menu_data_admin=[
@@ -41,11 +46,6 @@
         label: "Служебные",
         type: 'service',
         children: #{controller_actions_list(ServiceController, @project)}
-      },
-      {
-        label: "Данные проектов",
-        type: 'project_settings',
-        children: #{controller_actions_list(ProjectSettingsController, @project)}
       }
     ];
     if (#{current_user_rights} >= 3){

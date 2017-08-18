@@ -1,5 +1,5 @@
 var React = require('react');
-var Modal = require('react-modal');
+import Modal from 'react-modal';
 var SimpleSelect = require('../../modules/simple-select.jsx');
 var XlsxImport = require('../xlsx-import.jsx');
 var _ = require('underscore');

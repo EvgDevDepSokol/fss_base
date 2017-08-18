@@ -2,7 +2,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 import PropTypes from 'prop-types';
-var Modal = require('react-modal');
+import Modal from 'react-modal';
 
 var SystemSelector = require('../selectors/system.jsx');
 var SystemAllSelector = require('../selectors/system_all.jsx');
@@ -19,7 +19,6 @@ var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 //some static selectors
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
-
 //some static selectors
 var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
 var RFTypeSelector = require('../selectors/static_selectors.jsx').RFTypeSelector;
@@ -28,8 +27,13 @@ var BooleanSelector = require('../selectors/static_selectors.jsx').BooleanSelect
 var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSelector;
 var BooleanNumbSelector = require('../selectors/static_selectors.jsx').BooleanNumbSelector;
 var MotorZmnSelector = require('../selectors/static_selectors.jsx').MotorZmnSelector;
+var UserRightsSelector = require('../selectors/static_selectors.jsx').UserRightsSelector;
+var RegidityUnitSelector = require('../selectors/static_selectors.jsx').RegidityUnitSelector;
+var AnnounciatorTypeSelector = require('../selectors/static_selectors.jsx').AnnounciatorTypeSelector;
+var AnnounciatorSignSelector = require('../selectors/static_selectors.jsx').AnnounciatorSignSelector;
+var SyslistDescriptorSelector = require('../selectors/static_selectors.jsx').SyslistDescriptorSelector;
+var SyslistCategorySelector = require('../selectors/static_selectors.jsx').SyslistCategorySelector;
 
-// todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
 var UnitSelector = require('../selectors/pds_project_units.jsx');
 var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');

@@ -1,5 +1,5 @@
 var React = require('react');
-var Modal = require('react-modal');
+import Modal from 'react-modal';
 var Paginator = require('react-pagify').default;
 var segmentize = require('segmentize');
 
