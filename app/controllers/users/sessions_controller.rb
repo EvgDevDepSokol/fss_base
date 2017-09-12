@@ -9,7 +9,7 @@ class Users::SessionsController < Devise::SessionsController
   # private :resource_params
   #
 
-  before_filter :configure_permitted_parameters
+  before_action :configure_permitted_parameters
 
   def configure_permitted_parameters
     # devise_parameter_sanitizer.for(:sign_in).push(:login)

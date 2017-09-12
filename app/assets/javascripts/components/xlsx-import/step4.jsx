@@ -348,6 +348,7 @@ var ImportStep4 = React.createClass(
                     break;
                   };
 
+                  var rows_displayed_message = <p > Отображено {!!rows ? rows.length : 0} строк данных. </p>
 
                   var paginated = paginate(rows, pagination);
                   var pages = Math.ceil(rows.length / Math.max(isNaN(pagination.perPage) ?
@@ -391,6 +392,7 @@ var ImportStep4 = React.createClass(
                   <h3 > Импорт завершен, внесенные изменения сохранены в базе. < /h3>
                   <h3 > После выхода из диалога импорта не забудьте обновить таблицу. < /h3>
                 </div>
+
               }
             };
 
@@ -477,7 +479,7 @@ var ImportStep4 = React.createClass(
               Paginator.Context > <
               /div>
 
-              <p > Отображено {!!rows ? rows.length : 0} строк данных. </p>
+              {rows_displayed_message}
               <p > Обработано {this.props.processed} строк данных. </p>
               <p > Всего импортируется {numberOfRows} строк данных. </p>
 
