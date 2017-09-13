@@ -38,10 +38,10 @@ var PdsPanelSelector = require('../selectors/pds_panels.jsx');
 var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 var PdsEquipSelector = require('../selectors/pds_equip.jsx');
 
-//some static selectors
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
 
+//some static selectors
 var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
 var RFTypeSelector = require('../selectors/static_selectors.jsx').RFTypeSelector;
 var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSelector;
@@ -161,17 +161,13 @@ var TableContainer = React.createClass({
 
         if (editor) {
           if ((editor == BooleanNumbSelector) && (typeof(value) == "number")) {
-            value = (value == 0)
-              ? "нет"
-              : "да";
+            value = (value == 0) ? "нет" : "да";
           }
           if (editor == ValveTypeSelector) {
             value = labelFromSelectorList(editor.options, value)
           }
           if (editor == BooleanSelector) {
-            value = value
-              ? "да"
-              : "нет";
+            value = value ? "да" : "нет";
           }
           if (editor == BooleanNumbSelector) {
             value = labelFromSelectorList(editor.options, value)
