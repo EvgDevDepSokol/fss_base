@@ -78,6 +78,38 @@ module.exports.search = function(search, columns, data) {
     var property = col.property;
     var value = row[property];
     var formatter = col.search || formatters.identity;
+    var editor = col.editor;
+
+    function labelFromSelectorList(array, value) {
+      var tmp = array.filter(function(obj) {
+        if (obj.value === value) {
+          return true
+        }
+      });
+      return tmp[0]
+        ? tmp[0].label
+        : '';
+    }
+ 
+    debugger
+
+    if (editor) {
+      if ((editor.displayName == 'BooleanNumbSelector') && (typeof(value) == "number")) {
+        value = (value == 0) ? "нет" : "да";
+      }
+      if (editor.displayName == 'ValveTypeSelector') {
+        value = labelFromSelectorList(editor.options, value)
+      }
+      if (editor.displayName == 'BooleanSelector') {
+        value = value ? "да" : "нет";
+      }
+      if (editor.displayName == 'BooleanNumbSelector') {
+        value = labelFromSelectorList(editor.options, value)
+      }
+      if (editor.displayName == 'UserRightsSelector') {
+        value = labelFromSelectorList(editor.options, value)
+      }
+    }
 
     if (col.nested) {
       var keys = property.split(".");
