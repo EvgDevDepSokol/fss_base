@@ -90,8 +90,6 @@ module.exports.search = function(search, columns, data) {
         ? tmp[0].label
         : '';
     }
- 
-    debugger
 
     if (editor) {
       if ((editor.displayName == 'BooleanNumbSelector') && (typeof(value) == "number")) {

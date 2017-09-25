@@ -8,7 +8,7 @@
     "react": ">=15.0.0",
     "react-dom": ">=15.0.0",
     "react-localstorage": ">=0.2.3",
-    "react-modal": "^2.2.4",
+    "react-modal": "^2.3.2",
     "react-pagify": "^2.3.0",
     "react-select": "1.0.0-rc.3",
     "react-virtualized-select": ">=2.1.1",
