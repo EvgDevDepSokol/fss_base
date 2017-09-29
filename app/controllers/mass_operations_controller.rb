@@ -108,21 +108,21 @@ class MassOperationsController < ApplicationController
 
   def replace_finish
     new_data = params[:new_data]
-    #column = params[:column]
+    # column = params[:column]
     ids = []
     new_data.each do |_i, row|
       ids.push(row[:id].to_i)
     end
 
     querry = model_class
-    column = model_class.attribute_aliases[params[:column]]?model_class.attribute_aliases[params[:column]]:params[:column]
+    column = model_class.attribute_aliases[params[:column]] ? model_class.attribute_aliases[params[:column]] : params[:column]
 
     new_data.each do |_i, row|
       querry_row = querry.find(row[:id])
       querry_row[column] = row[column]
-      #querry_row.attributes.each do |attr_name, _attr_value|
+      # querry_row.attributes.each do |attr_name, _attr_value|
       #  querry_row[attr_name] = row[attr_name]
-      #end
+      # end
       querry_row.save
     end
     querry = querry.find(ids)
