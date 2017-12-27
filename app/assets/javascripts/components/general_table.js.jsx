@@ -25,7 +25,7 @@ var orderBy = require('lodash').orderBy;
 var titleCase = require('title-case');
 
 var SystemSelector = require('../selectors/system.jsx');
-var SystemAllSelector = require('../selectors/system_all.jsx');
+//var SystemAllSelector = require('../selectors/system_all.jsx');
 var SystemFilterSelector = require('../selectors/system_filter.jsx');
 
 var HwIcSelector = require('../selectors/hw_ic.jsx');

@@ -55,7 +55,7 @@ module.exports = React.createClass({
 module.exports.options = function(){
   var options = getSelectorOptions(
     path,
-    {},
+    {pds_project_id:project.ProjectID},
     this
   );
   return options;
