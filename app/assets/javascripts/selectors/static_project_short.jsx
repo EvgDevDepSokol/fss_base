@@ -27,6 +27,7 @@ module.exports = React.createClass({
      { value: 83        , label: 'Курск-2'},
      { value: 80000001  , label: 'ПМТ КуАЭС-4'},
      { value: 80000003  , label: 'ПМТ КуАЭС-4 2016'},
+     { value: 200000029 , label: 'АТ БилАЭС'},
      { value: 88        , label: 'ПМТ БалАЭС-1'  }] 
 
     return (
