@@ -26,7 +26,10 @@ class PdsMalfunction < ApplicationRecord
 
   CHARACTER_ARRAY = ('A'..'Z').to_a + ('AA'..'ZZ').to_a
 
-  after_save do |pds_malfunction|
+  after_commit :check_dims, on: [:create, :update]
+
+  def check_dims
+    pds_malfunction = self
     pds_malfunction_dims = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
     icnt = pds_malfunction.Dimension - pds_malfunction_dims.size
     icnt = 0 if pds_malfunction.Dimension < 1
