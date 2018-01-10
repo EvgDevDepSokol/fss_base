@@ -34,8 +34,6 @@ module.exports = React.createClass({
         options.unshift({value: -1, label: 'Все'});
         callback(null, {
           options: options,
-          // CAREFUL! Only set this to true when there are no more options,
-          // or more specific queries will not be sent to the server.
           complete: true,
         });
       }, 0);
@@ -59,7 +57,7 @@ module.exports = React.createClass({
 module.exports.options = function(){
   var options = getSelectorOptions(
     path,
-    {},
+    {pds_project_id:project.ProjectID},
     this
   );
   return options;
