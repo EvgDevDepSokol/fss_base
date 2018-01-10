@@ -44,6 +44,7 @@ class ImportController < ApplicationController
       unless !!current_object
         msg[:add] = true
         current_object = model.new
+        row['id'] = nil
       end
       current_object.attributes = row.except(:err0).permit!
       current_object.Project = @current_project if @current_project
