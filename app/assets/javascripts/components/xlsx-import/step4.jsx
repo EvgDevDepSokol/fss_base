@@ -119,8 +119,6 @@ var ImportStep4 = React.createClass(
 
         if(this.props.isOpen)
         {
-          debugger
-
           if(msg.length == 1 && msg[0].not_unique)
           {
             filters = < div > Файл обработан. < /div>;
