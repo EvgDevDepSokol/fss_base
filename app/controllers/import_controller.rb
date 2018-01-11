@@ -11,9 +11,14 @@ class ImportController < ApplicationController
       params[:data].each do |_i, row|
         msg = { add: false, result: '', err: [], warn: '' }
         current_object = get_current_object(row[key_column])
-        unless !!current_object
+        if !!!current_object
           msg[:add] = true
           current_object = model.new
+          row['id'] = nil
+        elsif current_object.Project != @current_project
+          msg[:add] = true
+          current_object = model.new
+          row['id'] = nil
         end
         current_object.attributes = row.except(:err0).permit!
         current_object.Project = @current_project if @current_project
@@ -41,7 +46,11 @@ class ImportController < ApplicationController
     params[:data].each do |_i, row|
       msg = { add: false, result: '', err: [], warn: '' }
       current_object = get_current_object(row[key_column])
-      unless !!current_object
+      if !!!current_object
+        msg[:add] = true
+        current_object = model.new
+        row['id'] = nil
+      elsif current_object.Project != @current_project
         msg[:add] = true
         current_object = model.new
         row['id'] = nil

@@ -50,6 +50,11 @@ class PdsMalfunction < ApplicationRecord
         icnt += 1
       end
     end
+    if pds_malfunction.Dimension == 1
+      pds_malfunction_dim = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).last
+      pds_malfunction_dim.Character = ''
+      pds_malfunction_dim.save
+    end
   end
 
   before_destroy do |pds_malfunction|
