@@ -47,7 +47,6 @@ Object.byString = function(o, s) {
 function sheet_from_data_and_cols(data, columns) {
   var ws = {};
   var range = {s:  {c:0, r:0 }, e: {c: columns.length, r: data.length + 1}};
-  //debugger
   for(var C = 0; C < columns.length; C++) {
     var cell_ref = XLSX.utils.encode_cell({c:C,r:0});
     var label = columns[C].label ? columns[C].label : columns[C].header;
@@ -57,7 +56,6 @@ function sheet_from_data_and_cols(data, columns) {
   for(var R = 0; R < data.length; R++) {
     var object = flattenObject(data[R]);
 
-    //debugger;
     for(var C = 0; C < columns.length; ++C) {
     //  if(range.s.r > R) range.s.r = R;
     //  if(range.s.c > C) range.s.c = C;
@@ -95,7 +93,6 @@ function s2ab(s) {
 
 var exportData = function(data, columns, bookname){
 
-  //debugger;
   /* original data */
   var ws_name = "SheetJS";
 
@@ -124,7 +121,6 @@ var workbook_to_json =function(workbook) {
   var result = [];
   workbook.SheetNames.forEach(function(sheetName) {
     var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName],{raw: true});
-    debugger;
     if(roa.length > 0){
       result.push({sheetName: sheetName, data: roa});
     }
@@ -136,7 +132,6 @@ function importFileData(file){
   var reader = new FileReader();
   var name = file.name;
   reader.onload = function(e) {
-    //debugger;
     var importData = e.target.result;
     var workbook = XLSX.read(importData, {type: 'binary'});
     var jsonImportData = workbook_to_json(workbook);

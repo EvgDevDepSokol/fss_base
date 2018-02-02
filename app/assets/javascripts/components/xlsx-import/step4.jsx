@@ -20,6 +20,7 @@ var ImportStep4 = React.createClass(
           filter_add: 0,
           filter_err: 0,
           filter_warn: 0,
+          filter_uoi: 0,
           to_exit: false,
           pagination:
           {
@@ -36,6 +37,7 @@ var ImportStep4 = React.createClass(
           filter_add: 0,
           filter_err: 0,
           filter_warn: 0,
+          filter_uoi: 0,
           to_exit: false
         });
       },
@@ -47,6 +49,7 @@ var ImportStep4 = React.createClass(
           filter_add: 0,
           filter_err: 0,
           filter_warn: 0,
+          filter_uoi: 0,
           to_exit: false
         });
         this.props.onCloseModal();
@@ -54,7 +57,7 @@ var ImportStep4 = React.createClass(
 
       nextModal: function ()
       {
-        this.props.onNextModal(this.state.to_exit);
+        this.props.onNextModal(this.state.to_exit, this.state.filter_uoi);
         this.setState(
         {
           to_exit: true
@@ -85,6 +88,15 @@ var ImportStep4 = React.createClass(
         this.setState(
         {
           filter_warn: filter_warn
+        })
+      },
+
+      onFilterUOIChange: function (e)
+      {
+        var filter_uoi = parseInt(e.target.value, 10);
+        this.setState(
+        {
+          filter_uoi: filter_uoi
         })
       },
 
@@ -130,118 +142,98 @@ var ImportStep4 = React.createClass(
           {
 
             var radio_add = < div className = 'filter-add-radio-group modal-filter' >
-              <
-              p > Статус < /p> <
+              < p > Статус < /p> <
             input type = 'radio'
             name = 'filter-add'
             value = '0'
-            checked = {
-              this.state.filter_add === 0
-            }
-            onChange = {
-              this.onFilterAddChange
-            }
+            checked = { this.state.filter_add === 0 }
+            onChange = { this.onFilterAddChange }
             />Показать все < br / >
             <
             input type = 'radio'
             name = 'filter-add'
             value = '1'
-            checked = {
-              this.state.filter_add === 1
-            }
-            onChange = {
-              this.onFilterAddChange
-            }
+            checked = { this.state.filter_add === 1 }
+            onChange = { this.onFilterAddChange }
             />Показать только записи на добавление < br / >
             <
             input type = 'radio'
             name = 'filter-add'
             value = '2'
-            checked = {
-              this.state.filter_add === 2
-            }
-            onChange = {
-              this.onFilterAddChange
-            }
+            checked = { this.state.filter_add === 2 }
+            onChange = { this.onFilterAddChange }
             />Показать только записи на обновление < br / >
-            <
-            /div>
+            </div>
 
             var radio_warn = < div className = 'filter-warn-radio-group modal-filter' >
-              <
-              p > Предупреждение < /p> <
+              <p > Предупреждение < /p> <
             input type = 'radio'
             name = 'filter-warn'
             value = '0'
-            checked = {
-              this.state.filter_warn === 0
-            }
-            onChange = {
-              this.onFilterWarnChange
-            }
+            checked = { this.state.filter_warn === 0 }
+            onChange = { this.onFilterWarnChange }
             />Показать все < br / >
             <
             input type = 'radio'
             name = 'filter-warn'
             value = '1'
-            checked = {
-              this.state.filter_warn === 1
-            }
-            onChange = {
-              this.onFilterWarnChange
-            }
+            checked = { this.state.filter_warn === 1 }
+            onChange = { this.onFilterWarnChange }
             />Показать только записи с предупреждениями < br / >
             <
             input type = 'radio'
             name = 'filter-warn'
             value = '2'
-            checked = {
-              this.state.filter_warn === 2
-            }
-            onChange = {
-              this.onFilterWarnChange
-            }
+            checked = { this.state.filter_warn === 2 }
+            onChange = { this.onFilterWarnChange }
             />Показать только записи без предупреждений < br / >
-            <
-            /div>
+            </div>
 
             var radio_err = < div className = 'filter-err-radio-group modal-filter' >
-              <
-              p > Ошибки < /p> <
+            <p > Ошибки < /p> <
             input type = 'radio'
             name = 'filter-err'
             value = '0'
-            checked = {
-              this.state.filter_err === 0
-            }
-            onChange = {
-              this.onFilterErrChange
-            }
+            checked = { this.state.filter_err === 0 }
+            onChange = { this.onFilterErrChange}
             />Показать все < br / >
             <
             input type = 'radio'
             name = 'filter-err'
             value = '1'
-            checked = {
-              this.state.filter_err === 1
-            }
-            onChange = {
-              this.onFilterErrChange
-            }
+            checked = {this.state.filter_err === 1}
+            onChange = { this.onFilterErrChange}
             />Показать только записи с ошибками < br / >
             <
             input type = 'radio'
             name = 'filter-err'
             value = '2'
-            checked = {
-              this.state.filter_err === 2
-            }
-            onChange = {
-              this.onFilterErrChange
-            }
+            checked = { this.state.filter_err === 2 }
+            onChange = { this.onFilterErrChange }
             />Показать только записи без ошибок < br / >
-            <
-            /div>
+            </div>
+
+            var radio_uoi = <div className = 'filter-uoi-radio-group modal-filter' >
+            <p > Выбор действия < /p> 
+            <input type='radio'
+            name='filter-uoi'
+            value='0'
+            checked = { this.state.filter_uoi === 0 }
+            onChange = { this.onFilterUOIChange }
+            /> Добавить и обновить записи<br/>
+            <input type='radio'
+            name='filter-uoi'
+            value='1'
+            checked = { this.state.filter_uoi === 1 }
+            onChange = { this.onFilterUOIChange }
+            /> Только добавить новые записи<br/>
+            <input type='radio'
+            name='filter-uoi'
+            value='2'
+            checked = { this.state.filter_uoi === 2 }
+            onChange = { this.onFilterUOIChange }
+            /> Только обновить существующие<br/>
+            </div>
 
 
             importHeaders[HEADER_STATE] = '';
@@ -254,17 +246,9 @@ var ImportStep4 = React.createClass(
               var headersFrom = Object.keys(importHeaders).map(function (key, i)
               {
                 var className = importHeaders[key]['to'] ? "static-header" : "static-header not-editable";
-                return( <
-                  th key = {
-                    i + '-header'
-                  }
-                  className = {
-                    className
-                  } >
-                  {
-                    key
-                  } <
-                  /th>
+                return( < th key = { i + '-header' }
+                  className = { className } >
+                  { key } < /th>
                 );
               });
             };
@@ -273,6 +257,7 @@ var ImportStep4 = React.createClass(
             var filter_add = this.state.filter_add;
             var filter_err = this.state.filter_err;
             var filter_warn = this.state.filter_warn;
+            var filter_uoi = this.state.filter_uoi;
 
             var rows = null;
             numberOfRows = importData.length;
@@ -371,11 +356,15 @@ var ImportStep4 = React.createClass(
                   filters = < div > Ваш файл обрабатывается < /div>;
                 }
               }
+
               if (isProcessing) {
                 var next_button = null;
                 var exit_button = null;
               } else {
-                var next_button = to_exit ? null : < button onClick = {this.nextModal} > Подтвердить < /button>
+                var next_button = to_exit ? null : <div className = 'modal-filter-container'>
+                  {radio_uoi}
+                  <button onClick = {this.nextModal} > Подтвердить < /button>
+                </div>
                 var exit_button = to_exit ? < button onClick = {this.closeModal}> Выход < /button>:
               <button onClick={this.closeModal}>Отмена</button >
               }
@@ -484,7 +473,8 @@ var ImportStep4 = React.createClass(
               <div className = {'modal-warning'}> {message} </div>
               {wait_message}
               {success_message}
-              {exit_button}{next_button}
+              {exit_button}
+              {next_button}
               </Modal>
             </div>
             );

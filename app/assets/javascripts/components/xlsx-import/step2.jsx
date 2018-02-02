@@ -80,7 +80,6 @@ var ImportStep2 = React.createClass({
       },
 
       afterOpenModal() {
-        debugger
         var isEmptyObj = function (obj) {
           return Object
             .keys(obj)

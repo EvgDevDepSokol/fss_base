@@ -201,7 +201,7 @@ var ImportXlsxModal = React.createClass(
     this.sendDataToServer(parsedData, '/import_prepare');
   },
 
-  step4Finished: function (to_exit)
+  step4Finished: function (to_exit, filter_uoi)
   {
     this.setState({
       processed: 0,
@@ -227,6 +227,22 @@ var ImportXlsxModal = React.createClass(
     else
     {
       var parsedData = this.state.parsedData;
+      var msg = this.state.msg;
+      if (filter_uoi === 1) {
+        parsedData = parsedData.map(function(row,i){
+          if (!msg[i].add) {
+            row[HEADER_ERR0].push('Обновление запрещено пользователем')
+          }
+          return row
+        });
+      } else if (filter_uoi === 2) {
+        parsedData = parsedData.map(function(row,i){
+          if (msg[i].add) {
+            row[HEADER_ERR0].push('Добавление запрещено пользователем')
+          }
+          return row
+        });
+      }
       this.sendDataToServer(parsedData, '/import_finish');
     }
   },

@@ -58,7 +58,7 @@ class ImportController < ApplicationController
       current_object.attributes = row.except(:err0).permit!
       current_object.Project = @current_project if @current_project
       if !!row[:err0]
-        # msg[:err]=row[:err0]
+        msg[:err]=row[:err0]
       elsif msg[:add] && (current_user.user_rights <= 1)
         msg[:err] = ['Нет прав на добавление записи!']
       elsif !(msg[:add] || current_object.changed?)
