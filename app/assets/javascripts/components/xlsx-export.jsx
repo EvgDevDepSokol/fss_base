@@ -83,16 +83,16 @@ class ExportXlsxModal extends React.Component {
         Экспорт в Excel
         <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} onRequestClose={this.closeModal} style={customStyles} contentLabel="Свойства экспорта в файл">
 
-          <h2 ref="subtitle">Свойства экспорта в файл</h2>
+          <h4 ref="subtitle">Экспорт производится с учетом активных фильтров.</h4>
+          <h3 ref="subtitle">Свойства экспорта в файл:</h3>
           <div className='export-radio-group'>
             <input type='radio' name='export-prop' value='0' checked={this.state.exportIndex === 0} onChange={this.onRadioChange}/>
-            Экспортировать все: {cnt_all}
-            записей<br/>
+             Экспортировать все: {cnt_all} записей;<br/>
             <input type='radio' name='export-prop' value='1' checked={this.state.exportIndex === 1} onChange={this.onRadioChange}/>
-            Экспортировать отмеченные: {cnt_chk}
-            записей<br/>
+             Экспортировать отмеченные: {cnt_chk} записей.<br/>
           </div>
-          <div></div>
+          <h3></h3>
+          <h3></h3>
           <button onClick={this.closeModal}>Отмена</button>
           <button onClick={this.onExport}>Экспорт</button>
         </Modal>

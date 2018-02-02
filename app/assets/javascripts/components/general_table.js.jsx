@@ -879,7 +879,7 @@ var TableContainer = React.createClass({
               <div className="show-filters">
                 Скрыть/ Показать поля
               </div>
-              <ExportXlsxModal data={this.state.data} onExport={this.onExportClick}/>
+              <ExportXlsxModal data={this.state.dataxls} onExport={this.onExportClick}/>
             </div>
 
           </div>
