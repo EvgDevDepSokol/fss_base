@@ -42,7 +42,7 @@ class HwIc < ApplicationRecord
   after_save do |hw_ic|
     if hw_ic.pedID_was.nil?
       add_equipment(hw_ic)
-    elsif hw_ic.pedID_was && (hw_ic.pedID != hw_ic.pedID_was)
+    elsif hw_ic.pedID_was && (table_by_pedid(hw_ic.pedID) != table_by_pedid(hw_ic.pedID_was))
       destroy_equipment(hw_ic)
       add_equipment(hw_ic)
     end
@@ -57,15 +57,26 @@ class HwIc < ApplicationRecord
   end
 
   def add_equipment(hw_ic)
-    e = Object.const_get(table_by_pedid(hw_ic.pedID).classify).new
-    e.IC = hw_ic.icID
+    tbl_name = table_by_pedid(hw_ic.pedID)
+    e = Object.const_get(tbl_name.classify).new
+    if tbl_name=='pds_mnemo'
+      e.Code = hw_ic.ref
+    elsif
+      e.IC = hw_ic.icID
+    end
     e.Project = hw_ic.Project
     e.save
   end
 
   def destroy_equipment(hw_ic)
-    tbl = Object.const_get(table_by_pedid(hw_ic.pedID_was).classify)
-    e_was = tbl.where(IC: hw_ic.icID).to_a
+    tbl_name = table_by_pedid(hw_ic.pedID_was)
+    tbl = Object.const_get(tbl_name.classify)
+    if tbl_name=='pds_mnemo'
+      e_was = tbl.where(Code: hw_ic.ref).to_a
+    elsif
+      e_was = tbl.where(IC: hw_ic.icID).to_a
+    end
     e_was.each(&:destroy)
   end
+
 end
