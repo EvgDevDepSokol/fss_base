@@ -79,7 +79,7 @@ class GeneralController < ApplicationController
         end
       end
     end
-  rescue
+  rescue StandardError
     respond_to do |format|
       format.html { render :edit }
       format.json do

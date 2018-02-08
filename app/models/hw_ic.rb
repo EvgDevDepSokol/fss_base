@@ -58,8 +58,8 @@ class HwIc < ApplicationRecord
 
   def add_equipment(hw_ic)
     tbl_name = table_by_pedid(hw_ic.pedID)
-    if tbl_name=='pds_mnemo'
-      #e.Code = hw_ic.ref
+    if tbl_name == 'pds_mnemo'
+      # e.Code = hw_ic.ref
     elsif
       e = Object.const_get(tbl_name.classify).new
       e.IC = hw_ic.icID
@@ -70,13 +70,12 @@ class HwIc < ApplicationRecord
 
   def destroy_equipment(hw_ic)
     tbl_name = table_by_pedid(hw_ic.pedID_was)
-    if tbl_name=='pds_mnemo'
-      #e_was = tbl.where(Code: hw_ic.ref).to_a
+    if tbl_name == 'pds_mnemo'
+      # e_was = tbl.where(Code: hw_ic.ref).to_a
     elsif
       tbl = Object.const_get(tbl_name.classify)
       e_was = tbl.where(IC: hw_ic.icID).to_a
       e_was.each(&:destroy)
     end
   end
-
 end

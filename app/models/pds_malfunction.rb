@@ -26,7 +26,7 @@ class PdsMalfunction < ApplicationRecord
 
   CHARACTER_ARRAY = ('A'..'Z').to_a + ('AA'..'ZZ').to_a
 
-  after_commit :check_dims, on: [:create, :update]
+  after_commit :check_dims, on: %i[create update]
 
   def check_dims
     pds_malfunction = self

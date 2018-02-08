@@ -37,7 +37,7 @@ class ImportController < ApplicationController
       message.push(not_unique: true, err: '')
     end
     render json: { status: :ok, message: message, i1: params[:i1], i2: params[:i2] }
-  rescue
+  rescue StandardError
     render json: { status: :unprocessable_entity, message: message }
   end
 
@@ -58,7 +58,7 @@ class ImportController < ApplicationController
       current_object.attributes = row.except(:err0).permit!
       current_object.Project = @current_project if @current_project
       if !!row[:err0]
-        msg[:err]=row[:err0]
+        msg[:err] = row[:err0]
       elsif msg[:add] && (current_user.user_rights <= 1)
         msg[:err] = ['Нет прав на добавление записи!']
       elsif !(msg[:add] || current_object.changed?)
@@ -71,7 +71,7 @@ class ImportController < ApplicationController
       message.push(msg)
     end
     render json: { status: :ok, message: message, i1: params[:i1], i2: params[:i2] }
-  rescue
+  rescue StandardError
     render json: { status: :unprocessable_entity, message: message }
   end
 

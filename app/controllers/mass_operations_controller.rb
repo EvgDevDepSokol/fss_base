@@ -42,12 +42,12 @@ class MassOperationsController < ApplicationController
           elsif val.is_a? Float # string or textEditor, when value is float
             valfrom = (begin
                        Float(params[:from])
-                     rescue
+                     rescue StandardError
                        nil
                      end)
             valto = (begin
                      Float(params[:to])
-                   rescue
+                   rescue StandardError
                      nil
                    end)
             if Float(row[column]) == valfrom
@@ -84,7 +84,7 @@ class MassOperationsController < ApplicationController
           elsif val.is_a? Float # string or textEditor, when value is float
             valto = (begin
                      Float(params[:to])
-                   rescue
+                   rescue StandardError
                      nil
                    end)
             row[column] = valto
