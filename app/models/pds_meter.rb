@@ -1,4 +1,5 @@
 class PdsMeter < ApplicationRecord
+  include EquipmentPanelsHelper
   schema_validations except: :hw_ic
   alias_attribute :id, primary_key
   belongs_to :hw_ic, foreign_key: 'IC'
@@ -24,5 +25,9 @@ class PdsMeter < ApplicationRecord
                         system: { only: [:System] },
                         pds_section_assembler: { only: [:section_name] }
                       })
+  end
+
+  after_save do |element|
+    set_sys_to_hw_ic(element)
   end
 end

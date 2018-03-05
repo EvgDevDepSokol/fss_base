@@ -1,4 +1,5 @@
 class PdsSwitchFix < ApplicationRecord
+  include EquipmentPanelsHelper
   self.table_name = 'pds_switch_fix'
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic
@@ -20,5 +21,8 @@ class PdsSwitchFix < ApplicationRecord
                         hw_ic: { only: %i[ref tag_no Description], include: { hw_ped: { only: [:ped] } } },
                         system: { only: [:System] }
                       })
+  end
+  after_save do |element|
+    set_sys_to_hw_ic(element)
   end
 end

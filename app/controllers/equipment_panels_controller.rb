@@ -11,12 +11,14 @@ class EquipmentPanelsController < BaseController
   #      :UniquePTAG, :un, :panel, :Description_EN, :rev, :sys, :ped, :Unit)
   #      .includes(:system, hw_ped: [:hw_devtype], pds_panel: [], pds_project_unit: [:unit])
   #  end
+
+  #                   .includes(hw_ped: [:hw_devtype])
+  #                   .joins('LEFT OUTER JOIN hw_ic_sys ON hw_ic_sys.IC = hw_ic.icID')
+  #                   .joins('LEFT OUTER JOIN pds_syslist ON pds_syslist.SystemID = hw_ic_sys.sys').order(:ref)
   def hw_ics
     @data_list = HwIc.where(Project: project.ProjectID)
                      .includes(pds_panel: [], pds_project_unit: [:unit])
-                     .includes(hw_ped: [:hw_devtype])
-                     .joins('LEFT OUTER JOIN hw_ic_sys ON hw_ic_sys.IC = hw_ic.icID')
-                     .joins('LEFT OUTER JOIN pds_syslist ON pds_syslist.SystemID = hw_ic_sys.sys').order(:ref)
+                     .includes({hw_ped: [:hw_devtype]}, :system)
                      .pluck(
                        :icID, :ref,
                        'pds_syslist.SystemID', 'pds_syslist.System',

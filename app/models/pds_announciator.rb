@@ -1,4 +1,5 @@
 class PdsAnnounciator < ApplicationRecord
+  include EquipmentPanelsHelper
   self.table_name = 'pds_announciator'
   alias_attribute :id, primary_key
   # self.inheritance_column = nil
@@ -30,5 +31,9 @@ class PdsAnnounciator < ApplicationRecord
                         pds_section_assembler: { only: [:section_name] },
                         pds_detector: { only: [:tag] }
                       })
+  end
+
+  after_save do |element|
+    set_sys_to_hw_ic(element)
   end
 end

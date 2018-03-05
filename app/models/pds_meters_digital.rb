@@ -1,4 +1,5 @@
 class PdsMetersDigital < ApplicationRecord
+  include EquipmentPanelsHelper
   self.table_name = 'pds_meters_digital'
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic
@@ -26,5 +27,9 @@ class PdsMetersDigital < ApplicationRecord
                         system: { only: [:System] },
                         pds_section_assembler: { only: [:section_name] }
                       })
+  end
+
+  after_save do |element|
+    set_sys_to_hw_ic(element)
   end
 end

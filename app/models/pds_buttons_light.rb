@@ -1,4 +1,5 @@
 class PdsButtonsLight < ApplicationRecord
+  include EquipmentPanelsHelper
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic
   belongs_to :hw_ic, foreign_key: 'IC'
@@ -20,5 +21,9 @@ class PdsButtonsLight < ApplicationRecord
                         system: { only: [:System] },
                         pds_section_assembler: { only: [:section_name] }
                       })
+  end
+
+  after_save do |element|
+    set_sys_to_hw_ic(element)
   end
 end
