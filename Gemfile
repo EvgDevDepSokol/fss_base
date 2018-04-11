@@ -1,17 +1,21 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails','4.2.7'
 # gem 'rails', '5.0.0'
-gem 'rails', '5.0.2'
+ gem 'rails', '5.0.2'
+# gem 'rails'
 # Use sqlite3 as the database for Active Record
 # gem 'mysql2', '~> 0.3.18'
-gem 'mysql2'
+# gem 'mysql2'
+gem 'mysql2', '0.4.10'
 
 gem 'sassc-rails'
 gem 'therubyracer'
 # gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-gem 'sprockets'
+gem 'sprockets', '3.7.1'
 gem 'twitter-bootstrap-rails'
 # gem "font-awesome-rails"
 gem 'font-awesome-less'
@@ -72,16 +76,13 @@ gem 'web-console',    group: :development
 group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-  gem 'capistrano-rbenv'
-  # gem 'capistrano-unicorn-nginx', '~> 2.0'
   gem 'capistrano-npm'
-  gem 'capistrano-unicorn-nginx'
-  #  gem 'capistrano-scm-local', '~> 0.1', :github => 'ekho/capistrano-scm-local'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano3-puma'
 end
-# Use the Unicorn app server
 
-gem 'unicorn'
+gem 'puma'
 
 group :test do
   # gem 'factory_girl'
@@ -98,9 +99,6 @@ gem 'byebug', group: %i[development test]
 gem 'schema_to_scaffold'
 
 gem 'oj'
-# gem 'pluck_to_hash'
-# gem 'oj_mimic_json'
-# gem 'json'
 
 gem 'jquery-ui-rails'
 
@@ -130,6 +128,7 @@ gem 'simple_form'
 
 group :development do
   gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'bullet'
   gem 'flamegraph'
   gem 'rack-mini-profiler'

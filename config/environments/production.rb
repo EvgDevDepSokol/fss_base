@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -26,15 +28,28 @@ Rails.application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = false
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.compile = true
+  # config.assets.logger = false
+  # config.logger = ActiveSupport::Logger.new(nil)
 
   # Adds additional error checking when serving assets at runtime.
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
-
+  config.assets.unknown_asset_fallback = true
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-
+  # config.assets.prefix = "/assets_dev"
+  config.serve_static_assets = false
+  # for 'sassc-rails'
+  config.sass.inline_source_maps = true
+  # config.after_initialize do
+  #  # Enable bullet in your application
+  #  Bullet.enable = true
+  #  Bullet.alert = true
+  # end
+  config.assets.js_compressor = :uglifier
   config.log_level = :info
 end

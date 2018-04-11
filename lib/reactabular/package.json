@@ -1,0 +1,77 @@
+{
+  "name": "reactabular",
+  "version": "0.5.2",
+  "description": "Spectacular tables for React.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest && npm run lint",
+    "gh-pages": "webpack --config ./config/webpack.gh-pages.js",
+    "deploy-gh-pages": "node ./config/deploy-gh-pages.js",
+    "dist": "webpack --config ./config/webpack.dist.js && webpack --config ./config/webpack.dist.min.js",
+    "lint": "eslint . --ext .js --ext .jsx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bebraw/reactabular.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "table",
+    "tables"
+  ],
+  "author": "Juho Vepsalainen <bebraw@gmail.com> (http://github.com/bebraw)",
+  "license": "MIT",
+  "main": "dist/reactabular.js",
+  "bugs": {
+    "url": "https://github.com/bebraw/reactabular/issues"
+  },
+  "homepage": "https://github.com/bebraw/reactabular",
+  "dependencies": {
+    "classnames": "^1.2.0"
+  },
+  "devDependencies": {
+    "annogenerate": "^0.8.1",
+    "annomath": "^0.4.1",
+    "babel-eslint": "^2.0.2",
+    "css-loader": "^0.9.1",
+    "eslint": "^0.17.1",
+    "eslint-plugin-react": "^1.6.1",
+    "file-loader": "^0.8.1",
+    "gh-pages": "^0.2.0",
+    "highlight.js": "^8.4.0",
+    "html-loader": "^0.2.3",
+    "html-webpack-plugin": "^1.1.0",
+    "jest-cli": "^0.4.0",
+    "jsx-loader": "^0.12.2",
+    "lodash": "^3.5.0",
+    "marked": "^0.3.3",
+    "plexus-form": "0.1.1",
+    "plexus-validate": "^0.0.4",
+    "purecss": "^0.6.0",
+    "react-ghfork": "^0.2.2",
+    "react-hot-loader": "^1.1.5",
+    "react-pagify": "^0.3.2",
+    "react-skylight": "^0.1.4",
+    "react-tools": "^0.12.2",
+    "schema2object": "^0.4.0",
+    "style-loader": "^0.8.3",
+    "title-case": "^1.1.0",
+    "url-loader": "^0.5.5",
+    "webpack": "^1.6.0",
+    "webpack-dev-server": "^1.7.0",
+    "xtend": "^4.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=0.11.2 <1.0.0"
+  },
+  "jest": {
+    "scriptPreprocessor": "./config/preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "./node_modules/annotate",
+      "./node_modules/lodash",
+      "./node_modules/react",
+      "./lib/editors"
+    ]
+  }
+}

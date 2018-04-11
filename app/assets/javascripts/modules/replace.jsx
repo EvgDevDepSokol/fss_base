@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
 var SystemSelector = require('../selectors/system.jsx');
-var SystemAllSelector = require('../selectors/system_all.jsx');
 var SystemFilterSelector = require('../selectors/system_filter.jsx');
 
 var HwIcSelector = require('../selectors/hw_ic.jsx');

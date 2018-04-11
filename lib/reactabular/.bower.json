@@ -1,0 +1,14 @@
+{
+  "name": "reactabular",
+  "homepage": "https://github.com/bebraw/reactabular",
+  "version": "0.5.2",
+  "_release": "0.5.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.5.2",
+    "commit": "2eee4e8b22c777e5cd527559c409bf5a80287a67"
+  },
+  "_source": "git://github.com/bebraw/reactabular.git",
+  "_target": "0.5.2",
+  "_originalSource": "git://github.com/bebraw/reactabular"
+}

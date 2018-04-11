@@ -1,0 +1,124 @@
+Inspecting 223 files
+................................C.....EC.C......C..CC..C..CCC..CC......................C............C................C....................W.....C..............................................................C.C.............
+
+Offenses:
+
+app/controllers/equipment_panels_controller.rb:1:1: C: Class has too many lines. [214/213]
+class EquipmentPanelsController < BaseController ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/equipment_panels_controller.rb:145:121: C: Line is too long. [125/120]
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
+                                                                                                                        ^^^^^
+app/controllers/equipment_panels_controller.rb:168:121: C: Line is too long. [125/120]
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
+                                                                                                                        ^^^^^
+app/controllers/equipment_panels_controller.rb:189:121: C: Line is too long. [122/120]
+                                 .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system, :pds_section_assembler)
+                                                                                                                        ^^
+app/controllers/equipment_panels_controller.rb:200:121: C: Line is too long. [229/120]
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] }, scaleMin: e[11], scaleMax: e[12], pds_project_unit: { id: e[13], unit: { id: e[14], Unit_RU: e[15] } } }
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/equipment_panels_controller.rb:219:121: C: Line is too long. [130/120]
+                                .includes({ hw_ic: [:hw_ped] }, :system, :pds_section_assembler, :pds_detector).order('hw_ic.ref')
+                                                                                                                        ^^^^^^^^^^
+app/controllers/equipment_panels_controller.rb:233:121: C: Line is too long. [125/120]
+      e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
+                                                                                                                        ^^^^^
+app/controllers/equipment_panels_controller.rb:246:121: C: Line is too long. [122/120]
+                                 .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system, :pds_section_assembler)
+                                                                                                                        ^^
+app/controllers/project_settings_controller.rb:30:66: E: unexpected token tCOLON
+(Using Ruby 2.1 parser; configure using TargetRubyVersion parameter, under AllCops)
+      e1['pds_documentation']= { id: e[3], DocTitle: e[4], 'Type': e[5], 'NPP_Number':e[6] }
+                                                                 ^
+app/controllers/project_settings_controller.rb:30:86: E: unexpected token tCOLON
+(Using Ruby 2.1 parser; configure using TargetRubyVersion parameter, under AllCops)
+      e1['pds_documentation']= { id: e[3], DocTitle: e[4], 'Type': e[5], 'NPP_Number':e[6] }
+                                                                                     ^
+app/controllers/project_settings_controller.rb:30:92: E: unexpected token tRCURLY
+(Using Ruby 2.1 parser; configure using TargetRubyVersion parameter, under AllCops)
+      e1['pds_documentation']= { id: e[3], DocTitle: e[4], 'Type': e[5], 'NPP_Number':e[6] }
+                                                                                           ^
+app/controllers/pds_projects_controller.rb:70:121: C: Line is too long. [271/120]
+    params.require(:pds_project).permit(:project_number, :project_name, :project_name_EN, :Contractor, :companyID, :contract_number, :contract_date, :ProjectManager, :SWManager, :HWManager, :Factor, :Description, :Description_EN, :Notes, :BlobObj, :t, :contract_end_date)
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users_controller.rb:71:121: C: Line is too long. [224/120]
+    params.require(:pds_engineer).permit(:name, :TH, :TO, :L, :EL, :CR, :D, :SWM, :HWM, :PM, :t, :EMail, :CheifDirector, :login, :pwd, :dismiss, :coreID, :phoneNum, :cellNum, :IP, :compJack, :phoneJack, :sectorID1, :enabled)
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/pds_sds/show.json.jbuilder:1:121: C: Line is too long. [124/120]
+json.extract! @pds_sd, :id, :SdTitle, :sys, :Project, :title_EN, :Numb, :BlobObj, :t, :from_sapfir, :created_at, :updated_at
+                                                                                                                        ^^^^
+app/views/users/pds_project_properties/index.json.jbuilder:2:121: C: Line is too long. [348/120]
+  json.extract! pds_project_property, :id, :HostName, :HostIP, :SimDir, :ISName, :ISIP, :RootPass, :IOPass, :LoadPass, :TgisPass, :OSType, :LowLimKeyField, :UpLimKeyField, :Language, :Enabled, :ResName, :ClassLib, :ServicePort, :StatsInterval, :pdsCode, :fdsCode, :portS3serv, :report_prefix, :Encoding, :pmCode, :pmShortCode, :stCode, :stShortCode
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/pds_project_properties/show.json.jbuilder:1:121: C: Line is too long. [373/120]
+json.extract! @pds_project_property, :id, :HostName, :HostIP, :SimDir, :ISName, :ISIP, :RootPass, :IOPass, :LoadPass, :TgisPass, :OSType, :LowLimKeyField, :UpLimKeyField, :Language, :Enabled, :ResName, :ClassLib, :ServicePort, :StatsInterval, :pdsCode, :fdsCode, :portS3serv, :report_prefix, :Encoding, :pmCode, :pmShortCode, :stCode, :stShortCode, :created_at, :updated_at
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/index.json.jbuilder:2:121: C: Line is too long. [217/120]
+  json.extract! pds_engineer, :id, :name, :TH, :TO, :L, :EL, :CR, :D, :SWM, :HWM, :PM, :t, :EMail, :CheifDirector, :login, :pwd, :dismiss, :coreID, :phoneNum, :cellNum, :IP, :compJack, :phoneJack, :sectorID1, :enabled
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/show.json.jbuilder:1:121: C: Line is too long. [242/120]
+json.extract! @pds_engineer, :id, :name, :TH, :TO, :L, :EL, :CR, :D, :SWM, :HWM, :PM, :t, :EMail, :CheifDirector, :login, :pwd, :dismiss, :coreID, :phoneNum, :cellNum, :IP, :compJack, :phoneJack, :sectorID1, :enabled, :created_at, :updated_at
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/pds_ppcas/index.json.jbuilder:2:121: C: Line is too long. [188/120]
+  json.extract! pds_ppca, :id, :Project, :sys, :Shifr, :Key, :identif, :Description, :Description_EN, :Detector, :Unit, :L_lim, :U_lim, :nom, :LA, :LW, :HW, :HA, :t, :code, :power, :UnitID
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/pds_ppcas/show.json.jbuilder:1:121: C: Line is too long. [213/120]
+json.extract! @pds_ppca, :id, :Project, :sys, :Shifr, :Key, :identif, :Description, :Description_EN, :Detector, :Unit, :L_lim, :U_lim, :nom, :LA, :LW, :HW, :HA, :t, :code, :power, :UnitID, :created_at, :updated_at
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/pds_ppcds/index.json.jbuilder:2:121: C: Line is too long. [122/120]
+  json.extract! pds_ppcd, :id, :Project, :sys, :Shifr, :Key, :identif, :Description, :Description_EN, :Detector, :t, :code
+                                                                                                                        ^^
+app/views/users/pds_ppcds/show.json.jbuilder:1:121: C: Line is too long. [147/120]
+json.extract! @pds_ppcd, :id, :Project, :sys, :Shifr, :Key, :identif, :Description, :Description_EN, :Detector, :t, :code, :created_at, :updated_at
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/pds_section_assembler.rb:26:121: C: Line is too long. [132/120]
+  has_many :pds_valves_ed, dependent: :restrict_with_error, primary_key: 'section_N', foreign_key: 'ed_power', class_name: 'PdsValf'
+                                                                                                                        ^^^^^^^^^^^^
+app/models/pds_section_assembler.rb:28:121: C: Line is too long. [134/120]
+  has_many :pds_valves_anc, dependent: :restrict_with_error, primary_key: 'section_N', foreign_key: 'anc_power', class_name: 'PdsValf'
+                                                                                                                        ^^^^^^^^^^^^^^
+app/models/pds_section_assembler.rb:29:121: C: Line is too long. [136/120]
+  has_many :pds_valves_ctrl, dependent: :restrict_with_error, primary_key: 'section_N', foreign_key: 'ctrl_power', class_name: 'PdsValf'
+                                                                                                                        ^^^^^^^^^^^^^^^^
+app/models/pds_malfunction_dim.rb:9:121: C: Line is too long. [137/120]
+  scope :ordered, -> { includes(:pds_malfunction).order('pds_malfunction.sys', 'pds_malfunction.Numb', 'pds_malfunction_dim.Character') }
+                                                                                                                        ^^^^^^^^^^^^^^^^^
+app/models/pds_malfunction.rb:58:121: C: Line is too long. [143/120]
+  # (*) – В случае, если длина описания больше 66 символов, то общая длина 2-ой строки обрезается по 72-ой символ и при этом ниже генерятся две
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+app/models/pds_ppca.rb:20:3: W: Useless private access modifier.
+  private
+  ^^^^^^^
+app/models/pds_ppca.rb:22:3: W: private (on line 20) does not make singleton methods private. Use private_class_method or private inside a class << self block instead.
+  def self.plucked
+  ^^^
+app/workers/select_builder_job.rb:17:121: C: Line is too long. [136/120]
+    data = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s).render(ActionView::Base.new, select_builder.as_json.merge(data: pds_rfs))
+                                                                                                                        ^^^^^^^^^^^^^^^^
+app/workers/select_builder_job.rb:23:121: C: Line is too long. [153/120]
+    data = Tilt.new(TEMPLATE_PATH.join('pds_malfunction.sel.erb').to_s).render(ActionView::Base.new, select_builder.as_json.merge(data: pds_malfunction))
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/devise.rb:7:121: C: Line is too long. [152/120]
+  config.secret_key = '59a806d7769b310389bdfa67a34de47076170b4a511514a36268d4c7e734d19185a4f48d4dd1b17d33e58e956569f5ca63f8181b6d30b585c10f87286075272c'
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/devise.rb:100:121: C: Line is too long. [150/120]
+  # config.pepper = '36dd5b5d7e926cf650ebcda730f7653d306229fed99e7e7aec66de925ad31686c17a2ce52435abffa54503d220ec3f91a498fa548f4099e52a32fbad3ca1f801'
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/wice_grid_config.rb:14:121: C: Line is too long. [126/120]
+  # If REUSE_LAST_COLUMN_FOR_FILTER_ICONS is true and the last column doesn't have any filter and column name, it will be used
+                                                                                                                        ^^^^^^
+config/initializers/wice_grid_config.rb:99:121: C: Line is too long. [124/120]
+  # With Calendar helpers enabled the parameter sent is the string displayed. This lambda will be given a date string in the
+                                                                                                                        ^^^^
+config/initializers/wice_grid_config.rb:101:121: C: Line is too long. [142/120]
+  # In many cases <tt>Time.zone.parse</tt> is enough, for instance,  <tt>%Y-%m-%d</tt>. If you change the format, make sure to check this code
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/wice_grid_config.rb:118:121: C: Line is too long. [124/120]
+  # With Calendar helpers enabled the parameter sent is the string displayed. This lambda will be given a date string in the
+                                                                                                                        ^^^^
+config/initializers/wice_grid_config.rb:120:121: C: Line is too long. [137/120]
+  # In many cases <tt>Date.parse</tt> is enough, for instance,  <tt>%Y-%m-%d</tt>. If you change the format, make sure to check this code
+                                                                                                                        ^^^^^^^^^^^^^^^^^
+
+223 files inspected, 38 offenses detected
