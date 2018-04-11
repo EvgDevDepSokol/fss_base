@@ -27,7 +27,6 @@
 
 // require xlsx-djet
 
-//= require components
 
 //= require libs/Filesaver
 
@@ -36,3 +35,4 @@
 // require table_inline_edit
 //= require react
 //= require react_ujs
+//= require components
