@@ -16,7 +16,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  #config.action_mailer.raise_delivery_errors = false
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -29,7 +29,8 @@ Rails.application.configure do
   # number of complex assets.
   config.assets.debug = false
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = true
+  config.assets.compile = false
+  config.assets.digest = true
   # config.assets.logger = false
   # config.logger = ActiveSupport::Logger.new(nil)
 
@@ -40,7 +41,7 @@ Rails.application.configure do
   config.assets.unknown_asset_fallback = true
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # config.assets.prefix = "/assets_dev"
   config.serve_static_assets = false
   # for 'sassc-rails'

@@ -1,1 +1,1 @@
-cd /home/serega/denstepa-djet && rails s --binding=0.0.0.0
+cd /home/serega/repo/denstepa-djet && rails s --binding=0.0.0.0
