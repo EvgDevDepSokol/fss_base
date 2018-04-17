@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'sprockets/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -12,14 +13,15 @@ ActiveSupport.halt_callback_chains_on_return_false = false
 
 module FSS_database
   class Application < Rails::Application
-    # config.app_generators.stylesheet_engine :less
+    config.app_generators.stylesheet_engine :sass
 
     config.autoload_paths << "#{config.root}/lib"
 
     # config.web_console.whitelisted_ips = '10.0.226.8'
 
     #config.browserify_rails.commandline_options = ['--fast']
-    config.browserify_rails.commandline_options = ['-t [ babelify --presets [ 2015 react ]]', '--extension jsx']
+    config.browserify_rails.commandline_options = ['-t [ babelify --presets [ env react ] --extensions .babel .js .jsx .es .es6 ]']
+    #config.browserify_rails.commandline_options = ['-t [ babelify --presets [ env react ]]', '--extension jsx']
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -34,7 +36,7 @@ module FSS_database
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '**', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :ru
-    # config.active_record.belongs_to_required_by_default = true
+    #config.active_record.belongs_to_required_by_default = true
     config.active_record.raise_in_transactional_callbacks = true
   end
 end

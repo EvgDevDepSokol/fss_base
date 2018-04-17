@@ -12,10 +12,11 @@ source 'https://rubygems.org'
 # gem 'mysql2'
 gem 'mysql2', '0.4.10'
 
-gem 'sassc-rails'
+#gem 'sassc-rails'
 gem 'therubyracer'
 # gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-gem 'sprockets', '3.7.1'
+#gem 'sprockets', '3.7.1'
+gem 'sprockets'
 gem 'twitter-bootstrap-rails'
 # gem "font-awesome-rails"
 gem 'font-awesome-less'
@@ -31,7 +32,7 @@ gem 'sass-rails'
 gem 'uglifier'
 # Use CoffeeScript for .js.coffee assets and views
 # gem 'coffee-rails', '~> 4.0.0'
-gem 'coffee-rails'
+#gem 'coffee-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 

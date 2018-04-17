@@ -11,6 +11,8 @@
 // about supported directives.
 //
 
+//
+//= require_self
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
@@ -31,8 +33,8 @@
 //= require libs/Filesaver
 
 // require_tree .
-//= require_self
 // require table_inline_edit
-//= require react
-//= require react_ujs
-//= require components
+
+//=require react
+//=require react_ujs
+//=require components
