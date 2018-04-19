@@ -79,7 +79,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-npm'
   gem 'capistrano-rails'
-  gem 'capistrano-rvm'
+  #gem 'capistrano-rvm'
   gem 'capistrano3-puma'
 end
 
