@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails','4.2.7'
 # gem 'rails', '5.0.0'
-gem 'rails'
+gem 'rails' 
 # gem 'rails'
 # Use sqlite3 as the database for Active Record
 # gem 'mysql2', '~> 0.3.18'
@@ -19,8 +19,8 @@ gem 'therubyracer'
 gem 'sprockets'
 gem 'twitter-bootstrap-rails'
 # gem "font-awesome-rails"
-gem 'font-awesome-less'
-# gem 'font-awesome-sass'
+# gem 'font-awesome-less'
+gem 'font-awesome-sass'
 # gem "haml-rails", "~> 0.9"
 gem 'hamlit'
 

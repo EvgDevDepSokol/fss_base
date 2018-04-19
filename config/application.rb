@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 
 TableList = YAML.load_file('public/data/tables.yml')
 
-ActiveSupport.halt_callback_chains_on_return_false = false
+#ActiveSupport.halt_callback_chains_on_return_false = false
 
 module FSS_database
   class Application < Rails::Application
