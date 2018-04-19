@@ -18,7 +18,7 @@ class EquipmentPanelsController < BaseController
   def hw_ics
     @data_list = HwIc.where(Project: project.ProjectID)
                      .includes(pds_panel: [], pds_project_unit: [:unit])
-                     .includes({hw_ped: [:hw_devtype]}, :system)
+                     .includes({ hw_ped: [:hw_devtype] }, :system)
                      .pluck(
                        :icID, :ref,
                        'pds_syslist.SystemID', 'pds_syslist.System',

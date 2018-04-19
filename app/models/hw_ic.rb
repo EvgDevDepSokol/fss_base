@@ -45,7 +45,7 @@ class HwIc < ApplicationRecord
     elsif hw_ic.pedID_was && (table_by_pedid(hw_ic.pedID) != table_by_pedid(hw_ic.pedID_was))
       destroy_equipment(hw_ic)
       add_equipment(hw_ic)
-    else 
+    else
       tbl_name = table_by_pedid(hw_ic.pedID)
       if  tbl_name != 'pds_mnemo' && (hw_ic.sys_was != hw_ic.sys)
         e = Object.const_get(tbl_name.classify).where(IC: hw_ic.icID, Project: hw_ic.Project).first

@@ -5,17 +5,17 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails','4.2.7'
 # gem 'rails', '5.0.0'
- gem 'rails'
+gem 'rails'
 # gem 'rails'
 # Use sqlite3 as the database for Active Record
 # gem 'mysql2', '~> 0.3.18'
 # gem 'mysql2'
 gem 'mysql2', '0.4.10'
 
-#gem 'sassc-rails'
+# gem 'sassc-rails'
 gem 'therubyracer'
 # gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-#gem 'sprockets', '3.7.1'
+# gem 'sprockets', '3.7.1'
 gem 'sprockets'
 gem 'twitter-bootstrap-rails'
 # gem "font-awesome-rails"
@@ -32,7 +32,7 @@ gem 'sass-rails'
 gem 'uglifier'
 # Use CoffeeScript for .js.coffee assets and views
 # gem 'coffee-rails', '~> 4.0.0'
-#gem 'coffee-rails'
+# gem 'coffee-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
