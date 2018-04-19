@@ -10,6 +10,10 @@ set :user,            'deploy'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
+#My part
+#set :rvm_type, :system
+set :rvm_custom_path,'/usr/share/rvm'
+
 # Don't change these unless you know what you're doing
 # set :pty,             true
 # set :use_sudo,        false
