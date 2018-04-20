@@ -358,33 +358,33 @@ var TableContainer = React.createClass({
           var editButton = <span className='edit btn btn-xs btn-default' onClick={editClick.bind(this)} style={{
             cursor: 'pointer'
           }} title='Редактировать запись'>
-            <i className="fa fa-pencil"></i>
+            <i className="far fa-edit"></i>
           </span>;
 
           var saveButton = <span className='edit btn btn-xs btn-default' onClick={saveClick.bind(this)} style={{
             cursor: 'pointer'
           }} title='Сохранить изменения'>
-            <i className="fa fa-check"></i>
+            <i className="fas fa-check"></i>
           </span>;
 
           if (!newRow) {
             var cancelButton = <span className='edit btn btn-xs btn-default' onClick={cancelClick.bind(this)} style={{
               cursor: 'pointer'
             }} title='Отменить изменения'>
-              <i className="fa fa-undo"></i>
+              <i className="fas fa-undo"></i>
             </span>;
           }
 
           var deleteButton = <span className='remove btn btn-xs btn-danger' onClick={remove.bind(this)} style={{
             cursor: 'pointer'
           }} title='Удалить запись'>
-            <i className="fa fa-times"></i>
+            <i className="fas fa-times"></i>
           </span>;
 
           var copyButton = <span className='remove btn btn-xs btn-default' onClick={copy.bind(this)} style={{
             cursor: 'pointer'
           }} title='Дублировать запись'>
-            <i className="fa fa-files-o"></i>
+            <i className="far fa-copy"></i>
           </span>;
           return {value: (
 
