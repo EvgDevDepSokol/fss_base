@@ -11,6 +11,8 @@ var path = '/selectors/hw_ics';
 module.exports = React.createClass({
   displayName: 'HwIcSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.id,

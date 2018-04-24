@@ -11,6 +11,8 @@ var path = '/selectors/pds_sys_descriptions';
 module.exports = React.createClass({
   displayName: 'SystemSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.value,

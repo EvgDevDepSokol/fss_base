@@ -9,6 +9,8 @@ var Select = require('react-select');
 module.exports = React.createClass({
   displayName: 'ProjectSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.value

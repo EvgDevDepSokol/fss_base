@@ -11,6 +11,8 @@ var path = '/selectors/pds_man_equips';
 module.exports = React.createClass({
   displayName: 'PdsSectionAssemblerSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.id,

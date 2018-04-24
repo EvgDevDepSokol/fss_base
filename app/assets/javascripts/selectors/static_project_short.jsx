@@ -1,13 +1,15 @@
 // selector to be used for booleans
 
 'use strict';
-
-var React = require('react');
-var Select = require('react-select');
-var onChange = require('../selectors/selectors.jsx').onChange;
+import React from 'react';
+import createClass from 'create-react-class';
+import PropTypes from 'prop-types';
+import Select from 'react-select';
 
 module.exports = React.createClass({
   displayName: 'ProjectShortSelector',
+
+  propTypes: {label: PropTypes.string},
 
   getInitialState() {
     return {

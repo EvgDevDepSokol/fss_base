@@ -11,6 +11,8 @@ var path = '/selectors/sd_sys_numbs';
 module.exports = React.createClass({
   displayName: 'SdSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.id,

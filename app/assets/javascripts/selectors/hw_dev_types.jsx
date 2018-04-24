@@ -11,6 +11,8 @@ var path = '/selectors/hw_devtypes';
 module.exports = React.createClass({
   displayName: 'HwDevTypesSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.id,

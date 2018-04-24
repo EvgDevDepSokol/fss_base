@@ -9,7 +9,11 @@ class PdsDocumentation < ApplicationRecord
   has_many :pds_regulators, dependent: :restrict_with_error, foreign_key: 'doc_reg_N'
   has_many :pds_valves, dependent: :restrict_with_error, foreign_key: 'doc_reg_N'
 
+  def self.plucked
+    true
+  end
+
   def custom_hash
-    serializable_hash.merge(id: id)
+    serializable_hash(includes: [pds_doc_on_sys: {only: :sys}]).merge(id: id)
   end
 end

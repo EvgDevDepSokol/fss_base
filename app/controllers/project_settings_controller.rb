@@ -47,6 +47,22 @@ class ProjectSettingsController < BaseController
 
   def pds_documentations
     @data_list = PdsDocumentation.where(Project: project.ProjectID)
+      .pluck(:id,:DocTitle,:Type,:NPP_Number,:Revision,:reg_ID,:getting_date)
+    @data_list = @data_list.each.map do |e|
+      xx=PdsDocOnSy.where(Doc: e[0]).includes(:system).pluck('pds_syslist.System').join(' ')
+      e1 = {}
+      e1['id']                     = e[0]
+      e1['DocTitle']               = e[1]
+      e1['Type']                   = e[2]
+      e1['NPP_number']             = e[3]
+      e1['Revision']               = e[4]
+      e1['reg_ID']                 = e[5]
+      e1['getting_date']           = e[6]
+      e1['pds_doc_on_sys']         = {sys: xx}
+      e = e1
+    end
+
+
   end
 
   def pds_simplifications

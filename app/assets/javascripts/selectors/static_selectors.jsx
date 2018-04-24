@@ -1,8 +1,10 @@
 'use strict';
 
-var React = require('react');
-var Select = require('react-select');
-var onChange = require('../selectors/selectors.jsx').onChange;
+import React from 'react';
+import createClass from 'create-react-class';
+import PropTypes from 'prop-types';
+import Select from 'react-select';
+
 const DATA_VALVE_TYPES = require('../selectors/data/valve_types.js')
 const DATA_MALFUNCTION_TYPES = require('../selectors/data/malfunction_types.js')
 const DATA_RF_TYPES = require('../selectors/data/rf_types.js')
@@ -26,8 +28,10 @@ const DATA_SYSLIST_CATEGORY = [
   { value: '1', label: '1'},
   { value: '2', label: '2'},
   { value: '3', label: '3'},
-]; 
+];
+
 var StaticSelector = React.createClass({
+  propTypes: {label: PropTypes.string},
 
   getInitialState() {
     var value = null;

@@ -7,8 +7,11 @@ var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 var path = '/selectors/hw_peds';
+
 module.exports = React.createClass({
   displayName: 'HwPedSelector',
+
+  propTypes: {label: PropTypes.string},
 
   getInitialState() {
     return {
