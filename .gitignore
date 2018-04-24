@@ -67,3 +67,4 @@ bower.json
 
 /xx
 Gemfile.lock
+package-lock.json
