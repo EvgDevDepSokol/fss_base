@@ -8,9 +8,10 @@ class BaseController < ApplicationController
   helper_method :project, :table_data
   def create
     # Rails.logger.warn permit_params
+    extra_extract
     @current_object = model_class.new permit_params
     if @current_object.save permit_params
-      render json: { status: :created, data: current_object.reload.custom_hash }
+      render json: { status: :created, data: data }
     else
       render json: { errors: @current_object.errors.full_messages }, status: :unprocessable_entity
       Rails.logger.info(@current_object.errors.full_messages)
@@ -19,15 +20,18 @@ class BaseController < ApplicationController
 
   def update
     # Rails.logger.warn permit_params
-    if current_object.update permit_params
-      render json: { status: :ok, data: current_object.custom_hash }
+    extra_extract
+    if !params[model.to_s.underscore].present?
+      render json: { status: :ok, data: data }
+    elsif current_object.update permit_params
+      render json: { status: :ok, data: data }
     else
-      render json: { errors: current_object.errors.full_messages, data: current_object.reload.custom_hash },
+      render json: { errors: current_object.errors.full_messages, data: data },
              status: :unprocessable_entity
       Rails.logger.info(@current_object.errors.full_messages)
     end
     rescue StandardError
-      render json: { errors: current_object.errors.full_messages, data: current_object.reload.custom_hash },
+      render json: { errors: current_object.errors.full_messages, data: data },
              status: :unprocessable_entity
       Rails.logger.info(@current_object.errors.full_messages)
     end
@@ -52,9 +56,6 @@ class BaseController < ApplicationController
   end
 
   def permit_params
-    if (!model.attribute_names.include? 'Project') && params[model.to_s.underscore].key?('Project')
-      params[model.to_s.underscore].delete :Project
-    end
     params.require(model.to_s.underscore).permit!
   end
 
@@ -63,10 +64,32 @@ class BaseController < ApplicationController
     Oj.default_options = { mode: :compat }
     if (model_class.method_defined? :custom_hash) && (!model_class.respond_to? :plucked)
       Oj.dump(@data_list.map(&:custom_hash))
-      # @data_list.map{ |e| e.custom_hash }.to_json
     else
       Oj.dump(@data_list)
-      # @data_list.to_json
     end
+  end
+
+  def extra_extract
+    if (!model.attribute_names.include? 'Project') && params[model.to_s.underscore].key?('Project')
+      params[model.to_s.underscore].delete :Project
+    end
+    if params[model.to_s.underscore].key?('extra_data')
+      @extra_extract = params[model.to_s.underscore]['extra_data']
+      params[model.to_s.underscore].delete :extra_data
+    end
+  end
+
+  def extra_inject
+    if model_class.respond_to? :extra_actions
+      model.extra_actions(current_object.id, @extra_extract)
+    else
+      {}
+    end
+  end
+
+  def data
+    data = current_object.reload.custom_hash
+    data_in = extra_inject
+    data.merge(data_in)
   end
 end

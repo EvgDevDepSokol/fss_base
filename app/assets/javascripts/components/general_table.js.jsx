@@ -25,7 +25,7 @@ var orderBy = require('lodash').orderBy;
 var titleCase = require('title-case');
 
 var SystemSelector = require('../selectors/system.jsx');
-//var SystemAllSelector = require('../selectors/system_all.jsx');
+var SystemDocSelector = require('../selectors/system_doc.jsx');
 var SystemFilterSelector = require('../selectors/system_filter.jsx');
 
 var HwIcSelector = require('../selectors/hw_ic.jsx');
@@ -175,6 +175,15 @@ var TableContainer = React.createClass({
           if (editor == UserRightsSelector) {
             value = labelFromSelectorList(editor.options, value)
           }
+          if (editor == SystemDocSelector) {
+            if (!!data[rowIndex][property]) {
+              if (!!data[rowIndex][property][0]) {
+                id = data[rowIndex][property][0]
+                value = data[rowIndex][property][1]
+              }
+            }
+          }
+
         }
 
         var editedRow = context.state["editedRow"];
@@ -833,6 +842,9 @@ var TableContainer = React.createClass({
     var pages = Math.ceil(data.length / Math.max(isNaN(pagination.perPage)
       ? 1
       : pagination.perPage, 1));
+   
+    //columns to replace attribute == extra_data
+    debugger
 
     return (
       <div className="main-container-inner" key={"main-table"}>
