@@ -68,3 +68,6 @@ bower.json
 /xx
 Gemfile.lock
 package-lock.json
+rails_best_practices_output.html
+rubocop.txt
+traceroute.log
