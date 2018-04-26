@@ -21,12 +21,12 @@ Lint/AmbiguousOperator:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleAlignWith, SupportedStylesAlignWith, AutoCorrect.
 # SupportedStylesAlignWith: start_of_line, def
-Lint/DefEndAlignment:
+Layout/DefEndAlignment:
   Exclude:
     - 'app/controllers/base_controller.rb'
 
 # Offense count: 2
-Lint/LiteralInCondition:
+Lint/LiteralAsCondition:
   Exclude:
     - 'app/controllers/general_controller.rb'
 
@@ -80,7 +80,7 @@ Metrics/PerceivedComplexity:
   Max: 48
 
 # Offense count: 2
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Exclude:
     - 'app/controllers/tblbinaries_controller.rb'
     - 'app/helpers/application_helper.rb'
@@ -99,7 +99,7 @@ Style/AsciiComments:
     - 'lib/select_builder/settings.rb'
 
 # Offense count: 1
-Style/ClassAndModuleCamelCase:
+Naming/ClassAndModuleCamelCase:
   Exclude:
     - 'config/application.rb'
 
@@ -139,7 +139,7 @@ Style/Semicolon:
 # Offense count: 3
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: snake_case, camelCase
-Style/VariableName:
+Naming/VariableName:
   Exclude:
     - 'app/controllers/mass_operations_controller.rb'
     - 'app/models/hw_ic.rb'
