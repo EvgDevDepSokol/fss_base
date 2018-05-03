@@ -71,3 +71,7 @@ package-lock.json
 rails_best_practices_output.html
 rubocop.txt
 traceroute.log
+app/assets/javascripts/*-cache.json
+app/assets/javascripts/*/*-cache.json
+app/assets/javascripts/*/*/*-cache.json
+app/assets/javascripts/*/*/*/*-cache.json
