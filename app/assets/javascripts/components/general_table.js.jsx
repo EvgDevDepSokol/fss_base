@@ -176,10 +176,15 @@ var TableContainer = React.createClass({
             value = labelFromSelectorList(editor.options, value)
           }
           if (editor == SystemDocSelector) {
+            id=[]
+            value=[]
             if (!!data[rowIndex][property]) {
-              if (!!data[rowIndex][property][0]) {
-                id = data[rowIndex][property][0]
-                value = data[rowIndex][property][1]
+              if (!!data[rowIndex][property]['extra_data']) {
+                if (!!data[rowIndex][property]['extra_data'][0]) {
+                  debugger
+                  id = data[rowIndex][property]['extra_data'][0]
+                  value = data[rowIndex][property]['extra_data'][1]
+              }
               }
             }
           }
@@ -843,9 +848,6 @@ var TableContainer = React.createClass({
       ? 1
       : pagination.perPage, 1));
    
-    //columns to replace attribute == extra_data
-    debugger
-
     return (
       <div className="main-container-inner" key={"main-table"}>
         <div className="table-info" key={"table-info"}>

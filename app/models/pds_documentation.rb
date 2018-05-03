@@ -13,7 +13,6 @@ class PdsDocumentation < ApplicationRecord
     pluck(:id, :DocTitle, :Type, :NPP_Number, :Revision, :reg_ID, :getting_date)
       .each.map do |e|
       x1 = list_of_sys(e[0])
-      # PdsDocOnSy.where(Doc: e[0]).includes(:system).pluck('pds_doc_on_sys.sys','pds_syslist.System')
       e1 = {}
       e1['id']                     = e[0]
       e1['DocTitle']               = e[1]
@@ -33,7 +32,7 @@ class PdsDocumentation < ApplicationRecord
 
   def self.extra_actions(pds_documentation_id, new_list)
     if !!new_list
-      old_list = list_of_sys(pds_documentation_id)[0].to_a
+      old_list = list_of_sys(pds_documentation_id)['extra_data'][0].to_a
       new_list = new_list.split(',').map(&:to_i).to_a
       (new_list - old_list).each do |sys_id|
         doc_on_sys = PdsDocOnSy.new
@@ -52,6 +51,13 @@ class PdsDocumentation < ApplicationRecord
   end
 
   def self.list_of_sys(doc_id)
-    PdsDocOnSy.where(Doc: doc_id).includes(:system).pluck('pds_doc_on_sys.sys', 'pds_syslist.System').transpose
+    list={}
+    list['extra_data'] = PdsDocOnSy.where(Doc: doc_id).includes(:system).order('pds_syslist.System').pluck('pds_doc_on_sys.sys', 'pds_syslist.System').transpose
+    if !!list['extra_data'][1]
+      list['extra_label'] = list['extra_data'][1].join(",")
+    else
+      list['extra_label'] = ''
+    end
+    list
   end
 end

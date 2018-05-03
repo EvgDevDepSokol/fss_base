@@ -15,10 +15,8 @@ var HwPedSelector = require('../selectors/hw_ped.jsx');
 var PdsPanelSelector = require('../selectors/pds_panels.jsx');
 var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 
-//some static selectors
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
-//some static selectors
 var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
 var RFTypeSelector = require('../selectors/static_selectors.jsx').RFTypeSelector;
 var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSelector;
@@ -119,7 +117,6 @@ module.exports = React.createClass({
     var attribute = this.state.attribute;
     var column = ReactDOM.findDOMNode(this.refs.column).value;
     var editor = this.state.editor;
-    debugger
     var lpass = false;
     if (editor) {
       lpass = editor.displayName.endsWith('Selector')
@@ -162,7 +159,6 @@ module.exports = React.createClass({
             new_data = JSON.parse(responce.new_data);
 
             if (new_data) {
-              debugger
               //    _this.setState({isReplaceModalOpen:true});
               var lsave = confirm('Количество измененных записей: ' + new_data.length + '. Сохранить изменения?');
               //    var lsave=false;
@@ -238,7 +234,7 @@ module.exports = React.createClass({
     var columns = this.props.columns || [];
     var options = [{}].concat(columns.map(function(column) {
       if (column.property && column.label) {
-        if (column.editor) {
+        if (column.editor&&(column.attribute !== "extra_label")) {
           return {value: column.property, name: column.label}
         };
       }

@@ -7,7 +7,6 @@ class BaseController < ApplicationController
   before_action :project
   helper_method :project, :table_data
   def create
-    # Rails.logger.warn permit_params
     extra_extract
     @current_object = model_class.new permit_params
     if @current_object.save permit_params
@@ -19,7 +18,7 @@ class BaseController < ApplicationController
   end
 
   def update
-    # Rails.logger.warn permit_params
+    byebug
     extra_extract
     if !params[model.to_s.underscore].present?
       render json: { status: :ok, data: data }
@@ -76,6 +75,9 @@ class BaseController < ApplicationController
     if params[model.to_s.underscore].key?('extra_data')
       @extra_extract = params[model.to_s.underscore]['extra_data']
       params[model.to_s.underscore].delete :extra_data
+    end
+    if params[model.to_s.underscore].key?('extra_label')
+      params[model.to_s.underscore].delete :extra_label
     end
   end
 
