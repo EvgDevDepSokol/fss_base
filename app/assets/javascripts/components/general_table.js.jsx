@@ -181,7 +181,6 @@ var TableContainer = React.createClass({
             if (!!data[rowIndex][property]) {
               if (!!data[rowIndex][property]['extra_data']) {
                 if (!!data[rowIndex][property]['extra_data'][0]) {
-                  debugger
                   id = data[rowIndex][property]['extra_data'][0]
                   value = data[rowIndex][property]['extra_data'][1]
                 }
