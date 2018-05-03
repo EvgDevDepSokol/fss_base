@@ -107,7 +107,7 @@
   display: table;
   border-spacing: 0;
   border-collapse: separate;
-  height: 36px;
+  height: 22px;
   outline: none;
   overflow: hidden;
   position: relative;
@@ -125,7 +125,7 @@
   bottom: 0;
   color: #aaa;
   left: 0;
-  line-height: 34px;
+  line-height: 20px;
   padding-left: 10px;
   padding-right: 10px;
   position: absolute;
@@ -137,7 +137,7 @@
   white-space: nowrap;
 }
 .Select-input {
-  height: 34px;
+  height: 20px;
   padding-left: 10px;
   padding-right: 10px;
   vertical-align: middle;
@@ -280,7 +280,7 @@
   position: absolute;
   left: 0;
   top: 100%;
-  width: 100%;
+  width: 150%;
   z-index: 1;
   -webkit-overflow-scrolling: touch;
 }
