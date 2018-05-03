@@ -92,17 +92,19 @@ var ImportStep2 = React.createClass({
           if(property == 'id') {
             label = 'id';
           }
+          debugger
           if(col.nested) {
-            if(col.attribute)
+            if(!!col.attribute&&col.attribute!='extra_label'){
               options.push({
                 value: property,
                 label: label
-              });
+              });}
           } else {
+            if(!col.attribute||col.attribute!='extra_label'){
             options.push({
               value: property,
               label: label
-            });
+            });}
           }
         });
 

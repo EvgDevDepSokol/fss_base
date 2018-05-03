@@ -761,6 +761,7 @@ var TableContainer = React.createClass({
 
   onExportClick: function(exportIndex) {
     var bookname = model_name + '_' + project.id.toString() + '.xlsx';
+   
     if (exportIndex === 1) {
       var dataxls = this.state.dataxls.filter(function(elem) {
         return elem.checked
@@ -768,8 +769,12 @@ var TableContainer = React.createClass({
     } else {
       var dataxls = this.state.dataxls;
     };
-    //    var dataxls = this.state.dataxls;
-    exportData(dataxls, this.props.columns, bookname);
+    var columns = this.props.columns.filter(function(column) {
+      if (column.attribute !== 'extra_label') {
+        return true
+      }
+    });
+    exportData(dataxls, columns, bookname);
   },
 
   onReplaceDone: function(data) {
@@ -839,8 +844,7 @@ var TableContainer = React.createClass({
     };
 
     data = sortColumn.sort(data, this.state.sortingColumn, orderBy);
-    this.state.dataxls = data;
-
+    this.state.dataxls = data
     var paginated = paginate(data, pagination);
     var pages = Math.ceil(data.length / Math.max(isNaN(pagination.perPage)
       ? 1

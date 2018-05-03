@@ -18,7 +18,6 @@ class BaseController < ApplicationController
   end
 
   def update
-    byebug
     extra_extract
     if !params[model.to_s.underscore].present?
       render json: { status: :ok, data: data }
