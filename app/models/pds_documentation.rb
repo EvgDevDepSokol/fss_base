@@ -51,13 +51,13 @@ class PdsDocumentation < ApplicationRecord
   end
 
   def self.list_of_sys(doc_id)
-    list={}
+    list = {}
     list['extra_data'] = PdsDocOnSy.where(Doc: doc_id).includes(:system).order('pds_syslist.System').pluck('pds_doc_on_sys.sys', 'pds_syslist.System').transpose
-    if !!list['extra_data'][1]
-      list['extra_label'] = list['extra_data'][1].join(",")
-    else
-      list['extra_label'] = ''
-    end
+    list['extra_label'] = if !!list['extra_data'][1]
+                            list['extra_data'][1].join(',')
+                          else
+                            ''
+                          end
     list
   end
 end

@@ -76,9 +76,7 @@ class BaseController < ApplicationController
       @extra_extract = params[model.to_s.underscore]['extra_data']
       params[model.to_s.underscore].delete :extra_data
     end
-    if params[model.to_s.underscore].key?('extra_label')
-      params[model.to_s.underscore].delete :extra_label
-    end
+    params[model.to_s.underscore].delete :extra_label if params[model.to_s.underscore].key?('extra_label')
   end
 
   def extra_inject

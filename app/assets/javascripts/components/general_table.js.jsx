@@ -184,11 +184,10 @@ var TableContainer = React.createClass({
                   debugger
                   id = data[rowIndex][property]['extra_data'][0]
                   value = data[rowIndex][property]['extra_data'][1]
-              }
+                }
               }
             }
           }
-
         }
 
         var editedRow = context.state["editedRow"];
