@@ -11,6 +11,8 @@ var path = '/selectors/pds_motor_types';
 module.exports = React.createClass({
   displayName: 'PdsMotorType',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.id,

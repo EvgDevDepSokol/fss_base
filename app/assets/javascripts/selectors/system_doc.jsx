@@ -1,15 +1,16 @@
-// selector to be used for systems
+// selector to be used for systems for all projects
 
 'use strict';
+import React from 'react';
+import createClass from 'create-react-class';
+import PropTypes from 'prop-types';
+import Select from 'react-select';
 
-var React = require('react');
-var Select = require('react-select');
-var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/selectors/hw_peds';
+var path = '/selectors/pds_sys_descriptions';
 
 module.exports = React.createClass({
-  displayName: 'HwPedSelector',
+  displayName: 'SystemDocSelector',
 
   propTypes: {label: PropTypes.string},
 
@@ -21,7 +22,10 @@ module.exports = React.createClass({
   },
 
   setValue(value) {
-    onChange(value,this)
+    this.setState({ value })
+    var h = {};
+    h['extra_data'] = value;
+    this.props.onValue(h);
   },
 
   render: function() {
@@ -33,29 +37,27 @@ module.exports = React.createClass({
           {pds_project_id:project.ProjectID},
           this
         );
-
         callback(null, {
           options: options,
-          complete: true
+          complete: true,
         });
       }, 0);
     };
 
     return (
-      React.createElement(Select.Async, {name: "HwPed",
+      React.createElement(Select.Async, {name: "System",
         loadOptions: getOptions,
         onChange: this.setValue,
         value: this.state.value,
-        simpleValue:true,
-        multi: false,
+        simpleValue: true,
+        multi: true,
         disabled: this.props.disabled,
         clearable: false,
-        cache: false
+        closeOnSelect: false
         })
     );
   }
 });
-
 module.exports.options = function(){
   var options = getSelectorOptions(
     path,

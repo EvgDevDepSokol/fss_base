@@ -11,6 +11,8 @@ var path = '/selectors/pds_valves';
 module.exports = React.createClass({
   displayName: 'PdsValvesSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.id,

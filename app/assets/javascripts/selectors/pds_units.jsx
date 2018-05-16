@@ -11,6 +11,8 @@ var path = '/selectors/pds_units';
 module.exports = React.createClass({
   displayName: 'UnitAllSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.id,

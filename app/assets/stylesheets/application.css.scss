@@ -11,7 +11,7 @@
  * file per style scope.
  *
  *= require_tree .
- *= require jquery-ui
+ *  require jquery-ui
 
  *  require select2-bootstrap
  *  require libs/select2-3
@@ -684,19 +684,19 @@ body {
     table {
       tr {
         td {
-          padding: 2px;
+          padding: 1px;
           vertical-align: middle;
-          font-size: 10px;
+          font-size: 11px;
 
           .Select {
             .Select-control {
-              padding: 3px 12px 3px 0;
+              //padding: 3px 3px 3px 0;
               border-width: 1px;
               border-style: solid;
               border-color: rgb(169, 169, 169);
 
               .Select-value {
-                display: initial;
+                //display: initial;
               }
             }
           }
@@ -722,7 +722,7 @@ body {
 
           .wide-text {
             min-height: 100px;
-            min-width: 800px;
+            min-width: 600px;
             height: 100%;
             width: 100%;
           }
@@ -795,9 +795,9 @@ body {
       }
 
       .header-wide_text-col {
-        width: 805px;
-        min-width: 805px;
-        max-width: 805px;
+        width: 605px;
+        min-width: 605px;
+        max-width: 605px;
         display: table-cell;
       }
     }

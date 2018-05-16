@@ -21,6 +21,7 @@ public/data/pds_db.sql
 garbage
 lib/assets/bower_components/
 lib/assets/node_modules/
+public/dev-assets/
 public/assets/
 public/tmp/
 node_modules/
@@ -47,6 +48,7 @@ config/secrets.yml
 ## Environment normalization:
 /.bundle
 /vendor/bundle
+/vendor/cache
 
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
@@ -67,3 +69,13 @@ bower.json
 
 /xx
 Gemfile.lock
+package-lock.json
+rails_best_practices_output.html
+rubocop.txt
+traceroute.log
+app/assets/javascripts/*-cache.json
+app/assets/javascripts/*/*-cache.json
+app/assets/javascripts/*/*/*-cache.json
+app/assets/javascripts/*/*/*/*-cache.json
+app/assets/javascripts/*/*/*/*/*-cache.json
+app/assets/javascripts/*/*/*/*/*/*-cache.json

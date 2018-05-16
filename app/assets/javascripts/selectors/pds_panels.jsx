@@ -11,6 +11,8 @@ var path = '/selectors/pds_panels';
 module.exports = React.createClass({
   displayName: 'PdsPanelSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.id,

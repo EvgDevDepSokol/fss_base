@@ -11,6 +11,8 @@ var path = '/selectors/hw_iosignaldefs';
 module.exports = React.createClass({
   displayName: 'HwIosignaldefSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.id,

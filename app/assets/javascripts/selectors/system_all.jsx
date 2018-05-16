@@ -1,4 +1,4 @@
-// selector to be used for systems
+// selector to be used for systems for all projects
 
 'use strict';
 
@@ -6,10 +6,10 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/selectors/hw_peds';
+var path = '/selectors/pds_syslists';
 
 module.exports = React.createClass({
-  displayName: 'HwPedSelector',
+  displayName: 'SystemAllSelector',
 
   propTypes: {label: PropTypes.string},
 
@@ -30,19 +30,18 @@ module.exports = React.createClass({
       setTimeout(function() {
         var options = getSelectorOptions(
           path,
-          {pds_project_id:project.ProjectID},
+          {},
           this
         );
-
         callback(null, {
           options: options,
-          complete: true
+          complete: true,
         });
       }, 0);
     };
 
     return (
-      React.createElement(Select.Async, {name: "HwPed",
+      React.createElement(Select.Async, {name: "System",
         loadOptions: getOptions,
         onChange: this.setValue,
         value: this.state.value,
@@ -55,11 +54,10 @@ module.exports = React.createClass({
     );
   }
 });
-
 module.exports.options = function(){
   var options = getSelectorOptions(
     path,
-    {pds_project_id:project.ProjectID},
+    {},
     this
   );
   return options;

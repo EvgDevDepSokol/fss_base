@@ -6,15 +6,17 @@ var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
-var path = '/selectors/pds_syslists';
+var path = '/selectors/pds_sys_descriptions';
 
 module.exports = React.createClass({
   displayName: 'SystemSelector',
 
+  propTypes: {label: PropTypes.string},
+
   getInitialState() {
     return {
       value: this.props.id,
-      disabled: this.props.disabled
+      disabled: this.props.disabled,
     };
   },
 
@@ -23,12 +25,11 @@ module.exports = React.createClass({
   },
 
   render: function() {
-
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = getSelectorOptions(
           path,
-          {},
+          {pds_project_id:project.ProjectID},
           this
         );
         callback(null, {
@@ -38,6 +39,7 @@ module.exports = React.createClass({
       }, 0);
     };
 
+
     return (
       React.createElement(Select.Async, {name: "System",
         loadOptions: getOptions,
@@ -45,8 +47,8 @@ module.exports = React.createClass({
         value: this.state.value,
         simpleValue:true,
         multi: false,
-        disabled: this.props.disabled,
         clearable: false,
+        disabled: this.props.disabled,
         cache: false
         })
     );
@@ -55,7 +57,7 @@ module.exports = React.createClass({
 module.exports.options = function(){
   var options = getSelectorOptions(
     path,
-    {},
+    {pds_project_id:project.ProjectID},
     this
   );
   return options;

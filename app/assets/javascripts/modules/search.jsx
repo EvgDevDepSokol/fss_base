@@ -107,6 +107,9 @@ module.exports.search = function(search, columns, data) {
       if (editor.displayName == 'UserRightsSelector') {
         value = labelFromSelectorList(editor.options, value)
       }
+      if (editor.displayName == 'SystemDocSelector') {
+        value = row[property]['extra_label']
+      }
     }
 
     if (col.nested) {

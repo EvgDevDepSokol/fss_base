@@ -25,8 +25,9 @@ var orderBy = require('lodash').orderBy;
 var titleCase = require('title-case');
 
 var SystemSelector = require('../selectors/system.jsx');
-//var SystemAllSelector = require('../selectors/system_all.jsx');
+var SystemDocSelector = require('../selectors/system_doc.jsx');
 var SystemFilterSelector = require('../selectors/system_filter.jsx');
+var SystemAllSelector = require('../selectors/system_all.jsx');
 
 var HwIcSelector = require('../selectors/hw_ic.jsx');
 var DetectorSelector = require('../selectors/detector.jsx');
@@ -174,6 +175,18 @@ var TableContainer = React.createClass({
           }
           if (editor == UserRightsSelector) {
             value = labelFromSelectorList(editor.options, value)
+          }
+          if (editor == SystemDocSelector) {
+            id=[]
+            value=[]
+            if (!!data[rowIndex][property]) {
+              if (!!data[rowIndex][property]['extra_data']) {
+                if (!!data[rowIndex][property]['extra_data'][0]) {
+                  id = data[rowIndex][property]['extra_data'][0]
+                  value = data[rowIndex][property]['extra_data'][1]
+                }
+              }
+            }
           }
         }
 
@@ -749,6 +762,7 @@ var TableContainer = React.createClass({
 
   onExportClick: function(exportIndex) {
     var bookname = model_name + '_' + project.id.toString() + '.xlsx';
+   
     if (exportIndex === 1) {
       var dataxls = this.state.dataxls.filter(function(elem) {
         return elem.checked
@@ -756,8 +770,12 @@ var TableContainer = React.createClass({
     } else {
       var dataxls = this.state.dataxls;
     };
-    //    var dataxls = this.state.dataxls;
-    exportData(dataxls, this.props.columns, bookname);
+    var columns = this.props.columns.filter(function(column) {
+      if (column.attribute !== 'extra_label') {
+        return true
+      }
+    });
+    exportData(dataxls, columns, bookname);
   },
 
   onReplaceDone: function(data) {
@@ -827,13 +845,12 @@ var TableContainer = React.createClass({
     };
 
     data = sortColumn.sort(data, this.state.sortingColumn, orderBy);
-    this.state.dataxls = data;
-
+    this.state.dataxls = data
     var paginated = paginate(data, pagination);
     var pages = Math.ceil(data.length / Math.max(isNaN(pagination.perPage)
       ? 1
       : pagination.perPage, 1));
-
+   
     return (
       <div className="main-container-inner" key={"main-table"}>
         <div className="table-info" key={"table-info"}>

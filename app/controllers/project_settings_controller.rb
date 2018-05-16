@@ -46,7 +46,7 @@ class ProjectSettingsController < BaseController
   end
 
   def pds_documentations
-    @data_list = PdsDocumentation.where(Project: project.ProjectID)
+    @data_list = PdsDocumentation.where(Project: project.ProjectID).plucked
   end
 
   def pds_simplifications
