@@ -21,7 +21,7 @@ public/data/pds_db.sql
 garbage
 lib/assets/bower_components/
 lib/assets/node_modules/
-public/assets/
+public/dev-assets/
 public/tmp/
 node_modules/
 .DS_Store
