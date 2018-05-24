@@ -819,9 +819,18 @@ var TableContainer = React.createClass({
     });
 
     if (systemFilter && systemFilter != -1) {
-      data = _.filter(data, function(row) {
-        return row.system && row.system.id == systemFilter;
-      });
+      if (!!data[0]) {
+        var firstRow = data[0];
+        if (!!firstRow.system) {
+          data = _.filter(data, function(row) {
+            return row.system && row.system.id == systemFilter;
+          });
+        } else if (!!firstRow.doc_arr ) {
+          data = _.filter(data, function(row) {
+            return !!row.doc_arr && !!row.doc_arr.extra_data && !!row.doc_arr.extra_data[0] && row.doc_arr.extra_data[0].includes(systemFilter);
+          });
+        };
+      };
     };
     if (this.state.showFilters) {
       columns.forEach(function(column) {
