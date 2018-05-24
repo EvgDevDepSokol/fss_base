@@ -8,14 +8,20 @@ class SelectBuilder::Settings < SelectBuilder
                       systems project_id type].freeze
 
   INPUT_TYPES = %w[MOD ADD OMOD].freeze
-  VARIALBES = ['remote function', 'malfunctions', 'detectors',
+  VARIABLES = ['remote function', 'malfunctions', 'detectors',
                'peds', 'ppc', 'announcicator', 'time step', 'valves', 'power sections'].freeze
 
-  attr_accessor *ATTRIBUTE_LIST
 
+  attr_accessor *ATTRIBUTE_LIST
   def initialize(attributes = {})
-    ATTRIBUTE_LIST.each { |key| send("#{key}=", attributes[key.to_s]) if attributes[key.to_s] }
+    attributes.each do |name, value|
+      send("#{name}=", value)
+    end
   end
+
+  #def initialize(attributes)
+  #  ATTRIBUTE_LIST.each { |key| send("#{key}=", attributes[key.to_s]) if attributes[key.to_s] }
+  #end
 
   def new_record?
     false
@@ -30,11 +36,11 @@ class SelectBuilder::Settings < SelectBuilder
     [1]
   end
 
-  class << self
-    def default_pds_rf
-      a = { project_id: 79, input_type: 'MOD', delimiter: ';', preprocessor: 'globalyp',
-            variables: 'remote function', systems: [], type: 'pds_rf' }
-      SelectBuilder::Settings.new(a.as_json)
-    end
-  end
+ # class << self
+ #   def default_pds_rf
+ #     a = { project_id: 79, input_type: 'MOD', delimiter: ';', preprocessor: 'globalyp',
+ #           variables: 'remote function', systems: [], type: 'pds_rf' }
+ #     SelectBuilder::Settings.new(a.as_json)
+ #   end
+ # end
 end
