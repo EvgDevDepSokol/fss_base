@@ -29,7 +29,7 @@ class ImportController < ApplicationController
         elsif !current_object.valid?
           msg[:err] = current_object.errors.full_messages
         elsif !(msg[:add] || current_object.changed?)
-          msg[:warn] = 'Аттрибуты не меняются!'
+          msg[:warn] = 'Атрибуты не меняются!'
         end
         message.push(msg)
       end
@@ -62,7 +62,7 @@ class ImportController < ApplicationController
       elsif msg[:add] && (current_user.user_rights <= 1)
         msg[:err] = ['Нет прав на добавление записи!']
       elsif !(msg[:add] || current_object.changed?)
-        msg[:warn] = 'Аттрибуты не меняются!'
+        msg[:warn] = 'Атрибуты не меняются!'
       elsif !current_object.save
         msg[:err] = current_object.errors.full_messages
       else
