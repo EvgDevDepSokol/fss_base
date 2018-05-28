@@ -17,7 +17,7 @@
 
 .idea/*
 public/data/pds_db.sql
-
+public/select_builders/
 garbage
 lib/assets/bower_components/
 lib/assets/node_modules/
