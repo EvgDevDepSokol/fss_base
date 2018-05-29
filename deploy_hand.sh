@@ -1,6 +1,7 @@
 bash -l && {
 bundle package
 scp -r ~/work/fss_base/vendor/cache/* deploy@10.0.104.151:/home/deploy/handmade/fss_base/vendor/cache/
+scp -r ~/work/fss_base/node_modules/* deploy@10.0.104.151:/home/deploy/handmade/fss_base/node_modules/
 ENV_RAILS=production bundle exec rake assets:precompile
 echo
 echo    !!warning!!

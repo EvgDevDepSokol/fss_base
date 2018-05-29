@@ -49,19 +49,28 @@ class PdsRf < ApplicationRecord
   def custom_hash
     serializable_hash(include: {
                         system: { only: :System },
-                        pds_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
-                        psa_project_unit: { only: [], include: { unit: { only: :Unit_RU } } },
+                        pds_project_unit: { only: [], include: { unit: { only: %i[Unit_RU Unit_EN] } } },
+                        psa_project_unit: { only: [], include: { unit: { only: %i[Unit_RU Unit_EN] } } },
                         sd_sys_numb: { only: [:sd_link] }
                       })
   end
 
   def unit_with_language
     if pds_project.project_properties.language == 'Русский'
-      pds_project_unit.unit.ru
+      !!self.Unit ? pds_project_unit.unit.Unit_RU : ''
     else
-      pds_project_unit.unit.en
+      !!self.Unit ? pds_project_unit.unit.Unit_EN : ''
     end
   end
+
+  # def unit_with_language
+  #  byebug
+  #  if pds_project.project_properties.language == 'Русский'
+  #    !!self.Unit ? self.custom_hash['pds_project_unit']['unit']['Unit_RU'] : ''
+  #  else
+  #    !!self.Unit ? self.custom_hash['pds_project_unit']['unit']['Unit_EN'] : ''
+  #  end
+  # end
 
   def type_b?(t)
     %w[B VB].include?(t)

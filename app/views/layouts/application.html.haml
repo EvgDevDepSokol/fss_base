@@ -90,10 +90,16 @@
                 = link_to root_url do
                   = image_tag('import_export.png')
                   Экспорт/ Импорт
-              %li#navbar_generics
-                = link_to root_url do
-                  = image_tag('generate.png')
-                  Генерация
+              - if @project
+                %li#navbar_generics
+                  = link_to new_pds_project_select_builder_path do
+                    = image_tag('generate.png')
+                    Генерация
+              - else
+                %li#navbar_generics
+                  = link_to root_url do
+                    = image_tag('generate.png')
+                    Генерация
           %ul.nav.navbar-right.navbar-nav
             - if current_user
               %li#navbar_help

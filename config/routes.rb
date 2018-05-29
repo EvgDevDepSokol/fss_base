@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     # member do
     resources :pds_syslist
     # resources :hw_ic
+    resource :select_builder
 
     EquipmentPanelsController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :equipment_panels, model: table do
@@ -113,8 +114,6 @@ Rails.application.routes.draw do
     resources :pds_documentations, only: [:index]
     resources :pds_sys_descriptions, only: [:index]
   end
-
-  resource :select_builder
 
   resources :tblbinaries, only: [] do
     get 'get_file', on: :member

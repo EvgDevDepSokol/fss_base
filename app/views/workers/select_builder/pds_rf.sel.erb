@@ -1,34 +1,35 @@
 <% data.each do |pds_rf| %>
-    <%= "/#{input_type} #{pds_rf.var2(pds_rf.type)}r#{pds_rf.system.System}#{pds_rf.name.downcase}" %>
-    .DESC <%= pds_rf.Desc %>
-    @<%= pds_rf.type_r?(pds_rf.type) ? 'LIM' : 'IDX' %>(<%= pds_rf.range %>) @PTAG(<%= (pds_rf.Ptag || pds_rf.name).upcase %>)
+<%= "/#{input_type} #{pds_rf.var2(pds_rf.type)}r#{pds_rf.system.System.downcase}#{pds_rf.name.downcase}" %>
+.DESC <%= pds_rf.Desc %>
+@<%= pds_rf.type_r?(pds_rf.type) ? 'LIM' : 'IDX' %>(<%= pds_rf.range %>) @PTAG(<%= (pds_rf.Ptag || pds_rf.name).upcase %>)
 
 
 
 
-    .UNIT <%= pds_rf.unit_with_language %>
-    .SYS <%= pds_rf.system.System.downcase %>
-    .TYPE <%= pds_rf.selection_type(pds_rf.type) %>
-    .FORM <%= pds_rf.selection_form(pds_rf.type) %>
-    .VALU <%= pds_rf.selection_valu(pds_rf.type) %>
-    .DIM
-    .PRED <%= preprocessor %>
+.UNIT <%= pds_rf.unit_with_language %>
+.SYS <%= pds_rf.system.System.downcase %>
+.TYPE <%= pds_rf.selection_type(pds_rf.type) %>
+.FORM <%= pds_rf.selection_form(pds_rf.type) %>
+.VALU <%= pds_rf.selection_valu(pds_rf.type) %>
+.DIM
+.PRED <%= preprocessor %>
 
 <% end %>
+
 <% data.each do |pds_rf| %>
-    <%= "/#{input_type} #{pds_rf.var2(pds_rf.Type_FB)}fr#{pds_rf.system.System}#{pds_rf.name.downcase}" %>
-    .DESC <%= pds_rf.Desc %>
-    @<%= pds_rf.type_r?(pds_rf.Type_FB) ? 'LIM' : 'IDX' %>(<%= pds_rf.range %>) @PTAG(<%= (pds_rf.Ptag || pds_rf.name).upcase %>)
+<%= "/#{input_type} #{pds_rf.var2(pds_rf.Type_FB)}f#{pds_rf.system.System.downcase}#{pds_rf.name.downcase}" %>
+.DESC <%= pds_rf.Desc %>
+@<%= pds_rf.type_r?(pds_rf.Type_FB) ? 'LIM' : 'IDX' %>(<%= pds_rf.range %>) @PTAG(<%= (pds_rf.Ptag || pds_rf.name).upcase %>)
 
 
 
 
-    .UNIT <%= pds_rf.unit_with_language %>
-    .SYS <%= pds_rf.system.System.downcase %>
-    .TYPE <%= pds_rf.selection_type(pds_rf.Type_FB) %>
-    .FORM <%= pds_rf.selection_form(pds_rf.Type_FB) %>
-    .VALU <%= pds_rf.selection_valu(pds_rf.Type_FB) %>
-    .DIM
-    .PRED <%= preprocessor %>
+.UNIT <%= pds_rf.unit_with_language %>
+.SYS <%= pds_rf.system.System.downcase %>
+.TYPE <%= pds_rf.selection_type(pds_rf.Type_FB) %>
+.FORM <%= pds_rf.selection_form(pds_rf.Type_FB) %>
+.VALU <%= pds_rf.selection_valu(pds_rf.Type_FB) %>
+.DIM
+.PRED <%= preprocessor %>
 
 <% end %>

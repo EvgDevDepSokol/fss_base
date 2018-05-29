@@ -27,6 +27,7 @@
     = favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png'
     / For all other devices
     / Size should be 32 x 32 pixels
+    / = simple_form_for @select_builder do |f|
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
 
   %body
@@ -36,16 +37,17 @@
           %h2
             Настройка создания Select файла для заполнения dbm
 
-      = simple_form_for @select, url: select_builder_path do |f|
+      = simple_form_for @select_builder, url: pds_project_select_builder_path do |f|
         = f.input :type, as: :hidden
+        = f.input :project_id, as: :hidden
         .row
           .col-xs-1
           .col-xs-4
             .row
               .col-md-12
                 = f.input :input_type, collection: SelectBuilder::Settings::INPUT_TYPES,
-                 as: :radio_buttons, label: 'Тип ввода в DBM'
-            - if @select.type == 'pds_rf'
+                 as: :radio_buttons, label: 'Тип ввода в DBM', selected: 1
+            - if @select_builder.valid? && @select_builder.type == 'pds_rf'
               .row
                 .col-md-12
                   = f.input :delimiter, collection: [';', ','], selected: ';'
@@ -53,13 +55,13 @@
               .row
                 .col-md-12
                   = f.input :preprocessor, input_html: {value: 'globalyp'}
-
           .col-xs-4
-            = f.input :variables, collection: SelectBuilder::Settings::VARIABLES,
-                 as: :radio_buttons, label: 'Переменные'
+            = f.input :variables, collection: SelectBuilder::Settings::VARIABLES,as: :radio_buttons,
+             selected: 'remote function', label: 'Переменные'
+
         .row
           .col-xs-12
-            = f.input :systems, collection: PdsSyslist.all, as: :check_boxes
+            = f.input :systems, collection: PdsSysDescription.where(Project: project.ProjectID).includes(:system).order('pds_syslist.System').pluck('pds_syslist.System','pds_syslist.SystemID'), as: :check_boxes
             .btn.btn-xs.btn-default#select-all
               Выбрать все
         %br
