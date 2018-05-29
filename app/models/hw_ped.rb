@@ -4,7 +4,7 @@ class HwPed < ApplicationRecord
   alias_attribute :id, primary_key
 
   belongs_to :hw_devtype, foreign_key: :type
-  has_many :hw_ic, dependent: :restrict_with_error, foreign_key: 'pedID'
+  has_many :hw_ic, dependent: :restrict_with_error, foreign_key: 'ped'
   has_many :hw_wirelist, dependent: :restrict_with_error, foreign_key: 'pedID'
 
   validates :AI, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -73,7 +73,7 @@ class HwPed < ApplicationRecord
     if hw_ped.type_was && (hw_ped.type != hw_ped.type_was)
       tbl_old = Object.const_get(Tablelist.find(HwDevtype.find(hw_ped.type_was).typetable).table.classify)
       tbl_new = Object.const_get(Tablelist.find(HwDevtype.find(hw_ped.type).typetable).table.classify)
-      hw_ics = HwIc.where(Project: self.Project, pedID: id).to_a
+      hw_ics = HwIc.where(Project: self.Project, ped: id).to_a
       hw_ics.each do |hw_ic|
         e_old = tbl_old.where(IC: hw_ic.icID).to_a
         e_old.each(&:destroy)
