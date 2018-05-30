@@ -31,6 +31,7 @@ class EquipmentPanelsController < BaseController
     #                 )
     sql="SELECT `hw_ic`.`icID`, `hw_ic`.`ref`, pds_syslist.SystemID, pds_syslist.System, `hw_ic`.`Description`, hw_peds.ped_N, hw_peds.ped, hw_devtype.typeID, hw_devtype.RuName, `hw_ic`.`scaleMin`, `hw_ic`.`scaleMax`, pds_project_unit.ProjUnitID, pds_unit.UnitID, pds_unit.Unit_RU, `hw_ic`.`tag_no`, `hw_ic`.`UniquePTAG`, `hw_ic`.`un`, `hw_ic`.`Description_EN`, `hw_ic`.`rev`, pds_panel.pID, pds_panel.panel FROM `hw_ic` LEFT OUTER JOIN `pds_panel` ON `pds_panel`.`pID` = `hw_ic`.`panel_id` LEFT OUTER JOIN `pds_project_unit` ON `pds_project_unit`.`ProjUnitID` = `hw_ic`.`Unit` LEFT OUTER JOIN `pds_unit` ON `pds_unit`.`UnitID` = `pds_project_unit`.`Unit` LEFT OUTER JOIN `hw_peds` ON `hw_peds`.`ped_N` = `hw_ic`.`ped` LEFT OUTER JOIN `hw_devtype` ON `hw_devtype`.`typeID` = `hw_peds`.`type` LEFT OUTER JOIN `pds_syslist` ON `pds_syslist`.`SystemID` = `hw_ic`.`sys` WHERE `hw_ic`.`Project` = #{project.ProjectID}"
     @data_list = ActiveRecord::Base.connection.execute(sql)
+    puts @data_list.first
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]
@@ -49,6 +50,7 @@ class EquipmentPanelsController < BaseController
       e1['pds_panel']        = { id: e[19], panel: e[20] }
       e = e1
     end
+    puts @data_list.first
   end
 
   def pds_brus
