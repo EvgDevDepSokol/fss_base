@@ -33,7 +33,6 @@ module.exports = React.createClass({
           {pds_project_id:project.ProjectID},
           this
         );
-
         callback(null, {
           options: options,
           complete: true
