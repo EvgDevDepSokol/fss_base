@@ -2,7 +2,8 @@ class SelectBuildersController < ApplicationController
   layout false
 
   TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'select_builder')
-  FILE_PATH = Rails.root.join('public', 'select_builders', 'pds_rf.sel')
+  # FILE_PATH = Rails.root.join('public', 'select_builders', 'pds_rf.sel')
+  FILE_PATH = '/home/shared/pds_rf.sel'
 
   def new
     @select_builder = ::SelectBuilder::Settings.new('type' => 'pds_rf', 'project_id' => params[:pds_project_id])

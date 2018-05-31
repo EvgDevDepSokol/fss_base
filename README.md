@@ -18,3 +18,15 @@ djet project - это система для управления базы дан
 5. установить bowerлокально - npm install bower -g
 6. mkdir vendor/assets/js (вынести в git)
 7. установить зависимости от bower (потом уберем) rake bower:install
+
+## Расшарить папку ##
+1. sudo apt-get install samba
+2. sudo smbpasswd -a user
+  пароль shared123
+3. sudo mkdir /home/shared
+4. sudo vi /etc/samba/smb.conf
+  добавить в конец файла
+  [fss_db_share] /home/shared available = yes valid users = user read only = no browsable = yes public = yes writable = yes
+6. sudo service smbd restart
+7. sudo chgrp developer /home/shared
+8. sudo chmod g+w /home/shared
