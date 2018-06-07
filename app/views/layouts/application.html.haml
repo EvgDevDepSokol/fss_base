@@ -91,12 +91,12 @@
                   = image_tag('import_export.png')
                   Экспорт/ Импорт
               - if @project
-                %li#navbar_generics
+                %li#navbar_generate_dbm_modal
                   = link_to new_pds_project_select_builder_path do
                     = image_tag('generate.png')
                     Генерация
               - else
-                %li#navbar_generics
+                %li#navbar_generate_dbm_modal
                   = link_to root_url do
                     = image_tag('generate.png')
                     Генерация
