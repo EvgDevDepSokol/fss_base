@@ -1142,3 +1142,23 @@ footer {
     }
   }
 }
+
+.generate-dbm-all {
+  display: block;
+  width: 400px;
+}
+.generate-dbm-top {
+  display: inline-block;
+  width: 50%;
+  vertical-align:top;
+  border: 1px solid #dddddd;
+}
+.generate-dbm-sys-container {
+  border: 1px solid #dddddd;
+  label{
+    min-width:60px;
+  }
+}
+.generate-dbm-rf-container {
+  border: 1px solid #dddddd;
+}
