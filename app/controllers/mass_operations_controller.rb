@@ -117,7 +117,7 @@ class MassOperationsController < ApplicationController
     # querry = model_class.find(ids)
     querry = model_class
     # querry = querry.find(ids)
-    column = model_class.attribute_aliases[params[:column]] ? model_class.attribute_aliases[params[:column]] : params[:column]
+    column = model_class.attribute_aliases[params[:column]] || params[:column]
 
     new_data.each do |_i, row|
       querry_row = querry.find(row[:id])
