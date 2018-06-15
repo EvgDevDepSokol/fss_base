@@ -85,8 +85,8 @@ Rails.application.routes.draw do
 
   put :replace_prepare, to: 'mass_operations#replace_prepare'
   put :replace_finish,  to: 'mass_operations#replace_finish'
-  
-  #to fix later
+
+  # to fix later
   put :generate_rf, to: 'dbm_generator#prepare_hash'
 
   resources :users

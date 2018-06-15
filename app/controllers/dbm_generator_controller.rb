@@ -1,7 +1,7 @@
 class DbmGeneratorController < ApplicationController
   layout false
 
-  #TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
+  # TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
   TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
   FILE_PATH = '/home/shared/pds_rf.sel'.freeze
 
@@ -13,7 +13,7 @@ class DbmGeneratorController < ApplicationController
     hash = params[:data]
     dbm_generator = DbmGenerator.new(hash)
     # Resque.enqueue(SelectBuilderJob, dbm_generator)
-    #dbm_generator = @dbm_generator
+    # dbm_generator = @dbm_generator
     render_pds_rf(dbm_generator)
     render json: { status: :ok }
   end

@@ -26,5 +26,4 @@ class DbmGenerator
   def as_json(options = {})
     super.slice(*ATTRIBUTE_LIST.map(&:to_s))
   end
-
 end
