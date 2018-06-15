@@ -10,6 +10,7 @@ class DbmGenerator
   INPUT_TYPES = %w[MOD ADD OMOD].freeze
   VARIABLES = ['remote function', 'malfunctions', 'detectors',
                'peds', 'ppc', 'announcicator', 'time step', 'valves', 'power sections'].freeze
+  DELIMITER = [',' ';'].freeze
 
   attr_accessor *ATTRIBUTE_LIST
 

@@ -38,4 +38,3 @@
 //=require react
 //=require react_ujs
 //=require components
-//=require select_builders.js

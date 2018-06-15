@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-
+//import MOD from 'ruby_constants.js.erb'
+//import VARIABLES from 'ruby_constants.js.erb'
+//import ATTRIBUTE_LIST from 'ruby_constants.jsx.haml'
+//import DELIMETER from 'ruby_constants.js.erb'
 
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
 const MOD = ['MOD', 'ADD', 'OMOD'];
+//const MOD = ruby_constants.MOD;
 const VARIABLES = ['remote function', 'malfunctions', 'detectors',
                'peds', 'ppc', 'announciator', 'time step', 'valves', 'power sections'];
 const DELIMITER = [',', ';'];
@@ -117,7 +121,6 @@ class GenerateDbm extends React.Component {
       systems_all: systems_all
     });
   }
-
 
   onExport() {
     var systems = [];
