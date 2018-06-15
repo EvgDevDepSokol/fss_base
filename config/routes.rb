@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     # member do
     resources :pds_syslist
     # resources :hw_ic
-    resource :select_builder
+    # resource :select_builder
 
     EquipmentPanelsController::ACTIONS.each do |table|
       resources table.to_s.pluralize, controller: :equipment_panels, model: table do
@@ -85,6 +85,9 @@ Rails.application.routes.draw do
 
   put :replace_prepare, to: 'mass_operations#replace_prepare'
   put :replace_finish,  to: 'mass_operations#replace_finish'
+  
+  #to fix later
+  put :generate_rf, to: 'dbm_generator#prepare_hash'
 
   resources :users
 

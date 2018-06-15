@@ -1,5 +1,5 @@
 <% data.each do |pds_rf| %>
-<%= "/#{input_type} #{pds_rf.var2(pds_rf.type)}r#{pds_rf.system.System.downcase}#{pds_rf.name.downcase}" %>
+<%= "/#{mod} #{pds_rf.var2(pds_rf.type)}r#{pds_rf.system.System.downcase}#{pds_rf.name.downcase}" %>
 .DESC <%= pds_rf.Desc %>
 @<%= pds_rf.type_r?(pds_rf.type) ? 'LIM' : 'IDX' %>(<%= pds_rf.range %>) @PTAG(<%= (pds_rf.Ptag || pds_rf.name).upcase %>)
 
@@ -12,12 +12,12 @@
 .FORM <%= pds_rf.selection_form(pds_rf.type) %>
 .VALU <%= pds_rf.selection_valu(pds_rf.type) %>
 .DIM
-.PRED <%= preprocessor %>
+.PRED <%= predecessor %>
 
 <% end %>
 
 <% data.each do |pds_rf| %>
-<%= "/#{input_type} #{pds_rf.var2(pds_rf.Type_FB)}f#{pds_rf.system.System.downcase}#{pds_rf.name.downcase}" %>
+<%= "/#{mod} #{pds_rf.var2(pds_rf.Type_FB)}f#{pds_rf.system.System.downcase}#{pds_rf.name.downcase}" %>
 .DESC <%= pds_rf.Desc %>
 @<%= pds_rf.type_r?(pds_rf.Type_FB) ? 'LIM' : 'IDX' %>(<%= pds_rf.range %>) @PTAG(<%= (pds_rf.Ptag || pds_rf.name).upcase %>)
 
@@ -30,6 +30,6 @@
 .FORM <%= pds_rf.selection_form(pds_rf.Type_FB) %>
 .VALU <%= pds_rf.selection_valu(pds_rf.Type_FB) %>
 .DIM
-.PRED <%= preprocessor %>
+.PRED <%= predecessor %>
 
 <% end %>

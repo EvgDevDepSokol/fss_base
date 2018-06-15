@@ -8,7 +8,7 @@ var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOption
 const MOD = ['MOD', 'ADD', 'OMOD'];
 const VARIABLES = ['remote function', 'malfunctions', 'detectors',
                'peds', 'ppc', 'announciator', 'time step', 'valves', 'power sections'];
-const SEPARATOR = [',', ';'];
+const DELIMITER = [',', ';'];
 
 const customStyles = {
   content: {
@@ -30,7 +30,7 @@ class GenerateDbm extends React.Component {
       modalIsOpen: false,
       modIndex: 0,
       varIndex: 0,
-      sepIndex: 0,
+      delIndex: 0,
       predecessor: 'globalyp',
       systems_all: false,
       systems:[]
@@ -41,7 +41,7 @@ class GenerateDbm extends React.Component {
     this.onExport = this.onExport.bind(this);
     this.onModRadioChange = this.onModRadioChange.bind(this);
     this.onVarRadioChange = this.onVarRadioChange.bind(this);
-    this.onSeparatorSelectorChange = this.onSeparatorSelectorChange.bind(this);
+    this.onDelimiterSelectorChange = this.onDelimiterSelectorChange.bind(this);
     this.onSysCheckChange = this.onSysCheckChange.bind(this);
     this.onSysAllChange = this.onSysAllChange.bind(this);
     this.onPredecessorChange = this.onPredecessorChange.bind(this);
@@ -81,9 +81,9 @@ class GenerateDbm extends React.Component {
     this.setState({varIndex: varIndex})
   }
 
-  onSeparatorSelectorChange(e) {
-    var sepIndex = parseInt(e.target.value, 10);
-    this.setState({sepIndex: sepIndex})
+  onDelimiterSelectorChange(e) {
+    var delIndex = parseInt(e.target.value, 10);
+    this.setState({delIndex: delIndex})
   }
 
   onPredecessorChange(e) {
@@ -107,7 +107,6 @@ class GenerateDbm extends React.Component {
   }
 
   onSysAllChange(e) {
-    debugger
     var systems = this.state.systems;
     var systems_all = !this.state.systems_all
     systems = systems.map((sys) => {
@@ -120,9 +119,42 @@ class GenerateDbm extends React.Component {
   }
 
 
-
   onExport() {
-    this.setState({modalIsOpen: false});
+    var systems = [];
+    this.state.systems.forEach(function(sys) {
+      if (sys.isChecked) systems.push(sys.value)
+    });
+    $.ajax(
+    {
+      url: '/generate_rf',
+      dataType: 'json',
+      type: 'PUT',
+      data:
+      {
+        data: {
+          mod: MOD[this.state.modIndex],
+          delimiter: DELIMITER[this.state.delIndex],
+          type: this.state.varIndex,
+          predecessor: this.state.predecessor,
+          systems: systems,
+          project_id: project.id
+        },
+      },
+
+      success: function (data)
+      {
+        data = data;
+      },
+      error: function (xhr, status, err)
+      {
+        console.error(this.props.url, status, err.toString());
+        data = [];
+      },
+      async: false
+    });
+
+
+    //this.setState({modalIsOpen: false});
   }
 
   render() {
@@ -141,8 +173,8 @@ class GenerateDbm extends React.Component {
       </p>
     );
     
-    const separator_select = <select value={this_.state.sepIndex} onChange={this_.onSeparatorSelectorChange}>
-      {SEPARATOR.map((option,i) =>
+    const delimiter_select = <select value={this_.state.delIndex} onChange={this_.onDelimiterSelectorChange}>
+      {DELIMITER.map((option,i) =>
         <option key={i + '-opt'} value={i}>
           {option}
         </option>
@@ -170,13 +202,12 @@ class GenerateDbm extends React.Component {
       {([0,1].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}</div>:<div/>}
     </div>
 
-
       
     const predecessor_input = <input type='text' name = 'predecessor' value={this_.state.predecessor} onChange = {this_.onPredecessorChange}/> 
 
     const rf_container = <div className='generate-dbm-rf-container'>
       {([0].includes(this.state.varIndex))?<div>
-          {separator_select}<br/>
+          {delimiter_select}<br/>
           {predecessor_input}
         </div>
       :<div/>}

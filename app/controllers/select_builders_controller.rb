@@ -9,12 +9,14 @@ class SelectBuildersController < ApplicationController
     @select_builder = ::SelectBuilder::Settings.new('type' => 'pds_rf', 'project_id' => params[:pds_project_id])
   end
 
-  def create
+  def prepare_hash
     hash = params[:select_builder_settings]
     @select_builder = ::SelectBuilder::Settings.new(hash)
     # Resque.enqueue(SelectBuilderJob, @select_builder)
     select_builder = @select_builder
     render_pds_rf(select_builder)
+    byebug
+    render json: { status: :ok }
   end
 
   def render_pds_rf(select_builder)
