@@ -22,13 +22,14 @@ class DbmGeneratorController < ApplicationController
     systems = dbm_generator.systems
     data_tot = ''
     systems.each do |sys_id|
-      sys_name = PdsSyslist.find(sys_id).System.gsub('/','_')
+      sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
       pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order('pds_syslist.System').all
       data = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s).render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs))
-      data_tot += data
-      File.open(FILE_PATH+'pds_rf_'+sys_name+'.sel', 'w:UTF-8') { |f| f << data.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
+      data_tot += data if dbm_generator.systems_all?
+      File.open(FILE_PATH + 'pds_rf_' + sys_name + '.sel', 'w:UTF-8') { |f| f << data.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
     end
-    File.open(FILE_PATH+'pds_rf.sel', 'w:UTF-8') { |f| f << data_tot.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
-
+    if dbm_generator.systems_all?
+      File.open(FILE_PATH + 'pds_rf.sel', 'w:UTF-8') { |f| f << data_tot.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
+    end
   end
 end

@@ -37,6 +37,7 @@ class GenerateDbm extends React.Component {
       delIndex: 0,
       predecessor: 'globalyp',
       systems_all: false,
+      systems_none: true,
       systems:[]
     };
     this.openModal = this.openModal.bind(this);
@@ -65,8 +66,9 @@ class GenerateDbm extends React.Component {
     );
     systems = systems.map((sys) =>{sys.isChecked = false;return sys});
     this.setState({
-      systems: systems,
-      systems_all: false
+      systems_all: false,
+      systems_none: true,
+      systems: systems
     });
     
   }
@@ -97,16 +99,18 @@ class GenerateDbm extends React.Component {
   onSysCheckChange(e) {
     var systems = this.state.systems;
     var l_all = true;
-    //l_none = true;
+    var l_some = false;
     systems = systems.map((sys) => {
       if(sys.label==e.target.value) {
         sys.isChecked = !sys.isChecked;
       }
-      l_all = l_all && sys.isChecked
+      l_all = l_all && sys.isChecked;
+      l_some = l_some || sys.isChecked;
       return sys});
     this.setState({
       systems: systems,
-      systems_all: l_all
+      systems_all: l_all,
+      systems_none: !l_some
     });
   }
 
@@ -118,46 +122,50 @@ class GenerateDbm extends React.Component {
       return sys});
     this.setState({
       systems: systems,
-      systems_all: systems_all
+      systems_all: systems_all,
+      systems_none: !systems_all,
     });
   }
 
   onExport() {
-    var systems = [];
-    this.state.systems.forEach(function(sys) {
-      if (sys.isChecked) systems.push(sys.value)
-    });
-    $.ajax(
-    {
-      url: '/generate_rf',
-      dataType: 'json',
-      type: 'PUT',
-      data:
+    if (!([0,1].includes(this.state.varIndex)&&this.state.systems_none)){
+      var systems = [];
+      this.state.systems.forEach(function(sys) {
+        if (sys.isChecked) systems.push(sys.value)
+      });
+      $.ajax(
       {
-        data: {
-          mod: MOD[this.state.modIndex],
-          delimiter: DELIMITER[this.state.delIndex],
-          type: this.state.varIndex,
-          predecessor: this.state.predecessor,
-          systems: systems,
-          project_id: project.id
+        url: '/generate_rf',
+        dataType: 'json',
+        type: 'PUT',
+        data:
+        {
+          data: {
+            mod: MOD[this.state.modIndex],
+            delimiter: DELIMITER[this.state.delIndex],
+            type: this.state.varIndex,
+            predecessor: this.state.predecessor,
+            systems: systems,
+            systems_all: this.state.systems_all,
+            project_id: project.id
+          },
         },
-      },
 
-      success: function (data)
-      {
-        data = data;
-      },
-      error: function (xhr, status, err)
-      {
-        console.error(this.props.url, status, err.toString());
-        data = [];
-      },
-      async: false
-    });
-
-
-    //this.setState({modalIsOpen: false});
+        success: function (data)
+        {
+          data = data;
+        },
+        error: function (xhr, status, err)
+        {
+          console.error(this.props.url, status, err.toString());
+          data = [];
+        },
+        async: false
+      });
+      this.setState({modalIsOpen: false});
+    } else {
+      alert('Выберите системы для генерации селект-файлов!');
+    }
   }
 
   render() {
@@ -199,10 +207,11 @@ class GenerateDbm extends React.Component {
       <input  type='checkbox' checked={this.state.systems_all} onChange={this.onSysAllChange} />
       Выбрать все
     </label>
-    //const sys_all_label = 
+
+    const sys_none_label = this.state.systems_none?<label>Ни одной системы не выбрано</label>:<div/>;
 
     const sys_container = <div className='generate-dbm-sys-container'>
-      {([0,1].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}</div>:<div/>}
+      {([0,1].includes(this.state.varIndex))?<div>{sys_none_label}{sys_check_group}{sys_all_checkbox}</div>:<div/>}
     </div>
 
       

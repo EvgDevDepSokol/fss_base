@@ -5,7 +5,7 @@ class DbmGenerator
   extend ActiveModel::Naming
 
   ATTRIBUTE_LIST = %i[mod delimiter predecessor variables
-                      systems project_id type].freeze
+                      systems systems_all project_id type].freeze
 
   INPUT_TYPES = %w[MOD ADD OMOD].freeze
   VARIABLES = ['remote function', 'malfunctions', 'detectors',
@@ -26,5 +26,9 @@ class DbmGenerator
 
   def as_json(options = {})
     super.slice(*ATTRIBUTE_LIST.map(&:to_s))
+  end
+
+  def systems_all?
+    systems_all == 'true'
   end
 end
