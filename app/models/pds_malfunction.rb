@@ -70,4 +70,14 @@ class PdsMalfunction < ApplicationRecord
   #  def description
   #    Desc
   #  end
+  #
+
+  # this part is for fbm generator
+  def type_b?(t)
+    %w[GBN GBR IBN IBR].include?(t)
+  end
+
+  def type_r?(t)
+    %w[GVN GVR IVN IVR].include?(t)
+  end
 end
