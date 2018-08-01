@@ -239,7 +239,8 @@
   padding-right: 5px;
 }
 .Select--multi .Select-multi-value-wrapper {
-  display: inline-block;
+  /*display: inline-block;*/
+  display: table;
 }
 .Select .Select-aria-only {
   position: absolute;
