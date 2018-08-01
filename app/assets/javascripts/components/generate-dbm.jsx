@@ -227,7 +227,11 @@ class GenerateDbm extends React.Component {
 
     return (
       <div className="generate-dbm-modal" onClick={this.openModal}>
-        Генерация селект-файлов для DBM
+        <a onClick = {this.openModal} >
+          <img alt = "Generate" src = "/assets/generate.png" />
+          Генерация
+        </a>
+     
         <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} onRequestClose={this.closeModal} style={customStyles} contentLabel="Свойства экспорта в файл">
 
           <div className='generate-dbm-all'>

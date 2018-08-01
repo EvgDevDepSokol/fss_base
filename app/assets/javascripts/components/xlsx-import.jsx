@@ -304,108 +304,45 @@ var ImportXlsxModal = React.createClass(
   {
     return( <
       div className = "import-from-excel" >
-      <
-      a onClick = {
-        this.openStep1
-      } >
-      <
-      img alt = "Import export"
-      src = "/assets/import_export.png" / >
-      Экспорт / Импорт <
-      /a>
+      <a onClick = {this.openStep1} >
+        <img alt = "Import export" src = "/assets/import_export.png" />
+        Импорт 
+      </a>
 
-      <
-      ImportStep1 key = {
-        "step-1"
-      }
-      isOpen = {
-        this.state.step == 1
-      }
-      onNextModal = {
-        this.step1Finished
-      }
-      onCloseModal = {
-        this.closeAllModals
-      }
-      rememberData = {
-        this.rememberData
-      }
-      rememberColumns = {
-        this.rememberColumns
-      }
-      onSelectChange = {
-        this.onSelectChange
-      }
-      style = {
-        customStyles
-      }
+      <ImportStep1 key = {"step-1"}
+      isOpen = {this.state.step == 1}
+      onNextModal = {this.step1Finished}
+      onCloseModal = {this.closeAllModals}
+      rememberData = {this.rememberData}
+      rememberColumns = {this.rememberColumns}
+      onSelectChange = {this.onSelectChange}
+      style = {customStyles}
       contentLabel = 'Импорт. Выбор файла.' / >
-      <
-      ImportStep2 key = {
-        "step-2"
-      }
-      isOpen = {
-        this.state.step == 2
-      }
-      onNextModal = {
-        this.step2Finished
-      }
-      onCloseModal = {
-        this.closeAllModals
-      }
-      columns = {
-        this.state.columns
-      }
-      keyColumn = {
-        this.state.keyColumn
-      }
-      importData = {
-        this.state.importData[0].data
-      }
-      rememberColumns = {
-        this.rememberColumns
-      }
-      rememberKeyColumn = {
-        this.rememberKeyColumn
-      }
-      style = {
-        customStyles
-      }
+
+      <ImportStep2 key = {"step-2"}
+      isOpen = {this.state.step == 2}
+      onNextModal = {this.step2Finished}
+      onCloseModal = {this.closeAllModals}
+      columns = {this.state.columns}
+      keyColumn = {this.state.keyColumn}
+      importData = {this.state.importData[0].data}
+      rememberColumns = {this.rememberColumns}
+      rememberKeyColumn = {this.rememberKeyColumn}
+      style = {customStyles}
       contentLabel = 'Импорт. Выбор соответствия столбцов.' / >
-      <
-      ImportStep4 key = {
-        "step-4"
-      }
-      isOpen = {
-        this.state.step == 4
-      }
-      onNextModal = {
-        this.step4Finished
-      }
-      onCloseModal = {
-        this.closeAllModals
-      }
-      columns = {
-        this.state.columns
-      }
-      importData = {
-        this.state.importData[0].data
-      }
-      msg = {
-        this.state.msg
-      }
-      processed = {
-        this.state.processed
-      }
-      isProcessing = {
-        this.state.isProcessing
-      }
-      style = {
-        customStyles
-      }
+
+      <ImportStep4 key = {"step-4"}
+      isOpen = {this.state.step == 4}
+      onNextModal = {this.step4Finished}
+      onCloseModal = {this.closeAllModals}
+      columns = {this.state.columns}
+      importData = {this.state.importData[0].data}
+      msg = {this.state.msg}
+      processed = {this.state.processed}
+      isProcessing = {this.state.isProcessing}
+      style = {customStyles}
       contentLabel = 'Импорт. Обработка.' / >
-      <
-      /div>
+      </div>
     );
   }
 });
