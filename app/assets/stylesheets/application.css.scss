@@ -436,6 +436,16 @@ body {
         height: 100%;
         float: left;
         width:80%;
+        display: flex;
+
+        .left-left {
+          min-width: 300px;
+        }
+
+        .left-right {
+          width: 60%;
+          display: flex;
+        }
 
         p {
           font-size: 11px;
@@ -536,7 +546,7 @@ body {
         .icon-filter {
           background-image: asset_data_url("icons/filter.png");
           padding-left: 50px;
-          margin-left: 130px;
+          margin-left: 20%;
         }
 
         .icon-replace {

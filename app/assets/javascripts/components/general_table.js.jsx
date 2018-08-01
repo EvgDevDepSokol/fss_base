@@ -868,37 +868,41 @@ var TableContainer = React.createClass({
           </div>
           <div className="info">
             <div className="left">
-              <div className='total'>
-                <p>Записей -</p>
-                <p>{data.length}</p>
-                <p>{"на " + pages + " стр."}</p>
+              <div className="left-left">
+                <div className='total'>
+                  <p>Записей -</p>
+                  <p>{data.length}</p>
+                  <p>{"на " + pages + " стр."}</p>
+                </div>
+                <div className='system-selector'>
+                  <SystemFilterSelector attribute="system" onValue={this.onSystemSelectorChange} disabled={this.state.lockRow} value={this.state.systemFilter}/>
+                  <p>cистема</p>
+                </div>
+                <div className='per-page-container'>
+                  <input type='number' min='1' max='200' defaultValue={pagination.perPage} onChange={this.onPerPage} disabled={this.state.lockRow}></input>
+                  <p>строк</p>
+                </div>
+                <div className='page-container'>
+                  <input type='number' min='1' value={this.state.pagination.page} onChange={this.onPage} disabled={this.state.lockRow}></input>
+                  <p>cтр.</p>
+                </div>
               </div>
-              <div className='system-selector'>
-                <SystemFilterSelector attribute="system" onValue={this.onSystemSelectorChange} disabled={this.state.lockRow} value={this.state.systemFilter}/>
-                <p>cистема</p>
-              </div>
-              <div className='per-page-container'>
-                <input type='number' min='1' max='200' defaultValue={pagination.perPage} onChange={this.onPerPage} disabled={this.state.lockRow}></input>
-                <p>строк</p>
-              </div>
-              <div className='page-container'>
-                <input type='number' min='1' value={this.state.pagination.page} onChange={this.onPage} disabled={this.state.lockRow}></input>
-                <p>cтр.</p>
-              </div>
-              <div className={this.state.showFilters
-                ? 'icon-filter info-buttons border-inset'
-                : 'icon-filter info-buttons'} onClick={this.onIconFilterClick}>
-                Фильтр
-              </div>
-              <div className={this.state.showReplace
-                ? 'icon-replace info-buttons border-inset'
-                : 'icon-replace info-buttons'} onClick={this.onIconReplaceClick}>
-                Замена
-              </div>
-              <div className={false
-                ? 'add-row info-buttons border-inset'
-                : 'add-row info-buttons'} onClick={this.onAddRowClick}>
-                Добавить запись
+              <div className="left-right">
+                <div className={this.state.showFilters
+                  ? 'icon-filter info-buttons border-inset'
+                  : 'icon-filter info-buttons'} onClick={this.onIconFilterClick}>
+                  Фильтр
+                </div>
+                <div className={this.state.showReplace
+                  ? 'icon-replace info-buttons border-inset'
+                  : 'icon-replace info-buttons'} onClick={this.onIconReplaceClick}>
+                  Замена
+                </div>
+                <div className={false
+                  ? 'add-row info-buttons border-inset'
+                  : 'add-row info-buttons'} onClick={this.onAddRowClick}>
+                  Добавить запись
+                </div>
               </div>
             </div>
             <div className="right">
