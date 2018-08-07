@@ -99,4 +99,17 @@ class PdsMalfunction < ApplicationRecord
   attr_reader :desc1
 
   attr_reader :desc2
+
+  def number_by_letter(letter)
+    CHARACTER_ARRAY.index(letter)
+  end
+
+  def unit_for_dbm
+    pds_mf = self
+    if pds_mf.pds_project_unit && pds_mf.pds_project_unit.unit && pds_mf.pds_project_unit.unit.Unit_RU
+      pds_mf.pds_project_unit.unit.Unit_RU
+    else
+      pds_mf.regidity_unit
+    end
+  end
 end

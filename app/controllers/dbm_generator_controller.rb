@@ -43,14 +43,14 @@ class DbmGeneratorController < ApplicationController
           path = if pds_mf.type_b?(pds_mf.type)
                    'pds_mf_l1.sel.erb'
                  else
-                   'pds_mf_l1.sel.erb'
+                   'pds_mf_r1.sel.erb'
                  end
         else
           pds_mf_dims = PdsMalfunctionDim.where(Malfunction: pds_mf.id).order(:Character).to_a
           path = if pds_mf.type_b?(pds_mf.type)
-                   'pds_mf_l1.sel.erb'
+                   'pds_mf_l2.sel.erb'
                  else
-                   'pds_mf_l1.sel.erb'
+                   'pds_mf_r2.sel.erb'
                  end
         end
         pds_mf.gen_desc12

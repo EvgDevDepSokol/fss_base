@@ -1,0 +1,31 @@
+<%= "/#{mod} yp:m#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)}" %> 
+<%= pds_mf.desc %> 
+<%= pds_mf.desc1 %> 
+<%= pds_mf.desc2 %> 
+@TYPE(<%= "#{pds_mf.type}) @FEED(ypxfm#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)})" %>
+
+
+.UNIT 
+.SYS <%= pds_mf.system.System.downcase %>
+.TYPE L,1
+.FORM L1 
+.VALU F,V
+.DIM
+.PRED globalyp
+ 
+ 
+<%= "/#{mod} ypxm#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)}" %> 
+<%= pds_mf.desc %> 
+<%= pds_mf.desc1 %> 
+<%= pds_mf.desc2 %> 
+@TYPE(<%= "#{pds_mf.type}) @LIM(#{pds_mf.lowlim_regidity},#{pds_mf.uplim_regidity})" %>
+
+
+.UNIT <%= pds_mf.unit_for_dbm %>
+.SYS <%= pds_mf.system.System.downcase %>
+.TYPE R,4
+.FORM E13.5 
+.VALU 0.,V
+.DIM
+.PRED globalyp
+
