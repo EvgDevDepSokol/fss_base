@@ -9,8 +9,8 @@ gem 'rails'
 # gem 'rails'
 # Use sqlite3 as the database for Active Record
 # gem 'mysql2', '~> 0.3.18'
-# gem 'mysql2'
-gem 'mysql2', '0.4.10'
+gem 'mysql2'
+# gem 'mysql2', '0.4.10'
 
 # gem 'sassc-rails'
 gem 'therubyracer'

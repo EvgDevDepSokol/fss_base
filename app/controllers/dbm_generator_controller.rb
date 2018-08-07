@@ -1,20 +1,15 @@
 class DbmGeneratorController < ApplicationController
   layout false
 
-  # TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
   TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
   FILE_PATH = '/home/shared/'.freeze
-
-  # def new
-  #   @dbm_generator = ::SelectBuilder::Settings.new('type' => 'pds_rf', 'project_id' => params[:pds_project_id])
-  # end
 
   def prepare_hash
     hash = params[:data]
     dbm_generator = DbmGenerator.new(hash)
     # Resque.enqueue(SelectBuilderJob, dbm_generator)
     # dbm_generator = @dbm_generator
-    render_pds_rf(dbm_generator)
+    render_pds_mf(dbm_generator)
     render json: { status: :ok }
   end
 
@@ -23,10 +18,12 @@ class DbmGeneratorController < ApplicationController
     data_tot = ''
     systems.each do |sys_id|
       sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
-      pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order('pds_syslist.System').all
+      pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
       data = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s).render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs))
       data_tot += data if dbm_generator.systems_all?
-      File.open(FILE_PATH + 'pds_rf_' + sys_name + '.sel', 'w:UTF-8') { |f| f << data.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
+      if data > ''
+        File.open(FILE_PATH + 'pds_rf_' + sys_name + '.sel', 'w:UTF-8') { |f| f << data.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
+      end
     end
     if dbm_generator.systems_all?
       File.open(FILE_PATH + 'pds_rf.sel', 'w:UTF-8') { |f| f << data_tot.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
@@ -38,13 +35,35 @@ class DbmGeneratorController < ApplicationController
     data_tot = ''
     systems.each do |sys_id|
       sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
-      pds_mfs = PdsMalfunction.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order('pds_syslist.System').all
-      data = Tilt.new(TEMPLATE_PATH.join('pds_mf.sel.erb').to_s).render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_mfs))
-      data_tot += data if dbm_generator.systems_all?
-      File.open(FILE_PATH + 'pds_mf_' + sys_name + '.sel', 'w:UTF-8') { |f| f << data.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
+      pds_mfs = PdsMalfunction.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order(:Numb).all
+      data_sys = ''
+      pds_mfs.each do |pds_mf|
+        if pds_mf.Dimension == 1
+          pds_mf_dims = ''
+          path = if pds_mf.type_b?(pds_mf.type)
+                   'pds_mf_l1.sel.erb'
+                 else
+                   'pds_mf_l1.sel.erb'
+                 end
+        else
+          pds_mf_dims = PdsMalfunctionDim.where(Malfunction: pds_mf.id).order(:Character).to_a
+          path = if pds_mf.type_b?(pds_mf.type)
+                   'pds_mf_l1.sel.erb'
+                 else
+                   'pds_mf_l1.sel.erb'
+                 end
+        end
+        pds_mf.gen_desc12
+        data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(ActionView::Base.new, dbm_generator.as_json.merge(pds_mf: pds_mf, pds_mf_dims: pds_mf_dims))
+        data_sys += data
+      end
+      data_tot += data_sys if dbm_generator.systems_all?
+      if data_sys > ''
+        File.open(FILE_PATH + 'pds_malf_' + sys_name + '.sel', 'w:UTF-8') { |f| f << data_sys.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
+      end
     end
     if dbm_generator.systems_all?
-      File.open(FILE_PATH + 'pds_mf.sel', 'w:UTF-8') { |f| f << data_tot.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
+      File.open(FILE_PATH + 'pds_malf.sel', 'w:UTF-8') { |f| f << data_tot.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
     end
   end
 end

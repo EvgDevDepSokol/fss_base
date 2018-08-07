@@ -1,0 +1,15 @@
+<%= "/#{mod} yp:m#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)}" %> 
+<%= pds_mf.desc %> 
+<%= pds_mf.desc1 %> 
+<%= pds_mf.desc2 %> 
+@TYPE(<%= "#{pds_mf.type}) @FEED(ypxfm#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)})" %>
+
+
+.UNIT 
+.SYS <%= pds_mf.system.System.downcase %>
+.TYPE L,1
+.FORM L1 
+.VALU F,V
+.DIM
+.PRED globalyp
+

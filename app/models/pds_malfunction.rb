@@ -80,4 +80,23 @@ class PdsMalfunction < ApplicationRecord
   def type_r?(t)
     %w[GVN GVR IVN IVR].include?(t)
   end
+
+  def gen_desc12
+    desc = shortDesc
+    if desc.length > 66
+      @desc = '.DESC ' + desc[0..65]
+      @desc1 = '@DESC1(' + desc[0..desc.rindex(' ', 66) - 1] + ')'
+      @desc2 = '@DESC2(' + desc[desc.rindex(' ', 66) + 1..-1] + ')'
+    else
+      @desc = '.DESC ' + desc
+      @desc1 = ''
+      @desc1 = ''
+    end
+  end
+
+  attr_reader :desc
+
+  attr_reader :desc1
+
+  attr_reader :desc2
 end
