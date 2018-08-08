@@ -21,7 +21,7 @@
 @TYPE(<%= "#{pds_mf.type}) @LIM(#{pds_mf.lowlim_regidity},#{pds_mf.uplim_regidity})" %>
 
 
-.UNIT <%= pds_mf.unit_for_dbm %>
+.UNIT <%= pds_mf.unit_for_dbm(is_rus) %>
 .SYS <%= pds_mf.system.System.downcase %>
 .TYPE R,4
 .FORM E13.5 

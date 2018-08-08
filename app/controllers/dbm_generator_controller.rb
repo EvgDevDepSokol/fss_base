@@ -9,17 +9,18 @@ class DbmGeneratorController < ApplicationController
     dbm_generator = DbmGenerator.new(hash)
     # Resque.enqueue(SelectBuilderJob, dbm_generator)
     # dbm_generator = @dbm_generator
-    render_pds_mf(dbm_generator)
+    render_pds_rf(dbm_generator)
     render json: { status: :ok }
   end
 
   def render_pds_rf(dbm_generator)
     systems = dbm_generator.systems
     data_tot = ''
+    is_rus = is_rus?(dbm_generator.project_id)
     systems.each do |sys_id|
       sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
       pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
-      data = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s).render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs))
+      data = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s).render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs, is_rus: is_rus))
       data_tot += data if dbm_generator.systems_all?
       if data > ''
         File.open(FILE_PATH + 'pds_rf_' + sys_name + '.sel', 'w:UTF-8') { |f| f << data.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
@@ -33,6 +34,7 @@ class DbmGeneratorController < ApplicationController
   def render_pds_mf(dbm_generator)
     systems = dbm_generator.systems
     data_tot = ''
+    is_rus = is_rus?(dbm_generator.project_id)
     systems.each do |sys_id|
       sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
       pds_mfs = PdsMalfunction.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order(:Numb).all
@@ -54,7 +56,7 @@ class DbmGeneratorController < ApplicationController
                  end
         end
         pds_mf.gen_desc12
-        data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(ActionView::Base.new, dbm_generator.as_json.merge(pds_mf: pds_mf, pds_mf_dims: pds_mf_dims))
+        data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(ActionView::Base.new, dbm_generator.as_json.merge(pds_mf: pds_mf, pds_mf_dims: pds_mf_dims, is_rus: is_rus))
         data_sys += data
       end
       data_tot += data_sys if dbm_generator.systems_all?
@@ -65,5 +67,9 @@ class DbmGeneratorController < ApplicationController
     if dbm_generator.systems_all?
       File.open(FILE_PATH + 'pds_malf.sel', 'w:UTF-8') { |f| f << data_tot.encode('utf-8', invalid: :replace, undef: :replace, replace: '') }
     end
+  end
+
+  def is_rus?(project_id)
+    PdsProject.find(project_id).project_properties.language == 'Русский'
   end
 end

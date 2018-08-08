@@ -2,6 +2,9 @@ class PdsRf < ApplicationRecord
   # self.inheritance_column = nil
   self.inheritance_column = :_type_disabled
   self.table_name = 'pds_rf'
+
+  include DbmGeneratorHelper
+
   alias_attribute :id, primary_key
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
@@ -54,23 +57,6 @@ class PdsRf < ApplicationRecord
                         sd_sys_numb: { only: [:sd_link] }
                       })
   end
-
-  def unit_with_language
-    if pds_project.project_properties.language == 'Русский'
-      !!self.Unit ? pds_project_unit.unit.Unit_RU : ''
-    else
-      !!self.Unit ? pds_project_unit.unit.Unit_EN : ''
-    end
-  end
-
-  # def unit_with_language
-  #  byebug
-  #  if pds_project.project_properties.language == 'Русский'
-  #    !!self.Unit ? self.custom_hash['pds_project_unit']['unit']['Unit_RU'] : ''
-  #  else
-  #    !!self.Unit ? self.custom_hash['pds_project_unit']['unit']['Unit_EN'] : ''
-  #  end
-  # end
 
   def type_b?(t)
     %w[B VB].include?(t)
