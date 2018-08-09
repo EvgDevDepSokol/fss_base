@@ -1,5 +1,5 @@
 <%= "/#{mod} yp:m#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)}" %> 
-<%= pds_mf.desc %> 
+<%= pds_mf.desc12(is_rus) %><%= pds_mf.desc0 %> 
 <%= pds_mf.desc1 %> 
 <%= pds_mf.desc2 %> 
 @TYPE(<%= "#{pds_mf.type}) @EXCL(MF)" %> 
@@ -15,7 +15,7 @@
 
 <% pds_mf_dims.each do |pds_mf_dim| %>
 <%= "/#{mod} yp:m#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)}#{pds_mf_dim.Character.downcase}" %> 
-<%= pds_mf.desc %> 
+<%= pds_mf.desc12(is_rus) %><%= pds_mf.desc0 %> 
 <%= pds_mf.desc1 %> 
 <%= pds_mf.desc2 %> 
 @TYPE(<%= "#{pds_mf.type}) @OBJ(#{pds_mf_dim.Target}) @FEED(ypxfm#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)}#{pds_mf_dim.Character.downcase})" %> 

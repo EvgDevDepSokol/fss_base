@@ -9,7 +9,7 @@ class DbmGeneratorController < ApplicationController
     dbm_generator = DbmGenerator.new(hash)
     # Resque.enqueue(SelectBuilderJob, dbm_generator)
     # dbm_generator = @dbm_generator
-    render_pds_rf(dbm_generator)
+    render_pds_mf(dbm_generator)
     render json: { status: :ok }
   end
 
@@ -55,7 +55,6 @@ class DbmGeneratorController < ApplicationController
                    'pds_mf_r2.sel.erb'
                  end
         end
-        pds_mf.gen_desc12
         data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(ActionView::Base.new, dbm_generator.as_json.merge(pds_mf: pds_mf, pds_mf_dims: pds_mf_dims, is_rus: is_rus))
         data_sys += data
       end

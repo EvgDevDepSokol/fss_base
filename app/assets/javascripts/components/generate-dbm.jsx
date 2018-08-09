@@ -8,7 +8,7 @@ import Modal from 'react-modal';
 
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
-const MOD = ['MOD', 'ADD', 'OMOD'];
+const MOD = ['MDD', 'ADD', 'OMOD'];
 //const MOD = ruby_constants.MOD;
 const VARIABLES = ['remote function', 'malfunctions', 'detectors',
                'peds', 'ppc', 'announciator', 'time step', 'valves', 'power sections'];
