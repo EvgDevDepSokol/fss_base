@@ -34,8 +34,8 @@
 <%= pds_mf.desc12(is_rus) %><%= pds_mf.desc0 %> 
 <%= pds_mf.desc1 %> 
 <%= pds_mf.desc2 %> 
-@TYPE(<%= "#{pds_mf.type}) @OBJ(#{pds_mf_dim.Target}) @FEED(ypxfm#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)}#{pds_mf_dim.Character.downcase})" %> 
-
+@TYPE(<%= "#{pds_mf.type}) @FEED(ypxfm#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)}#{pds_mf_dim.Character.downcase})" %> 
+@OBJ(<%= "#{pds_mf_dim.Target})" %>
 
 .UNIT 
 .SYS <%= pds_mf.system.System.downcase %>
@@ -49,8 +49,8 @@
 <%= pds_mf.desc12(is_rus) %><%= pds_mf.desc0 %> 
 <%= pds_mf.desc1 %> 
 <%= pds_mf.desc2 %> 
-@TYPE(<%= "#{pds_mf.type}) @LIM(#{pds_mf.lowlim_regidity},#{pds_mf.uplim_regidity}) @OBJ(#{pds_mf_dim.Target}) @EXCL(MF)" %> 
-
+@TYPE(<%= "#{pds_mf.type}) @LIM(#{pds_mf.lowlim_regidity},#{pds_mf.uplim_regidity}) @EXCL(MF)" %> 
+@OBJ(<%= "#{pds_mf_dim.Target})" %>
 
 .UNIT <%= pds_mf.unit_for_dbm(is_rus) %>
 .SYS <%= pds_mf.system.System.downcase %>

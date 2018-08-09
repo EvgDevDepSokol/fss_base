@@ -74,6 +74,9 @@ gem 'web-console',    group: :development
 
 # gem 'puma'
 
+gem 'net-scp'
+gem 'net-ssh'
+
 group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'

@@ -1,4 +1,5 @@
 class DbmGeneratorController < ApplicationController
+  require 'net/scp'
   layout false
 
   TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
@@ -18,6 +19,7 @@ class DbmGeneratorController < ApplicationController
     data_tot = ''
     is_rus = rus?(dbm_generator.project_id)
     enc = project_encoding(dbm_generator.project_id)
+    ssh = project_ssh(dbm_generator.project_id)
     systems.each do |sys_id|
       sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
       pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
@@ -35,36 +37,45 @@ class DbmGeneratorController < ApplicationController
     data_tot = ''
     is_rus = rus?(dbm_generator.project_id)
     enc = project_encoding(dbm_generator.project_id)
-    systems.each do |sys_id|
-      sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
-      pds_mfs = PdsMalfunction.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order(:Numb).all
-      data_sys = ''
-      pds_mfs.each do |pds_mf|
-        if pds_mf.Dimension == 1
-          pds_mf_dims = ''
-          path = if pds_mf.type_b?(pds_mf.type)
-                   'pds_mf_l1.sel.erb'
-                 else
-                   'pds_mf_r1.sel.erb'
-                 end
-        else
-          pds_mf_dims = PdsMalfunctionDim.where(Malfunction: pds_mf.id).order(:Character).to_a
-          path = if pds_mf.type_b?(pds_mf.type)
-                   'pds_mf_l2.sel.erb'
-                 else
-                   'pds_mf_r2.sel.erb'
-                 end
+    ssh = project_ssh(dbm_generator.project_id)
+    Net::SCP.start(ssh[:ip], 'load', password: ssh[:pass]) do |scp|
+      systems.each do |sys_id|
+        sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
+        pds_mfs = PdsMalfunction.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order(:Numb).all
+        data_sys = ''
+        pds_mfs.each do |pds_mf|
+          if pds_mf.Dimension == 1
+            pds_mf_dims = ''
+            path = if pds_mf.type_b?(pds_mf.type)
+                     'pds_mf_l1.sel.erb'
+                   else
+                     'pds_mf_r1.sel.erb'
+                   end
+          else
+            pds_mf_dims = PdsMalfunctionDim.where(Malfunction: pds_mf.id).order(:Character).to_a
+            path = if pds_mf.type_b?(pds_mf.type)
+                     'pds_mf_l2.sel.erb'
+                   else
+                     'pds_mf_r2.sel.erb'
+                   end
+          end
+          data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
+            ActionView::Base.new, dbm_generator.as_json.merge(pds_mf: pds_mf, pds_mf_dims: pds_mf_dims, is_rus: is_rus)
+          )
+          data_sys += data
         end
-        data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
-          ActionView::Base.new, dbm_generator.as_json.merge(pds_mf: pds_mf, pds_mf_dims: pds_mf_dims, is_rus: is_rus)
-        )
-        data_sys += data
+        data_tot += data_sys if dbm_generator.systems_all?
+        next unless data_sys > ''
+        file_name = 'pds_malf_' + sys_name + '.sel'
+        create_file(file_name, enc, data_sys)
+        scp.upload! @local_path, ssh[:remote_path] + file_name
       end
-      data_tot += data_sys if dbm_generator.systems_all?
-      next unless data_sys > ''
-      create_file(FILE_PATH + 'pds_malf_' + sys_name + '.sel', enc, data_sys)
+      if dbm_generator.systems_all?
+        file_name = 'pds_malf.sel'
+        create_file(file_name, enc, data_tot)
+        scp.upload! @local_path, ssh[:remote_path] + file_name
+      end
     end
-    create_file(FILE_PATH + 'pds_malf.sel', enc, data_tot) if dbm_generator.systems_all?
   end
 
   def rus?(project_id)
@@ -78,8 +89,15 @@ class DbmGeneratorController < ApplicationController
     'UTF-8'
   end
 
-  def create_file(file_path, enc, data)
-    File.open(file_path, 'w:' + enc) do |f|
+  def project_ssh(project_id)
+    prop = PdsProject.find(project_id).project_properties
+    { ip: prop.HostIP, pass: prop.LoadPass, remote_path: '/home/' + prop.SimDir + 'load/pds_sel_test/' }
+  end
+
+  def create_file(file_name, enc, data)
+    @file_name = file_name
+    @local_path = FILE_PATH + file_name
+    File.open(@local_path, 'w:' + enc) do |f|
       f << data.encode(enc, invalid: :replace, undef: :replace, replace: '')
     end
   end
