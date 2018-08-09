@@ -17,6 +17,7 @@ class DbmGeneratorController < ApplicationController
     systems = dbm_generator.systems
     data_tot = ''
     is_rus = rus?(dbm_generator.project_id)
+    enc = project_encoding(dbm_generator.project_id)
     systems.each do |sys_id|
       sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
       pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
@@ -24,21 +25,16 @@ class DbmGeneratorController < ApplicationController
                  .render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs, is_rus: is_rus))
       data_tot += data if dbm_generator.systems_all?
       next unless data > ''
-      File.open(FILE_PATH + 'pds_rf_' + sys_name + '.sel', 'w:UTF-8') do |f|
-        f << data.encode('utf-8', invalid: :replace, undef: :replace, replace: '')
-      end
+      create_file(FILE_PATH + 'pds_rf_' + sys_name + '.sel', enc, data)
     end
-    if dbm_generator.systems_all?
-      File.open(FILE_PATH + 'pds_rf.sel', 'w:UTF-8') do |f|
-        f << data_tot.encode('utf-8', invalid: :replace, undef: :replace, replace: '')
-      end
-    end
+    create_file(FILE_PATH + 'pds_rf.sel', enc, data_tot) if dbm_generator.systems_all?
   end
 
   def render_pds_mf(dbm_generator)
     systems = dbm_generator.systems
     data_tot = ''
     is_rus = rus?(dbm_generator.project_id)
+    enc = project_encoding(dbm_generator.project_id)
     systems.each do |sys_id|
       sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
       pds_mfs = PdsMalfunction.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order(:Numb).all
@@ -66,18 +62,25 @@ class DbmGeneratorController < ApplicationController
       end
       data_tot += data_sys if dbm_generator.systems_all?
       next unless data_sys > ''
-      File.open(FILE_PATH + 'pds_malf_' + sys_name + '.sel', 'w:UTF-8') do |f|
-        f << data_sys.encode('utf-8', invalid: :replace, undef: :replace, replace: '')
-      end
+      create_file(FILE_PATH + 'pds_malf_' + sys_name + '.sel', enc, data_sys)
     end
-    if dbm_generator.systems_all?
-      File.open(FILE_PATH + 'pds_malf.sel', 'w:UTF-8') do |f|
-        f << data_tot.encode('utf-8', invalid: :replace, undef: :replace, replace: '')
-      end
-    end
+    create_file(FILE_PATH + 'pds_malf.sel', enc, data_tot) if dbm_generator.systems_all?
   end
 
   def rus?(project_id)
     PdsProject.find(project_id).project_properties.language == 'Русский'
+  end
+
+  def project_encoding(project_id)
+    enc = PdsProject.find(project_id).project_properties.Encoding
+    return 'KOI8-R' if enc == 'koi8r'
+    return 'Windows-1251' if enc == 'cp1251'
+    'UTF-8'
+  end
+
+  def create_file(file_path, enc, data)
+    File.open(file_path, 'w:' + enc) do |f|
+      f << data.encode(enc, invalid: :replace, undef: :replace, replace: '')
+    end
   end
 end
