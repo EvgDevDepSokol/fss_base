@@ -15,6 +15,7 @@ module DbmGeneratorHelper
            else
              (defined? shortDesc_EN) ? shortDesc_EN : (defined? self.Desc_EN) ? self.Desc_EN : ''
            end
+    desc = desc.strip
     if desc.length > 66
       @desc0 = '.DESC ' + desc[0..65]
       @desc1 = '@DESC1(' + desc[0..desc.rindex(' ', 66) - 1] + ')'

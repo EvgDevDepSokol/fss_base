@@ -105,9 +105,9 @@ class PdsRf < ApplicationRecord
     if type_b?(type)
       'F,V'
     elsif type_i?(type)
-      'O,V'
+      '0,V'
     elsif type_r?(type)
-      'O.,V'
+      '0.,V'
     end
   end
 end

@@ -10,7 +10,7 @@ class DbmGeneratorController < ApplicationController
     dbm_generator = DbmGenerator.new(hash)
     # Resque.enqueue(SelectBuilderJob, dbm_generator)
     # dbm_generator = @dbm_generator
-    render_pds_mf(dbm_generator)
+    render_pds_rf(dbm_generator)
     render json: { status: :ok }
   end
 
@@ -20,16 +20,24 @@ class DbmGeneratorController < ApplicationController
     is_rus = rus?(dbm_generator.project_id)
     enc = project_encoding(dbm_generator.project_id)
     ssh = project_ssh(dbm_generator.project_id)
-    systems.each do |sys_id|
-      sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
-      pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
-      data = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s)
-                 .render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs, is_rus: is_rus))
-      data_tot += data if dbm_generator.systems_all?
-      next unless data > ''
-      create_file(FILE_PATH + 'pds_rf_' + sys_name + '.sel', enc, data)
+    Net::SCP.start(ssh[:ip], 'load', password: ssh[:pass]) do |scp|
+      systems.each do |sys_id|
+        sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
+        pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
+        data_sys = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s)
+                   .render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs, is_rus: is_rus))
+        data_tot += data_sys if dbm_generator.systems_all?
+        next unless data_sys > ''
+        file_name = 'pds_rf_' + sys_name + '.sel'
+        create_file(file_name, enc, data_sys)
+        scp.upload! @local_path, ssh[:remote_path] + file_name
+      end
+      if dbm_generator.systems_all?
+        file_name = 'pds_rf.sel'
+        create_file(file_name, enc, data_tot)
+        scp.upload! @local_path, ssh[:remote_path] + file_name
+      end
     end
-    create_file(FILE_PATH + 'pds_rf.sel', enc, data_tot) if dbm_generator.systems_all?
   end
 
   def render_pds_mf(dbm_generator)
@@ -98,7 +106,7 @@ class DbmGeneratorController < ApplicationController
     @file_name = file_name
     @local_path = FILE_PATH + file_name
     File.open(@local_path, 'w:' + enc) do |f|
-      f << data.encode(enc, invalid: :replace, undef: :replace, replace: '')
+      f << data.encode(enc, invalid: :replace, undef: :replace, replace: '', universal_newline: true)
     end
   end
 end
