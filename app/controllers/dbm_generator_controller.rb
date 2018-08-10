@@ -10,7 +10,12 @@ class DbmGeneratorController < ApplicationController
     dbm_generator = DbmGenerator.new(hash)
     # Resque.enqueue(SelectBuilderJob, dbm_generator)
     # dbm_generator = @dbm_generator
-    render_pds_rf(dbm_generator)
+    case dbm_generator.type
+    when '0'
+      render_pds_rf(dbm_generator)
+    when '1'
+      render_pds_mf(dbm_generator)
+    end
     render json: { status: :ok }
   end
 

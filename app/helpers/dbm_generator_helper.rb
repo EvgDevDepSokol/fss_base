@@ -31,13 +31,4 @@ module DbmGeneratorHelper
   attr_reader :desc0
   attr_reader :desc1
   attr_reader :desc2
-
-  # private
-  # def pds_project
-  #   PdsProject.find(self.Project)
-  # end
-
-  # def language_is_russian
-  #   pds_project.project_properties.language == 'Русский'
-  # end
 end
