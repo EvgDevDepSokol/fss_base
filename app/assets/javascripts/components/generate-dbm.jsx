@@ -39,6 +39,7 @@ class GenerateDbm extends React.Component {
       predecessor: 'globalyp',
       systems_all: false,
       systems_none: true,
+      systems_warn: {na: false, all: false},
       systems:[]
     };
     this.openModal = this.openModal.bind(this);
@@ -55,20 +56,16 @@ class GenerateDbm extends React.Component {
   }
 
   openModal() {
-    this.setState({modalIsOpen: true});
+    this.setState({
+      varIndex: 0,
+      modalIsOpen: true});
+    this.refreshSystems(0);
   }
 
   afterOpenModal() {
     // references are now sync'd and can be accessed.
+    this.setState({varIndex: 0});
     this.refs.subtitle.style.color = '#0081c2';
-    //this.setState = ({
-    //   modIndex: 0,
-    //   varIndex: 0
-    //   delIndex: 0,
-    //   predecessor: 'globalyp',
-    //   systems_all: false,
-    //   systems_none: true,
-    //});
     this.refreshSystems(0);
   }
 
@@ -79,10 +76,22 @@ class GenerateDbm extends React.Component {
         {pds_project_id:project.ProjectID},
         this
       );
-      systems = systems.map((sys) =>{sys.isChecked = false;return sys});
+      var systems_warn = {na: false, all: false};
+      debugger
+      systems = systems.map((sys) => {
+        if(sys.value==20000001) {
+          systems_warn.na = true;
+        }
+        if(sys.value==34) {
+          systems_warn.all = true;
+        }
+      return sys});
+     
+      systems = systems.filter(x => {return !([20000001,34].includes(x.value))})
       this.setState({
         systems_all: false,
         systems_none: true,
+        systems_warn: systems_warn,
         systems: systems
       });
     }
@@ -224,10 +233,12 @@ class GenerateDbm extends React.Component {
       Выбрать все
     </label>
 
+    const sys_warn_all = this.state.systems_warn.all?<label>Система ALL исключена из генерации</label>:<div/>;
+    const sys_warn_na = this.state.systems_warn.na?<label>Система N/A исключена из генерации</label>:<div/>;
     const sys_none_label = this.state.systems_none?<label>Ни одной системы не выбрано</label>:<div/>;
 
     const sys_container = <div className='generate-dbm-sys-container'>
-      {([0,1].includes(this.state.varIndex))?<div>{sys_none_label}{sys_check_group}{sys_all_checkbox}</div>:<div/>}
+      {([0,1].includes(this.state.varIndex))?<div>{sys_none_label}{sys_check_group}{sys_all_checkbox}{sys_warn_all}{sys_warn_na}</div>:<div/>}
     </div>
 
       

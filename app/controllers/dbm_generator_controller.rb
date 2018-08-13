@@ -30,7 +30,7 @@ class DbmGeneratorController < ApplicationController
         sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
         pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
         data_sys = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s)
-                   .render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs, is_rus: is_rus))
+                       .render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs, is_rus: is_rus))
         data_tot += data_sys if dbm_generator.systems_all?
         next unless data_sys > ''
         file_name = 'pds_rf_' + sys_name + '.sel'
