@@ -13,6 +13,7 @@ const MOD = ['MDD', 'ADD', 'OMOD'];
 const VARIABLES = ['remote function', 'malfunctions', 'detectors',
                'peds', 'ppc', 'announciator', 'time step', 'valves', 'power sections'];
 const DELIMITER = [',', ';'];
+const SEL_PATH = ['/selectors/dbm_sys_rfs','/selectors/dbm_sys_mfs'];
 
 const customStyles = {
   content: {
@@ -50,6 +51,7 @@ class GenerateDbm extends React.Component {
     this.onSysCheckChange = this.onSysCheckChange.bind(this);
     this.onSysAllChange = this.onSysAllChange.bind(this);
     this.onPredecessorChange = this.onPredecessorChange.bind(this);
+    this.refreshSystems = this.refreshSystems.bind(this);
   }
 
   openModal() {
@@ -59,18 +61,31 @@ class GenerateDbm extends React.Component {
   afterOpenModal() {
     // references are now sync'd and can be accessed.
     this.refs.subtitle.style.color = '#0081c2';
-    var systems = getSelectorOptions(
-      '/selectors/pds_sys_descriptions',
-      {pds_project_id:project.ProjectID},
-      this
-    );
-    systems = systems.map((sys) =>{sys.isChecked = false;return sys});
-    this.setState({
-      systems_all: false,
-      systems_none: true,
-      systems: systems
-    });
-    
+    //this.setState = ({
+    //   modIndex: 0,
+    //   varIndex: 0
+    //   delIndex: 0,
+    //   predecessor: 'globalyp',
+    //   systems_all: false,
+    //   systems_none: true,
+    //});
+    this.refreshSystems(0);
+  }
+
+  refreshSystems(varIndex){
+    if (varIndex < 2) {
+      var systems = getSelectorOptions(
+        SEL_PATH[varIndex],
+        {pds_project_id:project.ProjectID},
+        this
+      );
+      systems = systems.map((sys) =>{sys.isChecked = false;return sys});
+      this.setState({
+        systems_all: false,
+        systems_none: true,
+        systems: systems
+      });
+    }
   }
 
   closeModal() {
@@ -85,6 +100,7 @@ class GenerateDbm extends React.Component {
   onVarRadioChange(e) {
     var varIndex = parseInt(e.target.value, 10);
     this.setState({varIndex: varIndex})
+    this.refreshSystems(varIndex);
   }
 
   onDelimiterSelectorChange(e) {
