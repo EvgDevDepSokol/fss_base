@@ -118,6 +118,7 @@ Rails.application.routes.draw do
     resources :pds_sys_descriptions, only: [:index]
     resources :dbm_sys_mfs, only: [:index]
     resources :dbm_sys_rfs, only: [:index]
+    resources :dbm_tbl_ics, only: [:index]
   end
 
   resources :tblbinaries, only: [] do

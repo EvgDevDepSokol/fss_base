@@ -13,10 +13,13 @@ const MOD = ['MDD', 'ADD', 'OMOD'];
 const VARIABLES = ['remote function', 'malfunctions', 'detectors',
                'peds', 'ppc', 'announciator', 'time step', 'valves', 'power sections'];
 const DELIMITER = [',', ';'];
-const SEL_PATH = ['/selectors/dbm_sys_rfs','/selectors/dbm_sys_mfs'];
+const SEL_PATH = ['/selectors/dbm_sys_rfs','/selectors/dbm_sys_mfs','',
+'/selectors/dbm_tbl_ics'];
 
 const customStyles = {
   content: {
+    height: '90%',
+    width: '90%',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -70,7 +73,7 @@ class GenerateDbm extends React.Component {
   }
 
   refreshSystems(varIndex){
-    if (varIndex < 2) {
+    if ([0,1,3].includes(varIndex)) {
       var systems = getSelectorOptions(
         SEL_PATH[varIndex],
         {pds_project_id:project.ProjectID},
@@ -153,7 +156,7 @@ class GenerateDbm extends React.Component {
   }
 
   onExport() {
-    if (!([0,1].includes(this.state.varIndex)&&this.state.systems_none)){
+    if (!this.state.systems_none){
       var systems = [];
       this.state.systems.forEach(function(sys) {
         if (sys.isChecked) systems.push(sys.value)
@@ -189,13 +192,24 @@ class GenerateDbm extends React.Component {
       });
       this.setState({modalIsOpen: false});
     } else {
-      alert('Выберите системы для генерации селект-файлов!');
+      if (this.state.varIndex==3) {
+        alert('Выберите типы оборудования для генерации селект-файлов!');
+      } else {
+        alert('Выберите системы для генерации селект-файлов!');
+      }
     }
   }
 
   render() {
     var this_ = this;
     const systems = this.state.systems;
+    if (this.state.varIndex == 3) {
+      var sys_check_group_label = 'Типы оборудования:';
+      var none_label = 'Ни одного типа оборудования';
+    } else {
+      var sys_check_group_label = 'Системы:';
+      var none_label = 'Ни одной системы';
+    };
 
     const mod_radio_group = MOD.map((data,idx) =>
       <p key={'mod-radio-group-key'+idx}>
@@ -218,7 +232,7 @@ class GenerateDbm extends React.Component {
     </select>
 
     const sys_check_group = <div>
-      <label>Системы</label><br/>
+      <label>{sys_check_group_label}</label><br/>
       {systems.map((data,idx) =>
         <label key={'sys-check-group-key'+idx}>
           <input  type='checkbox' value={data.label} checked={data.isChecked} onChange={this_.onSysCheckChange} />
@@ -235,10 +249,10 @@ class GenerateDbm extends React.Component {
 
     const sys_warn_all = this.state.systems_warn.all?<label>Система ALL исключена из генерации</label>:<div/>;
     const sys_warn_na = this.state.systems_warn.na?<label>Система N/A исключена из генерации</label>:<div/>;
-    const sys_none_label = this.state.systems_none?<label>Ни одной системы не выбрано</label>:<div/>;
+    const sys_none_label = this.state.systems_none?<label>{none_label} не выбрано!</label>:<div/>;
 
     const sys_container = <div className='generate-dbm-sys-container'>
-      {([0,1].includes(this.state.varIndex))?<div>{sys_none_label}{sys_check_group}{sys_all_checkbox}{sys_warn_all}{sys_warn_na}</div>:<div/>}
+      {([0,1,3].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}</div>:<div/>}
     </div>
 
       
