@@ -82,7 +82,7 @@ class DbmGeneratorController < ApplicationController
           data_sys += data
         end
         if dbm_generator.systems_all?
-          data_tot += data_sys 
+          data_tot += data_sys
         elsif data_sys > ''
           file_name = 'pds_malf_' + sys_name + '.sel'
           create_file(file_name, enc, data_sys)
@@ -103,31 +103,30 @@ class DbmGeneratorController < ApplicationController
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
-    template_lodi = HwIosignaldef.where(:memtype => ['LO' , 'DI']).all.pluck(:ioname)
-    template_aidi = HwIosignaldef.where(:memtype => ['AI' , 'DI']).all.pluck(:ioname)
+    template_lodi = HwIosignaldef.where(memtype: %w[LO DI]).all.pluck(:ioname)
+    template_aidi = HwIosignaldef.where(memtype: %w[AI DI]).all.pluck(:ioname)
     gen_tables.each do |table_id|
       tbl_name = Tablelist.find(table_id).table
       tbl = Object.const_get(tbl_name.classify)
-      objects = tbl.where(Project: dbm_generator.project_id).includes(:system, hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped:[]]).to_a
+      objects = tbl.where(Project: dbm_generator.project_id).includes(:system, hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).to_a
       data_tbl = ''
       objects.each do |obj|
         hw_ic = obj.hw_ic
         hw_ped = hw_ic.hw_ped
         data_obj = ''
         hw_ped.signals.each do |sig_name|
-          if (hw_ped[sig_name].to_i > 0)
-            if (template_lodi.include?(sig_name))
-              path = 'sel_ped_lodi.sel.erb'
-              global = template_aidi.include?(sig_name) ? 'di' : 'lo'
-            else
-              path = 'sel_ped_lodi.sel.erb'
-              global = template_aidi.include?(sig_name) ? 'ai' : 'ao'
-            end
-            data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
-              ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus)
-            )
-            data_obj += data
+          next unless hw_ped[sig_name].to_i > 0
+          if template_lodi.include?(sig_name)
+            path = 'sel_ped_lodi.sel.erb'
+            global = template_aidi.include?(sig_name) ? 'di' : 'lo'
+          else
+            path = 'sel_ped_lodi.sel.erb'
+            global = template_aidi.include?(sig_name) ? 'ai' : 'ao'
           end
+          data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
+            ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus)
+          )
+          data_obj += data
         end
         data_tbl += data_obj
       end

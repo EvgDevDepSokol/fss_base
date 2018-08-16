@@ -12,8 +12,8 @@ class Selectors::DbmTblIcsController < ApplicationController
                      LEFT OUTER JOIN
                  tablelist ON typetable = tablelist.tableid
              WHERE
-                 hw_ic.project = " + project.ProjectID.to_s + 
-             " ORDER BY tablelist.title;"
+                 hw_ic.project = " + project.ProjectID.to_s +
+            ' ORDER BY tablelist.title;'
     @dbm_tbl_ics = ActiveRecord::Base.connection.execute(query)
     do_format(@dbm_tbl_ics)
   end
