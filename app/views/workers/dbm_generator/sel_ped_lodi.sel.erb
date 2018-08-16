@@ -1,15 +1,15 @@
-<%= "/#{mod} zlo#{hw_ic.ref.downcase}" %> 
+<%= "/#{mod} z#{global}#{hw_ic.ref.downcase}" %> 
 <%= hw_ic.desc12(is_rus) %><%= hw_ic.desc0 %> 
 <%= hw_ic.desc1 %> 
 <%= hw_ic.desc2 %> 
 @EXCL(OR) <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.downcase}) @PED(#{hw_ped.ped})" %>
 
 
-.UNIT 
+.UNIT <%= hw_ic.unit_for_dbm(is_rus) %>
 .SYS <%= obj.system.System.downcase %>
 .TYPE L,1
 .FORM L1 
 .VALU F,V
 .DIM
-.PRED globallo
+.PRED global<%= global %>
 

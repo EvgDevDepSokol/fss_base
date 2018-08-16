@@ -33,14 +33,16 @@ class DbmGeneratorController < ApplicationController
         pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
         data_sys = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s)
                        .render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs, is_rus: is_rus))
-        data_tot += data_sys if dbm_generator.systems_all?
-        next unless data_sys > ''
-        file_name = 'pds_rf_' + sys_name + '.sel'
-        create_file(file_name, enc, data_sys)
-        scp.upload! @local_path, ssh[:remote_path] + file_name
+        if dbm_generator.systems_all?
+          data_tot += data_sys
+        elsif data_sys > ''
+          file_name = 'pds_rf_' + sys_name + '.sel'
+          create_file(file_name, enc, data_sys)
+          scp.upload! @local_path, ssh[:remote_path] + file_name
+        end
       end
       if dbm_generator.systems_all?
-        file_name = 'pds_rf.sel'
+        file_name = 'pds_rf_ALL.sel'
         create_file(file_name, enc, data_tot)
         scp.upload! @local_path, ssh[:remote_path] + file_name
       end
@@ -79,14 +81,16 @@ class DbmGeneratorController < ApplicationController
           )
           data_sys += data
         end
-        data_tot += data_sys if dbm_generator.systems_all?
-        next unless data_sys > ''
-        file_name = 'pds_malf_' + sys_name + '.sel'
-        create_file(file_name, enc, data_sys)
-        scp.upload! @local_path, ssh[:remote_path] + file_name
+        if dbm_generator.systems_all?
+          data_tot += data_sys 
+        elsif data_sys > ''
+          file_name = 'pds_malf_' + sys_name + '.sel'
+          create_file(file_name, enc, data_sys)
+          scp.upload! @local_path, ssh[:remote_path] + file_name
+        end
       end
       if dbm_generator.systems_all?
-        file_name = 'pds_malf.sel'
+        file_name = 'pds_malf_ALL.sel'
         create_file(file_name, enc, data_tot)
         scp.upload! @local_path, ssh[:remote_path] + file_name
       end
@@ -100,6 +104,7 @@ class DbmGeneratorController < ApplicationController
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
     template_lodi = HwIosignaldef.where(:memtype => ['LO' , 'DI']).all.pluck(:ioname)
+    template_aidi = HwIosignaldef.where(:memtype => ['AI' , 'DI']).all.pluck(:ioname)
     gen_tables.each do |table_id|
       tbl_name = Tablelist.find(table_id).table
       tbl = Object.const_get(tbl_name.classify)
@@ -113,11 +118,13 @@ class DbmGeneratorController < ApplicationController
           if (hw_ped[sig_name].to_i > 0)
             if (template_lodi.include?(sig_name))
               path = 'sel_ped_lodi.sel.erb'
+              global = template_aidi.include?(sig_name) ? 'di' : 'lo'
             else
               path = 'sel_ped_lodi.sel.erb'
+              global = template_aidi.include?(sig_name) ? 'ai' : 'ao'
             end
             data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
-              ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, is_rus: is_rus)
+              ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus)
             )
             data_obj += data
           end
