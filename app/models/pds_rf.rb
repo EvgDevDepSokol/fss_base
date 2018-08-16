@@ -73,11 +73,11 @@ class PdsRf < ApplicationRecord
   # selection functions
   def var2(type)
     if type_b?(type)
-      '2-:'
+      'yp:'
     elsif type_i?(type)
-      '2-i'
+      'ypi'
     elsif type_r?(type)
-      '2-x'
+      'ypx'
     end
   end
 
