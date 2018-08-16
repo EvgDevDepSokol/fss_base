@@ -2,7 +2,7 @@ class Selectors::DbmTblIcsController < ApplicationController
   include SelectorControllerHelper
 
   def index
-    query = "SELECT DISTINCT (tablelist.table), tablelist.title
+    query = "SELECT DISTINCT (tablelist.tableID), tablelist.title
              FROM
                  hw_ic
                      LEFT OUTER JOIN

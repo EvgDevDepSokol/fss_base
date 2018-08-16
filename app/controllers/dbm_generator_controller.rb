@@ -12,19 +12,21 @@ class DbmGeneratorController < ApplicationController
     # dbm_generator = @dbm_generator
     case dbm_generator.type
     when '0'
-      render_pds_rf(dbm_generator)
+      render_sel_rf(dbm_generator)
     when '1'
-      render_pds_mf(dbm_generator)
+      render_sel_mf(dbm_generator)
+    when '3'
+      render_sel_ped(dbm_generator)
     end
     render json: { status: :ok }
   end
 
-  def render_pds_rf(dbm_generator)
+  def render_sel_rf(dbm_generator)
     systems = dbm_generator.systems
     data_tot = ''
-    is_rus = rus?(dbm_generator.project_id)
-    enc = project_encoding(dbm_generator.project_id)
-    ssh = project_ssh(dbm_generator.project_id)
+    is_rus = dbm_generator.rus?(dbm_generator.project_id)
+    enc = dbm_generator.project_encoding(dbm_generator.project_id)
+    ssh = dbm_generator.project_ssh(dbm_generator.project_id)
     Net::SCP.start(ssh[:ip], 'load', password: ssh[:pass]) do |scp|
       systems.each do |sys_id|
         sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
@@ -45,12 +47,12 @@ class DbmGeneratorController < ApplicationController
     end
   end
 
-  def render_pds_mf(dbm_generator)
+  def render_sel_mf(dbm_generator)
     systems = dbm_generator.systems
     data_tot = ''
-    is_rus = rus?(dbm_generator.project_id)
-    enc = project_encoding(dbm_generator.project_id)
-    ssh = project_ssh(dbm_generator.project_id)
+    is_rus = dbm_generator.rus?(dbm_generator.project_id)
+    enc = dbm_generator.project_encoding(dbm_generator.project_id)
+    ssh = dbm_generator.project_ssh(dbm_generator.project_id)
     Net::SCP.start(ssh[:ip], 'load', password: ssh[:pass]) do |scp|
       systems.each do |sys_id|
         sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
@@ -91,20 +93,40 @@ class DbmGeneratorController < ApplicationController
     end
   end
 
-  def rus?(project_id)
-    PdsProject.find(project_id).project_properties.language == 'Русский'
-  end
-
-  def project_encoding(project_id)
-    enc = PdsProject.find(project_id).project_properties.Encoding
-    return 'KOI8-R' if enc == 'koi8r'
-    return 'Windows-1251' if enc == 'cp1251'
-    'UTF-8'
-  end
-
-  def project_ssh(project_id)
-    prop = PdsProject.find(project_id).project_properties
-    { ip: prop.HostIP, pass: prop.LoadPass, remote_path: '/home/' + prop.SimDir + 'load/pds_sel_test/' }
+  def render_sel_ped(dbm_generator)
+    gen_tables = dbm_generator.systems
+    data_tot = ''
+    is_rus = dbm_generator.rus?(dbm_generator.project_id)
+    enc = dbm_generator.project_encoding(dbm_generator.project_id)
+    ssh = dbm_generator.project_ssh(dbm_generator.project_id)
+    template_lodi = HwIosignaldef.where(:memtype => ['LO' , 'DI']).all.pluck(:ioname)
+    gen_tables.each do |table_id|
+      tbl_name = Tablelist.find(table_id).table
+      tbl = Object.const_get(tbl_name.classify)
+      objects = tbl.where(Project: dbm_generator.project_id).includes(:system, hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped:[]]).to_a
+      data_tbl = ''
+      objects.each do |obj|
+        hw_ic = obj.hw_ic
+        hw_ped = hw_ic.hw_ped
+        data_obj = ''
+        hw_ped.signals.each do |sig_name|
+          if (hw_ped[sig_name].to_i > 0)
+            if (template_lodi.include?(sig_name))
+              path = 'sel_ped_lodi.sel.erb'
+            else
+              path = 'sel_ped_lodi.sel.erb'
+            end
+            data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
+              ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, is_rus: is_rus)
+            )
+            data_obj += data
+          end
+        end
+        data_tbl += data_obj
+      end
+      file_name = tbl_name + '.sel'
+      create_file(file_name, enc, data_tbl)
+    end
   end
 
   def create_file(file_name, enc, data)

@@ -2,7 +2,6 @@ class DisplaySystemsController < BaseController
   # Controller for display systems
   ACTIONS = %i[pds_ppca pds_ppcd pds_sd].freeze
 
-  # уродливо, но ОООЧЕНЬ быстро. Было 35-38 секунд, стало 3-5 секунд!
   def pds_ppcas
     @data_list = PdsPpca
                  .where(Project: project.ProjectID)

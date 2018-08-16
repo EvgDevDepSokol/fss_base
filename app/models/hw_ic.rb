@@ -1,5 +1,6 @@
 class HwIc < ApplicationRecord
   self.table_name = 'hw_ic'
+  include DbmGeneratorHelper
   alias_attribute :id, primary_key
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'

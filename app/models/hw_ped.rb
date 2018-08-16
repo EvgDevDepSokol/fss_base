@@ -40,6 +40,10 @@ class HwPed < ApplicationRecord
 
   SIGNAL_ARRAY = ['AI', 'AO', 'AO*', 'DI', 'LO', 'LO*', 'LO+', 'LO220', 'RO', 'DO'].freeze
 
+  def signals
+    SIGNAL_ARRAY
+  end
+
   after_save do |hw_ped|
     if hw_ped.GenExtSig == 'да'
       SIGNAL_ARRAY.each do |sig_name|

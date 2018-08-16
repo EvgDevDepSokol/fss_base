@@ -80,17 +80,21 @@ class GenerateDbm extends React.Component {
         this
       );
       var systems_warn = {na: false, all: false};
-      debugger
-      systems = systems.map((sys) => {
-        if(sys.value==20000001) {
-          systems_warn.na = true;
-        }
-        if(sys.value==34) {
-          systems_warn.all = true;
-        }
-      return sys});
+    
+      if ([0,1].includes(varIndex)) {
+        systems = systems.map((sys) => {
+          if(sys.value==20000001) {
+            systems_warn.na = true;
+          }
+          if(sys.value==34) {
+            systems_warn.all = true;
+          }
+        return sys});
+        systems = systems.filter(x => {return !([20000001,34].includes(x.value))})
+      } else if (varIndex == 3) {
+        systems = systems.filter(x => {return !([47].includes(x.value))})
+      }
      
-      systems = systems.filter(x => {return !([20000001,34].includes(x.value))})
       this.setState({
         systems_all: false,
         systems_none: true,

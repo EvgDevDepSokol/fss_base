@@ -31,4 +31,20 @@ class DbmGenerator
   def systems_all?
     systems_all == 'true'
   end
+
+  def rus?(project_id)
+    PdsProject.find(project_id).project_properties.language == 'Русский'
+  end
+
+  def project_encoding(project_id)
+    enc = PdsProject.find(project_id).project_properties.Encoding
+    return 'KOI8-R' if enc == 'koi8r'
+    return 'Windows-1251' if enc == 'cp1251'
+    'UTF-8'
+  end
+
+  def project_ssh(project_id)
+    prop = PdsProject.find(project_id).project_properties
+    { ip: prop.HostIP, pass: prop.LoadPass, remote_path: '/home/' + prop.SimDir + 'load/pds_sel_test/' }
+  end
 end
