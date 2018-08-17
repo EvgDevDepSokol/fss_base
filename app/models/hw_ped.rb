@@ -48,7 +48,7 @@ class HwPed < ApplicationRecord
     if hw_ped.GenExtSig == 'да'
       SIGNAL_ARRAY.each do |sig_name|
         sig_id = HwIosignaldef.where(ioname: sig_name).first.id
-        hw_iosignals = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).to_a
+        hw_iosignals = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).order(:id).to_a
         icnt = hw_ped[sig_name] - hw_iosignals.size
         icnt = 0 if hw_ped[sig_name] < 0
         if icnt > 0
@@ -63,7 +63,7 @@ class HwPed < ApplicationRecord
           end
         elsif icnt < 0
           while icnt < 0
-            hw_iosignal = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).last
+            hw_iosignal = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).order(:id).last
             hw_iosignal.skip_check_ped
             hw_iosignal.destroy
             icnt += 1
