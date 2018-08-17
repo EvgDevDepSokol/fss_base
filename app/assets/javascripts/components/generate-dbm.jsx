@@ -4,7 +4,6 @@ import Modal from 'react-modal';
 //import MOD from 'ruby_constants.js.erb'
 //import VARIABLES from 'ruby_constants.js.erb'
 //import ATTRIBUTE_LIST from 'ruby_constants.jsx.haml'
-//import DELIMETER from 'ruby_constants.js.erb'
 
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
@@ -12,7 +11,6 @@ const MOD = ['MDD', 'ADD', 'OMOD'];
 //const MOD = ruby_constants.MOD;
 const VARIABLES = ['remote function', 'malfunctions', 'detectors',
                'peds', 'ppc', 'announciator', 'time step', 'valves', 'power sections'];
-const DELIMITER = [',', ';'];
 const SEL_PATH = ['/selectors/dbm_sys_rfs','/selectors/dbm_sys_mfs','',
 '/selectors/dbm_tbl_ics'];
 
@@ -38,7 +36,6 @@ class GenerateDbm extends React.Component {
       modalIsOpen: false,
       modIndex: 0,
       varIndex: 0,
-      delIndex: 0,
       predecessor: 'globalyp',
       systems_all: false,
       systems_none: true,
@@ -51,7 +48,6 @@ class GenerateDbm extends React.Component {
     this.onExport = this.onExport.bind(this);
     this.onModRadioChange = this.onModRadioChange.bind(this);
     this.onVarRadioChange = this.onVarRadioChange.bind(this);
-    this.onDelimiterSelectorChange = this.onDelimiterSelectorChange.bind(this);
     this.onSysCheckChange = this.onSysCheckChange.bind(this);
     this.onSysAllChange = this.onSysAllChange.bind(this);
     this.onPredecessorChange = this.onPredecessorChange.bind(this);
@@ -119,11 +115,6 @@ class GenerateDbm extends React.Component {
     this.refreshSystems(varIndex);
   }
 
-  onDelimiterSelectorChange(e) {
-    var delIndex = parseInt(e.target.value, 10);
-    this.setState({delIndex: delIndex})
-  }
-
   onPredecessorChange(e) {
     this.setState({predecessor: e.target.value})
   }
@@ -174,7 +165,6 @@ class GenerateDbm extends React.Component {
         {
           data: {
             mod: MOD[this.state.modIndex],
-            delimiter: DELIMITER[this.state.delIndex],
             type: this.state.varIndex,
             predecessor: this.state.predecessor,
             systems: systems,
@@ -227,14 +217,6 @@ class GenerateDbm extends React.Component {
       </p>
     );
     
-    const delimiter_select = <select value={this_.state.delIndex} onChange={this_.onDelimiterSelectorChange}>
-      {DELIMITER.map((option,i) =>
-        <option key={i + '-opt'} value={i}>
-          {option}
-        </option>
-      )};
-    </select>
-
     const sys_check_group = <div>
       <label>{sys_check_group_label}</label><br/>
       {systems.map((data,idx) =>
@@ -264,7 +246,6 @@ class GenerateDbm extends React.Component {
 
     const rf_container = <div className='generate-dbm-rf-container'>
       {([0].includes(this.state.varIndex))?<div>
-          {delimiter_select}<br/>
           {predecessor_input}
         </div>
       :<div/>}

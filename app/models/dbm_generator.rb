@@ -4,13 +4,12 @@ class DbmGenerator
   include ActiveRecord::Reflection
   extend ActiveModel::Naming
 
-  ATTRIBUTE_LIST = %i[mod delimiter predecessor variables
+  ATTRIBUTE_LIST = %i[mod predecessor variables
                       systems systems_all project_id type].freeze
 
   INPUT_TYPES = %w[MDD ADD OMOD].freeze
   VARIABLES = ['remote function', 'malfunctions', 'detectors',
                'peds', 'ppc', 'announcicator', 'time step', 'valves', 'power sections'].freeze
-  DELIMITER = [',', ';'].freeze
 
   attr_accessor *ATTRIBUTE_LIST
 
