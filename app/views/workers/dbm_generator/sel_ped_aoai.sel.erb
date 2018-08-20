@@ -4,13 +4,13 @@
 <%= hw_ic.desc2 %> 
 <%= gen_tag ? '@EXCL(OR) ' : ''%>
 <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.downcase}) @PED(#{hw_ped.ped})" %>
-<%= "@PTAG(#{hw_ic.ref.upcase})" %><%= (defined? obj.range) ? " @IDX(#{obj.range})" : '' %>
+<%= "@PTAG(#{hw_ic.ref.upcase})" %><%= (global == 'ao') ? " @LIM(#{hw_ic.scaleMin},#{hw_ic.scaleMax})" : '' %>
 
 .UNIT <%= hw_ic.unit_for_dbm(is_rus) %>
 .SYS <%= obj.system.System.downcase %>
-.TYPE L,1
-.FORM L1 
-.VALU F,V
+.TYPE R,4
+.FORM E13.5 
+.VALU 0.,V
 .DIM <%= dim > 1 ? "(#{dim})" : '' %>
 .PRED global<%= global %>
 
@@ -21,13 +21,13 @@
 <%= hw_ic.desc2 %> 
 <%= gen_tag ? '@EXCL(OR) ' : ''%>
 <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.downcase}) @PED(#{hw_ped.ped})" %>
-<%= "@PTAG(#{hw_ic.tag_no.upcase})" %><%= (defined? obj.range) ? " @IDX(#{obj.range})" : '' %>
+<%= "@PTAG(#{hw_ic.tag_no.upcase})" %><%= (global == 'ao') ? " @LIM(#{hw_ic.scaleMin},#{hw_ic.scaleMax})" : '' %>
 
 .UNIT <%= hw_ic.unit_for_dbm(is_rus) %>
 .SYS <%= obj.system.System.downcase %>
-.TYPE L,1
-.FORM L1 
-.VALU F,V
+.TYPE R,4
+.FORM E13.5 
+.VALU 0.,V
 .DIM <%= dim > 1 ? "(#{dim})" : '' %>
 .PRED <%= "z#{global}#{hw_ic.ref.downcase}" %>
 
@@ -46,11 +46,11 @@
 
 .UNIT <%= hw_ic.unit_for_dbm(is_rus) %>
 .SYS <%= obj.system.System.downcase %>
-.TYPE L,1
-.FORM L1 
-.VALU F,V
+.TYPE R,4
+.FORM E13.5 
+.VALU 0.,V
 .DIM <%= dim > 1 ? "(#{dim})" : '' %>
-.PRED <%= "z#{global}#{(gen_tag ? hw_ic.tag_no : hw_ic.ref).downcase},B,#{index}" %>
+.PRED <%= "z#{global}#{(gen_tag ? hw_ic.tag_no : hw_ic.ref).downcase},B,#{index*4}" %>
 
 <% end %>
 <% end %>

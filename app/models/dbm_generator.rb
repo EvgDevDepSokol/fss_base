@@ -5,7 +5,7 @@ class DbmGenerator
   extend ActiveModel::Naming
 
   ATTRIBUTE_LIST = %i[mod predecessor variables
-                      systems systems_all project_id type].freeze
+                      systems systems_all project_id type gen_tag].freeze
 
   INPUT_TYPES = %w[MDD ADD OMOD].freeze
   VARIABLES = ['remote function', 'malfunctions', 'detectors',

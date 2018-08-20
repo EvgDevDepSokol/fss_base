@@ -29,11 +29,7 @@ module DbmGeneratorHelper
   end
 
   def desc12_io(is_rus, desc_io)
-    desc = if is_rus
-             (defined? shortDesc) ? shortDesc : (defined? self.Desc) ? self.Desc : (defined? self.Description) ? self.Description : ''
-           else
-             (defined? shortDesc_EN) ? shortDesc_EN : (defined? self.Desc_EN) ? self.Desc_EN : (defined? self.Description_EN) ? self.Description_EN : ''
-           end
+    desc = if is_rus then self.Description else self.Description_EN end
     desc += (desc_io ? "(#{desc_io})" : '')
     desc = desc ? desc.split.join(' ').strip : ''
     if desc.length > 66
@@ -47,6 +43,25 @@ module DbmGeneratorHelper
     end
     nil
   end
+
+  def desc12_an(is_rus, ref)
+    desc = if is_rus then self.Description else self.Description_EN end
+    desc = desc ? desc.split.join(' ').strip : ' '
+    desc_ref = if is_rus then 'Компонентный отказ ' else 'Component malfunction ' end
+    desc_ref += ref.downcase
+    desc_ref = desc_ref.split.join(' ').strip
+    if desc.length > 66
+      @desc0 = '.DESC ' + desc_ref
+      @desc1 = '@DESC1(' + desc[0..desc.rindex(' ', 66) - 1] + ')'
+      @desc2 = '@DESC2(' + desc[desc.rindex(' ', 66) + 1..-1] + ')'
+    else
+      @desc0 = '.DESC ' + desc_ref
+      @desc1 = '@DESC1(' + desc[0..64] + ')'
+      @desc2 = ''
+    end
+    nil
+  end
+
 
   attr_reader :desc0
   attr_reader :desc1

@@ -103,7 +103,6 @@ class DbmGeneratorController < ApplicationController
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
-    gen_tag = false
     template_lodi = HwIosignaldef.where(memtype: %w[LO DI]).all.pluck(:ioname)
     template_aidi = HwIosignaldef.where(memtype: %w[AI DI]).all.pluck(:ioname)
     hw_ped = HwPed.first
@@ -111,39 +110,49 @@ class DbmGeneratorController < ApplicationController
     hw_ped.signals.each do |sig_name|
       sig_def[sig_name] = HwIosignaldef.where(ioname: sig_name).pluck('ID')
     end
-    gen_tables.each do |table_id|
-      tbl_name = Tablelist.find(table_id).table
-      tbl = Object.const_get(tbl_name.classify)
-      objects = tbl.where(Project: dbm_generator.project_id).includes(:system, hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).to_a
-      data_tbl = ''
-      objects.each do |obj|
-        hw_ic = obj.hw_ic
-        hw_ped = hw_ic.hw_ped
-        data_obj = ''
-        hw_ped.signals.each do |sig_name|
-          next unless hw_ped[sig_name].to_i > 0
-          if template_lodi.include?(sig_name)
-            path = 'sel_ped_lodi.sel.erb'
-            global = template_aidi.include?(sig_name) ? 'di' : 'lo'
+    Net::SCP.start(ssh[:ip], 'load', password: ssh[:pass]) do |scp|
+      gen_tables.each do |table_id|
+        tbl_name = Tablelist.find(table_id).table
+        tbl = Object.const_get(tbl_name.classify)
+        objects = tbl.where(Project: dbm_generator.project_id).includes(:system, hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).to_a
+        data_tbl = ''
+        objects.each do |obj|
+          hw_ic = obj.hw_ic
+          hw_ped = hw_ic.hw_ped
+          data_obj = ''
+          if table_id.to_i == 4 #announciators
+            path = 'sel_ped_announciators.sel.erb'
+            data_obj = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
+              ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, is_rus: is_rus)
+            )
           else
-            path = 'sel_ped_lodi.sel.erb'
-            global = template_aidi.include?(sig_name) ? 'ai' : 'ao'
+            hw_ped.signals.each do |sig_name|
+              next unless hw_ped[sig_name].to_i > 0
+              if template_lodi.include?(sig_name)
+                path = 'sel_ped_lodi.sel.erb'
+                global = template_aidi.include?(sig_name) ? 'di' : 'lo'
+              else
+                path = 'sel_ped_aoai.sel.erb'
+                global = template_aidi.include?(sig_name) ? 'ai' : 'ao'
+              end
+              if hw_ped.gen_ext?
+                sig_id = sig_def[sig_name]
+                hw_iosignals = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).order(:id).to_a
+              else
+                hw_iosignals = nil
+              end
+              data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
+                ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus, dim: hw_ped[sig_name].to_i, hw_iosignals: hw_iosignals)
+              )
+              data_obj += data
+            end
           end
-          if hw_ped.gen_ext?
-            sig_id = sig_def[sig_name]
-            hw_iosignals = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).order(:id).to_a
-          else
-            hw_iosignals = nil
-          end
-          data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
-            ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, gen_tag: gen_tag, is_rus: is_rus, dim: hw_ped[sig_name].to_i, hw_iosignals: hw_iosignals)
-          )
-          data_obj += data
+          data_tbl += data_obj
         end
-        data_tbl += data_obj
+        file_name = tbl_name + '.sel'
+        create_file(file_name, enc, data_tbl)
+        scp.upload! @local_path, ssh[:remote_path] + file_name
       end
-      file_name = tbl_name + '.sel'
-      create_file(file_name, enc, data_tbl)
     end
   end
 

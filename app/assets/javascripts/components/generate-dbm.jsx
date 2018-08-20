@@ -9,15 +9,15 @@ var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOption
 
 const MOD = ['MDD', 'ADD', 'OMOD'];
 //const MOD = ruby_constants.MOD;
-const VARIABLES = ['remote function', 'malfunctions', 'detectors',
-               'peds', 'ppc', 'announciator', 'time step', 'valves', 'power sections'];
+const VARIABLES = ['Удаленное управление', 'Отказы', '(нет) Датчики',
+               'Оборудование', '(нет) Системы отображения', '(нет) Анонсиаторы', '(что?) Шаг по времени', '(нет) Арматура', '(нет) Питание'];
 const SEL_PATH = ['/selectors/dbm_sys_rfs','/selectors/dbm_sys_mfs','',
 '/selectors/dbm_tbl_ics'];
 
 const customStyles = {
   content: {
     height: '90%',
-    width: '90%',
+    width: '80%',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -40,6 +40,7 @@ class GenerateDbm extends React.Component {
       systems_all: false,
       systems_none: true,
       systems_warn: {na: false, all: false},
+      gen_tag: false,
       systems:[]
     };
     this.openModal = this.openModal.bind(this);
@@ -50,6 +51,7 @@ class GenerateDbm extends React.Component {
     this.onVarRadioChange = this.onVarRadioChange.bind(this);
     this.onSysCheckChange = this.onSysCheckChange.bind(this);
     this.onSysAllChange = this.onSysAllChange.bind(this);
+    this.onGenTagChange = this.onGenTagChange.bind(this);
     this.onPredecessorChange = this.onPredecessorChange.bind(this);
     this.refreshSystems = this.refreshSystems.bind(this);
   }
@@ -150,6 +152,13 @@ class GenerateDbm extends React.Component {
     });
   }
 
+  onGenTagChange(e) {
+    var gen_tag = !this.state.gen_tag
+    this.setState({
+      gen_tag: gen_tag,
+    });
+  }
+
   onExport() {
     if (!this.state.systems_none){
       var systems = [];
@@ -169,6 +178,7 @@ class GenerateDbm extends React.Component {
             predecessor: this.state.predecessor,
             systems: systems,
             systems_all: this.state.systems_all,
+            gen_tag: this.state.gen_tag,
             project_id: project.id
           },
         },
@@ -221,17 +231,16 @@ class GenerateDbm extends React.Component {
       <label>{sys_check_group_label}</label><br/>
       {systems.map((data,idx) =>
         <label key={'sys-check-group-key'+idx}>
-          <input  type='checkbox' value={data.label} checked={data.isChecked} onChange={this_.onSysCheckChange} />
-          {data.label}
-        </label>
+          <input  type='checkbox' value={data.label} checked={data.isChecked} onChange={this_.onSysCheckChange} /> {data.label}</label>
       )}
       <br/>
     </div>
 
+    const gen_tag_checkbox = <label>
+      <input  type='checkbox' checked={this.state.gen_tag} onChange={this.onGenTagChange} /> Генерить TAG</label>
+
     const sys_all_checkbox = <label>
-      <input  type='checkbox' checked={this.state.systems_all} onChange={this.onSysAllChange} />
-      Выбрать все
-    </label>
+      <input  type='checkbox' checked={this.state.systems_all} onChange={this.onSysAllChange} /> Выбрать все</label>
 
     const sys_warn_all = this.state.systems_warn.all?<label>Система ALL исключена из генерации</label>:<div/>;
     const sys_warn_na = this.state.systems_warn.na?<label>Система N/A исключена из генерации</label>:<div/>;
@@ -247,6 +256,10 @@ class GenerateDbm extends React.Component {
     const rf_container = <div className='generate-dbm-rf-container'>
       {([0].includes(this.state.varIndex))?<div>
           {predecessor_input}
+        </div>
+      :<div/>}
+      {([3].includes(this.state.varIndex))?<div>
+          {gen_tag_checkbox}
         </div>
       :<div/>}
     </div>
