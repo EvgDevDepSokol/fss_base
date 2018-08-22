@@ -88,6 +88,7 @@ Rails.application.routes.draw do
 
   # to fix later
   put :generate_rf, to: 'dbm_generator#prepare_hash'
+  put :get_log, to: 'dbm_generator#get_log'
 
   resources :users
 

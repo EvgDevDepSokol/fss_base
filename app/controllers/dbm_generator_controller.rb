@@ -1,4 +1,5 @@
 class DbmGeneratorController < ApplicationController
+  require 'net/ssh'
   require 'net/scp'
   layout false
 
@@ -10,6 +11,8 @@ class DbmGeneratorController < ApplicationController
     dbm_generator = DbmGenerator.new(hash)
     # Resque.enqueue(SelectBuilderJob, dbm_generator)
     # dbm_generator = @dbm_generator
+    current_user.message = ''
+    current_user.save
     case dbm_generator.type
     when '0'
       render_sel_rf(dbm_generator)
@@ -21,15 +24,25 @@ class DbmGeneratorController < ApplicationController
     render json: { status: :ok }
   end
 
+  def get_log
+    log = current_user.message
+    render json: { log: log }
+  end
+
   def render_sel_rf(dbm_generator)
+    write_log('Инициализация...')
     systems = dbm_generator.systems
     data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
-    Net::SCP.start(ssh[:ip], 'load', password: ssh[:pass]) do |scp|
+    ssh[:remote_path] += 'gen_rf/'
+    write_log('Подключение к серверу: ' + ssh[:ip] + '.')
+    Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+      session.exec!('mkdir ' + ssh[:remote_path])
       systems.each do |sys_id|
         sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
+        write_log('Генерация селект-файла для ' + sys_name + '.')
         pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
         data_sys = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s)
                        .render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs, is_rus: is_rus))
@@ -38,15 +51,19 @@ class DbmGeneratorController < ApplicationController
         elsif data_sys > ''
           file_name = 'pds_rf_' + sys_name + '.sel'
           create_file(file_name, enc, data_sys)
-          scp.upload! @local_path, ssh[:remote_path] + file_name
+          session.scp.upload! @local_path, ssh[:remote_path] + file_name
+          write_log('Файл ' + file_name + ' загружен на сервер.')
         end
       end
       if dbm_generator.systems_all?
         file_name = 'pds_rf_ALL.sel'
         create_file(file_name, enc, data_tot)
-        scp.upload! @local_path, ssh[:remote_path] + file_name
+        session.scp.upload! @local_path, ssh[:remote_path] + file_name
+        write_log('Файл ' + file_name + ' загружен на сервер.')
       end
     end
+    write_log('Генерация завершена.')
+    write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
   def render_sel_mf(dbm_generator)
@@ -55,9 +72,13 @@ class DbmGeneratorController < ApplicationController
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
-    Net::SCP.start(ssh[:ip], 'load', password: ssh[:pass]) do |scp|
+    ssh[:remote_path] += 'gen_mf/'
+    write_log('Подключение к серверу: ' + ssh[:ip] + '.')
+    Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+      session.exec!('mkdir ' + ssh[:remote_path])
       systems.each do |sys_id|
         sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
+        write_log('Генерация селект-файла для ' + sys_name + '.')
         pds_mfs = PdsMalfunction.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order(:Numb).all
         data_sys = ''
         pds_mfs.each do |pds_mf|
@@ -86,15 +107,19 @@ class DbmGeneratorController < ApplicationController
         elsif data_sys > ''
           file_name = 'pds_malf_' + sys_name + '.sel'
           create_file(file_name, enc, data_sys)
-          scp.upload! @local_path, ssh[:remote_path] + file_name
+          session.scp.upload! @local_path, ssh[:remote_path] + file_name
+          write_log('Файл ' + file_name + ' загружен на сервер.')
         end
       end
       if dbm_generator.systems_all?
         file_name = 'pds_malf_ALL.sel'
         create_file(file_name, enc, data_tot)
-        scp.upload! @local_path, ssh[:remote_path] + file_name
+        session.scp.upload! @local_path, ssh[:remote_path] + file_name
+        write_log('Файл ' + file_name + ' загружен на сервер.')
       end
     end
+    write_log('Генерация завершена.')
+    write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
   def render_sel_ped(dbm_generator)
@@ -103,6 +128,7 @@ class DbmGeneratorController < ApplicationController
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
+    ssh[:remote_path] += 'gen_peds/'
     template_lodi = HwIosignaldef.where(memtype: %w[LO DI]).all.pluck(:ioname)
     template_aidi = HwIosignaldef.where(memtype: %w[AI DI]).all.pluck(:ioname)
     hw_ped = HwPed.first
@@ -110,9 +136,12 @@ class DbmGeneratorController < ApplicationController
     hw_ped.signals.each do |sig_name|
       sig_def[sig_name] = HwIosignaldef.where(ioname: sig_name).pluck('ID')
     end
-    Net::SCP.start(ssh[:ip], 'load', password: ssh[:pass]) do |scp|
+    write_log('Подключение к серверу: ' + ssh[:ip] + '.')
+    Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+      session.exec!('mkdir ' + ssh[:remote_path])
       gen_tables.each do |table_id|
         tbl_name = Tablelist.find(table_id).table
+        write_log('Генерация селект-файла для ' + tbl_name + '.')
         tbl = Object.const_get(tbl_name.classify)
         objects = tbl.where(Project: dbm_generator.project_id).includes(:system, hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).to_a
         data_tbl = ''
@@ -120,7 +149,7 @@ class DbmGeneratorController < ApplicationController
           hw_ic = obj.hw_ic
           hw_ped = hw_ic.hw_ped
           data_obj = ''
-          if table_id.to_i == 4 #announciators
+          if table_id.to_i == 4 # announciators
             path = 'sel_ped_announciators.sel.erb'
             data_obj = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
               ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, is_rus: is_rus)
@@ -151,9 +180,12 @@ class DbmGeneratorController < ApplicationController
         end
         file_name = tbl_name + '.sel'
         create_file(file_name, enc, data_tbl)
-        scp.upload! @local_path, ssh[:remote_path] + file_name
+        session.scp.upload! @local_path, ssh[:remote_path] + file_name
+        write_log('Файл ' + file_name + ' загружен на сервер.')
       end
     end
+    write_log('Генерация завершена.')
+    write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
   def create_file(file_name, enc, data)
@@ -162,5 +194,10 @@ class DbmGeneratorController < ApplicationController
     File.open(@local_path, 'w:' + enc) do |f|
       f << data.encode(enc, invalid: :replace, undef: :replace, replace: '', universal_newline: true)
     end
+  end
+
+  def write_log(string)
+    current_user.message += Time.now.strftime('%Y.%m.%d %H:%M:%S ') + string + '\n'
+    current_user.save
   end
 end

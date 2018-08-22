@@ -41,6 +41,8 @@ class GenerateDbm extends React.Component {
       systems_none: true,
       systems_warn: {na: false, all: false},
       gen_tag: false,
+      isProcessing: false,
+      log: '',
       systems:[]
     };
     this.openModal = this.openModal.bind(this);
@@ -54,6 +56,7 @@ class GenerateDbm extends React.Component {
     this.onGenTagChange = this.onGenTagChange.bind(this);
     this.onPredecessorChange = this.onPredecessorChange.bind(this);
     this.refreshSystems = this.refreshSystems.bind(this);
+    this.refreshLog = this.refreshLog.bind(this);
   }
 
   openModal() {
@@ -61,6 +64,33 @@ class GenerateDbm extends React.Component {
       varIndex: 0,
       modalIsOpen: true});
     this.refreshSystems(0);
+  }
+
+  refreshLog() {
+    var _this = this;
+    const ajaxcall = (_this) => {
+        $.ajax(
+        {
+          url: '/get_log',
+          dataType: 'json',
+          type: 'PUT',
+          success: function (responce)
+          {
+            _this.setState({log: responce.log.split('\\n').join('\r\n')});
+          },
+          error: function (xhr, status, err)
+          {
+            console.error(this.props.url, status, err.toString());
+          },
+          async: true
+        });
+    }
+    ajaxcall(_this)
+    do {
+      setTimeout(function(){
+        ajaxcall(_this)
+      }, 1000);
+    } while (this.state.isProcessing);
   }
 
   afterOpenModal() {
@@ -161,6 +191,7 @@ class GenerateDbm extends React.Component {
 
   onExport() {
     if (!this.state.systems_none){
+      var _this = this;
       var systems = [];
       this.state.systems.forEach(function(sys) {
         if (sys.isChecked) systems.push(sys.value)
@@ -185,16 +216,18 @@ class GenerateDbm extends React.Component {
 
         success: function (data)
         {
-          data = data;
+          _this.setState({isProcessing: false});
+          _this.refreshLog();
         },
         error: function (xhr, status, err)
         {
           console.error(this.props.url, status, err.toString());
-          data = [];
+          _this.setState({isProcessing: false});
         },
-        async: false
+        async: true
       });
-      this.setState({modalIsOpen: false});
+      this.setState({isProcessing: true});
+      this.refreshLog();
     } else {
       if (this.state.varIndex==3) {
         alert('Выберите типы оборудования для генерации селект-файлов!');
@@ -217,13 +250,13 @@ class GenerateDbm extends React.Component {
 
     const mod_radio_group = MOD.map((data,idx) =>
       <p key={'mod-radio-group-key'+idx}>
-        <input type='radio' value={idx} checked={this_.state.modIndex === idx} onChange={this_.onModRadioChange} /> {data}<br/>
+        <input type='radio' value={idx} checked={this_.state.modIndex === idx} onChange={this_.onModRadioChange} disabled={this.state.isProcessing}/> {data}<br/>
       </p>
     );
 
     const var_radio_group = VARIABLES.map((data,idx) =>
       <p key={'var-radio-group-key'+idx}>
-        <input  type='radio' value={idx} checked={this_.state.varIndex === idx} onChange={this_.onVarRadioChange} /> {VARIABLES[idx]}<br/>
+        <input  type='radio' value={idx} checked={this_.state.varIndex === idx} onChange={this_.onVarRadioChange} disabled={this.state.isProcessing}/> {VARIABLES[idx]}<br/>
       </p>
     );
     
@@ -231,16 +264,16 @@ class GenerateDbm extends React.Component {
       <label>{sys_check_group_label}</label><br/>
       {systems.map((data,idx) =>
         <label key={'sys-check-group-key'+idx}>
-          <input  type='checkbox' value={data.label} checked={data.isChecked} onChange={this_.onSysCheckChange} /> {data.label}</label>
+          <input  type='checkbox' value={data.label} checked={data.isChecked} onChange={this_.onSysCheckChange} disabled={this.state.isProcessing}/> {data.label}</label>
       )}
       <br/>
     </div>
 
     const gen_tag_checkbox = <label>
-      <input  type='checkbox' checked={this.state.gen_tag} onChange={this.onGenTagChange} /> Генерить TAG</label>
+      <input  type='checkbox' checked={this.state.gen_tag} onChange={this.onGenTagChange} disabled={this.state.isProcessing}/> Генерить TAG</label>
 
     const sys_all_checkbox = <label>
-      <input  type='checkbox' checked={this.state.systems_all} onChange={this.onSysAllChange} /> Выбрать все</label>
+      <input  type='checkbox' checked={this.state.systems_all} onChange={this.onSysAllChange} disabled={this.state.isProcessing}/> Выбрать все</label>
 
     const sys_warn_all = this.state.systems_warn.all?<label>Система ALL исключена из генерации</label>:<div/>;
     const sys_warn_na = this.state.systems_warn.na?<label>Система N/A исключена из генерации</label>:<div/>;
@@ -251,7 +284,7 @@ class GenerateDbm extends React.Component {
     </div>
 
       
-    const predecessor_input = <input type='text' name = 'predecessor' value={this_.state.predecessor} onChange = {this_.onPredecessorChange}/> 
+    const predecessor_input = <input type='text' name = 'predecessor' value={this_.state.predecessor} onChange = {this_.onPredecessorChange} disabled={this.state.isProcessing}/> 
 
     const rf_container = <div className='generate-dbm-rf-container'>
       {([0].includes(this.state.varIndex))?<div>
@@ -271,9 +304,9 @@ class GenerateDbm extends React.Component {
           Генерация
         </a>
      
-        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} onRequestClose={this.closeModal} style={customStyles} contentLabel="Свойства экспорта в файл">
+        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} contentLabel="Свойства экспорта в файл">
 
-          <div className='generate-dbm-all'>
+          <div className='generate-dbm-all' >
             <h2 ref="subtitle">Настройки создания SELECT файла и заполнения DBM.</h2>
             <div>
               <div className='generate-dbm-top'>
@@ -286,8 +319,11 @@ class GenerateDbm extends React.Component {
             </div>
             {sys_container}
           </div>
-          <button onClick={this.closeModal}>Отмена</button>
-          <button onClick={this.onExport}>Экспорт</button>
+          <button onClick={this.closeModal} disabled={this.state.isProcessing}>Выход из меню генерации</button>
+          <button onClick={this.onExport} disabled={this.state.isProcessing}>Генерировать</button>
+          <div className='generate-dbm-log'>
+            <textarea value={this.state.log} readOnly/>
+          </div>
         </Modal>
       </div>
     );

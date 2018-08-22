@@ -1159,20 +1159,33 @@ footer {
 
 .generate-dbm-all {
   display: block;
-  width: 1000px;
+  width: 100%;
 }
 .generate-dbm-top {
   display: inline-block;
   width: 50%;
   vertical-align:top;
   border: 1px solid #dddddd;
+  p{
+    margin: 0;
+  }
 }
 .generate-dbm-sys-container {
   border: 1px solid #dddddd;
   label{
     min-width:300px;
+    margin: 0;
   }
 }
 .generate-dbm-rf-container {
   border: 1px solid #dddddd;
+}
+.generate-dbm-log {
+  border: 1px solid #dddddd;
+  height: 30%;
+  textarea{
+    width: 100%;
+    height: 100%;
+    resize: none;
+  }
 }
