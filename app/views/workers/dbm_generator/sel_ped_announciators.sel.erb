@@ -2,37 +2,37 @@
 <%= hw_ic.desc12(is_rus) %><%= hw_ic.desc0 %> 
 <%= hw_ic.desc1 %> 
 <%= hw_ic.desc2 %> 
-<%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.downcase}) @PED(#{hw_ped.ped})" %>
+<%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.downcase}) @PED(#{hw_ped.ped})" %> 
 .UNIT 
-.SYS an
-.TYPE L,1
+.SYS an 
+.TYPE L,1 
 .FORM L1 
-.VALU F,V
+.VALU F,V 
 .DIM 
-.PRED globallo
+.PRED globallo 
 
 <%= "/#{mod} an:#{hw_ic.ref.downcase}" %> 
 <%= hw_ic.desc12(is_rus) %><%= hw_ic.desc0 %> 
 <%= hw_ic.desc1 %> 
 <%= hw_ic.desc2 %> 
 .UNIT
-.SYS <%= obj.system.System.downcase %>
-.TYPE L,1
-.FORM L1 
-.VALU F,V
+.SYS <%= obj.system.System.downcase %> 
+.TYPE L,1 
+.FORM L1  
+.VALU F,V 
 .DIM 
-.PRED global01an
+.PRED global01an 
 
 <%= "/#{mod} yg#{hw_ic.ref.downcase}" %> 
 <%= hw_ic.desc12_an(is_rus,hw_ic.ref) %><%= hw_ic.desc0 %> 
 <%= hw_ic.desc1 %> 
 <%= hw_ic.desc2 %> 
-<%= "@TAG(#{hw_ic.ref.downcase}) @TYPE(ANN) @FEED(zlo#{hw_ic.ref.downcase})" %>
-.UNIT
-.SYS an
-.TYPE R,4
-.FORM I13
-.VALU 0,V
+<%= "@TAG(#{hw_ic.ref.downcase}) @TYPE(ANN) @FEED(zlo#{hw_ic.ref.downcase})" %> 
+.UNIT 
+.SYS an 
+.TYPE R,4 
+.FORM I13 
+.VALU 0,V 
 .DIM 
-.PRED globalyp
+.PRED globalyp 
 

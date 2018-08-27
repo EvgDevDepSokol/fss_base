@@ -30,7 +30,7 @@ module DbmGeneratorHelper
 
   def desc12_io(is_rus, desc_io)
     desc = is_rus ? self.Description : self.Description_EN
-    desc += (desc_io ? "(#{desc_io})" : '')
+    desc += (desc_io ? " (#{desc_io})" : '')
     desc = desc ? desc.split.join(' ').strip : ''
     if desc.length > 66
       @desc0 = '.DESC ' + desc[0..65]
