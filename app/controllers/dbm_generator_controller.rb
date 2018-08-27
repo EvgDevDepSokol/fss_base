@@ -11,7 +11,7 @@ class DbmGeneratorController < ApplicationController
     dbm_generator = DbmGenerator.new(hash)
     current_user.message = ''
     current_user.save
-    #Resque.enqueue(SelectBuilderJob, hash)
+    # Resque.enqueue(SelectBuilderJob, hash)
     case dbm_generator.gen_type
     when '0'
       render_sel_rf(dbm_generator)
@@ -199,8 +199,4 @@ class DbmGeneratorController < ApplicationController
     current_user.message += Time.now.strftime('%Y.%m.%d %H:%M:%S ') + string + '\n'
     current_user.save
   end
- 
-
-
-
 end

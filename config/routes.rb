@@ -184,11 +184,10 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   #
-  
+
   # Of course, you need to substitute your application name here, a block
   # like this probably already exists.
-  #MyApp::Application.routes.draw do
-    mount Resque::Server.new, at: "/resque"
-  #end
-
+  # MyApp::Application.routes.draw do
+  mount Resque::Server.new, at: '/resque'
+  # end
 end

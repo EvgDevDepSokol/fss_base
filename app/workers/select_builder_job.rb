@@ -182,47 +182,46 @@ class SelectBuilderJob
     current_user.message += Time.now.strftime('%Y.%m.%d %H:%M:%S ') + string + '\n'
     current_user.save
   end
- 
+
   def self.perform(hash)
     dbm_generator = DbmGenerator.new(hash)
     case dbm_generator.gen_type
     when '0'
-#      render_sel_rf(dbm_generator)
-    write_log('Инициализация...')
-    systems = dbm_generator.systems
-    data_tot = ''
-    is_rus = dbm_generator.rus?(dbm_generator.project_id)
-    enc = dbm_generator.project_encoding(dbm_generator.project_id)
-    ssh = dbm_generator.project_ssh(dbm_generator.project_id)
-    ssh[:remote_path] += 'gen_rf/'
-    write_log('Подключение к серверу: ' + ssh[:ip] + '.')
-    Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
-      session.exec!('mkdir ' + ssh[:remote_path])
-      systems.each do |sys_id|
-        sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
-        write_log('Генерация селект-файла для ' + sys_name + '.')
-        pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
-        data_sys = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s)
-                       .render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs, is_rus: is_rus))
+      #      render_sel_rf(dbm_generator)
+      write_log('Инициализация...')
+      systems = dbm_generator.systems
+      data_tot = ''
+      is_rus = dbm_generator.rus?(dbm_generator.project_id)
+      enc = dbm_generator.project_encoding(dbm_generator.project_id)
+      ssh = dbm_generator.project_ssh(dbm_generator.project_id)
+      ssh[:remote_path] += 'gen_rf/'
+      write_log('Подключение к серверу: ' + ssh[:ip] + '.')
+      Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+        session.exec!('mkdir ' + ssh[:remote_path])
+        systems.each do |sys_id|
+          sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
+          write_log('Генерация селект-файла для ' + sys_name + '.')
+          pds_rfs = PdsRf.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).all
+          data_sys = Tilt.new(TEMPLATE_PATH.join('pds_rf.sel.erb').to_s)
+                         .render(ActionView::Base.new, dbm_generator.as_json.merge(data: pds_rfs, is_rus: is_rus))
+          if dbm_generator.systems_all?
+            data_tot += data_sys
+          elsif data_sys > ''
+            file_name = 'pds_rf_' + sys_name + '.sel'
+            create_file(file_name, enc, data_sys)
+            session.scp.upload! @local_path, ssh[:remote_path] + file_name
+            write_log('Файл ' + file_name + ' загружен на сервер.')
+          end
+        end
         if dbm_generator.systems_all?
-          data_tot += data_sys
-        elsif data_sys > ''
-          file_name = 'pds_rf_' + sys_name + '.sel'
-          create_file(file_name, enc, data_sys)
+          file_name = 'pds_rf_ALL.sel'
+          create_file(file_name, enc, data_tot)
           session.scp.upload! @local_path, ssh[:remote_path] + file_name
           write_log('Файл ' + file_name + ' загружен на сервер.')
         end
       end
-      if dbm_generator.systems_all?
-        file_name = 'pds_rf_ALL.sel'
-        create_file(file_name, enc, data_tot)
-        session.scp.upload! @local_path, ssh[:remote_path] + file_name
-        write_log('Файл ' + file_name + ' загружен на сервер.')
-      end
-    end
-    write_log('Генерация завершена.')
-    write_log('Файлы размещены в ' + ssh[:remote_path])
- 
+      write_log('Генерация завершена.')
+      write_log('Файлы размещены в ' + ssh[:remote_path])
 
     when '1'
       render_sel_mf(dbm_generator)
@@ -230,7 +229,4 @@ class SelectBuilderJob
       render_sel_ped(dbm_generator)
     end
   end
-
-
-
 end

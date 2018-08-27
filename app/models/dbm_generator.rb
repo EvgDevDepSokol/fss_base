@@ -23,9 +23,9 @@ class DbmGenerator
     false
   end
 
-  #def gen_type
+  # def gen_type
   #  self.gen_type
-  #end
+  # end
 
   def as_json(options = {})
     super.slice(*ATTRIBUTE_LIST.map(&:to_s))
@@ -50,5 +50,4 @@ class DbmGenerator
     prop = PdsProject.find(project_id).project_properties
     { ip: prop.HostIP, pass: prop.LoadPass, remote_path: '/home/' + prop.SimDir + 'load/pds_sel_test/' }
   end
-
 end
