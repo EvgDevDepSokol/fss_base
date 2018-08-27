@@ -11,7 +11,7 @@ class SelectBuilderJob
   TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
   FILE_PATH = '/home/shared/'.freeze
 
-  def render_sel_rf(dbm_generator)
+  def self.render_sel_rf(dbm_generator)
     write_log('Инициализация...')
     systems = dbm_generator.systems
     data_tot = ''
@@ -48,7 +48,7 @@ class SelectBuilderJob
     write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
-  def render_sel_mf(dbm_generator)
+  def self.render_sel_mf(dbm_generator)
     systems = dbm_generator.systems
     data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
@@ -104,7 +104,7 @@ class SelectBuilderJob
     write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
-  def render_sel_ped(dbm_generator)
+  def self.render_sel_ped(dbm_generator)
     gen_tables = dbm_generator.systems
     data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
@@ -170,7 +170,7 @@ class SelectBuilderJob
     write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
-  def create_file(file_name, enc, data)
+  def self.create_file(file_name, enc, data)
     @file_name = file_name
     @local_path = FILE_PATH + file_name
     File.open(@local_path, 'w:' + enc) do |f|
@@ -178,7 +178,7 @@ class SelectBuilderJob
     end
   end
 
-  def write_log(string)
+  def self.write_log(string)
     current_user.message += Time.now.strftime('%Y.%m.%d %H:%M:%S ') + string + '\n'
     current_user.save
   end

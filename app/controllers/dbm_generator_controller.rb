@@ -8,10 +8,10 @@ class DbmGeneratorController < ApplicationController
 
   def prepare_hash
     hash = params[:data]
-    dbm_generator = DbmGenerator.new(hash)
     current_user.message = ''
     current_user.save
     # Resque.enqueue(SelectBuilderJob, hash)
+    dbm_generator = DbmGenerator.new(hash)
     case dbm_generator.gen_type
     when '0'
       render_sel_rf(dbm_generator)
@@ -66,6 +66,7 @@ class DbmGeneratorController < ApplicationController
   end
 
   def render_sel_mf(dbm_generator)
+    write_log('Инициализация...')
     systems = dbm_generator.systems
     data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
@@ -122,6 +123,7 @@ class DbmGeneratorController < ApplicationController
   end
 
   def render_sel_ped(dbm_generator)
+    write_log('Инициализация...')
     gen_tables = dbm_generator.systems
     data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
@@ -130,6 +132,7 @@ class DbmGeneratorController < ApplicationController
     ssh[:remote_path] += 'gen_peds/'
     template_lodi = HwIosignaldef.where(memtype: %w[LO DI]).all.pluck(:ioname)
     template_aidi = HwIosignaldef.where(memtype: %w[AI DI]).all.pluck(:ioname)
+    gen_tag_b = dbm_generator.gen_tag == 'true'
     hw_ped = HwPed.first
     sig_def = {}
     hw_ped.signals.each do |sig_name|
@@ -170,7 +173,7 @@ class DbmGeneratorController < ApplicationController
                 hw_iosignals = nil
               end
               data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
-                ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus, dim: hw_ped[sig_name].to_i, hw_iosignals: hw_iosignals)
+                ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus, dim: hw_ped[sig_name].to_i, hw_iosignals: hw_iosignals, gen_tag_b: gen_tag_b)
               )
               data_obj += data
             end

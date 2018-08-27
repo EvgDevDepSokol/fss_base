@@ -2,9 +2,9 @@
 <%= hw_ic.desc12(is_rus) %><%= hw_ic.desc0 %> 
 <%= hw_ic.desc1 %> 
 <%= hw_ic.desc2 %> 
-<%= gen_tag ? '@EXCL(OR) ' : ''%> 
+<%= gen_tag_b ? '@EXCL(OR) ' : ''%> 
 <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.upcase}) @PED(#{hw_ped.ped})" %> 
-<%= "@PTAG(#{hw_ic.ref.upcase})" %><%= (defined? obj.range) ? " @IDX(#{obj.range})" : '' %> 
+<%= "@PTAG(#{hw_ic.ref.upcase})" %><%= ((global == 'di') && (defined? obj.range)) ? " @IDX(#{obj.range})" : '' %> 
 .UNIT <%= hw_ic.unit_for_dbm(is_rus) %> 
 .SYS <%= obj.system.System.downcase %> 
 .TYPE L,1 
@@ -13,14 +13,14 @@
 .DIM <%= dim > 1 ? "(#{dim})" : '' %> 
 .PRED global<%= global %> 
 
-<% if gen_tag && hw_ic.tag_no %>
+<% if gen_tag_b && hw_ic.tag_no %>
 <%= "/#{mod} z#{global}#{hw_ic.tag_no.downcase}" %> 
 <%= hw_ic.desc12(is_rus) %><%= hw_ic.desc0 %> 
 <%= hw_ic.desc1 %> 
 <%= hw_ic.desc2 %> 
-<%= gen_tag ? '@EXCL(OR) ' : ''%> 
+<%= (gen_tag_b && hw_ped.gen_ext?) ? '@EXCL(OR) ' : ''%> 
 <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.upcase}) @PED(#{hw_ped.ped})" %> 
-<%= "@PTAG(#{hw_ic.tag_no.upcase})" %><%= (defined? obj.range) ? " @IDX(#{obj.range})" : '' %> 
+<%= "@PTAG(#{hw_ic.tag_no.upcase})" %><%= ((global == 'di') && (defined? obj.range)) ? " @IDX(#{obj.range})" : '' %> 
 .UNIT <%= hw_ic.unit_for_dbm(is_rus) %> 
 .SYS <%= obj.system.System.downcase %> 
 .TYPE L,1 
@@ -32,21 +32,21 @@
 <% end %>
 
 <% if (hw_ped.gen_ext?) %>
-<% if ((gen_tag && hw_ic.tag_no)||(!gen_tag)) %>
+<% if ((gen_tag_b && hw_ic.tag_no)||(!gen_tag_b)) %>
 <% hw_iosignals.each_with_index do |hw_iosignal, index| %>
-<%= "/#{mod} z#{global}"%><%=(gen_tag ? hw_ic.tag_no : hw_ic.ref).downcase%><%= hw_iosignal.comment ? "_#{hw_iosignal.comment.downcase}" : ""%> 
+<%= "/#{mod} z#{global}"%><%=(gen_tag_b ? hw_ic.tag_no : hw_ic.ref).downcase%><%= hw_iosignal.comment ? "_#{hw_iosignal.comment.downcase}" : ""%> 
 <%= hw_ic.desc12_io(is_rus, hw_iosignal.description) %><%= hw_ic.desc0 %> 
 <%= hw_ic.desc1 %> 
 <%= hw_ic.desc2 %> 
 <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.upcase}) @PED(#{hw_ped.ped})" %> 
-<%= "@PTAG(#{(gen_tag ? hw_ic.tag_no : hw_ic.ref).upcase})" %><%= (defined? obj.range) ? " @IDX(#{obj.range})" : '' %> 
+<%= "@PTAG(#{(gen_tag_b ? hw_ic.tag_no : hw_ic.ref).upcase})" %><%= (global == 'di') ? " @IDX(#{hw_iosignal.diapason})" : '' %> 
 .UNIT <%= hw_ic.unit_for_dbm(is_rus) %> 
 .SYS <%= obj.system.System.downcase %> 
 .TYPE L,1 
 .FORM L1 
 .VALU F,V 
-.DIM <%= dim > 1 ? "(#{dim})" : '' %> 
-.PRED <%= "z#{global}#{(gen_tag ? hw_ic.tag_no : hw_ic.ref).downcase},B,#{index}" %> 
+.DIM 
+.PRED <%= "z#{global}#{(gen_tag_b ? hw_ic.tag_no : hw_ic.ref).downcase},B,#{index}" %> 
 
 <% end %>
 <% end %>

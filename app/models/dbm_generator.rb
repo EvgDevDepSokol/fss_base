@@ -17,15 +17,12 @@ class DbmGenerator
     attributes.each do |name, value|
       send("#{name}=", value)
     end
+    attributes['gen_tag'] = attributes['gen_tag'] == 'true'
   end
 
   def new_record?
     false
   end
-
-  # def gen_type
-  #  self.gen_type
-  # end
 
   def as_json(options = {})
     super.slice(*ATTRIBUTE_LIST.map(&:to_s))
