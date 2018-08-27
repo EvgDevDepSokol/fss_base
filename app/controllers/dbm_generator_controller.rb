@@ -8,11 +8,10 @@ class DbmGeneratorController < ApplicationController
 
   def prepare_hash
     hash = params[:data]
-    dbm_generator = DbmGenerator.new(hash)
-    # Resque.enqueue(SelectBuilderJob, dbm_generator)
-    # dbm_generator = @dbm_generator
+    #dbm_generator = DbmGenerator.new(hash)
     current_user.message = ''
     current_user.save
+    #Resque.enqueue(SelectBuilderJob, hash)
     case dbm_generator.type
     when '0'
       render_sel_rf(dbm_generator)
@@ -200,4 +199,8 @@ class DbmGeneratorController < ApplicationController
     current_user.message += Time.now.strftime('%Y.%m.%d %H:%M:%S ') + string + '\n'
     current_user.save
   end
+ 
+
+
+
 end

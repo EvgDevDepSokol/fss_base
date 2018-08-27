@@ -5,7 +5,6 @@
 <%= gen_tag ? '@EXCL(OR) ' : ''%>
 <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.downcase}) @PED(#{hw_ped.ped})" %>
 <%= "@PTAG(#{hw_ic.ref.upcase})" %><%= (defined? obj.range) ? " @IDX(#{obj.range})" : '' %>
-
 .UNIT <%= hw_ic.unit_for_dbm(is_rus) %>
 .SYS <%= obj.system.System.downcase %>
 .TYPE L,1
@@ -22,7 +21,6 @@
 <%= gen_tag ? '@EXCL(OR) ' : ''%>
 <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.downcase}) @PED(#{hw_ped.ped})" %>
 <%= "@PTAG(#{hw_ic.tag_no.upcase})" %><%= (defined? obj.range) ? " @IDX(#{obj.range})" : '' %>
-
 .UNIT <%= hw_ic.unit_for_dbm(is_rus) %>
 .SYS <%= obj.system.System.downcase %>
 .TYPE L,1
@@ -43,7 +41,6 @@
 <%= gen_tag ? '@EXCL(OR) ' : ''%>
 <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.downcase}) @PED(#{hw_ped.ped})" %>
 <%= "@PTAG(#{(gen_tag ? hw_ic.tag_no : hw_ic.ref).upcase})" %><%= (defined? obj.range) ? " @IDX(#{obj.range})" : '' %>
-
 .UNIT <%= hw_ic.unit_for_dbm(is_rus) %>
 .SYS <%= obj.system.System.downcase %>
 .TYPE L,1

@@ -3,8 +3,6 @@
 <%= pds_mf.desc1 %> 
 <%= pds_mf.desc2 %> 
 @TYPE(<%= "#{pds_mf.type}) @EXCL(MF)" %> 
-
-
 .UNIT 
 .SYS <%= pds_mf.system.System.downcase %>
 .TYPE L,1
@@ -20,7 +18,6 @@
 <%= pds_mf.desc2 %> 
 @TYPE(<%= "#{pds_mf.type}) @FEED(ypxfm#{pds_mf.system.System.downcase}#{format('%02d', pds_mf.Numb)}#{pds_mf_dim.Character.downcase})" %> 
 @OBJ(<%= "#{pds_mf_dim.Target})" %>
-
 .UNIT 
 .SYS <%= pds_mf.system.System.downcase %>
 .TYPE L,1

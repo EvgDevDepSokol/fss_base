@@ -1,3 +1,4 @@
+require 'resque/server'
 Rails.application.routes.draw do
   root 'pds_projects#select'
   resources :pds_projects, only: %i[new show] do
@@ -182,4 +183,12 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  #
+  
+  # Of course, you need to substitute your application name here, a block
+  # like this probably already exists.
+  #MyApp::Application.routes.draw do
+    mount Resque::Server.new, at: "/resque"
+  #end
+
 end

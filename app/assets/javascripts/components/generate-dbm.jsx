@@ -9,7 +9,7 @@ var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOption
 
 const MOD = ['MDD', 'ADD', 'OMOD'];
 //const MOD = ruby_constants.MOD;
-const VARIABLES = ['Удаленное управление', 'Отказы', '(нет) Датчики',
+const VARIABLES = ['Дистанционное управление', 'Отказы', '(нет) Датчики',
                'Оборудование', '(нет) Системы отображения', '(нет) Анонсиаторы', '(что?) Шаг по времени', '(нет) Арматура', '(нет) Питание'];
 const SEL_PATH = ['/selectors/dbm_sys_rfs','/selectors/dbm_sys_mfs','',
 '/selectors/dbm_tbl_ics'];
@@ -205,7 +205,7 @@ class GenerateDbm extends React.Component {
         {
           data: {
             mod: MOD[this.state.modIndex],
-            type: this.state.varIndex,
+            gen_type: this.state.varIndex,
             predecessor: this.state.predecessor,
             systems: systems,
             systems_all: this.state.systems_all,

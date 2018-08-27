@@ -3,7 +3,6 @@
 <%= hw_ic.desc1 %> 
 <%= hw_ic.desc2 %> 
 <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.downcase}) @PED(#{hw_ped.ped})" %>
-
 .UNIT 
 .SYS an
 .TYPE L,1
@@ -16,7 +15,6 @@
 <%= hw_ic.desc12(is_rus) %><%= hw_ic.desc0 %> 
 <%= hw_ic.desc1 %> 
 <%= hw_ic.desc2 %> 
-
 .UNIT
 .SYS <%= obj.system.System.downcase %>
 .TYPE L,1
@@ -30,7 +28,6 @@
 <%= hw_ic.desc1 %> 
 <%= hw_ic.desc2 %> 
 <%= "@TAG(#{hw_ic.ref.downcase}) @TYPE(ANN) @FEED(zlo#{hw_ic.ref.downcase})" %>
-
 .UNIT
 .SYS an
 .TYPE R,4

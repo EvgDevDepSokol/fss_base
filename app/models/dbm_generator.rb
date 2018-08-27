@@ -5,7 +5,7 @@ class DbmGenerator
   extend ActiveModel::Naming
 
   ATTRIBUTE_LIST = %i[mod predecessor variables
-                      systems systems_all project_id type gen_tag].freeze
+                      systems systems_all project_id gen_type gen_tag].freeze
 
   INPUT_TYPES = %w[MDD ADD OMOD].freeze
   VARIABLES = ['remote function', 'malfunctions', 'detectors',
@@ -22,6 +22,10 @@ class DbmGenerator
   def new_record?
     false
   end
+
+  #def gen_type
+  #  self.gen_type
+  #end
 
   def as_json(options = {})
     super.slice(*ATTRIBUTE_LIST.map(&:to_s))
@@ -46,4 +50,5 @@ class DbmGenerator
     prop = PdsProject.find(project_id).project_properties
     { ip: prop.HostIP, pass: prop.LoadPass, remote_path: '/home/' + prop.SimDir + 'load/pds_sel_test/' }
   end
+
 end
