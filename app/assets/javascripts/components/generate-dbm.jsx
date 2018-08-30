@@ -9,10 +9,9 @@ var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOption
 
 const MOD = ['MDD', 'ADD', 'OMOD'];
 //const MOD = ruby_constants.MOD;
-const VARIABLES = ['Дистанционное управление', 'Отказы', '(нет) Датчики',
-               'Оборудование', '(нет) Системы отображения', '(нет) Анонсиаторы', '(что?) Шаг по времени', '(нет) Арматура', '(нет) Питание'];
-const SEL_PATH = ['/selectors/dbm_sys_rfs','/selectors/dbm_sys_mfs','',
-'/selectors/dbm_tbl_ics'];
+const VARIABLES = ['Дистанционное управление', 'Отказы',
+               'Оборудование', 'Системы отображения', 'Анонсиаторы'];
+const SEL_PATH = ['/selectors/dbm_sys_rfs','/selectors/dbm_sys_mfs','/selectors/dbm_tbl_ics'];
 
 const customStyles = {
   content: {
@@ -40,7 +39,7 @@ class GenerateDbm extends React.Component {
       systems_all: false,
       systems_none: true,
       systems_warn: {na: false, all: false},
-      gen_tag: false,
+      gen_tag: true,
       isProcessing: false,
       log: '',
       systems:[]
@@ -80,7 +79,7 @@ class GenerateDbm extends React.Component {
           },
           error: function (xhr, status, err)
           {
-            console.error(this.props.url, status, err.toString());
+            console.error(_this.props.url, status, err.toString());
           },
           async: true
         });
@@ -101,7 +100,7 @@ class GenerateDbm extends React.Component {
   }
 
   refreshSystems(varIndex){
-    if ([0,1,3].includes(varIndex)) {
+    if ([0,1,2].includes(varIndex)) {
       var systems = getSelectorOptions(
         SEL_PATH[varIndex],
         {pds_project_id:project.ProjectID},
@@ -119,7 +118,7 @@ class GenerateDbm extends React.Component {
           }
         return sys});
         systems = systems.filter(x => {return !([20000001,34].includes(x.value))})
-      } else if (varIndex == 3) {
+      } else if (varIndex == 2) {
         systems = systems.filter(x => {return !([47].includes(x.value))})
       }
      
@@ -127,6 +126,7 @@ class GenerateDbm extends React.Component {
         systems_all: false,
         systems_none: true,
         systems_warn: systems_warn,
+        gen_tag: true,
         systems: systems
       });
     }
@@ -229,7 +229,7 @@ class GenerateDbm extends React.Component {
       this.setState({isProcessing: true});
       this.refreshLog();
     } else {
-      if (this.state.varIndex==3) {
+      if (this.state.varIndex==2) {
         alert('Выберите типы оборудования для генерации селект-файлов!');
       } else {
         alert('Выберите системы для генерации селект-файлов!');
@@ -240,7 +240,7 @@ class GenerateDbm extends React.Component {
   render() {
     var this_ = this;
     const systems = this.state.systems;
-    if (this.state.varIndex == 3) {
+    if (this.state.varIndex == 2) {
       var sys_check_group_label = 'Типы оборудования:';
       var none_label = 'Ни одного типа оборудования';
     } else {
@@ -280,7 +280,7 @@ class GenerateDbm extends React.Component {
     const sys_none_label = this.state.systems_none?<label>{none_label} не выбрано!</label>:<div/>;
 
     const sys_container = <div className='generate-dbm-sys-container'>
-      {([0,1,3].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}</div>:<div/>}
+      {([0,1,2].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}</div>:<div/>}
     </div>
 
       
@@ -291,7 +291,7 @@ class GenerateDbm extends React.Component {
           {predecessor_input}
         </div>
       :<div/>}
-      {([3].includes(this.state.varIndex))?<div>
+      {([2].includes(this.state.varIndex))?<div>
           {gen_tag_checkbox}
         </div>
       :<div/>}

@@ -17,7 +17,7 @@ class DbmGeneratorController < ApplicationController
       render_sel_rf(dbm_generator)
     when '1'
       render_sel_mf(dbm_generator)
-    when '3'
+    when '2'
       render_sel_ped(dbm_generator)
     end
     render json: { status: :ok }
@@ -35,9 +35,10 @@ class DbmGeneratorController < ApplicationController
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
-    ssh[:remote_path] += 'gen_rf/'
     write_log('Подключение к серверу: ' + ssh[:ip] + '.')
     Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+      session.exec!('mkdir ' + ssh[:remote_path])
+      ssh[:remote_path] += 'gen_rf/'
       session.exec!('mkdir ' + ssh[:remote_path])
       systems.each do |sys_id|
         sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
@@ -72,9 +73,10 @@ class DbmGeneratorController < ApplicationController
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
-    ssh[:remote_path] += 'gen_mf/'
     write_log('Подключение к серверу: ' + ssh[:ip] + '.')
     Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+      session.exec!('mkdir ' + ssh[:remote_path])
+      ssh[:remote_path] += 'gen_mf/'
       session.exec!('mkdir ' + ssh[:remote_path])
       systems.each do |sys_id|
         sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
@@ -129,7 +131,6 @@ class DbmGeneratorController < ApplicationController
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
-    ssh[:remote_path] += 'gen_peds/'
     template_lodi = HwIosignaldef.where(memtype: %w[LO DI]).all.pluck(:ioname)
     template_aidi = HwIosignaldef.where(memtype: %w[AI DI]).all.pluck(:ioname)
     gen_tag_b = dbm_generator.gen_tag == 'true'
@@ -140,6 +141,8 @@ class DbmGeneratorController < ApplicationController
     end
     write_log('Подключение к серверу: ' + ssh[:ip] + '.')
     Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+      session.exec!('mkdir ' + ssh[:remote_path])
+      ssh[:remote_path] += 'gen_peds/'
       session.exec!('mkdir ' + ssh[:remote_path])
       gen_tables.each do |table_id|
         tbl_name = Tablelist.find(table_id).table
@@ -172,10 +175,14 @@ class DbmGeneratorController < ApplicationController
               else
                 hw_iosignals = nil
               end
-              data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
-                ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus, dim: hw_ped[sig_name].to_i, hw_iosignals: hw_iosignals, gen_tag_b: gen_tag_b)
-              )
-              data_obj += data
+              if hw_ped.gen_ext? && (hw_ped[sig_name] != hw_iosignals.count)
+                write_log("Пропуск! Таблица: #{tbl_name}, I&C: #{hw_ic.ref}, PED: #{hw_ped.ped}, сигнал: #{sig_name}")
+              else
+                data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
+                  ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus, dim: hw_ped[sig_name].to_i, hw_iosignals: hw_iosignals, gen_tag_b: gen_tag_b)
+                )
+                data_obj += data
+              end
             end
           end
           data_tbl += data_obj
