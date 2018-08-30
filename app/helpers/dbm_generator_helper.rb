@@ -2,11 +2,11 @@ module DbmGeneratorHelper
   # Helper for models with dbm generation
 
   def unit_for_dbm(is_rus)
-    if is_rus
-      !!pds_project_unit ? pds_project_unit.unit.Unit_RU : (defined? regidity_unit) ? regidity_unit : ''
-    else
-      !!pds_project_unit ? pds_project_unit.unit.Unit_EN : (defined? regidity_unit) ? regidity_unit : ''
-    end
+    (if is_rus
+       !!pds_project_unit ? pds_project_unit.unit.Unit_RU : (defined? regidity_unit) ? regidity_unit : ''
+     else
+       !!pds_project_unit ? pds_project_unit.unit.Unit_EN : (defined? regidity_unit) ? regidity_unit : ''
+    end).unicode_normalize(:nfkd)
   end
 
   def desc12(is_rus)
