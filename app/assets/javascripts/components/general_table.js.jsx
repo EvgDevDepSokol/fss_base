@@ -853,7 +853,17 @@ var TableContainer = React.createClass({
       this.state.mainCheckbox_old = mainCheckbox_new;
     };
 
-    data = sortColumn.sort(data, this.state.sortingColumn, orderBy);
+    var sortingColumn=this.state.sortingColumn;
+    if (sortingColumn) {
+      data = data.map(function(row) {
+        var h = row;
+        if(row[sortingColumn.property] === null) {
+          h[sortingColumn.property] = ''
+        }
+        return(h)
+      });
+    }
+    data = sortColumn.sort(data, sortingColumn, orderBy);
     this.state.dataxls = data
     var paginated = paginate(data, pagination);
     var pages = Math.ceil(data.length / Math.max(isNaN(pagination.perPage)
