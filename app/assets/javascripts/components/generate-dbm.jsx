@@ -89,7 +89,7 @@ class GenerateDbm extends React.Component {
     do {
       setTimeout(function(){
         ajaxcall(_this)
-      }, 5000);
+      }, 10000);
     } while (this.state.isProcessing);
   }
 
@@ -274,7 +274,7 @@ class GenerateDbm extends React.Component {
       </p>
     );
     
-    const sys_check_group = <div>
+    const sys_check_group = <div className='generate-dbm-systems'>
       <label>{sys_check_group_label}</label><br/>
       {systems.map((data,idx) =>
         <label key={'sys-check-group-key'+idx}>
@@ -286,13 +286,13 @@ class GenerateDbm extends React.Component {
     const gen_tag_checkbox = <label>
       <input  type='checkbox' checked={this.state.gen_tag} onChange={this.onGenTagChange} disabled={this.state.isProcessing}/> Генерить TAG</label>
 
-    const sys_all_checkbox = <label>
+    const sys_all_checkbox = <label className='generate-dbm-sys-all'>
       <input  type='checkbox' checked={this.state.systems_all} onChange={this.onSysAllChange} disabled={this.state.isProcessing}/> Выбрать все</label>
 
-    const sys_warn_all = this.state.systems_warn.all?<label>Система ALL исключена из генерации</label>:<div/>;
-    const sys_warn_na = this.state.systems_warn.na?<label>Система N/A исключена из генерации</label>:<div/>;
-    const sys_warn_empty = this.state.systems_warn.empty?<div><label>Присутствуют {WARN_MESSAGES[this.state.varIndex]} Они исключены из генерации.</label></div>:<div/>;
-    const sys_none_label = this.state.systems_none?<label>{none_label} не выбрано!</label>:<div/>;
+    const sys_warn_all = this.state.systems_warn.all?<label className='generate-dbm-warn'>Система ALL исключена из генерации</label>:<div/>;
+    const sys_warn_na = this.state.systems_warn.na?<label className='generate-dbm-warn'>Система N/A исключена из генерации</label>:<div/>;
+    const sys_warn_empty = this.state.systems_warn.empty?<div><label className='generate-dbm-warn'>Присутствуют {WARN_MESSAGES[this.state.varIndex]} Они исключены из генерации.</label></div>:<div/>;
+    const sys_none_label = this.state.systems_none?<label className='generate-dbm-err'>{none_label} не выбрано!</label>:<div/>;
 
     const sys_container = <div className='generate-dbm-sys-container'>
       {([0,1,2].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}{sys_warn_empty}</div>:<div/>}
@@ -322,7 +322,7 @@ class GenerateDbm extends React.Component {
         <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} contentLabel="Свойства экспорта в файл">
 
           <div className='generate-dbm-all' >
-            <h2 ref="subtitle">Настройки создания SELECT файла и заполнения DBM.</h2>
+            <h2 ref="subtitle">Настройки создания SELECT файла и заполнения DBM</h2>
             <div>
               <div className='generate-dbm-top'>
                 {mod_radio_group}
@@ -334,8 +334,12 @@ class GenerateDbm extends React.Component {
             </div>
             {sys_container}
           </div>
-          <button onClick={this.closeModal} disabled={this.state.isProcessing}>Выход из меню генерации</button>
-          <button onClick={this.onExport} disabled={this.state.isProcessing}>Генерировать</button>
+          <div className='generate-dbm-top generate-dbm-exit'>
+            <button onClick={this.closeModal} disabled={this.state.isProcessing}>Выход из меню генерации</button>
+          </div>
+          <div className='generate-dbm-top generate-dbm-run'>
+            <button onClick={this.onExport} disabled={this.state.isProcessing}>Генерировать селект-файлы</button>
+          </div>
           <div className='generate-dbm-log'>
             <textarea value={this.state.log} readOnly/>
           </div>
