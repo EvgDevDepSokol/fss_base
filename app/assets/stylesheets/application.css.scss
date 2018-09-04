@@ -32,27 +32,39 @@ table {
     th {
       padding: 3px;
       text-align: center;
+      cursor: pointer;
+      cursor: hand;
 
       &.sort-asc:after {
-        content: "\f0de";
+        //padding-left: 1em;
+        //content: '\25BC';
+        //font-size: smaller;
+
+        content: '\2193';
         font-family: FontAwesome;
-        font-style: normal;
-        font-weight: normal;
-        text-decoration: inherit;
-        top: 18px;
-        position: absolute;
-        margin-left: 5px;
+        font-size: initial;
+        //font-style: normal;
+        //font-weight: normal;
+        //text-decoration: inherit;
+        //top: 18px;
+        //position: absolute;
+        //margin-left: 5px;
       }
 
       &.sort-desc:after {
-        content: "\f0dd";
+        //padding-left: 1em;
+        //content: '\25B2';
+        //font-size: smaller;
+
+        content: '\2191';
         font-family: FontAwesome;
-        font-style: normal;
-        font-weight: normal;
-        text-decoration: inherit;
-        top: 12px;
-        position: absolute;
-        margin-left: 5px;
+        font-size: initial;
+        //font-style: normal;
+        //font-weight: normal;
+        //text-decoration: inherit;
+        //top: 12px;
+        //position: absolute;
+        //margin-left: 5px;
       }
     }
 
