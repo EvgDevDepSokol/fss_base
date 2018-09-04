@@ -12,6 +12,7 @@ const MOD = ['MDD', 'ADD', 'OMOD'];
 const VARIABLES = ['Дистанционное управление', 'Отказы',
                'Оборудование', 'Системы отображения', 'Анонсиаторы'];
 const SEL_PATH = ['/selectors/dbm_sys_rfs','/selectors/dbm_sys_mfs','/selectors/dbm_tbl_ics'];
+const WARN_MESSAGES = ['RF без заданной системы.','отказы без заданной системы.','I&C без определенного типа оборудования (посредством PED).'];
 
 const customStyles = {
   content: {
@@ -38,7 +39,7 @@ class GenerateDbm extends React.Component {
       predecessor: 'globalyp',
       systems_all: false,
       systems_none: true,
-      systems_warn: {na: false, all: false},
+      systems_warn: {na: false, all: false, empty: false},
       gen_tag: true,
       isProcessing: false,
       log: '',
@@ -62,7 +63,7 @@ class GenerateDbm extends React.Component {
     this.setState({
       varIndex: 0,
       modalIsOpen: true});
-    this.refreshSystems(0);
+    //this.refreshSystems(0);
   }
 
   refreshLog() {
@@ -88,7 +89,7 @@ class GenerateDbm extends React.Component {
     do {
       setTimeout(function(){
         ajaxcall(_this)
-      }, 1000);
+      }, 5000);
     } while (this.state.isProcessing);
   }
 
@@ -106,7 +107,13 @@ class GenerateDbm extends React.Component {
         {pds_project_id:project.ProjectID},
         this
       );
-      var systems_warn = {na: false, all: false};
+      var systems_warn = {na: false, all: false, empty: false};
+
+      systems = systems.map((sys) => {
+        if(sys.value==null) {
+          systems_warn.empty = true;
+        }
+      return sys});
     
       if ([0,1].includes(varIndex)) {
         systems = systems.map((sys) => {
@@ -117,17 +124,24 @@ class GenerateDbm extends React.Component {
             systems_warn.all = true;
           }
         return sys});
-        systems = systems.filter(x => {return !([20000001,34].includes(x.value))})
+        systems = systems.filter(x => {return !([20000001,34,null].includes(x.value))})
       } else if (varIndex == 2) {
-        systems = systems.filter(x => {return !([47].includes(x.value))})
+        systems = systems.filter(x => {return !([47,null].includes(x.value))})
       }
-     
       this.setState({
         systems_all: false,
         systems_none: true,
         systems_warn: systems_warn,
         gen_tag: true,
         systems: systems
+      });
+    } else {
+      var systems = [ {value: 4, isChecked: true} ];
+      this.setState({
+        gen_tag: false,
+        systems_all: false,
+        systems_none: false,
+        systems: systems //announciators
       });
     }
   }
@@ -198,7 +212,7 @@ class GenerateDbm extends React.Component {
       });
       $.ajax(
       {
-        url: '/generate_rf',
+        url: '/generate_dbm_sel',
         dataType: 'json',
         type: 'PUT',
         data:
@@ -277,10 +291,11 @@ class GenerateDbm extends React.Component {
 
     const sys_warn_all = this.state.systems_warn.all?<label>Система ALL исключена из генерации</label>:<div/>;
     const sys_warn_na = this.state.systems_warn.na?<label>Система N/A исключена из генерации</label>:<div/>;
+    const sys_warn_empty = this.state.systems_warn.empty?<div><label>Присутствуют {WARN_MESSAGES[this.state.varIndex]} Они исключены из генерации.</label></div>:<div/>;
     const sys_none_label = this.state.systems_none?<label>{none_label} не выбрано!</label>:<div/>;
 
     const sys_container = <div className='generate-dbm-sys-container'>
-      {([0,1,2].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}</div>:<div/>}
+      {([0,1,2].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}{sys_warn_empty}</div>:<div/>}
     </div>
 
       

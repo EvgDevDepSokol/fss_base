@@ -88,7 +88,7 @@ Rails.application.routes.draw do
   put :replace_finish,  to: 'mass_operations#replace_finish'
 
   # to fix later
-  put :generate_rf, to: 'dbm_generator#prepare_hash'
+  put :generate_dbm_sel, to: 'dbm_generator#prepare_hash'
   put :get_log, to: 'dbm_generator#get_log'
 
   resources :users

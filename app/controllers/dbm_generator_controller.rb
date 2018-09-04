@@ -5,6 +5,7 @@ class DbmGeneratorController < ApplicationController
 
   TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
   FILE_PATH = '/home/shared/'.freeze
+  REMOTE_FOLDER = ['gen_rf/', 'gen_mf/', 'gen_peds/', 'gen_ppc/', 'gen_ann/']
 
   def prepare_hash
     hash = params[:data]
@@ -17,7 +18,7 @@ class DbmGeneratorController < ApplicationController
       render_sel_rf(dbm_generator)
     when '1'
       render_sel_mf(dbm_generator)
-    when '2'
+    when '2','4'
       render_sel_ped(dbm_generator)
     end
     render json: { status: :ok }
@@ -38,7 +39,7 @@ class DbmGeneratorController < ApplicationController
     write_log('Подключение к серверу: ' + ssh[:ip] + '.')
     Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
       session.exec!('mkdir ' + ssh[:remote_path])
-      ssh[:remote_path] += 'gen_rf/'
+      ssh[:remote_path] += REMOTE_FOLDER[dbm_generator.gen_type.to_i]
       session.exec!('mkdir ' + ssh[:remote_path])
       systems.each do |sys_id|
         sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
@@ -76,7 +77,7 @@ class DbmGeneratorController < ApplicationController
     write_log('Подключение к серверу: ' + ssh[:ip] + '.')
     Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
       session.exec!('mkdir ' + ssh[:remote_path])
-      ssh[:remote_path] += 'gen_mf/'
+      ssh[:remote_path] += REMOTE_FOLDER[dbm_generator.gen_type.to_i]
       session.exec!('mkdir ' + ssh[:remote_path])
       systems.each do |sys_id|
         sys_name = PdsSyslist.find(sys_id).System.tr('/', '_')
@@ -142,7 +143,7 @@ class DbmGeneratorController < ApplicationController
     write_log('Подключение к серверу: ' + ssh[:ip] + '.')
     Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
       session.exec!('mkdir ' + ssh[:remote_path])
-      ssh[:remote_path] += 'gen_peds/'
+      ssh[:remote_path] += REMOTE_FOLDER[dbm_generator.gen_type.to_i]
       session.exec!('mkdir ' + ssh[:remote_path])
       gen_tables.each do |table_id|
         tbl_name = Tablelist.find(table_id).table
@@ -155,7 +156,11 @@ class DbmGeneratorController < ApplicationController
           hw_ped = hw_ic.hw_ped
           data_obj = ''
           if table_id.to_i == 4 # announciators
-            path = 'sel_ped_announciators.sel.erb'
+            if dbm_generator.gen_type == '2'
+              path = 'sel_ped_announciators1.sel.erb'
+            else
+              path = 'sel_ped_announciators2.sel.erb'
+            end
             data_obj = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
               ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, is_rus: is_rus)
             )
