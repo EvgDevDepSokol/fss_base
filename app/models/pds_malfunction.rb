@@ -84,35 +84,8 @@ class PdsMalfunction < ApplicationRecord
     %w[GVN GVR IVN IVR].include?(t)
   end
 
-  # def gen_desc12
-  #   desc = shortDesc
-  #   if desc.length > 66
-  #     @desc = '.DESC ' + desc[0..65]
-  #     @desc1 = '@DESC1(' + desc[0..desc.rindex(' ', 66) - 1] + ')'
-  #     @desc2 = '@DESC2(' + desc[desc.rindex(' ', 66) + 1..-1] + ')'
-  #   else
-  #     @desc = '.DESC ' + desc
-  #     @desc1 = ''
-  #     @desc1 = ''
-  #   end
-  # end
-
-  # attr_reader :desc
-
-  # attr_reader :desc1
-
-  # attr_reader :desc2
-
   def number_by_letter(letter)
     CHARACTER_ARRAY.index(letter)
   end
 
-  # def unit_for_dbm
-  #   pds_mf = self
-  #   if pds_mf.pds_project_unit && pds_mf.pds_project_unit.unit && pds_mf.pds_project_unit.unit.Unit_RU
-  #     pds_mf.pds_project_unit.unit.Unit_RU
-  #   else
-  #     pds_mf.regidity_unit
-  #   end
-  # end
 end

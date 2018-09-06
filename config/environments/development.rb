@@ -44,7 +44,7 @@ Rails.application.configure do
   config.sass.inline_source_maps = true
   config.after_initialize do
     # Enable bullet in your application
-    Bullet.enable = true
-    Bullet.alert = true
+    #Bullet.enable = true
+    #Bullet.alert = true
   end
 end

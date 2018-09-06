@@ -69,27 +69,27 @@ class GenerateDbm extends React.Component {
   refreshLog() {
     var _this = this;
     const ajaxcall = (_this) => {
-        $.ajax(
+      $.ajax(
+      {
+        url: '/get_log',
+        dataType: 'json',
+        type: 'PUT',
+        success: function (responce)
         {
-          url: '/get_log',
-          dataType: 'json',
-          type: 'PUT',
-          success: function (responce)
-          {
-            _this.setState({log: responce.log.split('\\n').join('\r\n')});
-          },
-          error: function (xhr, status, err)
-          {
-            console.error(_this.props.url, status, err.toString());
-          },
-          async: true
-        });
+          _this.setState({log: responce.log.split('\\n').join('\r\n')});
+        },
+        error: function (xhr, status, err)
+        {
+          console.error(_this.props.url, status, err.toString());
+        },
+        async: true
+      });
     }
-    ajaxcall(_this)
+    ajaxcall(this)
     do {
       setTimeout(function(){
         ajaxcall(_this)
-      }, 10000);
+      }, 1000);
     } while (this.state.isProcessing);
   }
 
@@ -113,6 +113,7 @@ class GenerateDbm extends React.Component {
         if(sys.value==null) {
           systems_warn.empty = true;
         }
+        sys.isChecked = false;
       return sys});
     
       if ([0,1].includes(varIndex)) {
@@ -135,13 +136,23 @@ class GenerateDbm extends React.Component {
         gen_tag: true,
         systems: systems
       });
-    } else {
+    } else if(varIndex==4) {
       var systems = [ {value: 4, isChecked: true} ];
       this.setState({
         gen_tag: false,
+        systems_warn: {na: false, all: false, empty: false},
         systems_all: false,
         systems_none: false,
         systems: systems //announciators
+      });
+    } else {
+      var systems = [ {value: 51, label: 'Аналоговые точки контроля', isChecked: true}, {value: 52, label: 'Дискретные точки контроля', isChecked: true} ];
+      this.setState({
+        gen_tag: false,
+        systems_warn: {na: false, all: false, empty: false},
+        systems_all: true,
+        systems_none: false,
+        systems: systems //ppc
       });
     }
   }
@@ -235,8 +246,9 @@ class GenerateDbm extends React.Component {
         },
         error: function (xhr, status, err)
         {
-          console.error(this.props.url, status, err.toString());
+          console.error(_this.props.url, status, err.toString());
           _this.setState({isProcessing: false});
+          _this.refreshLog();
         },
         async: true
       });
@@ -245,6 +257,8 @@ class GenerateDbm extends React.Component {
     } else {
       if (this.state.varIndex==2) {
         alert('Выберите типы оборудования для генерации селект-файлов!');
+      } else if (this.state.varIndex==3) {
+        alert('Выберите системы отображения для генерации селект-файлов!');
       } else {
         alert('Выберите системы для генерации селект-файлов!');
       }
@@ -257,6 +271,9 @@ class GenerateDbm extends React.Component {
     if (this.state.varIndex == 2) {
       var sys_check_group_label = 'Типы оборудования:';
       var none_label = 'Ни одного типа оборудования';
+    }else if (this.state.varIndex == 3) {
+      var sys_check_group_label = 'Системы отображения:';
+      var none_label = 'Ни одной системы отображения';
     } else {
       var sys_check_group_label = 'Системы:';
       var none_label = 'Ни одной системы';
@@ -295,7 +312,7 @@ class GenerateDbm extends React.Component {
     const sys_none_label = this.state.systems_none?<label className='generate-dbm-err'>{none_label} не выбрано!</label>:<div/>;
 
     const sys_container = <div className='generate-dbm-sys-container'>
-      {([0,1,2].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}{sys_warn_empty}</div>:<div/>}
+      {([0,1,2,3].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}{sys_warn_empty}</div>:<div/>}
     </div>
 
       

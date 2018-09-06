@@ -20,6 +20,8 @@ class DbmGeneratorController < ApplicationController
       render_sel_mf(dbm_generator)
     when '2', '4'
       render_sel_ped(dbm_generator)
+    when '3'
+      render_sel_ppc(dbm_generator)
     end
     render json: { status: :ok }
   end
@@ -202,10 +204,52 @@ class DbmGeneratorController < ApplicationController
     write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
+  def render_sel_ppc(dbm_generator)
+    write_log('Инициализация...')
+    gen_tables = dbm_generator.systems
+    data_tot = ''
+    is_rus = dbm_generator.rus?(dbm_generator.project_id)
+    enc = dbm_generator.project_encoding(dbm_generator.project_id)
+    ssh = dbm_generator.project_ssh(dbm_generator.project_id)
+    write_log('Подключение к серверу: ' + ssh[:ip] + '.')
+    Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+      session.exec!('mkdir ' + ssh[:remote_path])
+      ssh[:remote_path] += REMOTE_FOLDER[dbm_generator.gen_type.to_i]
+      session.exec!('mkdir ' + ssh[:remote_path])
+      gen_tables.each do |table_id|
+        tbl_name = Tablelist.find(table_id).table
+        write_log('Генерация селект-файла для ' + tbl_name + '.')
+        tbl = Object.const_get(tbl_name.classify)
+        data_tbl = ''
+        if table_id.to_i == 51 # ppca
+          path = 'sel_ppca.sel.erb'
+        else
+          path = 'sel_ppcd.sel.erb'
+        end
+        objects = tbl.where(Project: dbm_generator.project_id).includes(:system).to_a
+        data_tbl = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
+          ActionView::Base.new, dbm_generator.as_json.merge(data: objects, is_rus: is_rus)
+        )
+        file_name = tbl_name + '.sel'
+        create_file(file_name, enc, data_tbl)
+        session.scp.upload! @local_path, ssh[:remote_path] + file_name
+        write_log('Файл ' + file_name + ' загружен на сервер.')
+      end
+    end
+    write_log('Генерация завершена.')
+    write_log('Файлы размещены в ' + ssh[:remote_path])
+  end
+
   def create_file(file_name, enc, data)
     @file_name = file_name
     @local_path = FILE_PATH + file_name
     File.open(@local_path, 'w:' + enc) do |f|
+      f << data.encode(enc, invalid: :replace, undef: :replace, replace: '', universal_newline: true)
+    end
+  end
+
+  def append_file(enc, data)
+    File.open(@local_path, 'w+:' + enc) do |f|
       f << data.encode(enc, invalid: :replace, undef: :replace, replace: '', universal_newline: true)
     end
   end

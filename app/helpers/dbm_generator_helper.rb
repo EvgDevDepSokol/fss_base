@@ -6,7 +6,7 @@ module DbmGeneratorHelper
        !!pds_project_unit ? pds_project_unit.unit.Unit_RU : (defined? regidity_unit) ? regidity_unit : ''
      else
        !!pds_project_unit ? pds_project_unit.unit.Unit_EN : (defined? regidity_unit) ? regidity_unit : ''
-    end).unicode_normalize(:nfkd)
+     end).unicode_normalize(:nfkd).gsub(/[^0-9a-zа-я ]/i, '')
   end
 
   def desc12(is_rus)
