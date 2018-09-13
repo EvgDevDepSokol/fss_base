@@ -57,6 +57,7 @@ class GenerateDbm extends React.Component {
     this.onPredecessorChange = this.onPredecessorChange.bind(this);
     this.refreshSystems = this.refreshSystems.bind(this);
     this.refreshLog = this.refreshLog.bind(this);
+    this.onCheckPeds = this.onCheckPeds.bind(this);
   }
 
   openModal() {
@@ -265,6 +266,47 @@ class GenerateDbm extends React.Component {
     }
   }
 
+  onCheckPeds() {
+    var _this = this;
+    var systems = [];
+    this.state.systems.forEach(function(sys) {
+      systems.push(sys.value)
+    });
+    $.ajax(
+    {
+      url: '/generate_dbm_check_peds',
+      dataType: 'json',
+      type: 'PUT',
+      data:
+      {
+        data: {
+          gen_type: this.state.varIndex,
+          systems: systems,
+          project_id: project.id
+        },
+      },
+
+      success: function (responce)
+      {
+        _this.setState({isProcessing: false});
+        if (responce.log.length>0) {
+          _this.setState({log: responce.log.split('\\n').join('\r\n')});
+        } else {
+          _this.setState({log: 'Проверка завершена. Проблем не обнаружено.'});
+        }
+      },
+      error: function (xhr, status, err)
+      {
+        console.error(_this.props.url, status, err.toString());
+        _this.setState({isProcessing: false});
+        _this.setState({log: 'Ошибка при проверке. Обратитесь к разработчику'});
+      },
+      async: true
+    });
+    this.setState({isProcessing: true});
+    _this.setState({log: 'Начата проверка. Ждите.'});
+  }
+
   render() {
     var this_ = this;
     const systems = this.state.systems;
@@ -315,6 +357,9 @@ class GenerateDbm extends React.Component {
       {([0,1,2,3].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}{sys_warn_empty}</div>:<div/>}
     </div>
 
+    const check_peds_button = this.state.varIndex == 2 ? <div className='generate-dbm-check-peds'>
+      <button onClick={this.onCheckPeds} disabled={this.state.isProcessing}>Проверить PEDS</button>
+    </div> : <div/>
       
     const predecessor_input = <input type='text' name = 'predecessor' value={this_.state.predecessor} onChange = {this_.onPredecessorChange} disabled={this.state.isProcessing}/> 
 
@@ -350,6 +395,7 @@ class GenerateDbm extends React.Component {
               </div>
             </div>
             {sys_container}
+            {check_peds_button}
           </div>
           <div className='generate-dbm-top generate-dbm-exit'>
             <button onClick={this.closeModal} disabled={this.state.isProcessing}>Выход из меню генерации</button>

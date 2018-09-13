@@ -1,0 +1,14 @@
+<% data.each do |pds_ppc| %>
+<%= "/#{mod} ycd#{pds_ppc.Shifr.downcase}" %> 
+<%= pds_ppc.desc12(is_rus) %><%= pds_ppc.desc0 %> 
+<%= pds_ppc.desc1 %> 
+<%= pds_ppc.desc2 %> 
+.UNIT bool 
+.SYS <%= pds_ppc.system.System.tr('/', '_').downcase %> 
+.TYPE L,1 
+.FORM L1 
+.VALU F,V 
+.DIM 
+.PRED globalppc 
+
+<% end %>

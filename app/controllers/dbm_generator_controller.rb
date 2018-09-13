@@ -151,7 +151,7 @@ class DbmGeneratorController < ApplicationController
         tbl_name = Tablelist.find(table_id).table
         write_log('Генерация селект-файла для ' + tbl_name + '.')
         tbl = Object.const_get(tbl_name.classify)
-        objects = tbl.where(Project: dbm_generator.project_id).includes(:system, hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).to_a
+        objects = tbl.where(Project: dbm_generator.project_id).includes(:system).where.not('pds_syslist.System': 'N/A').includes(hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).to_a
         data_tbl = ''
         objects.each do |obj|
           hw_ic = obj.hw_ic
@@ -169,6 +169,7 @@ class DbmGeneratorController < ApplicationController
           else
             hw_ped.signals.each do |sig_name|
               next unless hw_ped[sig_name].to_i > 0
+
               if template_lodi.include?(sig_name)
                 path = 'sel_ped_lodi.sel.erb'
                 global = template_aidi.include?(sig_name) ? 'di' : 'lo'
@@ -221,12 +222,12 @@ class DbmGeneratorController < ApplicationController
         write_log('Генерация селект-файла для ' + tbl_name + '.')
         tbl = Object.const_get(tbl_name.classify)
         data_tbl = ''
-        if table_id.to_i == 51 # ppca
-          path = 'sel_ppca.sel.erb'
-        else
-          path = 'sel_ppcd.sel.erb'
-        end
-        objects = tbl.where(Project: dbm_generator.project_id).includes(:system).to_a
+        path = if table_id.to_i == 51 # ppca
+                 'sel_ppca.sel.erb'
+               else
+                 'sel_ppcd.sel.erb'
+               end
+        objects = tbl.where(Project: dbm_generator.project_id).includes(:system).where.not('pds_syslist.System': 'N/A').to_a
         data_tbl = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
           ActionView::Base.new, dbm_generator.as_json.merge(data: objects, is_rus: is_rus)
         )
@@ -238,6 +239,91 @@ class DbmGeneratorController < ApplicationController
     end
     write_log('Генерация завершена.')
     write_log('Файлы размещены в ' + ssh[:remote_path])
+  end
+
+  def check_peds
+    hash = params[:data]
+    current_user.message = ''
+    current_user.save
+    dbm_generator = DbmGenerator.new(hash)
+    write_log('Инициализация проверки PEDS...')
+    gen_tables = dbm_generator.systems
+    data_tbl = {}
+    # is_rus = dbm_generator.rus?(dbm_generator.project_id)
+    # enc = dbm_generator.project_encoding(dbm_generator.project_id)
+    # ssh = dbm_generator.project_ssh(dbm_generator.project_id)
+    template_lodi = HwIosignaldef.where(memtype: %w[LO DI]).all.pluck(:ioname)
+    template_aidi = HwIosignaldef.where(memtype: %w[AI DI]).all.pluck(:ioname)
+    gen_tag_b = true
+    hw_ped = HwPed.first
+    sig_def = {}
+    hw_ped.signals.each do |sig_name|
+      sig_def[sig_name] = HwIosignaldef.where(ioname: sig_name).pluck('ID')
+    end
+    gen_tables.each do |table_id|
+      tbl_name = Tablelist.find(table_id).table
+      write_log('Генерация сигналов для ' + tbl_name + '.')
+      tbl = Object.const_get(tbl_name.classify)
+      objects = tbl.where(Project: dbm_generator.project_id).includes(:system).where.not('pds_syslist.System': 'N/A').includes(hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).to_a
+      objects.each do |obj|
+        hw_ic = obj.hw_ic
+        hw_ped = hw_ic.hw_ped
+        if table_id.to_i == 4 # announciators
+          data_tbl = add_name("zlo#{hw_ic.ref.downcase}", hw_ic, tbl_name, data_tbl)
+          data_tbl = add_name("an:#{hw_ic.ref.downcase}", hw_ic, tbl_name, data_tbl)
+          data_tbl = add_name("yg#{hw_ic.ref.downcase}", hw_ic, tbl_name, data_tbl)
+        else
+          hw_ped.signals.each do |sig_name|
+            next unless hw_ped[sig_name].to_i > 0
+
+            if template_lodi.include?(sig_name)
+              path = 'sel_ped_lodi.sel.erb'
+              global = template_aidi.include?(sig_name) ? 'di' : 'lo'
+            else
+              path = 'sel_ped_aoai.sel.erb'
+              global = template_aidi.include?(sig_name) ? 'ai' : 'ao'
+            end
+            if hw_ped.gen_ext?
+              sig_id = sig_def[sig_name]
+              hw_iosignals = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).order(:id).to_a
+            else
+              hw_iosignals = nil
+            end
+            if hw_ped.gen_ext? && (hw_ped[sig_name] != hw_iosignals.count)
+              write_log("Пропуск! Таблица: #{tbl_name}, I&C: #{hw_ic.ref}, PED: #{hw_ped.ped}, сигнал: #{sig_name}")
+            else
+              data_tbl = add_name("z#{global}#{hw_ic.ref.downcase}", hw_ic, tbl_name, data_tbl)
+              if gen_tag_b && hw_ic.tag_no
+                data_tbl = add_name("z#{global}#{hw_ic.tag_no.downcase}", hw_ic, tbl_name, data_tbl)
+                if hw_ped.gen_ext?
+                  if (gen_tag_b && hw_ic.tag_no) || !gen_tag_b
+                    hw_iosignals.each_with_index do |hw_iosignal, _index|
+                      data_tbl = add_name("z#{global}" + (gen_tag_b ? hw_ic.tag_no : hw_ic.ref).downcase + (hw_iosignal.comment ? "_#{hw_iosignal.comment.downcase}" : ''), hw_ic, tbl_name, data_tbl)
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+    data_log = ''
+    data_tbl.each do |key, value|
+      data_log += "#{key}:" + value.to_s + '\n' if value.size > 1
+    end
+    render json: { status: :ok, log: data_log }
+  end
+
+  def add_name(name, hw_ic, tbl_name, hash)
+    if !hash[name]
+      hash[name] = [{ ref: hw_ic.ref.downcase, tbl: tbl_name }]
+    else
+      arr = hash[name]
+      arr.push(ref: hw_ic.ref.downcase, tbl: tbl_name)
+      hash[name] = arr
+    end
+    hash
   end
 
   def create_file(file_name, enc, data)

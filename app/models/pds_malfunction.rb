@@ -87,5 +87,4 @@ class PdsMalfunction < ApplicationRecord
   def number_by_letter(letter)
     CHARACTER_ARRAY.index(letter)
   end
-
 end

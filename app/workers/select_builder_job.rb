@@ -139,6 +139,7 @@ class SelectBuilderJob
           else
             hw_ped.signals.each do |sig_name|
               next unless hw_ped[sig_name].to_i > 0
+
               if template_lodi.include?(sig_name)
                 path = 'sel_ped_lodi.sel.erb'
                 global = template_aidi.include?(sig_name) ? 'di' : 'lo'

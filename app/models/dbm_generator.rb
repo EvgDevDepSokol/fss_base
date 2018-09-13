@@ -40,6 +40,7 @@ class DbmGenerator
     enc = PdsProject.find(project_id).project_properties.Encoding
     return 'KOI8-R' if enc == 'koi8r'
     return 'Windows-1251' if enc == 'cp1251'
+
     'UTF-8'
   end
 

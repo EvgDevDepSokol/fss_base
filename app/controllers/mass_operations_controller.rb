@@ -4,6 +4,7 @@ class MassOperationsController < ApplicationController
 
   def replace_prepare
     return unless params[:column] || params[:from] || params[:to]
+
     querry = model_class
 
     if querry.respond_to?(:Project)

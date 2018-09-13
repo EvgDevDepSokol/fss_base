@@ -131,11 +131,11 @@ gem 'simple_form'
 # gem 'quiet_assets', group: :development
 
 group :development do
-  #gem 'better_errors'
-  #gem 'binding_of_caller'
-  #gem 'bullet'
-  #gem 'flamegraph'
-  #gem 'rack-mini-profiler'
+  # gem 'better_errors'
+  # gem 'binding_of_caller'
+  # gem 'bullet'
+  # gem 'flamegraph'
+  # gem 'rack-mini-profiler'
   gem 'rails_best_practices'
   gem 'rubocop', require: false
   gem 'rubycritic', require: false

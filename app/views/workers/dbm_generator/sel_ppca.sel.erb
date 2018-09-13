@@ -1,0 +1,15 @@
+<% data.each do |pds_ppc| %>
+<%= "/#{mod} yca#{pds_ppc.Shifr.downcase}" %> 
+<%= pds_ppc.desc12(is_rus) %><%= pds_ppc.desc0 %> 
+<%= pds_ppc.desc1 %> 
+<%= pds_ppc.desc2 %> 
+<%= pds_ppc.L_lim ? "@LIM(#{pds_ppc.L_lim},#{pds_ppc.U_lim})" : ''%> 
+.UNIT <%= (pds_ppc.Unit || '').unicode_normalize(:nfkd).gsub(/[^0-9a-zа-я ]/i, '') %> 
+.SYS <%= pds_ppc.system.System.tr('/', '_').downcase %> 
+.TYPE R,4 
+.FORM E13.5 
+.VALU 0,V 
+.DIM 
+.PRED globalppc 
+
+<% end %>

@@ -25,6 +25,7 @@ class PdsEngineer < ApplicationRecord
     super(password)
   rescue BCrypt::Errors::InvalidHash
     return false unless Digest::SHA1.hexdigest(password).casecmp(encrypted_password)
+
     logger.info "User #{email} is using the old password hashing method, updating attribute."
     self.password = password
     true
