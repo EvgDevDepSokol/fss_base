@@ -41,6 +41,7 @@ class GenerateDbm extends React.Component {
       systems_none: true,
       systems_warn: {na: false, all: false, empty: false},
       gen_tag: true,
+      log_as_table: false,
       isProcessing: false,
       log: '',
       systems:[]
@@ -77,7 +78,10 @@ class GenerateDbm extends React.Component {
         type: 'PUT',
         success: function (responce)
         {
-          _this.setState({log: responce.log.split('\\n').join('\r\n')});
+          _this.setState({
+            log: responce.log.split('\\n').join('\r\n'),
+            log_as_table: false
+          });
         },
         error: function (xhr, status, err)
         {
@@ -290,21 +294,34 @@ class GenerateDbm extends React.Component {
       {
         _this.setState({isProcessing: false});
         if (responce.log.length>0) {
-          _this.setState({log: responce.log.split('\\n').join('\r\n')});
+          _this.setState({
+            //log: responce.log.split('\\n').join('\r\n'),
+            log: responce.log,
+            log_as_table: true
+          });
         } else {
-          _this.setState({log: 'Проверка завершена. Проблем не обнаружено.'});
+          _this.setState({
+            log: 'Проверка завершена. Проблем не обнаружено.',
+            log_as_table: false
+          });
         }
       },
       error: function (xhr, status, err)
       {
         console.error(_this.props.url, status, err.toString());
         _this.setState({isProcessing: false});
-        _this.setState({log: 'Ошибка при проверке. Обратитесь к разработчику'});
+        _this.setState({
+          log: 'Ошибка при проверке. Обратитесь к разработчику',
+          log_as_table: false
+        });
       },
       async: true
     });
     this.setState({isProcessing: true});
-    _this.setState({log: 'Начата проверка. Ждите.'});
+    _this.setState({
+      log: 'Начата проверка. Ждите.',
+      log_as_table: false
+    });
   }
 
   render() {
@@ -357,7 +374,7 @@ class GenerateDbm extends React.Component {
       {([0,1,2,3].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}{sys_warn_empty}</div>:<div/>}
     </div>
 
-    const check_peds_button = this.state.varIndex == 2 ? <div className='generate-dbm-check-peds'>
+    const check_peds_button = this.state.varIndex == 2 ? <div className='generate-dbm-check-peds generate-dbm-top'>
       <button onClick={this.onCheckPeds} disabled={this.state.isProcessing}>Проверить PEDS</button>
     </div> : <div/>
       
@@ -373,6 +390,40 @@ class GenerateDbm extends React.Component {
         </div>
       :<div/>}
     </div>
+    
+    const keys = ['ref','tag_no','tbl','sig','lvl', 'sys'];
+    const headers = ['Переменная','REF','KKS','Таблица','Сигнал','Уровень', 'Сист.'];
+    var rows = null
+    if (this.state.log_as_table) {
+      var tbl_header = headers.map(function (key, k){
+        return(
+        <th key = {'header'+ k + '-cell'}>
+          {headers[k]}
+        </th>);
+      });
+      rows = this.state.log.map(function (row, i) {
+        var row_info = row['info'].map(function (row2, j) {
+          var cells = keys.map(function (key, k){
+            return(
+            <td key = {i + '-' + j +'-'+ k + '-cell'}>
+              {row2[key]}
+            </td>);
+          });
+          var row_signal = (j==0?<td rowSpan={row['info'].length}>{row['signal']}</td>:null)
+          var row_together = <tr>{row_signal}{cells}</tr>
+          return(row_together);
+        });
+        return(row_info);
+      });
+      var log_container = <table>
+        <tbody>
+          <tr>{tbl_header}</tr>
+          {rows}
+        </tbody>
+      </table>
+    } else {
+      var log_container = <textarea value={this.state.log} readOnly/>
+    };
 
     return (
       <div className="generate-dbm-modal" onClick={this.openModal}>
@@ -382,29 +433,30 @@ class GenerateDbm extends React.Component {
         </a>
      
         <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} contentLabel="Свойства экспорта в файл">
-
-          <div className='generate-dbm-all' >
-            <h2 ref="subtitle">Настройки создания SELECT файла и заполнения DBM</h2>
-            <div>
-              <div className='generate-dbm-top'>
-                {mod_radio_group}
-                {rf_container}
+          <div className='generate-dbm'>
+            <div className='generate-dbm-all' >
+              <h2 ref="subtitle">Настройки создания SELECT файла и заполнения DBM</h2>
+              <div>
+                <div className='generate-dbm-top'>
+                  {mod_radio_group}
+                  {rf_container}
+                </div>
+                <div className='generate-dbm-top'>
+                  {var_radio_group}
+                </div>
               </div>
-              <div className='generate-dbm-top'>
-                {var_radio_group}
-              </div>
+              {sys_container}
+              {check_peds_button}
             </div>
-            {sys_container}
-            {check_peds_button}
-          </div>
-          <div className='generate-dbm-top generate-dbm-exit'>
-            <button onClick={this.closeModal} disabled={this.state.isProcessing}>Выход из меню генерации</button>
-          </div>
-          <div className='generate-dbm-top generate-dbm-run'>
-            <button onClick={this.onExport} disabled={this.state.isProcessing}>Генерировать селект-файлы</button>
-          </div>
-          <div className='generate-dbm-log'>
-            <textarea value={this.state.log} readOnly/>
+            <div className='generate-dbm-top generate-dbm-exit'>
+              <button onClick={this.closeModal} disabled={this.state.isProcessing}>Выход из меню генерации</button>
+            </div>
+            <div className='generate-dbm-top generate-dbm-run'>
+              <button onClick={this.onExport} disabled={this.state.isProcessing}>Генерировать селект-файлы</button>
+            </div>
+            <div className='generate-dbm-log'>
+              {log_container}
+            </div>
           </div>
         </Modal>
       </div>

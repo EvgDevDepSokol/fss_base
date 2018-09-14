@@ -151,7 +151,7 @@ class DbmGeneratorController < ApplicationController
         tbl_name = Tablelist.find(table_id).table
         write_log('Генерация селект-файла для ' + tbl_name + '.')
         tbl = Object.const_get(tbl_name.classify)
-        objects = tbl.where(Project: dbm_generator.project_id).includes(:system).where.not('pds_syslist.System': 'N/A').includes(hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).to_a
+        objects = tbl.where(Project: dbm_generator.project_id).includes(:system).where.not('pds_syslist.System': 'N/A').includes(hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).order('hw_ic.ref').to_a
         data_tbl = ''
         objects.each do |obj|
           hw_ic = obj.hw_ic
@@ -262,16 +262,21 @@ class DbmGeneratorController < ApplicationController
     end
     gen_tables.each do |table_id|
       tbl_name = Tablelist.find(table_id).table
+      tbl_name_ru = Tablelist.find(table_id).title
       write_log('Генерация сигналов для ' + tbl_name + '.')
       tbl = Object.const_get(tbl_name.classify)
-      objects = tbl.where(Project: dbm_generator.project_id).includes(:system).where.not('pds_syslist.System': 'N/A').includes(hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).to_a
+      objects = tbl.where(Project: dbm_generator.project_id).includes(:system).where.not('pds_syslist.System': 'N/A').includes(hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).order('hw_ic.ref').to_a
       objects.each do |obj|
         hw_ic = obj.hw_ic
         hw_ped = hw_ic.hw_ped
-        if table_id.to_i == 4 # announciators
-          data_tbl = add_name("zlo#{hw_ic.ref.downcase}", hw_ic, tbl_name, data_tbl)
-          data_tbl = add_name("an:#{hw_ic.ref.downcase}", hw_ic, tbl_name, data_tbl)
-          data_tbl = add_name("yg#{hw_ic.ref.downcase}", hw_ic, tbl_name, data_tbl)
+        sys = hw_ic.system ? hw_ic.system.System : '?'
+        if hw_ped.hw_devtype.typetable.to_s != table_id
+          obj.destroy if tbl_name != 'pds_mnemo'
+        elsif table_id.to_i == 4 # announciators
+          lvl = 'REF'
+          data_tbl = add_name("zlo#{hw_ic.ref.downcase}", data_tbl, hw_ic, tbl_name_ru, lvl, '', sys)
+          data_tbl = add_name("an:#{hw_ic.ref.downcase}", data_tbl, hw_ic, tbl_name_ru, lvl, '', sys)
+          data_tbl = add_name("yg#{hw_ic.ref.downcase}", data_tbl, hw_ic, tbl_name_ru, lvl, '', sys)
         else
           hw_ped.signals.each do |sig_name|
             next unless hw_ped[sig_name].to_i > 0
@@ -290,15 +295,18 @@ class DbmGeneratorController < ApplicationController
               hw_iosignals = nil
             end
             if hw_ped.gen_ext? && (hw_ped[sig_name] != hw_iosignals.count)
-              write_log("Пропуск! Таблица: #{tbl_name}, I&C: #{hw_ic.ref}, PED: #{hw_ped.ped}, сигнал: #{sig_name}")
+              write_log("Пропуск! Таблица: #{tbl_name_ru}, I&C: #{hw_ic.ref}, PED: #{hw_ped.ped}, сигнал: #{sig_name}")
             else
-              data_tbl = add_name("z#{global}#{hw_ic.ref.downcase}", hw_ic, tbl_name, data_tbl)
+              lvl = 'REF'
+              data_tbl = add_name("z#{global}#{hw_ic.ref.downcase}", data_tbl, hw_ic, tbl_name_ru, lvl, sig_name, sys)
               if gen_tag_b && hw_ic.tag_no
-                data_tbl = add_name("z#{global}#{hw_ic.tag_no.downcase}", hw_ic, tbl_name, data_tbl)
+                lvl = 'KKS'
+                data_tbl = add_name("z#{global}#{hw_ic.tag_no.downcase}", data_tbl, hw_ic, tbl_name_ru, lvl, sig_name, sys)
                 if hw_ped.gen_ext?
                   if (gen_tag_b && hw_ic.tag_no) || !gen_tag_b
+                    lvl = 'IOSIGNAL'
                     hw_iosignals.each_with_index do |hw_iosignal, _index|
-                      data_tbl = add_name("z#{global}" + (gen_tag_b ? hw_ic.tag_no : hw_ic.ref).downcase + (hw_iosignal.comment ? "_#{hw_iosignal.comment.downcase}" : ''), hw_ic, tbl_name, data_tbl)
+                      data_tbl = add_name("z#{global}" + (gen_tag_b ? hw_ic.tag_no : hw_ic.ref).downcase + (hw_iosignal.comment ? "_#{hw_iosignal.comment.downcase}" : ''), data_tbl, hw_ic, tbl_name_ru, lvl, sig_name, sys)
                     end
                   end
                 end
@@ -308,19 +316,21 @@ class DbmGeneratorController < ApplicationController
         end
       end
     end
-    data_log = ''
+    data_log = []
     data_tbl.each do |key, value|
-      data_log += "#{key}:" + value.to_s + '\n' if value.size > 1
+      data_log.push(signal: key, info: value) if value.size > 1
     end
     render json: { status: :ok, log: data_log }
   end
 
-  def add_name(name, hw_ic, tbl_name, hash)
+  def add_name(name, hash, hw_ic, tbl_name_ru, lvl, sig, sys)
+    tag_no = hw_ic.tag_no ? hw_ic.tag_no.downcase : ''
+    new_hash = { ref: hw_ic.ref.downcase, tag_no: tag_no, tbl: tbl_name_ru, lvl: lvl, sig: sig, sys: sys}
     if !hash[name]
-      hash[name] = [{ ref: hw_ic.ref.downcase, tbl: tbl_name }]
+      hash[name] = [new_hash]
     else
       arr = hash[name]
-      arr.push(ref: hw_ic.ref.downcase, tbl: tbl_name)
+      arr.push(new_hash)
       hash[name] = arr
     end
     hash

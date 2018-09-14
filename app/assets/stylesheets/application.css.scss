@@ -1168,60 +1168,73 @@ footer {
     }
   }
 }
-
-.generate-dbm-all {
-  display: block;
-  width: 100%;
-  min-height: 60%;
-}
-.generate-dbm-top {
-  display: inline-block;
-  width: 50%;
-  vertical-align:top;
-  margin-top: 10px;
-  //border: 1px solid #dddddd;
-  p{
-    margin: 0;
+.generate-dbm{
+  button {
+    width:250px;
   }
-}
-.generate-dbm-sys-container {
-  border: 1px solid #dddddd;
-  margin-top: 10px;
-  label{
-    min-width:300px;
-    margin: 0;
-  }
-}
-.generate-dbm-rf-container {
-  margin-top: 10px;
-  //border: 1px solid #dddddd;
-}
-.generate-dbm-log {
-  border: 1px solid #dddddd;
-  height: 30%;
-  margin-top: 10px;
-  textarea{
+  .generate-dbm-all {
+    display: block;
     width: 100%;
-    height: 100%;
-    resize: none;
+    min-height: 60%;
   }
-}
-.generate-dbm-run {
-  color: #333;
-}
-.generate-dbm-exit {
-  //color: #dc322f;
-}
-.generate-dbm-warn {
-  color: rgb(0, 129, 194);
-}
-.generate-dbm-err {
-  color: #dc322f;
-}
-.generate-dbm-systems {
-  margin-bottom: 10px;
-}
-.generate-dbm-sys-all {
-  font-style: italic;
-  margin-bottom: 10px;
+  .generate-dbm-top {
+    display: inline-block;
+    width: 50%;
+    vertical-align:top;
+    margin-top: 10px;
+    //border: 1px solid #dddddd;
+    p{
+      margin: 0;
+    }
+  }
+  .generate-dbm-sys-container {
+    border: 1px solid #dddddd;
+    margin-top: 10px;
+    label{
+      min-width:300px;
+      margin: 0;
+    }
+  }
+  .generate-dbm-rf-container {
+    margin-top: 10px;
+    //border: 1px solid #dddddd;
+  }
+  .generate-dbm-log {
+    border: 1px solid #dddddd;
+    height: 30%;
+    overflow: auto;
+    margin-top: 10px;
+    table{
+      width: 100%;
+      th,td{
+          border-width: 1px;
+          border-style: solid;
+          border-color: rgb(169, 169, 169);
+      }
+    }
+    textarea{
+      width: 100%;
+      height: 100%;
+      resize: none;
+    }
+  }
+  .generate-dbm-run {
+    color: #333;
+  }
+  .generate-dbm-exit {
+    //color: #dc322f;
+  }
+  .generate-dbm-warn {
+    color: rgb(0, 129, 194);
+  }
+  .generate-dbm-err {
+    color: #dc322f;
+  }
+  .generate-dbm-systems {
+    margin-bottom: 10px;
+  }
+  .generate-dbm-sys-all {
+    font-style: italic;
+    margin-bottom: 10px;
+  }
 }
