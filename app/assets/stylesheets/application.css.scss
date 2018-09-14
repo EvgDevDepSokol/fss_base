@@ -1169,6 +1169,7 @@ footer {
   }
 }
 .generate-dbm{
+  height:100%;
   button {
     width:250px;
   }
@@ -1201,7 +1202,8 @@ footer {
   }
   .generate-dbm-log {
     border: 1px solid #dddddd;
-    height: 30%;
+    min-height: 30%;
+    display: grid;
     overflow: auto;
     margin-top: 10px;
     table{

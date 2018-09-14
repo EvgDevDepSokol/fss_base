@@ -319,7 +319,7 @@ class GenerateDbm extends React.Component {
     });
     this.setState({isProcessing: true});
     _this.setState({
-      log: 'Начата проверка. Ждите.',
+      log: 'Начата проверка. Ждите...',
       log_as_table: false
     });
   }
