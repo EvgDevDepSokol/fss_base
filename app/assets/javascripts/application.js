@@ -30,7 +30,7 @@
 // require xlsx-djet
 
 
-//= require libs/Filesaver
+// require libs/Filesaver
 
 // require_tree .
 // require table_inline_edit

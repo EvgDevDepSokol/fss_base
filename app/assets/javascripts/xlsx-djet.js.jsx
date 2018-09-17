@@ -1,5 +1,6 @@
 /* require XLSX */
 // var XLSX = require('XLSX')
+import { saveAs } from 'file-saver/FileSaver';
 
 var flattenObject = function(ob) {
   var toReturn = {};
