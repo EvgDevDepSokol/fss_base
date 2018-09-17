@@ -325,7 +325,7 @@ class DbmGeneratorController < ApplicationController
 
   def add_name(name, hash, hw_ic, tbl_name_ru, lvl, sig, sys)
     tag_no = hw_ic.tag_no ? hw_ic.tag_no.downcase : ''
-    new_hash = { ref: hw_ic.ref.downcase, tag_no: tag_no, tbl: tbl_name_ru, lvl: lvl, sig: sig, sys: sys}
+    new_hash = { ref: hw_ic.ref.downcase, tag_no: tag_no, tbl: tbl_name_ru, lvl: lvl, sig: sig, sys: sys }
     if !hash[name]
       hash[name] = [new_hash]
     else
