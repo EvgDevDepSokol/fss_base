@@ -360,7 +360,7 @@ class GenerateDbm extends React.Component {
     </div>
 
     const gen_tag_checkbox = <label>
-      <input  type='checkbox' checked={this.state.gen_tag} onChange={this.onGenTagChange} disabled={this.state.isProcessing}/> Генерить TAG</label>
+      <input  type='checkbox' checked={this.state.gen_tag} onChange={this.onGenTagChange} disabled={this.state.isProcessing}/> Генерировать TAG</label>
 
     const sys_all_checkbox = <label className='generate-dbm-sys-all'>
       <input  type='checkbox' checked={this.state.systems_all} onChange={this.onSysAllChange} disabled={this.state.isProcessing}/> Выбрать все</label>
@@ -375,7 +375,7 @@ class GenerateDbm extends React.Component {
     </div>
 
     const check_peds_button = this.state.varIndex == 2 ? <div className='generate-dbm-check-peds generate-dbm-top'>
-      <button onClick={this.onCheckPeds} disabled={this.state.isProcessing}>Проверить PEDS</button>
+      <button onClick={this.onCheckPeds} disabled={this.state.isProcessing}>Проверить TAGS</button>
     </div> : <div/>
       
     const predecessor_input = <input type='text' name = 'predecessor' value={this_.state.predecessor} onChange = {this_.onPredecessorChange} disabled={this.state.isProcessing}/> 
@@ -432,7 +432,11 @@ class GenerateDbm extends React.Component {
           Генерация
         </a>
      
-        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} contentLabel="Свойства экспорта в файл">
+        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} contentLabel="Свойства экспорта в файл" title='Закрыть меню генерации'>
+          <button className="modal-close-button" data-close aria-label="Close modal" type="button" onClick={this.closeModal} disabled={this.state.isProcessing}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+
           <div className='generate-dbm'>
             <div className='generate-dbm-all' >
               <h2 ref="subtitle">Настройки создания SELECT файла и заполнения DBM</h2>
@@ -447,9 +451,6 @@ class GenerateDbm extends React.Component {
               </div>
               {sys_container}
               {check_peds_button}
-            </div>
-            <div className='generate-dbm-top generate-dbm-exit'>
-              <button onClick={this.closeModal} disabled={this.state.isProcessing}>Выход из меню генерации</button>
             </div>
             <div className='generate-dbm-top generate-dbm-run'>
               <button onClick={this.onExport} disabled={this.state.isProcessing}>Генерировать селект-файлы</button>
