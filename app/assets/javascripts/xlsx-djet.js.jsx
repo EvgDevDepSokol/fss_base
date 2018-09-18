@@ -1,6 +1,4 @@
-/* require XLSX */
-// var XLSX = require('XLSX')
-import { saveAs } from 'file-saver/FileSaver';
+import XLSX from 'xlsx'
 
 var flattenObject = function(ob) {
   var toReturn = {};
@@ -84,44 +82,28 @@ function sheet_from_data_and_cols(data, columns) {
   return ws;
 }
 
-function s2ab(s) {
-  var buf = new ArrayBuffer(s.length);
-  var view = new Uint8Array(buf);
-  for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
-  return buf;
-}
+//function s2ab(s) {
+//  var buf = new ArrayBuffer(s.length);
+//  var view = new Uint8Array(buf);
+//  for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+//  //for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i);
+//  return buf;
+//}
 
 
 var exportData = function(data, columns, bookname){
-
-  /* original data */
-  var ws_name = "SheetJS";
-
-  function Workbook() {
-    if(!(this instanceof Workbook)) return new Workbook();
-    this.SheetNames = [];
-    this.Sheets = {};
-  }
-
-  var wb = new Workbook(), ws = sheet_from_data_and_cols(data, columns);
-
-  /* add worksheet to workbook */
+  var wb = XLSX.utils.book_new();
+  var ws = sheet_from_data_and_cols(data, columns);
+  var ws_name = 'Экспорт';
   wb.SheetNames.push(ws_name);
   wb.Sheets[ws_name] = ws;
-
-  /* bookType can be 'xlsx' or 'xlsm' or 'xlsb' */
-  var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
-
-  var wbout = XLSX.write(wb,wopts);
-
-  /* the saveAs call downloads a file on the local machine */
-  saveAs(new Blob([s2ab(wbout)],{type:""}), bookname);
+  XLSX.writeFile(wb,bookname,{ bookType:'csv'});
 }
 
 var workbook_to_json =function(workbook) {
   var result = [];
   workbook.SheetNames.forEach(function(sheetName) {
-    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName],{raw: true});
+    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName],{raw: true, defval: null});
     if(roa.length > 0){
       result.push({sheetName: sheetName, data: roa});
     }

@@ -761,7 +761,7 @@ var TableContainer = React.createClass({
   },
 
   onExportClick: function(exportIndex) {
-    var bookname = model_name + '_' + project.id.toString() + '.xlsx';
+    var bookname = model_name + '_' + project.id.toString() + '.csv';
    
     if (exportIndex === 1) {
       var dataxls = this.state.dataxls.filter(function(elem) {

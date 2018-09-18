@@ -23,15 +23,6 @@
 //  require libs/select2-3
 //= require libs/bootstrap3-editable/bootstrap-editable
 
-//=  require libs/xlsx.core.min
-
-// require ../node_modules/xlsx/dist/xlsx
-
-// require xlsx-djet
-
-
-// require libs/Filesaver
-
 // require_tree .
 // require table_inline_edit
 

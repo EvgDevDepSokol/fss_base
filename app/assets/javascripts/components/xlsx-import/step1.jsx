@@ -1,6 +1,7 @@
 var React = require('react');
 import Modal from 'react-modal';
 var workbook_to_json = require('../../xlsx-djet.js.jsx').workbook_to_json;
+import XLSX from 'xlsx'
 
 var ImportStep1 = React.createClass(
 {
@@ -66,6 +67,7 @@ var ImportStep1 = React.createClass(
       {
         message.push('Ошибка при чтении файла. ');
         message.push('Сообщение:' + er.message);
+        message.push('Попробуйте сохранить файл с расширением csv и повторить импорт. ');
         message.push('Выберите другой файл или нажмите на кнопку \'Отмена\'.');
       };
       this.setState(
