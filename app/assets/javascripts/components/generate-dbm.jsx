@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 //import MOD from 'ruby_constants.js.erb'
 //import VARIABLES from 'ruby_constants.js.erb'
 //import ATTRIBUTE_LIST from 'ruby_constants.jsx.haml'
+import XLSX from 'xlsx'
 
 var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
 
@@ -274,54 +275,24 @@ class GenerateDbm extends React.Component {
   }
 
   onExportXls() {
-    if (!this.state.systems_none){
-      var _this = this;
-      var systems = [];
-      this.state.systems.forEach(function(sys) {
-        if (sys.isChecked) systems.push(sys.value)
-      });
-      $.ajax(
-      {
-        url: '/generate_dbm_sel',
-        dataType: 'json',
-        type: 'PUT',
-        data:
-        {
-          data: {
-            mod: MOD[this.state.modIndex],
-            gen_type: this.state.varIndex,
-            predecessor: this.state.predecessor,
-            systems: systems,
-            systems_all: this.state.systems_all,
-            gen_tag: this.state.gen_tag,
-            project_id: project.id
-          },
-        },
-
-        success: function (data)
-        {
-          _this.setState({isProcessing: false});
-          _this.refreshLog();
-        },
-        error: function (xhr, status, err)
-        {
-          console.error(_this.props.url, status, err.toString());
-          _this.setState({isProcessing: false});
-          _this.refreshLog();
-        },
-        async: true
-      });
-      this.setState({isProcessing: true});
-      this.refreshLog();
-    } else {
-      if (this.state.varIndex==2) {
-        alert('Выберите типы оборудования для генерации селект-файлов!');
-      } else if (this.state.varIndex==3) {
-        alert('Выберите системы отображения для генерации селект-файлов!');
-      } else {
-        alert('Выберите системы для генерации селект-файлов!');
-      }
-    }
+    var new_data = [];
+    var hash = {};
+    
+    this.state.log.forEach(function (arr, i) {
+      arr['info'].forEach(function (row, j) {
+        hash = {};
+        hash[CHECK_HEADERS[0]] = arr['var_name'];
+        CHECK_KEYS.forEach(function (key, k) {
+          hash[CHECK_HEADERS[k+1]] = row[key]
+        })
+        new_data.push(hash);
+      })
+    })
+    var bookname = 'check_tags_' + project.id + '.xls';
+    var wb = XLSX.utils.book_new();
+    var ws = XLSX.utils.json_to_sheet(new_data);   
+    XLSX.utils.book_append_sheet(wb,ws,'Провека PED')
+    XLSX.writeFile(wb,bookname,{ bookType:'biff8'});
   }
 
 
@@ -333,7 +304,7 @@ class GenerateDbm extends React.Component {
     });
     $.ajax(
     {
-      url: '/generate_dbm_check_peds',
+      url: '/generate_dbm_check_tags',
       dataType: 'json',
       type: 'PUT',
       data:
@@ -429,7 +400,7 @@ class GenerateDbm extends React.Component {
       {([0,1,2,3].includes(this.state.varIndex))?<div>{sys_check_group}{sys_all_checkbox}{sys_none_label}{sys_warn_all}{sys_warn_na}{sys_warn_empty}</div>:<div/>}
     </div>
 
-    const check_peds_button = this.state.varIndex == 2 ? <div className='generate-dbm-check-peds generate-dbm-top'>
+    const check_tags_button = this.state.varIndex == 2 ? <div className='generate-dbm-check-peds generate-dbm-top'>
       <button onClick={this.onCheckPeds} disabled={this.state.isProcessing}>Проверить TAG</button>
     </div> : <div/>
       
@@ -462,8 +433,8 @@ class GenerateDbm extends React.Component {
               {row2[key]}
             </td>);
           });
-          var row_signal = (j==0?<td rowSpan={row['info'].length}>{row['signal']}</td>:null)
-          var row_together = <tr>{row_signal}{cells}</tr>
+          var row_var_name = (j==0?<td rowSpan={row['info'].length}>{row['var_name']}</td>:null)
+          var row_together = <tr>{row_var_name}{cells}</tr>
           return(row_together);
         });
         return(row_info);
@@ -503,7 +474,7 @@ class GenerateDbm extends React.Component {
                 </div>
               </div>
               {sys_container}
-              {check_peds_button}
+              {check_tags_button}
             </div>
             <div className='generate-dbm-top generate-dbm-run'>
               <button onClick={this.onExport} disabled={this.state.isProcessing}>Генерировать селект-файлы</button>

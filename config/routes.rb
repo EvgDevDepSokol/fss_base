@@ -90,7 +90,7 @@ Rails.application.routes.draw do
   # to fix later
   put :generate_dbm_sel, to: 'dbm_generator#prepare_hash'
   put :get_log, to: 'dbm_generator#get_log'
-  put :generate_dbm_check_peds, to: 'dbm_generator#check_peds'
+  put :generate_dbm_check_tags, to: 'dbm_generator#check_tags'
 
   resources :users
 

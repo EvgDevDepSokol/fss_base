@@ -241,7 +241,7 @@ class DbmGeneratorController < ApplicationController
     write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
-  def check_peds
+  def check_tags
     hash = params[:data]
     current_user.message = ''
     current_user.save
@@ -318,7 +318,7 @@ class DbmGeneratorController < ApplicationController
     end
     data_log = []
     data_tbl.each do |key, value|
-      data_log.push(signal: key, info: value) if value.size > 1
+      data_log.push(var_name: key, info: value) if value.size > 1
     end
     render json: { status: :ok, log: data_log }
   end
