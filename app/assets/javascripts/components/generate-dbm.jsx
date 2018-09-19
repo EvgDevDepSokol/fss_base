@@ -13,6 +13,8 @@ const VARIABLES = ['Дистанционное управление', 'Отка�
                'Оборудование', 'Системы отображения', 'Анонсиаторы'];
 const SEL_PATH = ['/selectors/dbm_sys_rfs','/selectors/dbm_sys_mfs','/selectors/dbm_tbl_ics'];
 const WARN_MESSAGES = ['RF без заданной системы.','отказы без заданной системы.','I&C без определенного типа оборудования (посредством PED).'];
+const CHECK_KEYS = ['ref','tag_no','tbl','sig','lvl','sys'];
+const CHECK_HEADERS = ['Переменная','REF','KKS','Таблица','Сигнал','Уровень', 'Сист.'];
 
 const customStyles = {
   content: {
@@ -50,6 +52,7 @@ class GenerateDbm extends React.Component {
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.onExport = this.onExport.bind(this);
+    this.onExportXls = this.onExportXls.bind(this);
     this.onModRadioChange = this.onModRadioChange.bind(this);
     this.onVarRadioChange = this.onVarRadioChange.bind(this);
     this.onSysCheckChange = this.onSysCheckChange.bind(this);
@@ -270,6 +273,58 @@ class GenerateDbm extends React.Component {
     }
   }
 
+  onExportXls() {
+    if (!this.state.systems_none){
+      var _this = this;
+      var systems = [];
+      this.state.systems.forEach(function(sys) {
+        if (sys.isChecked) systems.push(sys.value)
+      });
+      $.ajax(
+      {
+        url: '/generate_dbm_sel',
+        dataType: 'json',
+        type: 'PUT',
+        data:
+        {
+          data: {
+            mod: MOD[this.state.modIndex],
+            gen_type: this.state.varIndex,
+            predecessor: this.state.predecessor,
+            systems: systems,
+            systems_all: this.state.systems_all,
+            gen_tag: this.state.gen_tag,
+            project_id: project.id
+          },
+        },
+
+        success: function (data)
+        {
+          _this.setState({isProcessing: false});
+          _this.refreshLog();
+        },
+        error: function (xhr, status, err)
+        {
+          console.error(_this.props.url, status, err.toString());
+          _this.setState({isProcessing: false});
+          _this.refreshLog();
+        },
+        async: true
+      });
+      this.setState({isProcessing: true});
+      this.refreshLog();
+    } else {
+      if (this.state.varIndex==2) {
+        alert('Выберите типы оборудования для генерации селект-файлов!');
+      } else if (this.state.varIndex==3) {
+        alert('Выберите системы отображения для генерации селект-файлов!');
+      } else {
+        alert('Выберите системы для генерации селект-файлов!');
+      }
+    }
+  }
+
+
   onCheckPeds() {
     var _this = this;
     var systems = [];
@@ -375,7 +430,7 @@ class GenerateDbm extends React.Component {
     </div>
 
     const check_peds_button = this.state.varIndex == 2 ? <div className='generate-dbm-check-peds generate-dbm-top'>
-      <button onClick={this.onCheckPeds} disabled={this.state.isProcessing}>Проверить TAGS</button>
+      <button onClick={this.onCheckPeds} disabled={this.state.isProcessing}>Проверить TAG</button>
     </div> : <div/>
       
     const predecessor_input = <input type='text' name = 'predecessor' value={this_.state.predecessor} onChange = {this_.onPredecessorChange} disabled={this.state.isProcessing}/> 
@@ -391,19 +446,17 @@ class GenerateDbm extends React.Component {
       :<div/>}
     </div>
     
-    const keys = ['ref','tag_no','tbl','sig','lvl', 'sys'];
-    const headers = ['Переменная','REF','KKS','Таблица','Сигнал','Уровень', 'Сист.'];
     var rows = null
     if (this.state.log_as_table) {
-      var tbl_header = headers.map(function (key, k){
+      var tbl_header = CHECK_HEADERS.map(function (key, k){
         return(
         <th key = {'header'+ k + '-cell'}>
-          {headers[k]}
+          {CHECK_HEADERS[k]}
         </th>);
       });
       rows = this.state.log.map(function (row, i) {
         var row_info = row['info'].map(function (row2, j) {
-          var cells = keys.map(function (key, k){
+          var cells = CHECK_KEYS.map(function (key, k){
             return(
             <td key = {i + '-' + j +'-'+ k + '-cell'}>
               {row2[key]}
@@ -432,8 +485,8 @@ class GenerateDbm extends React.Component {
           Генерация
         </a>
      
-        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} contentLabel="Свойства экспорта в файл" title='Закрыть меню генерации'>
-          <button className="modal-close-button" data-close aria-label="Close modal" type="button" onClick={this.closeModal} disabled={this.state.isProcessing}>
+        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} contentLabel="Свойства экспорта в файл">
+          <button className="modal-close-button" data-close aria-label="Close modal" type="button" onClick={this.closeModal} disabled={this.state.isProcessing} title='Закрыть' >
             <span aria-hidden="true">&times;</span>
           </button>
 
@@ -454,6 +507,10 @@ class GenerateDbm extends React.Component {
             </div>
             <div className='generate-dbm-top generate-dbm-run'>
               <button onClick={this.onExport} disabled={this.state.isProcessing}>Генерировать селект-файлы</button>
+            </div>
+            <div className='generate-dbm-top' >
+              <button onClick={this.onExportXls} disabled={this.state.isProcessing} title='Экспорт в XLS' className={'generate-dbm-xls-button' + (this.state.log_as_table ? '' : ' hidden-element')}>
+              </button>
             </div>
             <div className='generate-dbm-log'>
               {log_container}
