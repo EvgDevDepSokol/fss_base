@@ -452,7 +452,7 @@ class GenerateDbm extends React.Component {
     return (
       <div className="generate-dbm-modal" onClick={this.openModal}>
         <a onClick = {this.openModal} >
-          <img alt = "Generate" src = "/assets/generate.png" />
+          <img/>
           Генерация
         </a>
      
