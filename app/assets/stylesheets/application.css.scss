@@ -206,13 +206,14 @@ body {
             color: #304d67;
           }
 
-          img {
+          img,
+          .header-icon {
             height: 30px;
             width: 30px;
             padding-right: 5px;
             margin-top: 2px;
             margin-bottom: 2px;
-            background-size: contain;
+            background-size: cover;
           }
         }
       }
@@ -1253,12 +1254,13 @@ footer {
 }
 
 .generate-dbm-modal{
-  img{
+  .header-icon{
     background-image: asset_data_url("generate.png");
-  } 
+  }
+
 }
 .import-from-excel{
-  img{
+  .header-icon{
     background-image: asset_data_url("import_export.png");
   } 
 }

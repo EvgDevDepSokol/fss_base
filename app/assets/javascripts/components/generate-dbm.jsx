@@ -450,9 +450,9 @@ class GenerateDbm extends React.Component {
     };
 
     return (
-      <div className="generate-dbm-modal" onClick={this.openModal}>
+      <div className="generate-dbm-modal">
         <a onClick = {this.openModal} >
-          <img/>
+          <div className="header-icon"/>
           Генерация
         </a>
      
