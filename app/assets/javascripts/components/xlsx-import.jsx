@@ -124,13 +124,8 @@ var ImportXlsxModal = React.createClass(
     this.setState(
     {
       step: 0,
-      importData: [
-      {
-        data:
-        {}
-      }],
-      columns:
-      {},
+      importData: [{data:{}}],
+      columns:{},
       keyColumn: '',
       msg: [],
       parsedData:[],
