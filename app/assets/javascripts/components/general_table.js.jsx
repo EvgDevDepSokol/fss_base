@@ -293,6 +293,7 @@ var TableContainer = React.createClass({
       return e.hidden != true
     });
 
+
     // add buttons
     columns = columns.concat([
       {
@@ -503,6 +504,7 @@ var TableContainer = React.createClass({
       mainCheckbox_old: false,
       exportIndex: 0,
       systemFilter: null,
+      show_hidden_columns:false,
       pagination: {
         page: 1,
         perPage: 20
@@ -531,8 +533,11 @@ var TableContainer = React.createClass({
 
   columnFilters() {
     var headerConfig = this.state.header;
-
+    var show_hidden_columns = this.state.show_hidden_columns;
     var columns = this.state.columns;
+    columns = columns.filter(function(e) {
+      return (!e.show_on_request || (e.show_on_request && show_hidden_columns ))
+    });
 
     var isEditableColumn = function(column) {
       var className = column.editor
@@ -558,6 +563,13 @@ var TableContainer = React.createClass({
         <ColumnNames config={headerConfig} columns={columns}/>
       </thead>);
   },
+
+  onShowHidden: function(){
+    this.setState({
+      show_hidden_columns: !this.state.show_hidden_columns
+    });
+  },
+
 
   onFilterInput: function(columns) {
     this.setState({columns: columns});
@@ -811,6 +823,12 @@ var TableContainer = React.createClass({
     var header = this.state.header;
     var columns = this.state.columns;
     var systemFilter = this.state.systemFilter;
+    var show_hidden_columns = this.state.show_hidden_columns;
+    columns = columns.filter(function(e) {
+      return (!e.show_on_request || (e.show_on_request && show_hidden_columns ))
+    });
+    debugger
+    var columns2=columns;
 
     columns.forEach(function(column) {
       if (!column.headerClass || column.headerClass.indexOf(column.headerClassStyle) == -1) {
@@ -915,8 +933,8 @@ var TableContainer = React.createClass({
                 </div>
               </div>
             </div>
-            <div className="right">
-              <div className="show-filters">
+            <div className="right" >
+              <div className="show-filters" onClick={this.onShowHidden}>
                 Скрыть/ Показать поля
               </div>
               <ExportXlsxModal data={this.state.dataxls} onExport={this.onExportClick}/>
@@ -955,7 +973,7 @@ var TableContainer = React.createClass({
           ? 'table-container table-container-replace-show'
           : 'table-container table-container-replace-hide'} key={"table-container"}>
 
-          <Table className='table table-bordered' columnNames={this.columnFilters} data={paginated.data} columns={this.state.columns} row={(d, rowIndex) => {
+          <Table className='table table-bordered' columnNames={this.columnFilters} data={paginated.data} columns={columns2} row={(d, rowIndex) => {
             var rowClass = rowIndex % 2
               ? 'odd-row'
               : 'even-row';
