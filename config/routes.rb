@@ -87,10 +87,10 @@ Rails.application.routes.draw do
   put :replace_prepare, to: 'mass_operations#replace_prepare'
   put :replace_finish,  to: 'mass_operations#replace_finish'
 
-  # to fix later
   put :generate_dbm_sel, to: 'dbm_generator#prepare_hash'
   put :get_log, to: 'dbm_generator#get_log'
   put :generate_dbm_check_tags, to: 'dbm_generator#check_tags'
+  put :compare_kursks, to: 'different_stuff#compare_kursks'
 
   resources :users
 

@@ -1,25 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-//
-//
-///*
-//The app element allows you to specify the portion of your app that should be hidden (via aria-hidden)
-//to prevent assistive technologies such as screenreaders from reading content outside of the content of
-//your modal.  It can be specified in the following ways:
-//
-//* element
-//Modal.setAppElement(appElement);
-//
-//* query selector - uses the first element found if you pass in a class.
-//Modal.setAppElement('#your-app-element');
-//
-//*/
-//const appElement1 = document.getElementById('export-to-excel');
-//
-//
-//
+import XLSX from 'xlsx'
+
 const customStyles = {
   content: {
     top: '50%',
@@ -30,8 +13,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)'
   }
 };
-//
-//
+
 class ExportXlsxModal extends React.Component {
   constructor() {
     super();
@@ -46,6 +28,7 @@ class ExportXlsxModal extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.onExport = this.onExport.bind(this);
     this.onRadioChange = this.onRadioChange.bind(this);
+    this.compare_kursks = this.compare_kursks.bind(this);
   }
 
   openModal() {
@@ -53,7 +36,6 @@ class ExportXlsxModal extends React.Component {
   }
 
   afterOpenModal() {
-    // references are now sync'd and can be accessed.
     this.refs.subtitle.style.color = '#0081c2';
   }
 
@@ -70,6 +52,40 @@ class ExportXlsxModal extends React.Component {
     var exportIndex = this.state.exportIndex;
     this.props.onExport(exportIndex);
     this.setState({modalIsOpen: false});
+  }
+
+  compare_kursks() {
+    $.ajax(
+    {
+      url: '/compare_kursks',
+      dataType: 'json',
+      type: 'PUT',
+      success: function (responce)
+      {
+        debugger
+        var bookname = 'kursk_evolution.xls';
+        var wb = XLSX.utils.book_new();
+        var ws;
+        function arr_to_json(arr) {
+          return arr.map(function(ref){
+            return {ref: ref}
+          })
+        };   
+        debugger
+        ws = XLSX.utils.json_to_sheet(arr_to_json(responce.pag1));   
+        XLSX.utils.book_append_sheet(wb,ws,'Курск')
+        ws = XLSX.utils.json_to_sheet(arr_to_json(responce.pag2));   
+        XLSX.utils.book_append_sheet(wb,ws,'Курск 2014')
+        ws = XLSX.utils.json_to_sheet(responce.pag3);   
+        XLSX.utils.book_append_sheet(wb,ws,'Совпадающие ref')
+        XLSX.writeFile(wb,bookname,{ bookType:'biff8'});
+      },
+      error: function (xhr, status, err)
+      {
+        debugger
+      },
+      async: true
+    });
   }
 
   render() {
@@ -95,6 +111,11 @@ class ExportXlsxModal extends React.Component {
           <h3></h3>
           <button onClick={this.closeModal}>Отмена</button>
           <button onClick={this.onExport}>Экспорт</button>
+          <h3></h3>
+          <h3></h3>
+          <div>
+            <button onClick={this.compare_kursks}>Различие курских проектов</button>
+          </div>
         </Modal>
       </div>
     );
