@@ -32,7 +32,7 @@
   %body
     .navbar.navbar-static-top.white
       .container-fluid
-        %a.navbar-brand{href: root_url}
+        %a.navbar-brand
           = image_tag 'logo.jpg', height: 40
 
         - if @project
@@ -42,7 +42,7 @@
           %ul.nav.navbar-nav.navbar-right
             %li.project_selector
               - if @project
-                = select(:project, :id, options_for_select([['', 0], ['ПМТ Смоленск-2', 90], ['ПМТ СмАЭС-3', 87], ['Курск-2',83], ['ПМТ КуАЭС-4',80000001], ['ПМТ КуАЭС-4 2016',80000003], ['АТ БилАЭС',200000029], ['ПМТ БалАЭС-1',88]], selected: @project.id), {}, :onchange => "changeProject()")
+                = select(:project, :id, options_for_select([['', 0], ['ПМТ Смоленск-2', 90], ['ПМТ СмАЭС-3', 87], ['Курск-2',83], ['ПМТ КуАЭС-4',80000001], ['ПМТ КуАЭС-4 2016',80000003], ['ПМТ БалАЭС-1',88]], selected: @project.id), {}, :onchange => "changeProject()")
                 :javascript
                   function changeProject(){
                     var tmp = document.getElementById("project_id");
@@ -69,25 +69,25 @@
             Список таблиц
           %ul.nav.navbar-left.navbar-nav
             %li#navbar_tables
-              = link_to root_url do
+              = link_to index_pds_project_hw_ics_path(pds_project_id: @project? @project : 90) do
                 = image_tag('tables.png')
                 Таблицы
             %li#navbar_protocols
-              = link_to root_url do
+              = link_to '#' do
                 = image_tag('blog_accept.png')
                 Протоколы рассогласований
           .container#navbar-middle-container      
             %ul.nav.navbar-middle.navbar-nav
               %li#navbar_settings
-                = link_to root_url do
+                = link_to '#' do
                   = image_tag('settings.png')
                   Настройки
               %li#navbar_reports
-                = link_to root_url do
+                = link_to '#' do
                   = image_tag('reports.png')
                   Отчеты
               %li#import_xlsx_modal
-                = link_to root_url do
+                = link_to '#' do
                   = image_tag('import_export.png')
                   Импорт
               - if @project
@@ -103,7 +103,7 @@
           %ul.nav.navbar-right.navbar-nav
             - if current_user
               %li#navbar_help
-                = link_to '#'do
+                = link_to '#' do
                   = image_tag('help.png')
                   Помощь
               %li#navbar_exit

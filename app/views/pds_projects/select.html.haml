@@ -22,10 +22,10 @@
             %td= pds_project.project_name
             %td= pds_project.company.try :shortName
             %td
-              = link_to 'Выбрать', pds_project, class: 'btn btn-xs btn-default'
+              = link_to 'Выбрать', index_pds_project_hw_ics_path(pds_project), class: 'btn btn-xs btn-default'
               -#= link_to 'Изменить', edit_pds_project_path(pds_project), class: 'btn btn-xs btn-default'
               -#= link_to 'Удалить', pds_project, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-xs btn-danger'
 
-    %br
+    -#%br
 
-    = link_to 'Добавить проект', new_pds_project_path, class: 'btn btn-default'
+    -#= link_to 'Добавить проект', new_pds_project_path, class: 'btn btn-default'
