@@ -66,15 +66,15 @@ class ExportXlsxModal extends React.Component {
         var bookname = 'kursk_evolution.xls';
         var wb = XLSX.utils.book_new();
         var ws;
-        function arr_to_json(arr) {
-          return arr.map(function(ref){
-            return {ref: ref}
-          })
-        };   
+        //function arr_to_json(arr) {
+        //  return arr.map(function(ref){
+        //    return {ref: ref}
+        //  })
+        //};   
         debugger
-        ws = XLSX.utils.json_to_sheet(arr_to_json(responce.pag1));   
+        ws = XLSX.utils.json_to_sheet(responce.pag1);   
         XLSX.utils.book_append_sheet(wb,ws,'Курск')
-        ws = XLSX.utils.json_to_sheet(arr_to_json(responce.pag2));   
+        ws = XLSX.utils.json_to_sheet(responce.pag2);   
         XLSX.utils.book_append_sheet(wb,ws,'Курск 2014')
         ws = XLSX.utils.json_to_sheet(responce.pag3);   
         XLSX.utils.book_append_sheet(wb,ws,'Совпадающие ref')
