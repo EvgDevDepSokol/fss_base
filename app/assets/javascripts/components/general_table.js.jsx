@@ -426,8 +426,8 @@ var TableContainer = React.createClass({
     }
 
     var mainCheckbox = <div className="two-checkboxes">
-      <input type="checkbox" onChange={clickMainCheckboxY.bind(this)} checked={true}/>
-      <input type="checkbox" onChange={clickMainCheckboxN.bind(this)} checked={false}/>
+      <input title='Выделить все записи для замены/экспорта' type="checkbox" onChange={clickMainCheckboxY.bind(this)} checked={true}/>
+      <input title='Снять выделение со всех записей' type="checkbox" onChange={clickMainCheckboxN.bind(this)} checked={false}/>
     </div>;
 
     var column_x = ([
