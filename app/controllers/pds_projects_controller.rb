@@ -4,7 +4,7 @@ class PdsProjectsController < ApplicationController
   # GET /pds_projects
   # GET /pds_projects.json
   def select
-    @pds_projects = PdsProject.includes(:company).where('ProjectID in (?)', [90,87,83,80000001,80000003,88])
+    @pds_projects = PdsProject.includes(:company).where('ProjectID in (?)', [90, 87, 83, 80_000_001, 80_000_003, 88])
   end
 
   # GET /pds_projects/1
