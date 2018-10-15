@@ -62,22 +62,15 @@ class ExportXlsxModal extends React.Component {
       type: 'PUT',
       success: function (responce)
       {
-        debugger
         var bookname = 'kursk_evolution.xls';
         var wb = XLSX.utils.book_new();
         var ws;
-        //function arr_to_json(arr) {
-        //  return arr.map(function(ref){
-        //    return {ref: ref}
-        //  })
-        //};   
-        debugger
         ws = XLSX.utils.json_to_sheet(responce.pag1);   
-        XLSX.utils.book_append_sheet(wb,ws,'Курск')
+        XLSX.utils.book_append_sheet(wb,ws,'Удалено')
         ws = XLSX.utils.json_to_sheet(responce.pag2);   
-        XLSX.utils.book_append_sheet(wb,ws,'Курск 2014')
+        XLSX.utils.book_append_sheet(wb,ws,'Добавлено')
         ws = XLSX.utils.json_to_sheet(responce.pag3);   
-        XLSX.utils.book_append_sheet(wb,ws,'Совпадающие ref')
+        XLSX.utils.book_append_sheet(wb,ws,'Изменено')
         XLSX.writeFile(wb,bookname,{ bookType:'biff8'});
       },
       error: function (xhr, status, err)
