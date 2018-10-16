@@ -186,8 +186,8 @@ ru:
         IC: '"REF"'
         ctrl_power: '"Питание"'
       pds_recorder:
-        pds_recorder: '"Самописцы"'
-        pds_recorders: '"Самописцы"'
+        pds_recorder: '"Регистраторы"'
+        pds_recorders: '"Регистраторы"'
         id: '"ID"'
         sys: '"Сист."'
         system: '"Сист."'
