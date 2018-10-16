@@ -15,7 +15,10 @@ class PdsRecorder < ApplicationRecord
 
   def custom_hash
     serializable_hash(include: {
-                        hw_ic: { only: %i[ref tag_no Description], include: { hw_ped: { only: [:ped] } } },
+                        hw_ic: { only: %i[ref tag_no Description scaleMin scaleMax], include: { hw_ped: { only: [:ped] }, pds_project_unit: { include: {
+                          unit: { only: :Unit_RU }
+                        },
+                                                                                                                                              only: [] } } },
                         system: { only: [:System] },
                         pds_section_assembler: { only: [:section_name] }
                       })

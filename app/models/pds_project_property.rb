@@ -5,6 +5,10 @@ class PdsProjectProperty < ApplicationRecord
   alias_attribute :language, :Language
 
   def custom_hash
-    serializable_hash.merge(id: id)
+    serializable_hash(include: { pds_project: { only: :project_name } })
+  end
+
+  def serializable_hash(options = {})
+    super options.merge(methods: :id)
   end
 end

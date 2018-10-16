@@ -12,6 +12,7 @@ class DbmGeneratorController < ApplicationController
     current_user.message = ''
     current_user.save
     # Resque.enqueue(SelectBuilderJob, hash)
+    write_log('Инициализация...')
     dbm_generator = DbmGenerator.new(hash)
     case dbm_generator.gen_type
     when '0'
@@ -32,7 +33,6 @@ class DbmGeneratorController < ApplicationController
   end
 
   def render_sel_rf(dbm_generator)
-    write_log('Инициализация...')
     systems = dbm_generator.systems
     data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
@@ -70,7 +70,6 @@ class DbmGeneratorController < ApplicationController
   end
 
   def render_sel_mf(dbm_generator)
-    write_log('Инициализация...')
     systems = dbm_generator.systems
     data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
@@ -128,7 +127,6 @@ class DbmGeneratorController < ApplicationController
   end
 
   def render_sel_ped(dbm_generator)
-    write_log('Инициализация...')
     gen_tables = dbm_generator.systems
     data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
@@ -206,7 +204,6 @@ class DbmGeneratorController < ApplicationController
   end
 
   def render_sel_ppc(dbm_generator)
-    write_log('Инициализация...')
     gen_tables = dbm_generator.systems
     data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)

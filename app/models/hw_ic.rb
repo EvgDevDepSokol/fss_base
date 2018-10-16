@@ -7,6 +7,7 @@ class HwIc < ApplicationRecord
   belongs_to :hw_ped, foreign_key: :ped, class_name: 'HwPed'
   belongs_to :pds_project_unit, foreign_key: :Unit, class_name: 'PdsProjectUnit'
   belongs_to :pds_panel, foreign_key: :panel_id
+  belongs_to :pds_project, foreign_key: 'Project'
   # delegate :unit, to: :pds_project_unit
 
   alias_attribute :system_id, :sys

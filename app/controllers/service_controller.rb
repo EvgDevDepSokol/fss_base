@@ -24,7 +24,7 @@ class ServiceController < BaseController
 
   # TODO: не ясно нужно ли тут использовать скоуп проекта
   def pds_project_properties
-    @data_list = PdsProjectProperty.all
+    @data_list = PdsProjectProperty.where('ProjectID in (?)', PROJECT_LIST)
   end
 
   def pds_engineers
@@ -32,7 +32,7 @@ class ServiceController < BaseController
   end
 
   def pds_projects
-    @data_list = PdsProject.all
+    @data_list = PdsProject.where('ProjectID in (?)', PROJECT_LIST)
   end
 
   def pds_syslists

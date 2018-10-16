@@ -56,4 +56,17 @@ class DifferentStuffController < ApplicationController
       e = e1
     end
   end
+
+  public
+
+  def duplicate_project
+    tables = Tablelist.pluck(:table).to_a
+    byebug
+    tables.each do |tbl_name|
+      # e = Object.const_get(tbl_name.classify).where(IC: hw_ic.icID, Project: hw_ic.Project).first
+      # Object.const_get(tbl_name.classify)
+      if tbl_name.classify.constantize.repond_to?(:project)
+      end
+    end
+  end
 end
