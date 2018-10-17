@@ -42,14 +42,15 @@ class HwIc < ApplicationRecord
   end
 
   after_save do |hw_ic|
-    if hw_ic.ped_was.nil?
+    byebug
+    if hw_ic.ped_before_last_save.nil?
       add_equipment(hw_ic)
-    elsif hw_ic.ped_was && (table_by_ped(hw_ic.ped) != table_by_ped(hw_ic.ped_was))
+    elsif hw_ic.ped_before_last_save && (table_by_ped(hw_ic.ped) != table_by_ped(hw_ic.ped_before_last_save))
       destroy_equipment(hw_ic)
       add_equipment(hw_ic)
     else
       tbl_name = table_by_ped(hw_ic.ped)
-      if  tbl_name != 'pds_mnemo' && (hw_ic.sys_was != hw_ic.sys)
+      if  tbl_name != 'pds_mnemo' && (hw_ic.sys_before_last_save != hw_ic.sys)
         e = Object.const_get(tbl_name.classify).where(IC: hw_ic.icID, Project: hw_ic.Project).first
         e.sys = hw_ic.sys
         e.save
@@ -79,13 +80,13 @@ class HwIc < ApplicationRecord
   end
 
   def destroy_equipment(hw_ic)
-    tbl_name = table_by_ped(hw_ic.ped_was)
+    tbl_name = table_by_ped(hw_ic.ped)
     if tbl_name == 'pds_mnemo'
-      # e_was = tbl.where(Code: hw_ic.ref).to_a
+      # e = tbl.where(Code: hw_ic.ref).to_a
     elsif
       tbl = Object.const_get(tbl_name.classify)
-      e_was = tbl.where(IC: hw_ic.icID).to_a
-      e_was.each(&:destroy)
+      e = tbl.where(IC: hw_ic.icID).to_a
+      e.each(&:destroy)
     end
   end
 end
