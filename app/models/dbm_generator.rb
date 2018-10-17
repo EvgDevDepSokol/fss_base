@@ -17,7 +17,6 @@ class DbmGenerator
     attributes.each do |name, value|
       send("#{name}=", value)
     end
-    byebug
     attributes['gen_tag'] = attributes['gen_tag'] == 'true'
     @project = PdsProject.find(attributes['project_id'])
     @properties = project.project_properties
@@ -52,6 +51,6 @@ class DbmGenerator
   end
 
   def project_ssh(_project_id)
-    { ip: properties.HostIP, pass: properties.LoadPass, remote_path: '/home/' + properties.SimDir ? properties.SimDir : '' + 'load/pds_sel_test/' }
+    { ip: properties.HostIP, pass: properties.LoadPass, remote_path: '/home/' + (properties.SimDir || '') + 'load/pds_sel_test/' }
   end
 end

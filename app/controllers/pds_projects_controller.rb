@@ -1,4 +1,5 @@
 class PdsProjectsController < ApplicationController
+  include GeneralControllerHelper
   # Project controller
   before_action :set_pds_project, only: %i[show edit update destroy]
   # GET /pds_projects

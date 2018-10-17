@@ -39,7 +39,8 @@ class DbmGeneratorController < ApplicationController
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
     write_log('Подключение к серверу: ' + ssh[:ip] + '.')
-    Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+    session = start_session(ssh)
+    if session
       session.exec!('mkdir ' + ssh[:remote_path])
       ssh[:remote_path] += REMOTE_FOLDER[dbm_generator.gen_type.to_i]
       session.exec!('mkdir ' + ssh[:remote_path])
@@ -64,9 +65,10 @@ class DbmGeneratorController < ApplicationController
         session.scp.upload! @local_path, ssh[:remote_path] + file_name
         write_log('Файл ' + file_name + ' загружен на сервер.')
       end
+      session.close
+      write_log('Генерация завершена.')
+      write_log('Файлы размещены в ' + ssh[:remote_path])
     end
-    write_log('Генерация завершена.')
-    write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
   def render_sel_mf(dbm_generator)
@@ -76,7 +78,8 @@ class DbmGeneratorController < ApplicationController
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
     write_log('Подключение к серверу: ' + ssh[:ip] + '.')
-    Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+    session = start_session(ssh)
+    if session
       session.exec!('mkdir ' + ssh[:remote_path])
       ssh[:remote_path] += REMOTE_FOLDER[dbm_generator.gen_type.to_i]
       session.exec!('mkdir ' + ssh[:remote_path])
@@ -121,9 +124,10 @@ class DbmGeneratorController < ApplicationController
         session.scp.upload! @local_path, ssh[:remote_path] + file_name
         write_log('Файл ' + file_name + ' загружен на сервер.')
       end
+      session.close
+      write_log('Генерация завершена.')
+      write_log('Файлы размещены в ' + ssh[:remote_path])
     end
-    write_log('Генерация завершена.')
-    write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
   def render_sel_ped(dbm_generator)
@@ -132,16 +136,17 @@ class DbmGeneratorController < ApplicationController
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
-    template_lodi = HwIosignaldef.where(memtype: %w[LO DI]).all.pluck(:ioname)
-    template_aidi = HwIosignaldef.where(memtype: %w[AI DI]).all.pluck(:ioname)
-    gen_tag_b = dbm_generator.gen_tag == 'true'
-    hw_ped = HwPed.first
-    sig_def = {}
-    hw_ped.signals.each do |sig_name|
-      sig_def[sig_name] = HwIosignaldef.where(ioname: sig_name).pluck('ID')
-    end
     write_log('Подключение к серверу: ' + ssh[:ip] + '.')
-    Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+    session = start_session(ssh)
+    if session
+      template_lodi = HwIosignaldef.where(memtype: %w[LO DI]).all.pluck(:ioname)
+      template_aidi = HwIosignaldef.where(memtype: %w[AI DI]).all.pluck(:ioname)
+      gen_tag_b = dbm_generator.gen_tag == 'true'
+      hw_ped = HwPed.first
+      sig_def = {}
+      hw_ped.signals.each do |sig_name|
+        sig_def[sig_name] = HwIosignaldef.where(ioname: sig_name).pluck('ID')
+      end
       session.exec!('mkdir ' + ssh[:remote_path])
       ssh[:remote_path] += REMOTE_FOLDER[dbm_generator.gen_type.to_i]
       session.exec!('mkdir ' + ssh[:remote_path])
@@ -198,9 +203,10 @@ class DbmGeneratorController < ApplicationController
         session.scp.upload! @local_path, ssh[:remote_path] + file_name
         write_log('Файл ' + file_name + ' загружен на сервер.')
       end
+      session.close
+      write_log('Генерация завершена.')
+      write_log('Файлы размещены в ' + ssh[:remote_path])
     end
-    write_log('Генерация завершена.')
-    write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
   def render_sel_ppc(dbm_generator)
@@ -210,7 +216,8 @@ class DbmGeneratorController < ApplicationController
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
     write_log('Подключение к серверу: ' + ssh[:ip] + '.')
-    Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass]) do |session|
+    session = start_session(ssh)
+    if session
       session.exec!('mkdir ' + ssh[:remote_path])
       ssh[:remote_path] += REMOTE_FOLDER[dbm_generator.gen_type.to_i]
       session.exec!('mkdir ' + ssh[:remote_path])
@@ -233,9 +240,10 @@ class DbmGeneratorController < ApplicationController
         session.scp.upload! @local_path, ssh[:remote_path] + file_name
         write_log('Файл ' + file_name + ' загружен на сервер.')
       end
+      session.close
+      write_log('Генерация завершена.')
+      write_log('Файлы размещены в ' + ssh[:remote_path])
     end
-    write_log('Генерация завершена.')
-    write_log('Файлы размещены в ' + ssh[:remote_path])
   end
 
   def check_tags
@@ -350,5 +358,12 @@ class DbmGeneratorController < ApplicationController
   def write_log(string)
     current_user.message += Time.now.strftime('%Y.%m.%d %H:%M:%S ') + string + '\n'
     current_user.save
+  end
+
+  def start_session(ssh)
+    session = Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass])
+  rescue StandardError
+    write_log('НЕ УДАЛОСЬ подключиться к серверу: ' + ssh[:ip] + '!')
+    false
   end
 end
