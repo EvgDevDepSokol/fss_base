@@ -1,5 +1,5 @@
 module GeneralControllerHelper
-  PROJECT_LIST = [90, 87, 83, 80_000_001, 80_000_003, 88].freeze
+  PROJECT_LIST = [90, 87, 83, 80_000_001, 80_000_002, 80_000_003, 88].freeze
   def model
     @model ||= params[:model].to_s.classify.constantize
   end
