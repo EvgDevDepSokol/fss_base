@@ -4,6 +4,7 @@ class PdsMalfunction < ApplicationRecord
   self.table_name = 'pds_malfunction'
 
   include DbmGeneratorHelper
+  attr_accessor :skip_callbacks
 
   alias_attribute :id, primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
@@ -32,6 +33,8 @@ class PdsMalfunction < ApplicationRecord
   after_commit :check_dims, on: %i[create update]
 
   def check_dims
+    return if skip_callbacks
+
     pds_malfunction = self
     pds_malfunction_dims = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
     icnt = pds_malfunction.Dimension - pds_malfunction_dims.size

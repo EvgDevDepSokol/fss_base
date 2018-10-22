@@ -1,6 +1,8 @@
 class HwIc < ApplicationRecord
   self.table_name = 'hw_ic'
   include DbmGeneratorHelper
+  include EquipmentPanelsHelper
+  attr_accessor :skip_callbacks
   alias_attribute :id, primary_key
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
@@ -42,7 +44,8 @@ class HwIc < ApplicationRecord
   end
 
   after_save do |hw_ic|
-    byebug
+    next if hw_ic.skip_callbacks
+
     if hw_ic.ped_before_last_save.nil?
       add_equipment(hw_ic)
     elsif hw_ic.ped_before_last_save && (table_by_ped(hw_ic.ped) != table_by_ped(hw_ic.ped_before_last_save))
@@ -59,6 +62,8 @@ class HwIc < ApplicationRecord
   end
 
   after_destroy do |hw_ic|
+    next if hw_ic.skip_callbacks
+
     destroy_equipment(hw_ic)
   end
 
