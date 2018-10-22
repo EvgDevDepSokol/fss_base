@@ -30,7 +30,7 @@ class PdsProject < ApplicationRecord
     tbls_with_prj = []
     old2new = {}
     # create list of tables with 'project' attribute
-    tbls_with_callbacks = ['HwIc' 'PdsMalfunction']
+    tbls_with_callbacks = %w[HwIc PdsMalfunction]
     tbls.each do |tbl_name|
       next if skip_tables.include?(tbl_name)
 
@@ -58,8 +58,8 @@ class PdsProject < ApplicationRecord
       scope_old = tbl_class.where(Project: project_old_id).to_a
       scope_old.each do |obj|
         obj_new = obj.dup
-        obj_new.Project = project_new_id
         obj_new.skip_callbacks = true if tbls_with_callbacks.include?(tbl_name)
+        obj_new.Project = project_new_id
         obj_new.save
         tbl_hash[obj.id] = obj_new.id
       end
@@ -80,15 +80,18 @@ class PdsProject < ApplicationRecord
         ext_keys.each do |ekey|
           obj[ekey[:key]] = old2new[ekey[:tbl]][obj[ekey[:key]]] if old2new[ekey[:tbl]][obj[ekey[:key]]]
         end
-        obj.save if obj.changed?
+        if obj.changed?
+          obj.skip_callbacks = true if tbls_with_callbacks.include?(tbl_name)
+          obj.save
+        end
       end
     end
-    byebug
+    # check if tables have the same amount of objects
     tbls_with_prj.each do |tbl_name|
       tbl_class = tbl_name.constantize
       num_old = tbl_class.where(Project: project_old_id).count
       num_new = tbl_class.where(Project: project_new_id).count
-      printf '%s: %i, %i', tbl_name, num_new, num_old if num_new != num_old
+      printf '%s: было %i, стало %i', tbl_name, num_old, num_new if num_new != num_old
     end
   end
 end
