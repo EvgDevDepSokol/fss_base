@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # Users controller
-  # before_action :set_pds_engineer, only: [:show, :edit, :update, :destroy]
+  before_action :set_pds_engineer, only: [:show, :edit, :update, :destroy]
   # GET /pds_engineers
   # GET /pds_engineers.json
   def index
@@ -9,7 +9,8 @@ class UsersController < ApplicationController
 
   # GET /pds_engineers/1
   # GET /pds_engineers/1.json
-  def show; end
+  def show
+  end
 
   # GET /pds_engineers/new
   def new
@@ -17,7 +18,8 @@ class UsersController < ApplicationController
   end
 
   # GET /pds_engineers/1/edit
-  def edit; end
+  def edit
+  end
 
   # POST /pds_engineers
   # POST /pds_engineers.json
@@ -26,8 +28,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @pds_engineer.save
-        format.html { redirect_to @pds_engineer, notice: 'Pds engineer was successfully created.' }
-        format.json { render :show, status: :created, location: @pds_engineer }
+        # format.html { redirect_to @pds_engineer, notice: 'Pds engineer was successfully created.' }
+        # format.json { render :show, status: :created, location: @pds_engineer }
       else
         format.html { render :new }
         format.json { render json: @pds_engineer.errors, status: :unprocessable_entity }
@@ -40,8 +42,8 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @pds_engineer.update(pds_engineer_params)
-        format.html { redirect_to @pds_engineer, notice: 'Pds engineer was successfully updated.' }
-        format.json { render :show, status: :ok, location: @pds_engineer }
+        # format.html { redirect_to @pds_engineer, notice: 'Pds engineer was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @pds_engineer }
       else
         format.html { render :edit }
         format.json { render json: @pds_engineer.errors, status: :unprocessable_entity }
