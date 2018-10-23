@@ -1,12 +1,14 @@
 class DifferentStuffController < ApplicationController
   layout false
 
-  def compare_kursks
+  def compare_projects
     hash = params[:data]
-    project_old_id = 80_000_001
-    project_new_id = 80_000_003
+    # project_old_id = 80_000_001
+    # project_new_id = 80_000_003
     # project_old_id = 83
     # project_new_id = 80_000_002
+    project_old_id = params[:project_old_id]
+    project_new_id = params[:project_new_id]
     ref1 = HwIc.where(Project: project_old_id).pluck(:ref) # old
     ref3 = HwIc.where(Project: project_new_id).pluck(:ref) # 2014
     pag1 = []
@@ -15,7 +17,6 @@ class DifferentStuffController < ApplicationController
     list1 = (ref1 - ref3).sort
     list2 = (ref3 - ref1).sort
     list3 = (ref1 - (ref1 - ref3)).sort
-    byebug
     unless list1.empty?
       hw_ic_by_ref_arr(project_old_id, list1).each_with_index do |hw_ic, index|
         pag1.push({ ref: list1[index] }.merge(hw_ic))
@@ -28,6 +29,7 @@ class DifferentStuffController < ApplicationController
     end
     hw_ic1_arr = hw_ic_by_ref_arr(project_old_id, list3)
     hw_ic3_arr = hw_ic_by_ref_arr(project_new_id, list3)
+
     hw_ic1_arr.each_with_index do |hw_ic1, index|
       line = {}
       hw_ic3 = hw_ic3_arr[index]
@@ -46,7 +48,7 @@ class DifferentStuffController < ApplicationController
         end
       end
       pag3.push(line)
-    end
+    end if hw_ic1_arr.present?
     render json: { status: :ok, pag1: pag1, pag2: pag2, pag3: pag3 }
   end
 
@@ -65,6 +67,6 @@ class DifferentStuffController < ApplicationController
       e1['max']              = e[6]
       e1['unit']             = e[7]
       e = e1
-    end
+    end || []
   end
 end

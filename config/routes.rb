@@ -90,7 +90,7 @@ Rails.application.routes.draw do
   put :generate_dbm_sel, to: 'dbm_generator#prepare_hash'
   put :get_log, to: 'dbm_generator#get_log'
   put :generate_dbm_check_tags, to: 'dbm_generator#check_tags'
-  put :compare_kursks, to: 'different_stuff#compare_kursks'
+  put :compare_projects, to: 'different_stuff#compare_projects'
 
   resources :users
 

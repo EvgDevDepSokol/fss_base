@@ -29,6 +29,8 @@ class ExportXlsxModal extends React.Component {
     this.onExport = this.onExport.bind(this);
     this.onRadioChange = this.onRadioChange.bind(this);
     this.compare_kursks = this.compare_kursks.bind(this);
+    this.compare_balakovos = this.compare_balakovos.bind(this);
+    this.compare_projects = this.compare_projects.bind(this);
   }
 
   openModal() {
@@ -54,15 +56,27 @@ class ExportXlsxModal extends React.Component {
     this.setState({modalIsOpen: false});
   }
 
+  compare_balakovos() {
+    this.compare_projects(88,80000004,'balakovo_diff.xls')
+  }
+
   compare_kursks() {
+    this.compare_projects(80000001,80000003,'kursk_diff.xls')
+  }
+
+  compare_projects(project_old_id, project_new_id, bookname) {
+    var data = {
+      project_old_id: project_old_id,
+      project_new_id: project_new_id
+    };
     $.ajax(
     {
-      url: '/compare_kursks',
+      url: '/compare_projects',
       dataType: 'json',
+      data: data,
       type: 'PUT',
       success: function (responce)
       {
-        var bookname = 'kursk_evolution.xls';
         var wb = XLSX.utils.book_new();
         var ws;
         ws = XLSX.utils.json_to_sheet(responce.pag1);   
@@ -107,7 +121,12 @@ class ExportXlsxModal extends React.Component {
           <h3></h3>
           <h3></h3>
           <div>
-            <button onClick={this.compare_kursks}>Различие курских проектов</button>
+            <button onClick={this.compare_kursks}>Различия курских проектов</button>
+          </div>
+          <h3></h3>
+          <h3></h3>
+          <div>
+            <button onClick={this.compare_balakovos}>Различия балаковских проектов</button>
           </div>
         </Modal>
       </div>
