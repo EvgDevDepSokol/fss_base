@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import XLSX from 'xlsx'
+import XLSX from 'xlsx';
 
 const customStyles = {
   content: {
@@ -47,7 +47,7 @@ class ExportXlsxModal extends React.Component {
 
   onRadioChange(e) {
     var exportIndex = parseInt(e.target.value, 10);
-    this.setState({exportIndex: exportIndex})
+    this.setState({exportIndex: exportIndex});
   }
 
   onExport() {
@@ -57,11 +57,11 @@ class ExportXlsxModal extends React.Component {
   }
 
   compare_balakovos() {
-    this.compare_projects(88,80000004,'balakovo_diff.xls')
+    this.compare_projects(88,80000004,'balakovo_diff.xls');
   }
 
   compare_kursks() {
-    this.compare_projects(80000001,80000003,'kursk_diff.xls')
+    this.compare_projects(80000001,80000003,'kursk_diff.xls');
   }
 
   compare_projects(project_old_id, project_new_id, bookname) {
@@ -80,16 +80,15 @@ class ExportXlsxModal extends React.Component {
         var wb = XLSX.utils.book_new();
         var ws;
         ws = XLSX.utils.json_to_sheet(responce.pag1);   
-        XLSX.utils.book_append_sheet(wb,ws,'Удалено')
+        XLSX.utils.book_append_sheet(wb,ws,'Удалено');
         ws = XLSX.utils.json_to_sheet(responce.pag2);   
-        XLSX.utils.book_append_sheet(wb,ws,'Добавлено')
+        XLSX.utils.book_append_sheet(wb,ws,'Добавлено');
         ws = XLSX.utils.json_to_sheet(responce.pag3);   
-        XLSX.utils.book_append_sheet(wb,ws,'Изменено')
+        XLSX.utils.book_append_sheet(wb,ws,'Изменено');
         XLSX.writeFile(wb,bookname,{ bookType:'biff8'});
       },
       error: function (xhr, status, err)
       {
-        debugger
       },
       async: true
     });
@@ -99,7 +98,7 @@ class ExportXlsxModal extends React.Component {
     var data = this.props.data;
     var cnt_all = data.length;
     var cnt_chk = data.filter(function(elem) {
-      return elem.checked
+      return elem.checked;
     }).length;
     return (
       <div className="export-to-excel" onClick={this.openModal}>
