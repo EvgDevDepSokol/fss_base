@@ -22,7 +22,7 @@ module.exports = function() {
         <span classname='checkbox'>
           <input type="checkbox" onClick={clickCheckBox()}/>
         </span>
-      )
+      );
     },
 
     onChange: function(e) {
@@ -31,7 +31,7 @@ module.exports = function() {
 
     done: function() {
       var h = {};
-      h[this.props.attribute] = ReactDOM.findDOMNode(this).value
+      h[this.props.attribute] = ReactDOM.findDOMNode(this).value;
       this.props.onValue(h);
     }
   });

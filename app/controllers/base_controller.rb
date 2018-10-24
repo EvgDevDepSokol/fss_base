@@ -28,11 +28,11 @@ class BaseController < ApplicationController
              status: :unprocessable_entity
       Rails.logger.info(@current_object.errors.full_messages)
     end
-    rescue StandardError
-      render json: { errors: current_object.errors.full_messages, data: data },
-             status: :unprocessable_entity
-      Rails.logger.info(@current_object.errors.full_messages)
-    end
+  rescue StandardError
+    render json: { errors: current_object.errors.full_messages, data: data },
+           status: :unprocessable_entity
+    Rails.logger.info(@current_object.errors.full_messages)
+  end
 
   def destroy
     if current_object.destroy

@@ -29,5 +29,5 @@ class SimpleSelect extends React.Component {
       </select>
     );
   }
-};
+}
 module.exports = SimpleSelect.bind(this);

@@ -20,8 +20,8 @@ module.exports = function() {
     },
 
     render: function() {
-      return (React.createElement("textarea", {
-        className: "wide-text",
+      return (React.createElement('textarea', {
+        className: 'wide-text',
         value: this.state.value,
         onChange: this.onChange,
         onKeyUp: this.keyUp,
@@ -50,7 +50,7 @@ module.exports = function() {
 
     done: function() {
       var h = {};
-      h[this.props.attribute] = ReactDOM.findDOMNode(this).value
+      h[this.props.attribute] = ReactDOM.findDOMNode(this).value;
       this.props.onValue(h);
     },
     cancel: function() {
@@ -58,7 +58,7 @@ module.exports = function() {
     },
     save: function() {
       var h = {};
-      h[this.props.attribute] = ReactDOM.findDOMNode(this).value
+      h[this.props.attribute] = ReactDOM.findDOMNode(this).value;
       this.props.onSave(h);
     }
   });

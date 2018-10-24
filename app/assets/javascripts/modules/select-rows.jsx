@@ -63,7 +63,7 @@ module.exports.getRows = function(search, columns, data) {
     var formatter = col.search || formatters.identity;
 
     if (col.nested) {
-      var keys = property.split(".");
+      var keys = property.split('.');
       var tempVal = row;
       keys.forEach(function(key) {
         if (tempVal) {

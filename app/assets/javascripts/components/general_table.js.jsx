@@ -134,7 +134,7 @@ var TableContainer = React.createClass({
       function labelFromSelectorList(array, value) {
         var tmp = array.filter(function(obj) {
           if (obj.value === value) {
-            return true
+            return true;
           }
         });
         return tmp[0]
@@ -144,15 +144,15 @@ var TableContainer = React.createClass({
       return function(value, data, rowIndex, property) {
         var id;
         if (nested) {
-          var keys = property.split(".");
+          var keys = property.split('.');
           var tempVal = data[rowIndex];
 
           if (tempVal[keys[0]])
-            id = tempVal[keys[0]].id
+            id = tempVal[keys[0]].id;
           keys.forEach(function(key) {
             if (tempVal) {
               tempVal = tempVal[key];
-            };
+            }
           });
           value = tempVal;
         }
@@ -161,36 +161,36 @@ var TableContainer = React.createClass({
           value = '';
 
         if (editor) {
-          if ((editor == BooleanNumbSelector) && (typeof(value) == "number")) {
-            value = (value == 0) ? "нет" : "да";
+          if ((editor == BooleanNumbSelector) && (typeof(value) == 'number')) {
+            value = (value == 0) ? 'нет' : 'да';
           }
           if (editor == ValveTypeSelector) {
-            value = labelFromSelectorList(editor.options, value)
+            value = labelFromSelectorList(editor.options, value);
           }
           if (editor == BooleanSelector) {
-            value = value ? "да" : "нет";
+            value = value ? 'да' : 'нет';
           }
           if (editor == BooleanNumbSelector) {
-            value = labelFromSelectorList(editor.options, value)
+            value = labelFromSelectorList(editor.options, value);
           }
           if (editor == UserRightsSelector) {
-            value = labelFromSelectorList(editor.options, value)
+            value = labelFromSelectorList(editor.options, value);
           }
           if (editor == SystemDocSelector) {
-            id=[]
-            value=[]
-            if (!!data[rowIndex][property]) {
-              if (!!data[rowIndex][property]['extra_data']) {
-                if (!!data[rowIndex][property]['extra_data'][0]) {
-                  id = data[rowIndex][property]['extra_data'][0]
-                  value = data[rowIndex][property]['extra_data'][1]
+            id=[];
+            value=[];
+            if (data[rowIndex][property]) {
+              if (data[rowIndex][property]['extra_data']) {
+                if (data[rowIndex][property]['extra_data'][0]) {
+                  id = data[rowIndex][property]['extra_data'][0];
+                  value = data[rowIndex][property]['extra_data'][1];
                 }
               }
             }
           }
         }
 
-        var editedRow = context.state["editedRow"];
+        var editedRow = context.state['editedRow'];
         if (editedRow === rowIndex) {
           return {
             value: React.createElement(editor, {
@@ -236,13 +236,13 @@ var TableContainer = React.createClass({
               }
             }
           };
-        };
-      }
+        }
+      };
     }.bind(this);
 
     var nestedValue = function(options) {
       return function(value, data, rowIndex, property) {
-        var keys = property.split(".");
+        var keys = property.split('.');
         var tempVal = data[rowIndex];
 
         keys.forEach(function(key) {
@@ -254,32 +254,32 @@ var TableContainer = React.createClass({
         if (tempVal == null)
           tempVal = '';
         return {value: tempVal};
-      }
+      };
     }.bind(this);
 
     var columns = this.props.columns.map(function(column) {
       var h = column; //  {property: column.property, header: column.header, };
       if (column.editor == 'TextEditor') {
-        column.headerClassStyle = 'header-text-col'
+        column.headerClassStyle = 'header-text-col';
       } else if (column.editor == 'WideTextEditor') {
-        column.headerClassStyle = 'header-wide_text-col'
+        column.headerClassStyle = 'header-wide_text-col';
       } else if (column.property == 'system.System') {
-        column.headerClassStyle = 'header-sys_sys-col'
+        column.headerClassStyle = 'header-sys_sys-col';
       } else if (!column.nested) {
-        column.headerClassStyle = 'header-' + column.property + '-col'
+        column.headerClassStyle = 'header-' + column.property + '-col';
       } else {
-        var keys = column.property.split(".");
-        column.headerClassStyle = 'header-' + keys[keys.length - 1] + '-col'
+        var keys = column.property.split('.');
+        column.headerClassStyle = 'header-' + keys[keys.length - 1] + '-col';
       }
       if (column.editor) {
         column['editor'] = eval(column.editor);
-        h["cell"] = [
+        h['cell'] = [
           editableField(column),
           highlighter(h.property)
-        ]
+        ];
         //h["cell"] = [editableField(column)]
       } else if (column.nested) {
-        h["cell"] = [
+        h['cell'] = [
           nestedValue(column),
           highlighter(h.property)
         ];
@@ -290,7 +290,7 @@ var TableContainer = React.createClass({
 
     // remove hidden elements
     columns = columns.filter(function(e) {
-      return e.hidden != true
+      return e.hidden != true;
     });
 
 
@@ -311,7 +311,7 @@ var TableContainer = React.createClass({
             if (this.props.objectType == 'pds_malfunction_dim')
               return;
             if (current_user.user_rights >= 2) {
-              var res = confirm("Вы действительно желаете удалить запись?");
+              var res = confirm('Вы действительно желаете удалить запись?');
               if (!res)
                 return;
               if (newRow) {
@@ -331,7 +331,7 @@ var TableContainer = React.createClass({
                   }.bind(this),
                   error: function(xhr, status, err) {
                     var jtmp = xhr.responseJSON['errors'];
-                    var result = "Не удалось удалить запись. Причина:\n\n";
+                    var result = 'Не удалось удалить запись. Причина:\n\n';
                     for (key in jtmp) {
                       result += jtmp[key] + '\n';
                     }
@@ -402,28 +402,28 @@ var TableContainer = React.createClass({
           </span>;
           return {value: (
 
-              <span style={{
-                width: '100px'
-              }}>
-                {this.state["editedRow"] === rowIndex
-                  ? [saveButton, cancelButton]
-                  : [editButton, copyButton]}
-                {deleteButton}
-              </span>
-            )};
+            <span style={{
+              width: '100px'
+            }}>
+              {this.state['editedRow'] === rowIndex
+                ? [saveButton, cancelButton]
+                : [editButton, copyButton]}
+              {deleteButton}
+            </span>
+          )};
         }.bind(this)
       }
     ]);
 
     var clickMainCheckboxY = function(e) {
-      this.state.mainCheckbox_new = true
+      this.state.mainCheckbox_new = true;
       this.setState({mainCheckbox_new: true, mainCheckbox_old: false});
-    }
+    };
 
     var clickMainCheckboxN = function(e) {
-      this.state.mainCheckbox_new = false
+      this.state.mainCheckbox_new = false;
       this.setState({mainCheckbox_new: false, mainCheckbox_old: true});
-    }
+    };
 
     var mainCheckbox = <div className="two-checkboxes">
       <input title='Выделить все записи для замены/экспорта' type="checkbox" onChange={clickMainCheckboxY.bind(this)} checked={true}/>
@@ -443,7 +443,7 @@ var TableContainer = React.createClass({
           var clickCheckBox = function() {
             this.state.data[idx].checked = !this.state.data[idx].checked;
             this.setState({data: this.state.data});
-          }
+          };
 
           if (idx > -1) {
             var checkBox = <span className='checkbox'>
@@ -459,12 +459,12 @@ var TableContainer = React.createClass({
           }
 
           return {value: (
-              <span style={{
-                width: '30px'
-              }}>
-                {checkBox}
-              </span>
-            )};
+            <span style={{
+              width: '30px'
+            }}>
+              {checkBox}
+            </span>
+          )};
 
         }.bind(this)
       }
@@ -474,7 +474,7 @@ var TableContainer = React.createClass({
     column_x = null;
 
     columns.map(function(column) {
-      column.label = column.header
+      column.label = column.header;
     });
     var myDefaultSorter = function(data, column) {
       var property = column.property;
@@ -536,7 +536,7 @@ var TableContainer = React.createClass({
     var show_hidden_columns = this.state.show_hidden_columns;
     var columns = this.state.columns;
     columns = columns.filter(function(e) {
-      return (!e.show_on_request || (e.show_on_request && show_hidden_columns ))
+      return (!e.show_on_request || (e.show_on_request && show_hidden_columns ));
     });
 
     var isEditableColumn = function(column) {
@@ -547,18 +547,18 @@ var TableContainer = React.createClass({
       if (!header.props) {
         column.header = <span className={className}>
           {header}
-        </span>
+        </span>;
       }
-      return column
-    }
+      return column;
+    };
     columns.every(isEditableColumn);
 
     // if you don't want an header, just return;
     return (this.state.showFilters
       ? <thead>
-          <ColumnNames config={headerConfig} columns={columns}/>
-          <ColumnFilters columns={columns} onUserInput={this.onFilterInput} disabled={this.state.lockRow}/>
-        </thead>
+        <ColumnNames config={headerConfig} columns={columns}/>
+        <ColumnFilters columns={columns} onUserInput={this.onFilterInput} disabled={this.state.lockRow}/>
+      </thead>
       : <thead>
         <ColumnNames config={headerConfig} columns={columns}/>
       </thead>);
@@ -632,7 +632,7 @@ var TableContainer = React.createClass({
           }.bind(this),
           error: function(xhr, status, err) {
             var jtmp = xhr.responseJSON['errors'];
-            var result = "Не удалось сохранить запись. Причина:\n\n";
+            var result = 'Не удалось сохранить запись. Причина:\n\n';
             for (key in jtmp) {
               result += jtmp[key] + '\n';
             }
@@ -647,14 +647,14 @@ var TableContainer = React.createClass({
           data: d,
           success: function(response) {
             if (response.data.MalfunctDimID) {
-              response.data.system = response.data.pds_malfunction.system
+              response.data.system = response.data.pds_malfunction.system;
             }
             this.state.data[idx] = response.data;
             this.setState({data: this.state.data, lockRow: false, sendData: {}, editedRow: null});
           }.bind(this),
           error: function(xhr, status, err) {
             var jtmp = xhr.responseJSON['errors'];
-            var result = "Не удалось сохранить запись. Причина:\n\n";
+            var result = 'Не удалось сохранить запись. Причина:\n\n';
             for (key in jtmp) {
               result += jtmp[key] + '\n';
             }
@@ -684,8 +684,8 @@ var TableContainer = React.createClass({
         columns.forEach(function(col) {
           col.sort = null;
         });
-        this.setState({columns: columns, sortingColumn: null})
-      };
+        this.setState({columns: columns, sortingColumn: null});
+      }
       // var copyRow  = newRow || {};
       var data = this.state.data;
 
@@ -700,7 +700,7 @@ var TableContainer = React.createClass({
         copyRow.system.id = this.state.systemFilter;
       var sendData = copyRow;
       copyRow['newRow'] = true;
-      copyRow['_id'] = "new-" + Date.now();
+      copyRow['_id'] = 'new-' + Date.now();
       data.splice(idx, 0, copyRow);
       this.setState({data: data, editedRow: 0, lockRow: true, sendData: this.getDuplicatedRowsendData(copyRow)});
     } else {
@@ -777,21 +777,21 @@ var TableContainer = React.createClass({
    
     if (exportIndex === 1) {
       var dataxls = this.state.dataxls.filter(function(elem) {
-        return elem.checked
+        return elem.checked;
       });
     } else {
       var dataxls = this.state.dataxls;
-    };
+    }
     var columns = this.props.columns.filter(function(column) {
       if (column.attribute !== 'extra_label') {
-        return true
+        return true;
       }
     });
     exportData(dataxls, columns, bookname);
   },
 
   onReplaceDone: function(data) {
-    this.setState({data: data})
+    this.setState({data: data});
   },
 
   onSystemSelectorChange: function(value) {
@@ -825,31 +825,31 @@ var TableContainer = React.createClass({
     var systemFilter = this.state.systemFilter;
     var show_hidden_columns = this.state.show_hidden_columns;
     columns = columns.filter(function(e) {
-      return (!e.show_on_request || (e.show_on_request && show_hidden_columns ))
+      return (!e.show_on_request || (e.show_on_request && show_hidden_columns ));
     });
-    debugger
+    debugger;
     var columns2=columns;
 
     columns.forEach(function(column) {
       if (!column.headerClass || column.headerClass.indexOf(column.headerClassStyle) == -1) {
-        column.headerClass = column.headerClassStyle + ' ' + column.headerClass
+        column.headerClass = column.headerClassStyle + ' ' + column.headerClass;
       }
     });
 
     if (systemFilter && systemFilter != -1) {
-      if (!!data[0]) {
+      if (data[0]) {
         var firstRow = data[0];
-        if (!!firstRow.system) {
+        if (firstRow.system) {
           data = _.filter(data, function(row) {
             return row.system && row.system.id == systemFilter;
           });
-        } else if (!!firstRow.doc_arr ) {
+        } else if (firstRow.doc_arr ) {
           data = _.filter(data, function(row) {
             return !!row.doc_arr && !!row.doc_arr.extra_data && !!row.doc_arr.extra_data[0] && row.doc_arr.extra_data[0].includes(systemFilter);
           });
-        };
-      };
-    };
+        }
+      }
+    }
     if (this.state.showFilters) {
       columns.forEach(function(column) {
         if (column.filter) {
@@ -858,10 +858,10 @@ var TableContainer = React.createClass({
           cfilter['column'] = column.property;
           data = Search.search(cfilter, columns, data);
         }
-      })
-    };
+      });
+    }
     if (this.state.search.query) {
-      data = Search.search(this.state.search, this.state.columns, data)
+      data = Search.search(this.state.search, this.state.columns, data);
     }
     var mainCheckbox_new = this.state.mainCheckbox_new;
     if (mainCheckbox_new !== this.state.mainCheckbox_old) {
@@ -869,28 +869,28 @@ var TableContainer = React.createClass({
         row.checked = mainCheckbox_new;
       });
       this.state.mainCheckbox_old = mainCheckbox_new;
-    };
+    }
 
     var sortingColumn=this.state.sortingColumn;
     if (sortingColumn) {
       data = data.map(function(row) {
         var h = row;
         if(row[sortingColumn.property] === null) {
-          h[sortingColumn.property] = ''
+          h[sortingColumn.property] = '';
         }
-        return(h)
+        return(h);
       });
     }
     data = sortColumn.sort(data, sortingColumn, orderBy);
-    this.state.dataxls = data
+    this.state.dataxls = data;
     var paginated = paginate(data, pagination);
     var pages = Math.ceil(data.length / Math.max(isNaN(pagination.perPage)
       ? 1
       : pagination.perPage, 1));
    
     return (
-      <div className="main-container-inner" key={"main-table"}>
-        <div className="table-info" key={"table-info"}>
+      <div className="main-container-inner" key={'main-table'}>
+        <div className="table-info" key={'table-info'}>
           <div className="title">
             {this.props.title}
           </div>
@@ -900,7 +900,7 @@ var TableContainer = React.createClass({
                 <div className='total'>
                   <p>Записей -</p>
                   <p>{data.length}</p>
-                  <p>{"на " + pages + " стр."}</p>
+                  <p>{'на ' + pages + ' стр.'}</p>
                 </div>
                 <div className='system-selector'>
                   <SystemFilterSelector attribute="system" onValue={this.onSystemSelectorChange} disabled={this.state.lockRow} value={this.state.systemFilter}/>
@@ -944,7 +944,7 @@ var TableContainer = React.createClass({
         </div>
         <div className={this.state.showReplace
           ? 'table-filters'
-          : 'table-filters hidden-element'} key={"table-filters"}>
+          : 'table-filters hidden-element'} key={'table-filters'}>
           <div className="left">
 
             <div className="replace-container">
@@ -971,7 +971,7 @@ var TableContainer = React.createClass({
 
         <div className={this.state.showReplace
           ? 'table-container table-container-replace-show'
-          : 'table-container table-container-replace-hide'} key={"table-container"}>
+          : 'table-container table-container-replace-hide'} key={'table-container'}>
 
           <Table className='table table-bordered' columnNames={this.columnFilters} data={paginated.data} columns={columns2} row={(d, rowIndex) => {
             var rowClass = rowIndex % 2
@@ -1029,7 +1029,7 @@ function augmentWithTitles(o) {
 function getNestedKey(obj, keys) {
   var tempVal = obj;
 
-  keys.split(".").forEach(function(key) {
+  keys.split('.').forEach(function(key) {
     if (tempVal) {
       tempVal = tempVal[key];
     }

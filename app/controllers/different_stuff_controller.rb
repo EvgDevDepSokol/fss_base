@@ -2,11 +2,6 @@ class DifferentStuffController < ApplicationController
   layout false
 
   def compare_projects
-    hash = params[:data]
-    # project_old_id = 80_000_001
-    # project_new_id = 80_000_003
-    # project_old_id = 83
-    # project_new_id = 80_000_002
     project_old_id = params[:project_old_id]
     project_new_id = params[:project_new_id]
     ref1 = HwIc.where(Project: project_old_id).pluck(:ref) # old

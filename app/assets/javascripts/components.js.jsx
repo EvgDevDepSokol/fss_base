@@ -14,15 +14,15 @@ import Modal from 'react-modal';
 
 $(document).ready(function () {
   ReactDOM.render(
-    <SideMenu dataSource={menu_data} key={"left-menu"} />,
+    <SideMenu dataSource={menu_data} key={'left-menu'} />,
     document.getElementById('left_menu')
   );
 
   var appElement = document.getElementById('import_xlsx_modal');
   Modal.setAppElement(appElement);
-  ReactDOM.render(<XlsxImport key={"xlsx-import"} />, appElement);
+  ReactDOM.render(<XlsxImport key={'xlsx-import'} />, appElement);
 
   var appElement1 = document.getElementById('navbar_generate_dbm_modal');
   Modal.setAppElement(appElement1);
-  ReactDOM.render(<GenerateDbm key={"generate-dbm"} />, appElement1);
+  ReactDOM.render(<GenerateDbm key={'generate-dbm'} />, appElement1);
 });

@@ -57,7 +57,7 @@ class ExportXlsxModal extends React.Component {
   }
 
   compare_balakovos() {
-    this.compare_projects(88,80000004,'balakovo_diff.xls');
+    this.compare_projects(80000004,88,'balakovo_diff.xls');
   }
 
   compare_kursks() {
@@ -70,28 +70,28 @@ class ExportXlsxModal extends React.Component {
       project_new_id: project_new_id
     };
     $.ajax(
-    {
-      url: '/compare_projects',
-      dataType: 'json',
-      data: data,
-      type: 'PUT',
-      success: function (responce)
       {
-        var wb = XLSX.utils.book_new();
-        var ws;
-        ws = XLSX.utils.json_to_sheet(responce.pag1);   
-        XLSX.utils.book_append_sheet(wb,ws,'Удалено');
-        ws = XLSX.utils.json_to_sheet(responce.pag2);   
-        XLSX.utils.book_append_sheet(wb,ws,'Добавлено');
-        ws = XLSX.utils.json_to_sheet(responce.pag3);   
-        XLSX.utils.book_append_sheet(wb,ws,'Изменено');
-        XLSX.writeFile(wb,bookname,{ bookType:'biff8'});
-      },
-      error: function (xhr, status, err)
-      {
-      },
-      async: true
-    });
+        url: '/compare_projects',
+        dataType: 'json',
+        data: data,
+        type: 'PUT',
+        success: function (responce)
+        {
+          var wb = XLSX.utils.book_new();
+          var ws;
+          ws = XLSX.utils.json_to_sheet(responce.pag1);   
+          XLSX.utils.book_append_sheet(wb,ws,'Удалено');
+          ws = XLSX.utils.json_to_sheet(responce.pag2);   
+          XLSX.utils.book_append_sheet(wb,ws,'Добавлено');
+          ws = XLSX.utils.json_to_sheet(responce.pag3);   
+          XLSX.utils.book_append_sheet(wb,ws,'Изменено');
+          XLSX.writeFile(wb,bookname,{ bookType:'biff8'});
+        },
+        error: function (xhr, status, err)
+        {
+        },
+        async: true
+      });
   }
 
   render() {
@@ -115,8 +115,8 @@ class ExportXlsxModal extends React.Component {
           </div>
           <h3></h3>
           <h3></h3>
-          <button onClick={this.closeModal}>Отмена</button>
           <button onClick={this.onExport}>Экспорт</button>
+          <button onClick={this.closeModal}>Отмена</button>
           <h3></h3>
           <h3></h3>
           <div>

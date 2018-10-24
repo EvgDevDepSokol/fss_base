@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 function paginate(data, o) {
   data = data || [];
 

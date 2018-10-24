@@ -52,7 +52,7 @@ var CustomInput = React.createClass({
   },
 
   getInitialState: function() {
-    return {editor: this.props.editor, attribute: this.props.attribute, enabled: this.props.enabled}
+    return {editor: this.props.editor, attribute: this.props.attribute, enabled: this.props.enabled};
   },
 
   render: function() {
@@ -60,8 +60,8 @@ var CustomInput = React.createClass({
     var editor = this.props.editor;
     var lpass = false;
     if (editor) {
-      lpass = editor.displayName.endsWith('Selector')
-    };
+      lpass = editor.displayName.endsWith('Selector');
+    }
     if (lpass) {
       var editor = eval(this.props.editor.displayName);
       return (
@@ -109,7 +109,7 @@ module.exports = React.createClass({
       fromIndex: 0,
       toIndex: 0,
       isReplaceModalOpen: false
-    }
+    };
   },
 
   onSubmit: function() {
@@ -120,8 +120,8 @@ module.exports = React.createClass({
     var editor = this.state.editor;
     var lpass = false;
     if (editor) {
-      lpass = editor.displayName.endsWith('Selector')
-    };
+      lpass = editor.displayName.endsWith('Selector');
+    }
     if (lpass) {
       var from = ReactDOM.findDOMNode(this.refs.from).firstChild.childNodes[0].defaultValue;
       var to = ReactDOM.findDOMNode(this.refs.to).firstChild.childNodes[0].defaultValue;
@@ -198,10 +198,10 @@ module.exports = React.createClass({
           }.bind(this)
         });
       } else {
-        alert("Поставьте галочки в строках, в которых желаете произвести замену!")
+        alert('Поставьте галочки в строках, в которых желаете произвести замену!');
       }
     } else {
-      alert("Выберите колонку, в которой будет производиться замена!")
+      alert('Выберите колонку, в которой будет производиться замена!');
     }
 
   },
@@ -222,22 +222,22 @@ module.exports = React.createClass({
     var toIndex = this.state.toIndex;
     if (fromIndex !== 2) {
       toIndex = 0;
-    };
-    this.setState({fromIndex: fromIndex, toIndex: toIndex})
+    }
+    this.setState({fromIndex: fromIndex, toIndex: toIndex});
   },
 
   onRadioToChange: function(e) {
     var toIndex = parseInt(e.target.value, 10);
-    this.setState({toIndex: toIndex})
+    this.setState({toIndex: toIndex});
   },
 
   render: function() {
     var columns = this.props.columns || [];
     var options = [{}].concat(columns.map(function(column) {
       if (column.property && column.label) {
-        if (column.editor&&(column.attribute !== "extra_label")) {
-          return {value: column.property, name: column.label}
-        };
+        if (column.editor&&(column.attribute !== 'extra_label')) {
+          return {value: column.property, name: column.label};
+        }
       }
     }).filter(id));
 
@@ -255,7 +255,7 @@ module.exports = React.createClass({
         }, option.name);
       }))
     } < p > Где заменить < /p>
-        </div >, < div className = 'replace-from-radio-group' > <input type='radio' name='replace-from' value='0' checked={this.state.fromIndex === 0} onChange={this.onRadioFromChange}/> < CustomInput ref = 'from' editor = {
+    </div >, < div className = 'replace-from-radio-group' > <input type='radio' name='replace-from' value='0' checked={this.state.fromIndex === 0} onChange={this.onRadioFromChange}/> < CustomInput ref = 'from' editor = {
       this.state.editor
     }
     attribute = {
@@ -277,21 +277,21 @@ module.exports = React.createClass({
     className = 'btn btn-xs btn-default' disabled = {
       this.props.disabled
     } > Replace < /button>,
-        <div>
-          <ReplaceConfirmModal
-            id = "replace_confirm_modal"
-            isReplaceModalOpen = {this.state.isReplaceModalOpen}
-            onRequestClose={this.closeReplaceModal}
-            new_data = {new_data}
-            contentLabel='Замена. Подтверждение.'
-          / > </div>
+    <div>
+      <ReplaceConfirmModal
+        id = "replace_confirm_modal"
+        isReplaceModalOpen = {this.state.isReplaceModalOpen}
+        onRequestClose={this.closeReplaceModal}
+        new_data = {new_data}
+        contentLabel='Замена. Подтверждение.'
+      / > </div>
     ));
   }
 });
 
 function id(a) {
   return a;
-};
+}
 
 var ReplaceConfirmModal = React.createClass({
   displayName: 'ReplaceConfirmModal',
@@ -317,6 +317,6 @@ var ReplaceConfirmModal = React.createClass({
           </form>
         </Modal>
       </div>
-    )
+    );
   }
 });

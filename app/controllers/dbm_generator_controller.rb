@@ -132,7 +132,6 @@ class DbmGeneratorController < ApplicationController
 
   def render_sel_ped(dbm_generator)
     gen_tables = dbm_generator.systems
-    data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
@@ -211,7 +210,6 @@ class DbmGeneratorController < ApplicationController
 
   def render_sel_ppc(dbm_generator)
     gen_tables = dbm_generator.systems
-    data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)
@@ -361,7 +359,7 @@ class DbmGeneratorController < ApplicationController
   end
 
   def start_session(ssh)
-    session = Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass])
+    Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass])
   rescue StandardError
     write_log('НЕ УДАЛОСЬ подключиться к серверу: ' + ssh[:ip] + '!')
     false

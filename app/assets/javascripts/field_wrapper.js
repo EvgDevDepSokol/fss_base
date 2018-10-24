@@ -22,8 +22,8 @@ module.exports = React.createClass({
     classes.push('pure-control-group');
 
     return (
-      React.createElement("div", {className: classes.join(' '), key: this.props.key},
-        React.createElement("label", {htmlFor: this.props.key}, this.props.title),
+      React.createElement('div', {className: classes.join(' '), key: this.props.key},
+        React.createElement('label', {htmlFor: this.props.key}, this.props.title),
         this.props.children
       )
     );

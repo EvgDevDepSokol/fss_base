@@ -31,18 +31,18 @@ module.exports = React.createClass({
       }
     }).filter(id));
 
-    return (React.createElement("span", {
-      className: "search"
-    }, React.createElement("select", {
-      ref: "column",
+    return (React.createElement('span', {
+      className: 'search'
+    }, React.createElement('select', {
+      ref: 'column',
       onChange: this.change
     }, options.map(function(option) {
-      return React.createElement("option", {
+      return React.createElement('option', {
         key: option.value + '-option',
         value: option.value
       }, option.name);
-    })), React.createElement("input", {
-      ref: "query",
+    })), React.createElement('input', {
+      ref: 'query',
       onChange: this.change
     })));
   },
@@ -83,7 +83,7 @@ module.exports.search = function(search, columns, data) {
     function labelFromSelectorList(array, value) {
       var tmp = array.filter(function(obj) {
         if (obj.value === value) {
-          return true
+          return true;
         }
       });
       return tmp[0]
@@ -92,28 +92,28 @@ module.exports.search = function(search, columns, data) {
     }
 
     if (editor) {
-      if ((editor.displayName == 'BooleanNumbSelector') && (typeof(value) == "number")) {
-        value = (value == 0) ? "нет" : "да";
+      if ((editor.displayName == 'BooleanNumbSelector') && (typeof(value) == 'number')) {
+        value = (value == 0) ? 'нет' : 'да';
       }
       if (editor.displayName == 'ValveTypeSelector') {
-        value = labelFromSelectorList(editor.options, value)
+        value = labelFromSelectorList(editor.options, value);
       }
       if (editor.displayName == 'BooleanSelector') {
-        value = value ? "да" : "нет";
+        value = value ? 'да' : 'нет';
       }
       if (editor.displayName == 'BooleanNumbSelector') {
-        value = labelFromSelectorList(editor.options, value)
+        value = labelFromSelectorList(editor.options, value);
       }
       if (editor.displayName == 'UserRightsSelector') {
-        value = labelFromSelectorList(editor.options, value)
+        value = labelFromSelectorList(editor.options, value);
       }
       if (editor.displayName == 'SystemDocSelector') {
-        value = row[property]['extra_label']
+        value = row[property]['extra_label'];
       }
     }
 
     if (col.nested) {
-      var keys = property.split(".");
+      var keys = property.split('.');
       var tempVal = row;
       keys.forEach(function(key) {
         if (tempVal) {

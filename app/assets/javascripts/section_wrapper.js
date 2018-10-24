@@ -26,11 +26,11 @@ module.exports = React.createClass({
     var errorClasses = 'form-error' + (errors ? '' : ' hidden');
 
     return (
-      React.createElement("fieldset", {className: classes.join(' '), key: this.props.key},
-        React.createElement("legend", {className: "form-section-title"},
+      React.createElement('fieldset', {className: classes.join(' '), key: this.props.key},
+        React.createElement('legend', {className: 'form-section-title'},
           this.props.title,
-          React.createElement("span", {className: helpClasses, title: this.props.description}, "?"),
-          React.createElement("span", {className: errorClasses, title: errors}, "!")
+          React.createElement('span', {className: helpClasses, title: this.props.description}, '?'),
+          React.createElement('span', {className: errorClasses, title: errors}, '!')
         ),
         this.props.children
       )

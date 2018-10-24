@@ -62,7 +62,7 @@ var TreeView = React.createClass({
 
 var TreeSearch = React.createClass({
   getInitialState: function() {
-    return {searchValue: ''}
+    return {searchValue: ''};
   },
 
   /**
@@ -95,8 +95,8 @@ var TreeListNode = React.createClass({
   render: function() {
     return (
       <li className={this.props.current
-        ? "node current"
-        : "node"}>
+        ? 'node current'
+        : 'node'}>
         <a href={this.props.href}>{this.props.label}</a>
       </li>
     );
@@ -111,7 +111,7 @@ var SideMenu = React.createClass({
         'use strict';
         return String.prototype.indexOf.apply(this, arguments) !== -1;
       };
-    };
+    }
     var data = $.merge([], this.props.dataSource);
     var newData = data.map(function(elem) {
       if (!pattern || elem.label.toLowerCase().includes(pattern)) {
@@ -143,15 +143,15 @@ var SideMenu = React.createClass({
   },
 
   getInitialState: function() {
-    this.filterData("");
-    return {dataSource: this.props.dataSource}
+    this.filterData('');
+    return {dataSource: this.props.dataSource};
   },
 
   render: function() {
 
     return (
       <div>
-        <TreeSearch changeInput={this.filterData} key={"menu-search"}/>
+        <TreeSearch changeInput={this.filterData} key={'menu-search'}/>
         <div className="menu-tree">
           <div className="menu-tree-inner">
 
@@ -159,7 +159,7 @@ var SideMenu = React.createClass({
               var type = node.type;
               var childrensList = node.children.map(function(child, j) {
                 if (child.visible) {
-                  return (<TreeListNode key={type + '|' + i + '|' + j} label={child.label} href={child.href} current={child.current}/>)
+                  return (<TreeListNode key={type + '|' + i + '|' + j} label={child.label} href={child.href} current={child.current}/>);
                 }
               });
               var label = <span className="node">{node.label}</span>;
