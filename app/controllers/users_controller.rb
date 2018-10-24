@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # Users controller
-  before_action :set_pds_engineer, only: [:show, :edit, :update, :destroy]
+  before_action :set_pds_engineer, only: %i[show edit update destroy]
   # GET /pds_engineers
   # GET /pds_engineers.json
   def index
@@ -9,8 +9,7 @@ class UsersController < ApplicationController
 
   # GET /pds_engineers/1
   # GET /pds_engineers/1.json
-  def show
-  end
+  def show; end
 
   # GET /pds_engineers/new
   def new
@@ -18,8 +17,7 @@ class UsersController < ApplicationController
   end
 
   # GET /pds_engineers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pds_engineers
   # POST /pds_engineers.json

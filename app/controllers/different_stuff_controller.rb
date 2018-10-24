@@ -30,25 +30,27 @@ class DifferentStuffController < ApplicationController
     hw_ic1_arr = hw_ic_by_ref_arr(project_old_id, list3)
     hw_ic3_arr = hw_ic_by_ref_arr(project_new_id, list3)
 
-    hw_ic1_arr.each_with_index do |hw_ic1, index|
-      line = {}
-      hw_ic3 = hw_ic3_arr[index]
-      ref = list3[index]
-      next unless hw_ic1 != hw_ic3
+    if hw_ic1_arr.present?
+      hw_ic1_arr.each_with_index do |hw_ic1, index|
+        line = {}
+        hw_ic3 = hw_ic3_arr[index]
+        ref = list3[index]
+        next unless hw_ic1 != hw_ic3
 
-      line['ref'] = ref
-      line['Сист.'] = hw_ic3['sys']
-      hw_ic1.each do |k, v|
-        if v != hw_ic3[k]
-          line[k] = v
-          line[k + '_new'] = hw_ic3[k]
-        else
-          line[k] = ''
-          line[k + '_new'] = ''
+        line['ref'] = ref
+        line['Сист.'] = hw_ic3['sys']
+        hw_ic1.each do |k, v|
+          if v != hw_ic3[k]
+            line[k] = v
+            line[k + '_new'] = hw_ic3[k]
+          else
+            line[k] = ''
+            line[k + '_new'] = ''
+          end
         end
+        pag3.push(line)
       end
-      pag3.push(line)
-    end if hw_ic1_arr.present?
+    end
     render json: { status: :ok, pag1: pag1, pag2: pag2, pag3: pag3 }
   end
 
