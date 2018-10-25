@@ -1,3 +1,4 @@
+# I&C table
 class HwIc < ApplicationRecord
   self.table_name = 'hw_ic'
   include DbmGeneratorHelper
@@ -47,16 +48,16 @@ class HwIc < ApplicationRecord
     next if hw_ic.skip_callbacks
 
     if hw_ic.ped_before_last_save.nil?
-      add_equipment(hw_ic)
+      add_equipment
     elsif hw_ic.ped_before_last_save && (table_by_ped(hw_ic.ped) != table_by_ped(hw_ic.ped_before_last_save))
-      destroy_equipment(hw_ic)
-      add_equipment(hw_ic)
+      destroy_equipment
+      add_equipment
     else
       tbl_name = table_by_ped(hw_ic.ped)
-      if  tbl_name != 'pds_mnemo' && (hw_ic.sys_before_last_save != hw_ic.sys)
-        e = Object.const_get(tbl_name.classify).where(IC: hw_ic.icID, Project: hw_ic.Project).first
-        e.sys = hw_ic.sys
-        e.save
+      if tbl_name != 'pds_mnemo' && (hw_ic.sys_before_last_save != hw_ic.sys)
+        obj = Object.const_get(tbl_name.classify).where(IC: hw_ic.icID, Project: hw_ic.Project).first
+        obj.sys = hw_ic.sys
+        obj.save
       end
     end
   end
@@ -64,34 +65,30 @@ class HwIc < ApplicationRecord
   after_destroy do |hw_ic|
     next if hw_ic.skip_callbacks
 
-    destroy_equipment(hw_ic)
+    destroy_equipment
   end
 
   def table_by_ped(ped)
     Tablelist.find(HwDevtype.find(HwPed.find(ped).type).typetable).table
   end
 
-  def add_equipment(hw_ic)
-    tbl_name = table_by_ped(hw_ic.ped)
-    if tbl_name == 'pds_mnemo'
-      # e.Code = hw_ic.ref
-    elsif
-      e = Object.const_get(tbl_name.classify).new
-      e.IC = hw_ic.icID
-      e.Project = hw_ic.Project
-      e.sys = hw_ic.sys
-      e.save
+  def add_equipment
+    tbl_name = table_by_ped(ped)
+    unless tbl_name == 'pds_mnemo'
+      obj = Object.const_get(tbl_name.classify).new
+      obj.IC = icID
+      obj.Project = self.Project
+      obj.sys = sys
+      obj.save
     end
   end
 
-  def destroy_equipment(hw_ic)
-    tbl_name = table_by_ped(hw_ic.ped)
-    if tbl_name == 'pds_mnemo'
-      # e = tbl.where(Code: hw_ic.ref).to_a
-    elsif
+  def destroy_equipment
+    tbl_name = table_by_ped(ped)
+    unless tbl_name == 'pds_mnemo'
       tbl = Object.const_get(tbl_name.classify)
-      e = tbl.where(IC: hw_ic.icID).to_a
-      e.each(&:destroy)
+      obj = tbl.where(IC: icID).to_a
+      obj.each(&:destroy)
     end
   end
 end
