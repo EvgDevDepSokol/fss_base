@@ -14,9 +14,8 @@ module.exports = React.createClass({
   onChange: function() {},
 
   render: function() {
-
     return (
-      <span/>
+      <span />
 
     //React.createElement("span", {className: "replace"},
     //  React.createElement("input", {type: "checkbox", onChange: this.onChange})
@@ -26,7 +25,6 @@ module.exports = React.createClass({
 });
 
 module.exports.addSelectColumn = function() {
-
   return {
     header: 'select',
     style: {
@@ -35,7 +33,6 @@ module.exports.addSelectColumn = function() {
     classes: 'select-rows-col',
     cell: function(value, celldata, rowIndex, property) {}
   };
-
 };
 
 module.exports.getRows = function(search, columns, data) {
@@ -52,10 +49,12 @@ module.exports.getRows = function(search, columns, data) {
     });
   }
 
-  return data.filter(function(row) {
-    //debugger;
-    return columns.filter(isColumnVisible.bind(this, row)).length > 0;
-  }.bind(this));
+  return data.filter(
+    function(row) {
+      //debugger;
+      return columns.filter(isColumnVisible.bind(this, row)).length > 0;
+    }.bind(this)
+  );
 
   function isColumnVisible(row, col) {
     var property = col.property;

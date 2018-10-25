@@ -1,7 +1,9 @@
 @import "twitter-bootstrap-static/bootstrap"; // Set the correct sprite paths
 @import "twitter-bootstrap-static/sprites"; // Set the correct sprite paths
 $iconSpritePath: image-url("twitter-bootstrap-static/glyphicons-halflings.png");
-$iconWhiteSpritePath: image-url("twitter-bootstrap-static/glyphicons-halflings-white.png");
+$iconWhiteSpritePath: image-url(
+  "twitter-bootstrap-static/glyphicons-halflings-white.png"
+);
 // Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
 $fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
 $fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot?#iefix");

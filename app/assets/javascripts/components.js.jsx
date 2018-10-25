@@ -1,7 +1,6 @@
 // require ./components/xlsx-import
 //= require ./components/general_table
 // require ./components/generate-dbm
-
 //= require react
 //= require react_ujs
 
@@ -12,7 +11,7 @@ var XlsxImport = require('components/xlsx-import.jsx');
 var GenerateDbm = require('components/generate-dbm.jsx');
 import Modal from 'react-modal';
 
-$(document).ready(function () {
+$(document).ready(function() {
   ReactDOM.render(
     <SideMenu dataSource={menu_data} key={'left-menu'} />,
     document.getElementById('left_menu')

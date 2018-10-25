@@ -14,19 +14,19 @@ module.exports = function() {
     },
 
     getInitialState: function() {
-      return {value: this.props.value};
+      return { value: this.props.value };
     },
 
     render: function() {
       return (
-        <span classname='checkbox'>
-          <input type="checkbox" onClick={clickCheckBox()}/>
+        <span className="checkbox">
+          <input type="checkbox" onClick={clickCheckBox()} />
         </span>
       );
     },
 
     onChange: function(e) {
-      this.setState({value: e.target.value});
+      this.setState({ value: e.target.value });
     },
 
     done: function() {

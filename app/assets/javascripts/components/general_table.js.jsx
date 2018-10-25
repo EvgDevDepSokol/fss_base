@@ -43,19 +43,32 @@ var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
 
 //some static selectors
-var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
-var RFTypeSelector = require('../selectors/static_selectors.jsx').RFTypeSelector;
-var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSelector;
-var BooleanSelector = require('../selectors/static_selectors.jsx').BooleanSelector;
-var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSelector;
-var BooleanNumbSelector = require('../selectors/static_selectors.jsx').BooleanNumbSelector;
-var MotorZmnSelector = require('../selectors/static_selectors.jsx').MotorZmnSelector;
-var UserRightsSelector = require('../selectors/static_selectors.jsx').UserRightsSelector;
-var RegidityUnitSelector = require('../selectors/static_selectors.jsx').RegidityUnitSelector;
-var AnnounciatorTypeSelector = require('../selectors/static_selectors.jsx').AnnounciatorTypeSelector;
-var AnnounciatorSignSelector = require('../selectors/static_selectors.jsx').AnnounciatorSignSelector;
-var SyslistDescriptorSelector = require('../selectors/static_selectors.jsx').SyslistDescriptorSelector;
-var SyslistCategorySelector = require('../selectors/static_selectors.jsx').SyslistCategorySelector;
+var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx')
+  .MalfunctionTypeSelector;
+var RFTypeSelector = require('../selectors/static_selectors.jsx')
+  .RFTypeSelector;
+var ValveTypeSelector = require('../selectors/static_selectors.jsx')
+  .ValveTypeSelector;
+var BooleanSelector = require('../selectors/static_selectors.jsx')
+  .BooleanSelector;
+var BooleanYNSelector = require('../selectors/static_selectors.jsx')
+  .BooleanYNSelector;
+var BooleanNumbSelector = require('../selectors/static_selectors.jsx')
+  .BooleanNumbSelector;
+var MotorZmnSelector = require('../selectors/static_selectors.jsx')
+  .MotorZmnSelector;
+var UserRightsSelector = require('../selectors/static_selectors.jsx')
+  .UserRightsSelector;
+var RegidityUnitSelector = require('../selectors/static_selectors.jsx')
+  .RegidityUnitSelector;
+var AnnounciatorTypeSelector = require('../selectors/static_selectors.jsx')
+  .AnnounciatorTypeSelector;
+var AnnounciatorSignSelector = require('../selectors/static_selectors.jsx')
+  .AnnounciatorSignSelector;
+var SyslistDescriptorSelector = require('../selectors/static_selectors.jsx')
+  .SyslistDescriptorSelector;
+var SyslistCategorySelector = require('../selectors/static_selectors.jsx')
+  .SyslistCategorySelector;
 
 // todo: fix
 var SdSelector = require('../selectors/pds_sds.jsx');
@@ -85,7 +98,7 @@ var TableContainer = React.createClass({
   mixins: [LocalStorageMixin],
 
   getDefaultProps: function() {
-    return {stateFilterKeys: ['systemFilter']};
+    return { stateFilterKeys: ['systemFilter'] };
   },
 
   getInitialState: function() {
@@ -100,13 +113,19 @@ var TableContainer = React.createClass({
       }
     });
 
-    var editable = cells.edit.bind(this, 'editedCell', function(value, celldata, rowIndex, property) {
-      var idx = findIndex(this.state.data, {tEquipID: celldata[rowIndex].tEquipID});
+    var editable = cells.edit.bind(
+      this,
+      'editedCell',
+      function(value, celldata, rowIndex, property) {
+        var idx = findIndex(this.state.data, {
+          tEquipID: celldata[rowIndex].tEquipID
+        });
 
-      this.state.data[idx][property] = value;
+        this.state.data[idx][property] = value;
 
-      this.setState({data: data});
-    }.bind(this));
+        this.setState({ data: data });
+      }.bind(this)
+    );
 
     var highlighter = function(column) {
       return formatters.highlight(function(value) {
@@ -119,14 +138,12 @@ var TableContainer = React.createClass({
             }
           }
         });
-        if (query == null)
-          query = '';
+        if (query == null) query = '';
         return Search.matches(column, value, query);
       });
     };
 
     var editableField = function(options) {
-
       var editor = options.editor;
       var attribute = options.attribute;
       var context = this;
@@ -137,9 +154,7 @@ var TableContainer = React.createClass({
             return true;
           }
         });
-        return tmp[0]
-          ? tmp[0].label
-          : '';
+        return tmp[0] ? tmp[0].label : '';
       }
       return function(value, data, rowIndex, property) {
         var id;
@@ -147,8 +162,7 @@ var TableContainer = React.createClass({
           var keys = property.split('.');
           var tempVal = data[rowIndex];
 
-          if (tempVal[keys[0]])
-            id = tempVal[keys[0]].id;
+          if (tempVal[keys[0]]) id = tempVal[keys[0]].id;
           keys.forEach(function(key) {
             if (tempVal) {
               tempVal = tempVal[key];
@@ -157,12 +171,11 @@ var TableContainer = React.createClass({
           value = tempVal;
         }
 
-        if (value == null)
-          value = '';
+        if (value == null) value = '';
 
         if (editor) {
-          if ((editor == BooleanNumbSelector) && (typeof(value) == 'number')) {
-            value = (value == 0) ? 'нет' : 'да';
+          if (editor == BooleanNumbSelector && typeof value == 'number') {
+            value = value == 0 ? 'нет' : 'да';
           }
           if (editor == ValveTypeSelector) {
             value = labelFromSelectorList(editor.options, value);
@@ -177,8 +190,8 @@ var TableContainer = React.createClass({
             value = labelFromSelectorList(editor.options, value);
           }
           if (editor == SystemDocSelector) {
-            id=[];
-            value=[];
+            id = [];
+            value = [];
             if (data[rowIndex][property]) {
               if (data[rowIndex][property]['extra_data']) {
                 if (data[rowIndex][property]['extra_data'][0]) {
@@ -199,23 +212,34 @@ var TableContainer = React.createClass({
               attribute: attribute || property,
               onValue: function(valueHash) {
                 var sendData = $.extend(context.state.sendData, valueHash);
-                context.setState({lockRow: true, sendData: sendData});
+                context.setState({ lockRow: true, sendData: sendData });
               },
               onCancel: function() {
                 var celldata = data[rowIndex];
                 if (celldata.newRow) {
-                  var idx = findIndex(context.state.data, {_id: celldata._id});
+                  var idx = findIndex(context.state.data, {
+                    _id: celldata._id
+                  });
 
                   context.state.data.splice(idx, 1);
-                  context.setState({data: context.state.data, editedRow: null, lockRow: false, sendData: {}});
+                  context.setState({
+                    data: context.state.data,
+                    editedRow: null,
+                    lockRow: false,
+                    sendData: {}
+                  });
                 } else {
-                  context.setState({editedRow: null, lockRow: false, sendData: {}});
+                  context.setState({
+                    editedRow: null,
+                    lockRow: false,
+                    sendData: {}
+                  });
                 }
               },
               onSave: function(valueHash) {
                 var celldata = data[rowIndex];
                 var sendData = $.extend(context.state.sendData, valueHash);
-                context.setState({lockRow: true, sendData: sendData});
+                context.setState({ lockRow: true, sendData: sendData });
                 context.onSaveClick(celldata);
               }
             })
@@ -228,7 +252,7 @@ var TableContainer = React.createClass({
               onDoubleClick: function() {
                 if (!context.state.lockRow) {
                   if (current_user.user_rights >= 1) {
-                    context.setState({editedRow: rowIndex, lockRow: true});
+                    context.setState({ editedRow: rowIndex, lockRow: true });
                   } else {
                     alert('У Вас недостаточно прав для редактирования записи!');
                   }
@@ -251,9 +275,8 @@ var TableContainer = React.createClass({
           }
         });
 
-        if (tempVal == null)
-          tempVal = '';
-        return {value: tempVal};
+        if (tempVal == null) tempVal = '';
+        return { value: tempVal };
       };
     }.bind(this);
 
@@ -273,19 +296,13 @@ var TableContainer = React.createClass({
       }
       if (column.editor) {
         column['editor'] = eval(column.editor);
-        h['cell'] = [
-          editableField(column),
-          highlighter(h.property)
-        ];
+        h['cell'] = [editableField(column), highlighter(h.property)];
         //h["cell"] = [editableField(column)]
       } else if (column.nested) {
-        h['cell'] = [
-          nestedValue(column),
-          highlighter(h.property)
-        ];
+        h['cell'] = [nestedValue(column), highlighter(h.property)];
         //h["cell"] = [nestedValue(column)];
       }
-      return (h);
+      return h;
     });
 
     // remove hidden elements
@@ -293,41 +310,43 @@ var TableContainer = React.createClass({
       return e.hidden != true;
     });
 
-
     // add buttons
     columns = columns.concat([
       {
-        header: <div className='buttons-col'>
-          Опции
-        </div>,
+        header: <div className="buttons-col">Опции</div>,
         headerClassStyle: 'header-buttons-col',
         cell: function(value, celldata, rowIndex, property) {
           var url = window.location.href;
           var newRow = celldata[rowIndex].newRow;
           var itemId = celldata[rowIndex].id;
-          var idx = findIndex(this.state.data, {id: itemId});
+          var idx = findIndex(this.state.data, { id: itemId });
 
           var remove = function() {
-            if (this.props.objectType == 'pds_malfunction_dim')
-              return;
+            if (this.props.objectType == 'pds_malfunction_dim') return;
             if (current_user.user_rights >= 2) {
               var res = confirm('Вы действительно желаете удалить запись?');
-              if (!res)
-                return;
+              if (!res) return;
               if (newRow) {
-                var idx = findIndex(this.state.data, {_id: celldata[rowIndex]._id});
+                var idx = findIndex(this.state.data, {
+                  _id: celldata[rowIndex]._id
+                });
 
                 this.state.data.splice(idx, 1);
-                this.setState({data: this.state.data, editedRow: null, lockRow: false, sendData: {}});
+                this.setState({
+                  data: this.state.data,
+                  editedRow: null,
+                  lockRow: false,
+                  sendData: {}
+                });
               } else {
-                var idx = findIndex(this.state.data, {id: itemId});
+                var idx = findIndex(this.state.data, { id: itemId });
                 $.ajax({
                   url: url + '/' + itemId,
                   dataType: 'json',
                   type: 'DELETE',
                   success: function(data) {
                     this.state.data.splice(idx, 1);
-                    this.setState({data: this.state.data, editedRow: null});
+                    this.setState({ data: this.state.data, editedRow: null });
                   }.bind(this),
                   error: function(xhr, status, err) {
                     var jtmp = xhr.responseJSON['errors'];
@@ -342,7 +361,6 @@ var TableContainer = React.createClass({
             } else {
               alert('У Вас недостаточно прав для удаления записи!');
             }
-
           }.bind(this);
 
           var copy = function() {
@@ -355,120 +373,180 @@ var TableContainer = React.createClass({
 
           var editClick = function() {
             if (current_user.user_rights >= 1) {
-              this.setState({editedRow: rowIndex});
+              this.setState({ editedRow: rowIndex });
             } else {
               alert('У Вас недостаточно прав для редактирования записи!');
             }
           }.bind(this);
 
           var cancelClick = function() {
-            this.setState({editedRow: null, lockRow: false, sendData: {}});
+            this.setState({ editedRow: null, lockRow: false, sendData: {} });
           }.bind(this);
 
           var saveClick = function() {
             this.onSaveClick(celldata[rowIndex]);
           }.bind(this);
 
-          var editButton = <span className='edit btn btn-xs btn-default' onClick={editClick.bind(this)} style={{
-            cursor: 'pointer'
-          }} title='Редактировать запись'>
-            <i className="far fa-edit"></i>
-          </span>;
+          var editButton = (
+            <span
+              className="edit btn btn-xs btn-default"
+              onClick={editClick.bind(this)}
+              style={{
+                cursor: 'pointer'
+              }}
+              title="Редактировать запись"
+            >
+              <i className="far fa-edit" />
+            </span>
+          );
 
-          var saveButton = <span className='edit btn btn-xs btn-default' onClick={saveClick.bind(this)} style={{
-            cursor: 'pointer'
-          }} title='Сохранить изменения'>
-            <i className="fas fa-check"></i>
-          </span>;
+          var saveButton = (
+            <span
+              className="edit btn btn-xs btn-default"
+              onClick={saveClick.bind(this)}
+              style={{
+                cursor: 'pointer'
+              }}
+              title="Сохранить изменения"
+            >
+              <i className="fas fa-check" />
+            </span>
+          );
 
           if (!newRow) {
-            var cancelButton = <span className='edit btn btn-xs btn-default' onClick={cancelClick.bind(this)} style={{
-              cursor: 'pointer'
-            }} title='Отменить изменения'>
-              <i className="fas fa-undo"></i>
-            </span>;
+            var cancelButton = (
+              <span
+                className="edit btn btn-xs btn-default"
+                onClick={cancelClick.bind(this)}
+                style={{
+                  cursor: 'pointer'
+                }}
+                title="Отменить изменения"
+              >
+                <i className="fas fa-undo" />
+              </span>
+            );
           }
 
-          var deleteButton = <span className='remove btn btn-xs btn-danger' onClick={remove.bind(this)} style={{
-            cursor: 'pointer'
-          }} title='Удалить запись'>
-            <i className="fas fa-times"></i>
-          </span>;
-
-          var copyButton = <span className='remove btn btn-xs btn-default' onClick={copy.bind(this)} style={{
-            cursor: 'pointer'
-          }} title='Дублировать запись'>
-            <i className="far fa-copy"></i>
-          </span>;
-          return {value: (
-
-            <span style={{
-              width: '100px'
-            }}>
-              {this.state['editedRow'] === rowIndex
-                ? [saveButton, cancelButton]
-                : [editButton, copyButton]}
-              {deleteButton}
+          var deleteButton = (
+            <span
+              className="remove btn btn-xs btn-danger"
+              onClick={remove.bind(this)}
+              style={{
+                cursor: 'pointer'
+              }}
+              title="Удалить запись"
+            >
+              <i className="fas fa-times" />
             </span>
-          )};
+          );
+
+          var copyButton = (
+            <span
+              className="remove btn btn-xs btn-default"
+              onClick={copy.bind(this)}
+              style={{
+                cursor: 'pointer'
+              }}
+              title="Дублировать запись"
+            >
+              <i className="far fa-copy" />
+            </span>
+          );
+          return {
+            value: (
+              <span
+                style={{
+                  width: '100px'
+                }}
+              >
+                {this.state['editedRow'] === rowIndex
+                  ? [saveButton, cancelButton]
+                  : [editButton, copyButton]}
+                {deleteButton}
+              </span>
+            )
+          };
         }.bind(this)
       }
     ]);
 
     var clickMainCheckboxY = function(e) {
       this.state.mainCheckbox_new = true;
-      this.setState({mainCheckbox_new: true, mainCheckbox_old: false});
+      this.setState({ mainCheckbox_new: true, mainCheckbox_old: false });
     };
 
     var clickMainCheckboxN = function(e) {
       this.state.mainCheckbox_new = false;
-      this.setState({mainCheckbox_new: false, mainCheckbox_old: true});
+      this.setState({ mainCheckbox_new: false, mainCheckbox_old: true });
     };
 
-    var mainCheckbox = <div className="two-checkboxes">
-      <input title='Выделить все записи для замены/экспорта' type="checkbox" onChange={clickMainCheckboxY.bind(this)} checked={true}/>
-      <input title='Снять выделение со всех записей' type="checkbox" onChange={clickMainCheckboxN.bind(this)} checked={false}/>
-    </div>;
+    var mainCheckbox = (
+      <div className="two-checkboxes">
+        <input
+          title="Выделить все записи для замены/экспорта"
+          type="checkbox"
+          onChange={clickMainCheckboxY.bind(this)}
+          checked={true}
+        />
+        <input
+          title="Снять выделение со всех записей"
+          type="checkbox"
+          onChange={clickMainCheckboxN.bind(this)}
+          checked={false}
+        />
+      </div>
+    );
 
-    var column_x = ([
+    var column_x = [
       {
-        header: <div>
-          {mainCheckbox}
-        </div>,
+        header: <div>{mainCheckbox}</div>,
         headerClassStyle: 'header-checkbox-col',
         classes: 'checkbox-col',
         cell: function(value, celldata, rowIndex, property) {
           var itemId = celldata[rowIndex].id;
-          var idx = findIndex(this.state.data, {id: itemId});
+          var idx = findIndex(this.state.data, { id: itemId });
           var clickCheckBox = function() {
             this.state.data[idx].checked = !this.state.data[idx].checked;
-            this.setState({data: this.state.data});
+            this.setState({ data: this.state.data });
           };
 
           if (idx > -1) {
-            var checkBox = <span className='checkbox'>
-              <input type="checkbox" onChange={clickCheckBox.bind(this)} checked={this.state.data[idx].checked
-                ? this.state.data[idx].checked
-                : false}/>
-            </span>;
+            var checkBox = (
+              <span className="checkbox">
+                <input
+                  type="checkbox"
+                  onChange={clickCheckBox.bind(this)}
+                  checked={
+                    this.state.data[idx].checked
+                      ? this.state.data[idx].checked
+                      : false
+                  }
+                />
+              </span>
+            );
           } else {
-            var checkBox = <span className='checkbox'>
-              <input type="checkbox"/>
-            </span>;
-
+            var checkBox = (
+              <span className="checkbox">
+                <input type="checkbox" />
+              </span>
+            );
           }
 
-          return {value: (
-            <span style={{
-              width: '30px'
-            }}>
-              {checkBox}
-            </span>
-          )};
-
+          return {
+            value: (
+              <span
+                style={{
+                  width: '30px'
+                }}
+              >
+                {checkBox}
+              </span>
+            )
+          };
         }.bind(this)
       }
-    ]);
+    ];
 
     columns = column_x.concat(columns);
     column_x = null;
@@ -504,7 +582,7 @@ var TableContainer = React.createClass({
       mainCheckbox_old: false,
       exportIndex: 0,
       systemFilter: null,
-      show_hidden_columns:false,
+      show_hidden_columns: false,
       pagination: {
         page: 1,
         perPage: 20
@@ -515,8 +593,14 @@ var TableContainer = React.createClass({
       },
       header: {
         onClick: function(column) {
-          if (!((column.classes == 'buttons-col') || (column.classes == 'checkbox-col') || (this.state.lockRow))) {
-            sortColumn(this.state.columns, column, this.setState.bind(this),);
+          if (
+            !(
+              column.classes == 'buttons-col' ||
+              column.classes == 'checkbox-col' ||
+              this.state.lockRow
+            )
+          ) {
+            sortColumn(this.state.columns, column, this.setState.bind(this));
           }
         }.bind(this)
       },
@@ -536,65 +620,64 @@ var TableContainer = React.createClass({
     var show_hidden_columns = this.state.show_hidden_columns;
     var columns = this.state.columns;
     columns = columns.filter(function(e) {
-      return (!e.show_on_request || (e.show_on_request && show_hidden_columns ));
+      return !e.show_on_request || (e.show_on_request && show_hidden_columns);
     });
 
     var isEditableColumn = function(column) {
-      var className = column.editor
-        ? 'editableColumn'
-        : 'notEditableColumn';
+      var className = column.editor ? 'editableColumn' : 'notEditableColumn';
       var header = column.header;
       if (!header.props) {
-        column.header = <span className={className}>
-          {header}
-        </span>;
+        column.header = <span className={className}>{header}</span>;
       }
       return column;
     };
     columns.every(isEditableColumn);
 
     // if you don't want an header, just return;
-    return (this.state.showFilters
-      ? <thead>
-        <ColumnNames config={headerConfig} columns={columns}/>
-        <ColumnFilters columns={columns} onUserInput={this.onFilterInput} disabled={this.state.lockRow}/>
+    return this.state.showFilters ? (
+      <thead>
+        <ColumnNames config={headerConfig} columns={columns} />
+        <ColumnFilters
+          columns={columns}
+          onUserInput={this.onFilterInput}
+          disabled={this.state.lockRow}
+        />
       </thead>
-      : <thead>
-        <ColumnNames config={headerConfig} columns={columns}/>
-      </thead>);
+    ) : (
+      <thead>
+        <ColumnNames config={headerConfig} columns={columns} />
+      </thead>
+    );
   },
 
-  onShowHidden: function(){
+  onShowHidden: function() {
     this.setState({
       show_hidden_columns: !this.state.show_hidden_columns
     });
   },
 
-
   onFilterInput: function(columns) {
-    this.setState({columns: columns});
+    this.setState({ columns: columns });
   },
 
   // handlers
   onSelect: function(page) {
-    if (this.state.lockRow)
-      return;
+    if (this.state.lockRow) return;
     var pagination = this.state.pagination || {};
     var pages = Math.ceil(this.state.data.length / pagination.perPage);
 
     pagination.page = Math.min(Math.max(page, 1), pages);
 
-    this.setState({pagination: pagination});
+    this.setState({ pagination: pagination });
   },
 
   onPerPage: function(e) {
     var pagination = this.state.pagination || {};
-    if (parseInt(e.target.value, 10) > 200)
-      e.target.value = '200';
+    if (parseInt(e.target.value, 10) > 200) e.target.value = '200';
     var PerPage = parseInt(e.target.value, 10);
     if (pagination.perPage !== PerPage) {
       pagination.perPage = PerPage;
-      this.setState({pagination: pagination});
+      this.setState({ pagination: pagination });
     }
   },
 
@@ -602,11 +685,10 @@ var TableContainer = React.createClass({
     var pagination = this.state.pagination;
     var pages = Math.ceil(this.state.data.length / pagination.perPage);
     var page = parseInt(e.target.value, 10);
-    if (isNaN(page))
-      page = 1;
+    if (isNaN(page)) page = 1;
     pagination.page = Math.min(Math.max(page, 1), pages);
 
-    this.setState({pagination: pagination});
+    this.setState({ pagination: pagination });
   },
 
   onSaveClick: function(celldata) {
@@ -614,11 +696,11 @@ var TableContainer = React.createClass({
       var newRow = celldata.newRow;
       var url = window.location.href;
       var itemId = celldata.id;
-      var idx = findIndex(this.state.data, {id: itemId});
+      var idx = findIndex(this.state.data, { id: itemId });
       var d = {};
       d[this.props.objectType] = this.state.sendData;
       if (newRow) {
-        idx = findIndex(this.state.data, {_id: celldata._id});
+        idx = findIndex(this.state.data, { _id: celldata._id });
         d[this.props.objectType].Project = project.id;
         $.ajax({
           url: url,
@@ -628,7 +710,12 @@ var TableContainer = React.createClass({
           data: JSON.stringify(d),
           success: function(response) {
             this.state.data[idx] = response.data;
-            this.setState({data: this.state.data, lockRow: false, sendData: {}, editedRow: null});
+            this.setState({
+              data: this.state.data,
+              lockRow: false,
+              sendData: {},
+              editedRow: null
+            });
           }.bind(this),
           error: function(xhr, status, err) {
             var jtmp = xhr.responseJSON['errors'];
@@ -650,7 +737,12 @@ var TableContainer = React.createClass({
               response.data.system = response.data.pds_malfunction.system;
             }
             this.state.data[idx] = response.data;
-            this.setState({data: this.state.data, lockRow: false, sendData: {}, editedRow: null});
+            this.setState({
+              data: this.state.data,
+              lockRow: false,
+              sendData: {},
+              editedRow: null
+            });
           }.bind(this),
           error: function(xhr, status, err) {
             var jtmp = xhr.responseJSON['errors'];
@@ -663,28 +755,28 @@ var TableContainer = React.createClass({
         });
       }
     } else {
-      this.setState({lockRow: false, sendData: {}, editedRow: null});
+      this.setState({ lockRow: false, sendData: {}, editedRow: null });
     }
   },
 
   onAddRowClick: function(copiedRow) {
-    if (this.state.lockRow)
-      return;
-    if (this.props.objectType == 'pds_malfunction_dim')
-      return;
+    if (this.state.lockRow) return;
+    if (this.props.objectType == 'pds_malfunction_dim') return;
     if (current_user.user_rights >= 2) {
       var copyRow = {};
       if (copiedRow.id) {
         copyRow = $.extend({}, copiedRow);
       } else if (this.state.showFilters) {
-        alert('Добавить запись при работающих фильтрах можно только дублированием одной из записей. Либо нужно отключить фильтры.');
+        alert(
+          'Добавить запись при работающих фильтрах можно только дублированием одной из записей. Либо нужно отключить фильтры.'
+        );
         return;
       } else {
         var columns = this.state.columns;
         columns.forEach(function(col) {
           col.sort = null;
         });
-        this.setState({columns: columns, sortingColumn: null});
+        this.setState({ columns: columns, sortingColumn: null });
       }
       // var copyRow  = newRow || {};
       var data = this.state.data;
@@ -702,7 +794,12 @@ var TableContainer = React.createClass({
       copyRow['newRow'] = true;
       copyRow['_id'] = 'new-' + Date.now();
       data.splice(idx, 0, copyRow);
-      this.setState({data: data, editedRow: 0, lockRow: true, sendData: this.getDuplicatedRowsendData(copyRow)});
+      this.setState({
+        data: data,
+        editedRow: 0,
+        lockRow: true,
+        sendData: this.getDuplicatedRowsendData(copyRow)
+      });
     } else {
       alert('У Вас недостаточно прав для добавления записи!');
     }
@@ -715,12 +812,12 @@ var TableContainer = React.createClass({
       columns.forEach(function(col) {
         col.filter = null;
       });
-    this.setState({showFilters: showFilters, columns: columns});
+    this.setState({ showFilters: showFilters, columns: columns });
   },
   onIconReplaceClick: function() {
     if (current_user.user_rights >= 1) {
       var showReplace = !this.state.showReplace;
-      this.setState({showReplace: showReplace});
+      this.setState({ showReplace: showReplace });
     } else {
       alert('У Вас недостаточно прав для редактирования записей!');
     }
@@ -731,22 +828,17 @@ var TableContainer = React.createClass({
     _.each(Object.keys(columns), function(columnKey) {
       var col = columns[columnKey];
 
-      if ('id' == col.property)
-        return;
+      if ('id' == col.property) return;
       if (!col.nested)
-        sendData[col.property] = row[col.property] !== null
-          ? row[col.property]
-          : null;
+        sendData[col.property] =
+          row[col.property] !== null ? row[col.property] : null;
 
       //sendData[col.property] = row[col.property];
       if (col.attribute) {
         // мы берем первую часть property, и ищем там id
         var prop = col.property.split('.')[0];
-        sendData[col.attribute] = row[prop]
-          ? row[prop].id
-          : null;
+        sendData[col.attribute] = row[prop] ? row[prop].id : null;
       }
-
     });
     return sendData;
   },
@@ -774,7 +866,7 @@ var TableContainer = React.createClass({
 
   onExportClick: function(exportIndex) {
     var bookname = model_name + '_' + project.id.toString() + '.xls';
-   
+
     if (exportIndex === 1) {
       var dataxls = this.state.dataxls.filter(function(elem) {
         return elem.checked;
@@ -791,11 +883,11 @@ var TableContainer = React.createClass({
   },
 
   onReplaceDone: function(data) {
-    this.setState({data: data});
+    this.setState({ data: data });
   },
 
   onSystemSelectorChange: function(value) {
-    this.setState({systemFilter: value.system});
+    this.setState({ systemFilter: value.system });
     //    var val = valueHash.system;
     //    var column = _.find(this.state.columns, function(c){ return c.property == 'system.System'; });
     //    if(!column) {column = _.find(this.state.columns, function(c){ return c.property == 'pds_malfunction.system.System'; });};
@@ -825,13 +917,16 @@ var TableContainer = React.createClass({
     var systemFilter = this.state.systemFilter;
     var show_hidden_columns = this.state.show_hidden_columns;
     columns = columns.filter(function(e) {
-      return (!e.show_on_request || (e.show_on_request && show_hidden_columns ));
+      return !e.show_on_request || (e.show_on_request && show_hidden_columns);
     });
     debugger;
-    var columns2=columns;
+    var columns2 = columns;
 
     columns.forEach(function(column) {
-      if (!column.headerClass || column.headerClass.indexOf(column.headerClassStyle) == -1) {
+      if (
+        !column.headerClass ||
+        column.headerClass.indexOf(column.headerClassStyle) == -1
+      ) {
         column.headerClass = column.headerClassStyle + ' ' + column.headerClass;
       }
     });
@@ -843,9 +938,14 @@ var TableContainer = React.createClass({
           data = _.filter(data, function(row) {
             return row.system && row.system.id == systemFilter;
           });
-        } else if (firstRow.doc_arr ) {
+        } else if (firstRow.doc_arr) {
           data = _.filter(data, function(row) {
-            return !!row.doc_arr && !!row.doc_arr.extra_data && !!row.doc_arr.extra_data[0] && row.doc_arr.extra_data[0].includes(systemFilter);
+            return (
+              !!row.doc_arr &&
+              !!row.doc_arr.extra_data &&
+              !!row.doc_arr.extra_data[0] &&
+              row.doc_arr.extra_data[0].includes(systemFilter)
+            );
           });
         }
       }
@@ -871,118 +971,190 @@ var TableContainer = React.createClass({
       this.state.mainCheckbox_old = mainCheckbox_new;
     }
 
-    var sortingColumn=this.state.sortingColumn;
+    var sortingColumn = this.state.sortingColumn;
     if (sortingColumn) {
       data = data.map(function(row) {
         var h = row;
-        if(row[sortingColumn.property] === null) {
+        if (row[sortingColumn.property] === null) {
           h[sortingColumn.property] = '';
         }
-        return(h);
+        return h;
       });
     }
     data = sortColumn.sort(data, sortingColumn, orderBy);
     this.state.dataxls = data;
     var paginated = paginate(data, pagination);
-    var pages = Math.ceil(data.length / Math.max(isNaN(pagination.perPage)
-      ? 1
-      : pagination.perPage, 1));
-   
+    var pages = Math.ceil(
+      data.length /
+        Math.max(isNaN(pagination.perPage) ? 1 : pagination.perPage, 1)
+    );
+
     return (
       <div className="main-container-inner" key={'main-table'}>
         <div className="table-info" key={'table-info'}>
-          <div className="title">
-            {this.props.title}
-          </div>
+          <div className="title">{this.props.title}</div>
           <div className="info">
             <div className="left">
               <div className="left-left">
-                <div className='total'>
+                <div className="total">
                   <p>Записей -</p>
                   <p>{data.length}</p>
                   <p>{'на ' + pages + ' стр.'}</p>
                 </div>
-                <div className='system-selector'>
-                  <SystemFilterSelector attribute="system" onValue={this.onSystemSelectorChange} disabled={this.state.lockRow} value={this.state.systemFilter}/>
+                <div className="system-selector">
+                  <SystemFilterSelector
+                    attribute="system"
+                    onValue={this.onSystemSelectorChange}
+                    disabled={this.state.lockRow}
+                    value={this.state.systemFilter}
+                  />
                   <p>cистема</p>
                 </div>
-                <div className='per-page-container'>
-                  <input type='number' min='1' max='200' defaultValue={pagination.perPage} onChange={this.onPerPage} disabled={this.state.lockRow}></input>
+                <div className="per-page-container">
+                  <input
+                    type="number"
+                    min="1"
+                    max="200"
+                    defaultValue={pagination.perPage}
+                    onChange={this.onPerPage}
+                    disabled={this.state.lockRow}
+                  />
                   <p>строк</p>
                 </div>
-                <div className='page-container'>
-                  <input type='number' min='1' value={this.state.pagination.page} onChange={this.onPage} disabled={this.state.lockRow}></input>
+                <div className="page-container">
+                  <input
+                    type="number"
+                    min="1"
+                    value={this.state.pagination.page}
+                    onChange={this.onPage}
+                    disabled={this.state.lockRow}
+                  />
                   <p>cтр.</p>
                 </div>
               </div>
               <div className="left-right">
-                <div className={this.state.showFilters
-                  ? 'icon-filter info-buttons border-inset'
-                  : 'icon-filter info-buttons'} onClick={this.onIconFilterClick}>
+                <div
+                  className={
+                    this.state.showFilters
+                      ? 'icon-filter info-buttons border-inset'
+                      : 'icon-filter info-buttons'
+                  }
+                  onClick={this.onIconFilterClick}
+                >
                   Фильтр
                 </div>
-                <div className={this.state.showReplace
-                  ? 'icon-replace info-buttons border-inset'
-                  : 'icon-replace info-buttons'} onClick={this.onIconReplaceClick}>
+                <div
+                  className={
+                    this.state.showReplace
+                      ? 'icon-replace info-buttons border-inset'
+                      : 'icon-replace info-buttons'
+                  }
+                  onClick={this.onIconReplaceClick}
+                >
                   Замена
                 </div>
-                <div className={false
-                  ? 'add-row info-buttons border-inset'
-                  : 'add-row info-buttons'} onClick={this.onAddRowClick}>
+                <div
+                  className={
+                    false
+                      ? 'add-row info-buttons border-inset'
+                      : 'add-row info-buttons'
+                  }
+                  onClick={this.onAddRowClick}
+                >
                   Добавить запись
                 </div>
               </div>
             </div>
-            <div className="right" >
+            <div className="right">
               <div className="show-filters" onClick={this.onShowHidden}>
                 Скрыть/ Показать поля
               </div>
-              <ExportXlsxModal data={this.state.dataxls} onExport={this.onExportClick}/>
+              <ExportXlsxModal
+                data={this.state.dataxls}
+                onExport={this.onExportClick}
+              />
             </div>
-
           </div>
         </div>
-        <div className={this.state.showReplace
-          ? 'table-filters'
-          : 'table-filters hidden-element'} key={'table-filters'}>
+        <div
+          className={
+            this.state.showReplace
+              ? 'table-filters'
+              : 'table-filters hidden-element'
+          }
+          key={'table-filters'}
+        >
           <div className="left">
-
             <div className="replace-container">
-              <Replace columns={this.state.columns} data={this.state.data} onReplaceDone={this.onReplaceDone} disabled={this.state.lockRow}/>
-
+              <Replace
+                columns={this.state.columns}
+                data={this.state.data}
+                onReplaceDone={this.onReplaceDone}
+                disabled={this.state.lockRow}
+              />
             </div>
-
           </div>
         </div>
 
-        <div className='pagination'>
-          <Paginator.Context className="pagify-pagination" segments={segmentize({page: pagination.page, pages: pages, beginPages: 3, endPages: 3, sidePages: 2})} onSelect={this.onSelect}>
-            <Paginator.Button page={pagination.page - 1}>Предыдущая</Paginator.Button>
-            <Paginator.Segment field="beginPages"/>
-            <Paginator.Ellipsis className="ellipsis" previousField="beginPages" nextField="previousPages"/>
-            <Paginator.Segment field="previousPages"/>
-            <Paginator.Segment field="centerPage" className="selected"/>
-            <Paginator.Segment field="nextPages"/>
-            <Paginator.Ellipsis className="ellipsis" previousField="nextPages" nextField="endPages"/>
-            <Paginator.Segment field="endPages"/>
-            <Paginator.Button page={pagination.page + 1}>Следующая</Paginator.Button>
+        <div className="pagination">
+          <Paginator.Context
+            className="pagify-pagination"
+            segments={segmentize({
+              page: pagination.page,
+              pages: pages,
+              beginPages: 3,
+              endPages: 3,
+              sidePages: 2
+            })}
+            onSelect={this.onSelect}
+          >
+            <Paginator.Button page={pagination.page - 1}>
+              Предыдущая
+            </Paginator.Button>
+            <Paginator.Segment field="beginPages" />
+            <Paginator.Ellipsis
+              className="ellipsis"
+              previousField="beginPages"
+              nextField="previousPages"
+            />
+            <Paginator.Segment field="previousPages" />
+            <Paginator.Segment field="centerPage" className="selected" />
+            <Paginator.Segment field="nextPages" />
+            <Paginator.Ellipsis
+              className="ellipsis"
+              previousField="nextPages"
+              nextField="endPages"
+            />
+            <Paginator.Segment field="endPages" />
+            <Paginator.Button page={pagination.page + 1}>
+              Следующая
+            </Paginator.Button>
           </Paginator.Context>
         </div>
 
-        <div className={this.state.showReplace
-          ? 'table-container table-container-replace-show'
-          : 'table-container table-container-replace-hide'} key={'table-container'}>
-
-          <Table className='table table-bordered' columnNames={this.columnFilters} data={paginated.data} columns={columns2} row={(d, rowIndex) => {
-            var rowClass = rowIndex % 2
-              ? 'odd-row'
-              : 'even-row';
-            if (rowIndex == this.state.editedRow)
-              rowClass = 'edited-row';
-            return { className: rowClass, }; }} rowKey="id"/>
+        <div
+          className={
+            this.state.showReplace
+              ? 'table-container table-container-replace-show'
+              : 'table-container table-container-replace-hide'
+          }
+          key={'table-container'}
+        >
+          <Table
+            className="table table-bordered"
+            columnNames={this.columnFilters}
+            data={paginated.data}
+            columns={columns2}
+            row={(d, rowIndex) => {
+              var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
+              if (rowIndex == this.state.editedRow) rowClass = 'edited-row';
+              return { className: rowClass };
+            }}
+            rowKey="id"
+          />
         </div>
         <div id="panel-sticker" onClick={this.onHideTreeViewClick}>
-          <p></p>
+          <p />
         </div>
       </div>
     );
@@ -996,7 +1168,15 @@ $(document).ready(function() {
   var appElement = document.getElementById('general_table');
   Modal.setAppElement(appElement);
   ReactDOM.render(
-    <TableContainer columns={columns} data={data} objectType={model_name} title={title} project={project}/>, appElement);
+    <TableContainer
+      columns={columns}
+      data={data}
+      objectType={model_name}
+      title={title}
+      project={project}
+    />,
+    appElement
+  );
 });
 
 function paginate(data, o) {
@@ -1007,9 +1187,7 @@ function paginate(data, o) {
   var perPage = o.perPage;
 
   var amountOfPages = Math.ceil(data.length / perPage);
-  var startPage = page < amountOfPages
-    ? page
-    : 0;
+  var startPage = page < amountOfPages ? page : 0;
 
   return {
     amount: amountOfPages,

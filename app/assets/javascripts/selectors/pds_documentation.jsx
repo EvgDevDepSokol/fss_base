@@ -1,17 +1,17 @@
 // selector to be used for systems
-
 'use strict';
 
 var React = require('react');
 var Select = require('react-select');
 var onChange = require('../selectors/selectors.jsx').onChange;
-var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
+var getSelectorOptions = require('../selectors/selectors.jsx')
+  .getSelectorOptions;
 var path = '/selectors/pds_documentations';
 
 module.exports = React.createClass({
   displayName: 'PdsDocumentationsSelector',
 
-  propTypes: {label: PropTypes.string},
+  propTypes: { label: PropTypes.string },
 
   getInitialState() {
     return {
@@ -21,16 +21,15 @@ module.exports = React.createClass({
   },
 
   setValue(value) {
-    onChange(value,this)
+    onChange(value, this);
   },
 
   render: function() {
-
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = getSelectorOptions(
           path,
-          {pds_project_id:project.ProjectID},
+          { pds_project_id: project.ProjectID },
           this
         );
 
@@ -41,24 +40,23 @@ module.exports = React.createClass({
       }, 0);
     };
 
-    return (
-        React.createElement(Select.Async, {name: "PdsDocumentation",
-          loadOptions: getOptions,
-          onChange: this.setValue,
-          value: this.state.value,
-          simpleValue:true,
-          multi: false,
-          disabled: this.props.disabled,
-          clearable: false,
-          cache: false
-        })
-    );
+    return React.createElement(Select.Async, {
+      name: 'PdsDocumentation',
+      loadOptions: getOptions,
+      onChange: this.setValue,
+      value: this.state.value,
+      simpleValue: true,
+      multi: false,
+      disabled: this.props.disabled,
+      clearable: false,
+      cache: false
+    });
   }
 });
-module.exports.options = function(){
+module.exports.options = function() {
   var options = getSelectorOptions(
     path,
-    {pds_project_id:project.ProjectID},
+    { pds_project_id: project.ProjectID },
     this
   );
   return options;

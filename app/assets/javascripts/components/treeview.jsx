@@ -18,7 +18,7 @@ var TreeView = React.createClass({
   },
 
   getInitialState: function() {
-    return {collapsed: this.props.defaultCollapsed};
+    return { collapsed: this.props.defaultCollapsed };
   },
 
   handleClick: function(a, b, c) {
@@ -30,9 +30,8 @@ var TreeView = React.createClass({
 
   render: function() {
     var props = this.props;
-    var collapsed = props.collapsed != null
-      ? props.collapsed
-      : this.state.collapsed;
+    var collapsed =
+      props.collapsed != null ? props.collapsed : this.state.collapsed;
 
     var arrowClassName = 'tree-view_arrow';
     var containerClassName = 'tree-view_children';
@@ -41,20 +40,21 @@ var TreeView = React.createClass({
       containerClassName += ' tree-view_children-collapsed';
     }
 
-    var arrow = <div className={(props.className || '') + ' ' + arrowClassName} onClick={this.handleClick}>
-      ▾
-    </div>;
-    var label = <div onClick={this.handleClick}>
-      {props.nodeLabel}
-    </div>;
+    var arrow = (
+      <div
+        className={(props.className || '') + ' ' + arrowClassName}
+        onClick={this.handleClick}
+      >
+        ▾
+      </div>
+    );
+    var label = <div onClick={this.handleClick}>{props.nodeLabel}</div>;
 
     return (
       <div className="tree-view">
         {arrow}
         {label}
-        <div className={containerClassName}>
-          {props.children}
-        </div>
+        <div className={containerClassName}>{props.children}</div>
       </div>
     );
   }
@@ -62,7 +62,7 @@ var TreeView = React.createClass({
 
 var TreeSearch = React.createClass({
   getInitialState: function() {
-    return {searchValue: ''};
+    return { searchValue: '' };
   },
 
   /**
@@ -70,16 +70,20 @@ var TreeSearch = React.createClass({
    **/
   changeInput: function() {
     var searchValue = ReactDOM.findDOMNode(this.refs.searchInput).value;
-    this.setState({searchValue: searchValue});
+    this.setState({ searchValue: searchValue });
     this.props.changeInput(searchValue);
   },
 
   render: function() {
-
     return (
       <div className="react-search">
-        <input type="text" className="input-text" ref="searchInput" onKeyUp={this.changeInput}/>
-        <i className="fa fa-search fa-lg"></i>
+        <input
+          type="text"
+          className="input-text"
+          ref="searchInput"
+          onKeyUp={this.changeInput}
+        />
+        <i className="fa fa-search fa-lg" />
       </div>
     );
   }
@@ -87,16 +91,13 @@ var TreeSearch = React.createClass({
 
 //  <i className="fa fa-times fa-lg" ></i>
 var TreeListNode = React.createClass({
-
   openLink: function() {
     location.href = this.props.href;
   },
 
   render: function() {
     return (
-      <li className={this.props.current
-        ? 'node current'
-        : 'node'}>
+      <li className={this.props.current ? 'node current' : 'node'}>
         <a href={this.props.href}>{this.props.label}</a>
       </li>
     );
@@ -104,7 +105,6 @@ var TreeListNode = React.createClass({
 });
 
 var SideMenu = React.createClass({
-
   filterData: function(pattern) {
     if (!String.prototype.includes) {
       String.prototype.includes = function() {
@@ -116,7 +116,7 @@ var SideMenu = React.createClass({
     var newData = data.map(function(elem) {
       if (!pattern || elem.label.toLowerCase().includes(pattern)) {
         var newChildrens = elem.children.map(function(child) {
-          return $.extend(child, {visible: true});
+          return $.extend(child, { visible: true });
         });
         return $.extend(elem, {
           children: newChildrens,
@@ -127,9 +127,9 @@ var SideMenu = React.createClass({
         var newChildrens = elem.children.map(function(child) {
           if (!pattern || child.label.toLowerCase().includes(pattern)) {
             countVisibleChildren++;
-            return $.extend(child, {visible: true});
+            return $.extend(child, { visible: true });
           } else {
-            return $.extend(child, {visible: false});
+            return $.extend(child, { visible: false });
           }
         });
         return $.extend(elem, {
@@ -137,46 +137,53 @@ var SideMenu = React.createClass({
           visible: countVisibleChildren > 0
         });
       }
-      return $.extend(elem, {visible: false});
+      return $.extend(elem, { visible: false });
     });
-    this.setState({dataSource: newData});
+    this.setState({ dataSource: newData });
   },
 
   getInitialState: function() {
     this.filterData('');
-    return {dataSource: this.props.dataSource};
+    return { dataSource: this.props.dataSource };
   },
 
   render: function() {
-
     return (
       <div>
-        <TreeSearch changeInput={this.filterData} key={'menu-search'}/>
+        <TreeSearch changeInput={this.filterData} key={'menu-search'} />
         <div className="menu-tree">
           <div className="menu-tree-inner">
-
             {this.state.dataSource.map(function(node, i) {
               var type = node.type;
               var childrensList = node.children.map(function(child, j) {
                 if (child.visible) {
-                  return (<TreeListNode key={type + '|' + i + '|' + j} label={child.label} href={child.href} current={child.current}/>);
+                  return (
+                    <TreeListNode
+                      key={type + '|' + i + '|' + j}
+                      label={child.label}
+                      href={child.href}
+                      current={child.current}
+                    />
+                  );
                 }
               });
               var label = <span className="node">{node.label}</span>;
               if (node.visible) {
                 return (
-                  <TreeView elem={node} key={type + '|' + i} nodeLabel={label} defaultCollapsed={false}>
-                    <ul>
-                      {childrensList}
-                    </ul>
+                  <TreeView
+                    elem={node}
+                    key={type + '|' + i}
+                    nodeLabel={label}
+                    defaultCollapsed={false}
+                  >
+                    <ul>{childrensList}</ul>
                   </TreeView>
                 );
               } else {
-                return ('');
+                return '';
               }
             }, this)}
           </div>
-
         </div>
       </div>
     );

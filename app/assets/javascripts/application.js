@@ -11,7 +11,6 @@
 // about supported directives.
 //
 
-//
 //= require_self
 //= require jquery
 //= require jquery_ujs

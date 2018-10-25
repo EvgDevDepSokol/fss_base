@@ -1,18 +1,18 @@
 // selector to be used for systems
-
 'use strict';
 
 var React = require('react');
 import VirtualizedSelect from 'react-virtualized-select';
 //import Select from 'react-select';
 var onChange = require('../selectors/selectors.jsx').onChange;
-var getSelectorOptions = require('../selectors/selectors.jsx').getSelectorOptions;
+var getSelectorOptions = require('../selectors/selectors.jsx')
+  .getSelectorOptions;
 var path = '/selectors/pds_detectors';
 
 module.exports = React.createClass({
   displayName: 'PdsDetectorSelector',
 
-  propTypes: {label: PropTypes.string},
+  propTypes: { label: PropTypes.string },
 
   getInitialState() {
     return {
@@ -22,16 +22,15 @@ module.exports = React.createClass({
   },
 
   setValue(value) {
-    onChange(value,this)
+    onChange(value, this);
   },
 
   render: function() {
-
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = getSelectorOptions(
           path,
-          {pds_project_id:project.ProjectID},
+          { pds_project_id: project.ProjectID },
           this
         );
 
@@ -41,26 +40,25 @@ module.exports = React.createClass({
       }, 0);
     };
 
-    return (
-      React.createElement(VirtualizedSelect, {name: "PdsDetector",
-        async: true,
-        loadOptions: getOptions,
-        onChange: this.setValue,
-        value: this.state.value,
-        simpleValue:true,
-        multi: false,
-        disabled: this.props.disabled,
-        clearable: false,
-        cache: false
-        })
-    );
+    return React.createElement(VirtualizedSelect, {
+      name: 'PdsDetector',
+      async: true,
+      loadOptions: getOptions,
+      onChange: this.setValue,
+      value: this.state.value,
+      simpleValue: true,
+      multi: false,
+      disabled: this.props.disabled,
+      clearable: false,
+      cache: false
+    });
   }
 });
 
-module.exports.options = function(){
+module.exports.options = function() {
   var options = getSelectorOptions(
     path,
-    {pds_project_id:project.ProjectID},
+    { pds_project_id: project.ProjectID },
     this
   );
 };

@@ -1,5 +1,4 @@
 // selector to be used for pds_section_assemblers
-
 'use strict';
 
 var React = require('react');

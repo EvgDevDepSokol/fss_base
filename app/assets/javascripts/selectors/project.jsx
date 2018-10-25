@@ -1,15 +1,13 @@
 // selector to be used for projects
-
 'use strict';
 
 var React = require('react');
 var Select = require('react-select');
 
-
 module.exports = React.createClass({
   displayName: 'ProjectSelector',
 
-  propTypes: {label: PropTypes.string},
+  propTypes: { label: PropTypes.string },
 
   getInitialState() {
     return {
@@ -18,7 +16,7 @@ module.exports = React.createClass({
   },
 
   onChange(value, object) {
-    if(object.length > 0) this.setState({value: object[0].label});
+    if (object.length > 0) this.setState({ value: object[0].label });
     var h = {};
     h[this.props.attribute] = value;
     this.props.onValue(h);
@@ -27,7 +25,6 @@ module.exports = React.createClass({
   render: function() {
     var getOptions = function(input, callback) {
       setTimeout(function() {
-
         var options = [];
         $.ajax({
           url: '/pds_projects',
@@ -43,7 +40,9 @@ module.exports = React.createClass({
           async: false
         });
 
-        options = $.map(options , function(el){ return {value: el.id, label: el.Project} } )
+        options = $.map(options, function(el) {
+          return { value: el.id, label: el.Project };
+        });
 
         callback(null, {
           options: options,
@@ -54,15 +53,13 @@ module.exports = React.createClass({
       }, 5);
     };
 
-
-    return (
-      React.createElement(Select, {name: "Project",
-        asyncOptions: getOptions,
-        onChange: this.onChange,
-        value: this.state.value,
-        clearable: false,
-        cache: false
-        })
-    );
+    return React.createElement(Select, {
+      name: 'Project',
+      asyncOptions: getOptions,
+      onChange: this.onChange,
+      value: this.state.value,
+      clearable: false,
+      cache: false
+    });
   }
 });

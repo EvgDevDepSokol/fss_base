@@ -18,19 +18,32 @@ var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
 
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
-var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx').MalfunctionTypeSelector;
-var RFTypeSelector = require('../selectors/static_selectors.jsx').RFTypeSelector;
-var ValveTypeSelector = require('../selectors/static_selectors.jsx').ValveTypeSelector;
-var BooleanSelector = require('../selectors/static_selectors.jsx').BooleanSelector;
-var BooleanYNSelector = require('../selectors/static_selectors.jsx').BooleanYNSelector;
-var BooleanNumbSelector = require('../selectors/static_selectors.jsx').BooleanNumbSelector;
-var MotorZmnSelector = require('../selectors/static_selectors.jsx').MotorZmnSelector;
-var UserRightsSelector = require('../selectors/static_selectors.jsx').UserRightsSelector;
-var RegidityUnitSelector = require('../selectors/static_selectors.jsx').RegidityUnitSelector;
-var AnnounciatorTypeSelector = require('../selectors/static_selectors.jsx').AnnounciatorTypeSelector;
-var AnnounciatorSignSelector = require('../selectors/static_selectors.jsx').AnnounciatorSignSelector;
-var SyslistDescriptorSelector = require('../selectors/static_selectors.jsx').SyslistDescriptorSelector;
-var SyslistCategorySelector = require('../selectors/static_selectors.jsx').SyslistCategorySelector;
+var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx')
+  .MalfunctionTypeSelector;
+var RFTypeSelector = require('../selectors/static_selectors.jsx')
+  .RFTypeSelector;
+var ValveTypeSelector = require('../selectors/static_selectors.jsx')
+  .ValveTypeSelector;
+var BooleanSelector = require('../selectors/static_selectors.jsx')
+  .BooleanSelector;
+var BooleanYNSelector = require('../selectors/static_selectors.jsx')
+  .BooleanYNSelector;
+var BooleanNumbSelector = require('../selectors/static_selectors.jsx')
+  .BooleanNumbSelector;
+var MotorZmnSelector = require('../selectors/static_selectors.jsx')
+  .MotorZmnSelector;
+var UserRightsSelector = require('../selectors/static_selectors.jsx')
+  .UserRightsSelector;
+var RegidityUnitSelector = require('../selectors/static_selectors.jsx')
+  .RegidityUnitSelector;
+var AnnounciatorTypeSelector = require('../selectors/static_selectors.jsx')
+  .AnnounciatorTypeSelector;
+var AnnounciatorSignSelector = require('../selectors/static_selectors.jsx')
+  .AnnounciatorSignSelector;
+var SyslistDescriptorSelector = require('../selectors/static_selectors.jsx')
+  .SyslistDescriptorSelector;
+var SyslistCategorySelector = require('../selectors/static_selectors.jsx')
+  .SyslistCategorySelector;
 
 var SdSelector = require('../selectors/pds_sds.jsx');
 var UnitSelector = require('../selectors/pds_project_units.jsx');
@@ -52,7 +65,11 @@ var CustomInput = React.createClass({
   },
 
   getInitialState: function() {
-    return {editor: this.props.editor, attribute: this.props.attribute, enabled: this.props.enabled};
+    return {
+      editor: this.props.editor,
+      attribute: this.props.attribute,
+      enabled: this.props.enabled
+    };
   },
 
   render: function() {
@@ -65,7 +82,7 @@ var CustomInput = React.createClass({
     if (lpass) {
       var editor = eval(this.props.editor.displayName);
       return (
-        <div className='replace-selector'>
+        <div className="replace-selector">
           {React.createElement(editor, {
             onValue: function() {},
             disabled: !this.props.enabled
@@ -74,8 +91,8 @@ var CustomInput = React.createClass({
       );
     } else {
       return (
-        <div className='replace-input-container'>
-          <input className='replace-input' disabled={!this.props.enabled}/>
+        <div className="replace-input-container">
+          <input className="replace-input" disabled={!this.props.enabled} />
         </div>
       );
     }
@@ -93,11 +110,11 @@ module.exports = React.createClass({
   },
 
   openReplaceModal: function() {
-    this.setState({isReplaceModalOpen: true});
+    this.setState({ isReplaceModalOpen: true });
   },
 
   closeReplaceModal: function() {
-    this.setState({isReplaceModalOpen: false});
+    this.setState({ isReplaceModalOpen: false });
   },
 
   getInitialState: function() {
@@ -123,8 +140,10 @@ module.exports = React.createClass({
       lpass = editor.displayName.endsWith('Selector');
     }
     if (lpass) {
-      var from = ReactDOM.findDOMNode(this.refs.from).firstChild.childNodes[0].defaultValue;
-      var to = ReactDOM.findDOMNode(this.refs.to).firstChild.childNodes[0].defaultValue;
+      var from = ReactDOM.findDOMNode(this.refs.from).firstChild.childNodes[0]
+        .defaultValue;
+      var to = ReactDOM.findDOMNode(this.refs.to).firstChild.childNodes[0]
+        .defaultValue;
     } else {
       var from = ReactDOM.findDOMNode(this.refs.from).children[0].value;
       var to = ReactDOM.findDOMNode(this.refs.to).children[0].value;
@@ -142,13 +161,9 @@ module.exports = React.createClass({
           url: '/replace_prepare',
           dataType: 'json',
           data: {
-            pds_project_id: project
-              ? project.id
-              : null,
+            pds_project_id: project ? project.id : null,
             model: model_name,
-            column: attribute
-              ? attribute
-              : column,
+            column: attribute ? attribute : column,
             from: from,
             to: to,
             ids: ids,
@@ -161,7 +176,11 @@ module.exports = React.createClass({
 
             if (new_data) {
               //    _this.setState({isReplaceModalOpen:true});
-              var lsave = confirm('Количество измененных записей: ' + new_data.length + '. Сохранить изменения?');
+              var lsave = confirm(
+                'Количество измененных записей: ' +
+                  new_data.length +
+                  '. Сохранить изменения?'
+              );
               //    var lsave=false;
               if (lsave && new_data.length > 0) {
                 $.ajax({
@@ -169,9 +188,7 @@ module.exports = React.createClass({
                   dataType: 'json',
                   data: {
                     new_data: new_data,
-                    column: attribute
-                      ? attribute
-                      : column,
+                    column: attribute ? attribute : column,
                     model: model_name
                   },
                   type: 'PUT',
@@ -181,7 +198,7 @@ module.exports = React.createClass({
                     var arr = column.split('.');
                     column = arr[0];
                     cols.forEach(function(col) {
-                      var idx = findIndex(data, {id: col.id});
+                      var idx = findIndex(data, { id: col.id });
                       data[idx][column] = col[column];
                     });
                     this.props.onReplaceDone(data);
@@ -198,12 +215,13 @@ module.exports = React.createClass({
           }.bind(this)
         });
       } else {
-        alert('Поставьте галочки в строках, в которых желаете произвести замену!');
+        alert(
+          'Поставьте галочки в строках, в которых желаете произвести замену!'
+        );
       }
     } else {
       alert('Выберите колонку, в которой будет производиться замена!');
     }
-
   },
 
   onChangeColumn: function(e) {
@@ -212,7 +230,7 @@ module.exports = React.createClass({
     var context = this;
     columns.forEach(function(col) {
       if (col.property == tmp) {
-        context.setState({attribute: col.attribute, editor: col.editor});
+        context.setState({ attribute: col.attribute, editor: col.editor });
       }
     });
   },
@@ -223,69 +241,134 @@ module.exports = React.createClass({
     if (fromIndex !== 2) {
       toIndex = 0;
     }
-    this.setState({fromIndex: fromIndex, toIndex: toIndex});
+    this.setState({ fromIndex: fromIndex, toIndex: toIndex });
   },
 
   onRadioToChange: function(e) {
     var toIndex = parseInt(e.target.value, 10);
-    this.setState({toIndex: toIndex});
+    this.setState({ toIndex: toIndex });
   },
 
   render: function() {
     var columns = this.props.columns || [];
-    var options = [{}].concat(columns.map(function(column) {
-      if (column.property && column.label) {
-        if (column.editor&&(column.attribute !== 'extra_label')) {
-          return {value: column.property, name: column.label};
-        }
-      }
-    }).filter(id));
+    var options = [{}].concat(
+      columns
+        .map(function(column) {
+          if (column.property && column.label) {
+            if (column.editor && column.attribute !== 'extra_label') {
+              return { value: column.property, name: column.label };
+            }
+          }
+        })
+        .filter(id)
+    );
 
-    return (React.createElement('span', {
-      className: 'replace'
-    }, < div > {
-      React.createElement('select', {
-        className: 'replace-column-selector',
-        ref: 'column',
-        onChange: this.onChangeColumn
-      }, options.map(function(option) {
-        return React.createElement('option', {
-          key: option.name,
-          value: option.value
-        }, option.name);
-      }))
-    } < p > Где заменить < /p>
-    </div >, < div className = 'replace-from-radio-group' > <input type='radio' name='replace-from' value='0' checked={this.state.fromIndex === 0} onChange={this.onRadioFromChange}/> < CustomInput ref = 'from' editor = {
-      this.state.editor
-    }
-    attribute = {
-      this.state.attribute
-    }
-    description = 'Что заменить' enabled = {
-      this.state.fromIndex === 0
-    } />< br /> <input type='radio' name='replace-from' value='1' checked={this.state.fromIndex === 1} onChange={this.onRadioFromChange}/>Заменить пустые < br /> <input type='radio' name='replace-from' value='2' checked={this.state.fromIndex === 2} onChange={this.onRadioFromChange}/>Заменить все < br /> </div>, < div className = 'replace-to-radio-group' > <input type='radio' name='replace-to' value='0' checked={this.state.toIndex === 0} onChange={this.onRadioToChange}/> < CustomInput ref = 'to' editor = {
-      this.state.editor
-    }
-    attribute = {
-      this.state.attribute
-    }
-    description = 'На что заменить' enabled = {
-      this.state.toIndex === 0
-    } />< br /> <input type='radio' name='replace-to' value='1' checked={this.state.toIndex === 1} onChange={this.onRadioToChange} disabled={this.state.fromIndex !== 2}/>Заменить на пустые < br /> </div>, < button onClick = {
-      this.onSubmit
-    }
-    className = 'btn btn-xs btn-default' disabled = {
-      this.props.disabled
-    } > Replace < /button>,
-    <div>
-      <ReplaceConfirmModal
-        id = "replace_confirm_modal"
-        isReplaceModalOpen = {this.state.isReplaceModalOpen}
-        onRequestClose={this.closeReplaceModal}
-        new_data = {new_data}
-        contentLabel='Замена. Подтверждение.'
-      / > </div>
-    ));
+    return React.createElement(
+      'span',
+      {
+        className: 'replace'
+      },
+      <div>
+        {' '}
+        {React.createElement(
+          'select',
+          {
+            className: 'replace-column-selector',
+            ref: 'column',
+            onChange: this.onChangeColumn
+          },
+          options.map(function(option) {
+            return React.createElement(
+              'option',
+              {
+                key: option.name,
+                value: option.value
+              },
+              option.name
+            );
+          })
+        )}{' '}
+        <p> Где заменить </p>
+      </div>,
+      <div className="replace-from-radio-group">
+        {' '}
+        <input
+          type="radio"
+          name="replace-from"
+          value="0"
+          checked={this.state.fromIndex === 0}
+          onChange={this.onRadioFromChange}
+        />{' '}
+        <CustomInput
+          ref="from"
+          editor={this.state.editor}
+          attribute={this.state.attribute}
+          description="Что заменить"
+          enabled={this.state.fromIndex === 0}
+        />
+        <br />{' '}
+        <input
+          type="radio"
+          name="replace-from"
+          value="1"
+          checked={this.state.fromIndex === 1}
+          onChange={this.onRadioFromChange}
+        />
+        Заменить пустые <br />{' '}
+        <input
+          type="radio"
+          name="replace-from"
+          value="2"
+          checked={this.state.fromIndex === 2}
+          onChange={this.onRadioFromChange}
+        />
+        Заменить все <br />{' '}
+      </div>,
+      <div className="replace-to-radio-group">
+        {' '}
+        <input
+          type="radio"
+          name="replace-to"
+          value="0"
+          checked={this.state.toIndex === 0}
+          onChange={this.onRadioToChange}
+        />{' '}
+        <CustomInput
+          ref="to"
+          editor={this.state.editor}
+          attribute={this.state.attribute}
+          description="На что заменить"
+          enabled={this.state.toIndex === 0}
+        />
+        <br />{' '}
+        <input
+          type="radio"
+          name="replace-to"
+          value="1"
+          checked={this.state.toIndex === 1}
+          onChange={this.onRadioToChange}
+          disabled={this.state.fromIndex !== 2}
+        />
+        Заменить на пустые <br />{' '}
+      </div>,
+      <button
+        onClick={this.onSubmit}
+        className="btn btn-xs btn-default"
+        disabled={this.props.disabled}
+      >
+        {' '}
+        Replace{' '}
+      </button>,
+      <div>
+        <ReplaceConfirmModal
+          id="replace_confirm_modal"
+          isReplaceModalOpen={this.state.isReplaceModalOpen}
+          onRequestClose={this.closeReplaceModal}
+          new_data={new_data}
+          contentLabel="Замена. Подтверждение."
+        />{' '}
+      </div>
+    );
   }
 });
 
@@ -297,7 +380,7 @@ var ReplaceConfirmModal = React.createClass({
   displayName: 'ReplaceConfirmModal',
 
   getInitialState: function() {
-    return {isReplaceModalOpen: this.props.isReplaceModalOpen};
+    return { isReplaceModalOpen: this.props.isReplaceModalOpen };
   },
 
   closeReplaceModal: function() {
@@ -307,14 +390,17 @@ var ReplaceConfirmModal = React.createClass({
   render: function() {
     return (
       <div>
-        <Modal isOpen={this.props.isReplaceModalOpen} onRequestClose={this.closeReplaceModal} contentLabel={this.props.contentLabel}>
-          shouldCloseOnOverlayClick={false}
+        <Modal
+          isOpen={this.props.isReplaceModalOpen}
+          onRequestClose={this.closeReplaceModal}
+          contentLabel={this.props.contentLabel}
+        >
+          shouldCloseOnOverlayClick=
+          {false}
           <h2 ref="subtitle">Окно с предварительными результатами замены.</h2>
           <button onClick={this.closeReplaceModal}>close</button>
           <div>Пока не работает.</div>
-          <form>
-            {this.props.new_data}
-          </form>
+          <form>{this.props.new_data}</form>
         </Modal>
       </div>
     );

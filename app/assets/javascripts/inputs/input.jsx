@@ -16,16 +16,16 @@ module.exports = function() {
     },
 
     getInitialState: function() {
-      return {value: this.props.value};
+      return { value: this.props.value };
     },
 
     render: function() {
-      return (React.createElement('input', {
+      return React.createElement('input', {
         value: this.state.value,
         onChange: this.onChange,
         onKeyUp: this.keyUp,
         onBlur: this.done
-      }));
+      });
     },
 
     onChange: function(e) {

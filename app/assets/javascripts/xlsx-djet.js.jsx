@@ -16,8 +16,7 @@ function sheet_from_data_and_cols(data, columns) {
             tempVal = tempVal[key];
           }
         });
-        if (tempVal == null)
-          tempVal = '';
+        if (tempVal == null) tempVal = '';
         value = tempVal;
       } else {
         value = row[column.property];
@@ -26,45 +25,48 @@ function sheet_from_data_and_cols(data, columns) {
     });
     new_data.push(new_row);
   });
-  var ws = XLSX.utils.json_to_sheet(new_data);   
+  var ws = XLSX.utils.json_to_sheet(new_data);
   return ws;
 }
 
-var exportData = function(data, columns, bookname){
+var exportData = function(data, columns, bookname) {
   var wb = XLSX.utils.book_new();
   var ws = sheet_from_data_and_cols(data, columns);
   var ws_name = 'Экспорт';
-  XLSX.utils.book_append_sheet(wb,ws,ws_name);
-  XLSX.writeFile(wb,bookname,{ bookType:'biff8'});
+  XLSX.utils.book_append_sheet(wb, ws, ws_name);
+  XLSX.writeFile(wb, bookname, { bookType: 'biff8' });
 };
 
-var workbook_to_json =function(workbook) {
+var workbook_to_json = function(workbook) {
   var result = [];
   workbook.SheetNames.forEach(function(sheetName) {
     //var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName],{raw: true, defval: null});
-    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName],{raw: false, defval: null});
-    roa = roa.map(function(line){
+    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName], {
+      raw: false,
+      defval: null
+    });
+    roa = roa.map(function(line) {
       var line1 = line;
-      for (var key in line){
-        if (key.includes('__EMPTY')){
+      for (var key in line) {
+        if (key.includes('__EMPTY')) {
           delete line1[key];
         }
       }
-      return(line1);
+      return line1;
     });
-    if(roa.length > 0){
-      result.push({sheetName: sheetName, data: roa});
+    if (roa.length > 0) {
+      result.push({ sheetName: sheetName, data: roa });
     }
   });
   return result;
 };
 
-function importFileData(file){
+function importFileData(file) {
   var reader = new FileReader();
   var name = file.name;
   reader.onload = function(e) {
     var importData = e.target.result;
-    var workbook = XLSX.read(importData, {type: 'binary'});
+    var workbook = XLSX.read(importData, { type: 'binary' });
     var jsonImportData = workbook_to_json(workbook);
     /* DO SOMETHING WITH workbook HERE */
   };

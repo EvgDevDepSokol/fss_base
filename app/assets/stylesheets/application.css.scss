@@ -23,7 +23,6 @@
  *= require libs/react-select/default.css
  *= require libs/react-virtualized/styles.css
  *= require libs/react-virtualized-select/styles.css
-
 */
 table {
   thead {
@@ -40,7 +39,7 @@ table {
         //content: '\25BC';
         //font-size: smaller;
 
-        content: '\2193';
+        content: "\2193";
         font-family: FontAwesome;
         font-size: initial;
         //font-style: normal;
@@ -56,7 +55,7 @@ table {
         //content: '\25B2';
         //font-size: smaller;
 
-        content: '\2191';
+        content: "\2191";
         font-family: FontAwesome;
         font-size: initial;
         //font-style: normal;
@@ -137,7 +136,7 @@ body {
   }
 
   &.blue {
-    background-image: asset_data_url('header_bg.png');
+    background-image: asset_data_url("header_bg.png");
     color: #427fa1;
     top: 55px;
     height: 35px;
@@ -222,7 +221,7 @@ body {
 }
 
 .container.app-container {
-  border: 1px solid #6DA3BD;
+  border: 1px solid #6da3bd;
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
@@ -244,7 +243,7 @@ body {
   }
 
   .inner-container.container {
-    border: 6px solid #ABD2E6;
+    border: 6px solid #abd2e6;
     -webkit-border-radius: 14px;
     -moz-border-radius: 14px;
     border-radius: 14px;
@@ -270,7 +269,7 @@ body {
 
 .left-menu.col {
   width: 245px;
-  border-right: 6px solid #ABD2E6;
+  border-right: 6px solid #abd2e6;
   position: absolute;
   height: 100%;
 
@@ -279,10 +278,10 @@ body {
   }
 
   .react-search {
-    background-color: #ABD2E6;
+    background-color: #abd2e6;
     padding-top: 4px;
     padding-bottom: 4px;
-    border-bottom: 1px solid #6DA3BD;
+    border-bottom: 1px solid #6da3bd;
 
     input {
       padding: 0;
@@ -310,9 +309,9 @@ body {
     top: 30px;
     bottom: 0;
     overflow-y: auto;
-    border-left: 1px solid #6DA3BD;
-    border-right: 1px solid #6DA3BD;
-    border-bottom: 1px solid #6DA3BD;
+    border-left: 1px solid #6da3bd;
+    border-right: 1px solid #6da3bd;
+    border-bottom: 1px solid #6da3bd;
     -webkit-border-bottom-left-radius: 8px;
     -moz-border-radius-bottomleft: 8px;
     border-bottom-left-radius: 8px;
@@ -352,7 +351,7 @@ body {
 }
 
 .col.main-container {
-  background-color: #ABD2E6;
+  background-color: #abd2e6;
   //padding-top: 5px;
   left: 245px;
   right: 0;
@@ -400,9 +399,9 @@ body {
     .title {
       min-width: 120px;
       max-width: 400px;
-      border: 1px solid #6DA3BD;
+      border: 1px solid #6da3bd;
       background-color: #ffffff;
-      border-bottom-color: rgb(220,220,240);
+      border-bottom-color: rgb(220, 220, 240);
       text-align: center;
       -webkit-border-top-left-radius: 8px;
       -webkit-border-top-right-radius: 8px;
@@ -420,10 +419,10 @@ body {
         -moz-border-radius: 0 0 0 5px;
         -webkit-border-radius: 0 0 0 5px;
         border-radius: 0 0 0 5px;
-        content: '';
+        content: "";
         right: -40px;
-        content: '';
-        border: 1px solid #6DA3BD;
+        content: "";
+        border: 1px solid #6da3bd;
         position: absolute;
         bottom: 0;
         border-top: 0;
@@ -440,7 +439,7 @@ body {
       -moz-border-radius: 10px;
       border-radius: 10px;
       background-color: #ffffff;
-      border: 1px solid #6DA3BD;
+      border: 1px solid #6da3bd;
       border-top-left-radius: 0;
       position: relative;
 
@@ -450,7 +449,7 @@ body {
         padding-left: 15px;
         height: 100%;
         float: left;
-        width:80%;
+        width: 80%;
         display: flex;
 
         .left-left {
@@ -581,9 +580,8 @@ body {
         color: #0044cc;
         font-size: 12px;
         cursor: pointer;
-        width:20%;
-        display:flex;
-
+        width: 20%;
+        display: flex;
 
         .show-filters {
           background-size: contain;
@@ -619,7 +617,7 @@ body {
     -moz-border-radius: 10px;
     border-radius: 10px;
     margin-top: 3px;
-    border: 1px solid #6DA3BD;
+    border: 1px solid #6da3bd;
 
     .replace-container {
       display: flex;
@@ -701,7 +699,7 @@ body {
   .table-container {
     background-color: #ffffff;
     border-radius: 10px;
-    border: 1px solid #6DA3BD;
+    border: 1px solid #6da3bd;
     position: absolute;
     padding: 5px;
     margin-top: 3px;
@@ -764,7 +762,7 @@ body {
         }
 
         &.selected {
-          background-color: #6DA3BD;
+          background-color: #6da3bd;
         }
       }
 
@@ -840,27 +838,27 @@ body {
 
 .notEditableColumn {
   font-style: italic;
-  COLOR: #687077;
+  color: #687077;
 }
 
 .header {
-  BORDER-BOTTOM: thin groove;
-  PADDING-BOTTOM: 7px;
-  PADDING-TOP: 7px;
-  PADDING-LEFT: 7px;
-  PADDING-RIGHT: 7px;
-  BACKGROUND-COLOR: #f8f8ff;
+  border-bottom: thin groove;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
+  background-color: #f8f8ff;
 
   table {
-    HEIGHT: 1px;
+    height: 1px;
     width: 100%;
 
     td {
-      HEIGHT: 32px;
+      height: 32px;
 
       #ctl00_lnkExport {
-        WIDTH: 130px;
-        DISPLAY: inline-block;
+        width: 130px;
+        display: inline-block;
       }
     }
 
@@ -1090,7 +1088,8 @@ footer {
   bottom: 0;
 }
 
-.system-selector {}
+.system-selector {
+}
 
 .navbar-middle {
   padding-left: 15%;
@@ -1140,7 +1139,7 @@ footer {
 
   .not-editable {
     font-style: italic;
-    COLOR: #687077;
+    color: #687077;
   }
 }
 
@@ -1170,10 +1169,10 @@ footer {
     }
   }
 }
-.generate-dbm{
-  height:95%;
+.generate-dbm {
+  height: 95%;
   button {
-    width:250px;
+    width: 250px;
   }
   .generate-dbm-all {
     display: block;
@@ -1183,18 +1182,18 @@ footer {
   .generate-dbm-top {
     display: inline-block;
     width: 50%;
-    vertical-align:top;
+    vertical-align: top;
     margin-top: 10px;
     //border: 1px solid #dddddd;
-    p{
+    p {
       margin: 0;
     }
   }
   .generate-dbm-sys-container {
     border: 1px solid #dddddd;
     margin-top: 10px;
-    label{
-      min-width:300px;
+    label {
+      min-width: 300px;
       margin: 0;
     }
   }
@@ -1208,15 +1207,16 @@ footer {
     display: grid;
     overflow: auto;
     margin-top: 10px;
-    table{
+    table {
       width: 100%;
-      th,td{
-          border-width: 1px;
-          border-style: solid;
-          border-color: rgb(169, 169, 169);
+      th,
+      td {
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(169, 169, 169);
       }
     }
-    textarea{
+    textarea {
       width: 100%;
       height: 100%;
       resize: none;
@@ -1231,8 +1231,8 @@ footer {
     border-style: none;
     font-size: 2.5em;
     background: white;
-    width:30px;
-    height:30px;
+    width: 30px;
+    height: 30px;
     background-size: contain;
     background-image: asset_data_url("icons/excel.png");
     //color: #dc322f;
@@ -1252,23 +1252,21 @@ footer {
   }
 }
 
-.generate-dbm-modal{
-  .header-icon{
+.generate-dbm-modal {
+  .header-icon {
     background-image: asset_data_url("generate.png");
   }
-
 }
-.import-from-excel{
-  .header-icon{
+.import-from-excel {
+  .header-icon {
     background-image: asset_data_url("import_export.png");
-  } 
+  }
 }
-.modal-close-button{
+.modal-close-button {
   position: absolute;
   right: 1%;
   border-style: none;
   font-size: 2.5em;
   background: white;
-  width:50px;
+  width: 50px;
 }
-

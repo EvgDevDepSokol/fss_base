@@ -16,21 +16,21 @@ module.exports = function() {
     },
 
     getInitialState: function() {
-      return {value: this.props.value};
+      return { value: this.props.value };
     },
 
     render: function() {
-      return (React.createElement('textarea', {
+      return React.createElement('textarea', {
         className: 'normal-text',
         value: this.state.value,
         onChange: this.onChange,
         onKeyUp: this.keyUp,
         onBlur: this.done
-      }));
+      });
     },
 
     onChange: function(e) {
-      this.setState({value: e.target.value});
+      this.setState({ value: e.target.value });
     },
 
     keyUp: function(e) {

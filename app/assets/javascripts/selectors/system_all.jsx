@@ -1,5 +1,4 @@
 // selector to be used for systems for all projects
-
 'use strict';
 
 var React = require('react');

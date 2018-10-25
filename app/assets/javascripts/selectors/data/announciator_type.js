@@ -1,4 +1,1 @@
-module.exports = [
-  { value: 'AN', label: 'AN'},
-  { value: 'YC', label: 'YC'},
-];
+module.exports = [{ value: 'AN', label: 'AN' }, { value: 'YC', label: 'YC' }];

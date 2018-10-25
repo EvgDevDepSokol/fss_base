@@ -7,9 +7,7 @@ function paginate(data, o) {
   var perPage = o.perPage;
 
   var amountOfPages = Math.ceil(data.length / perPage);
-  var startPage = page < amountOfPages
-    ? page
-    : 0;
+  var startPage = page < amountOfPages ? page : 0;
 
   return {
     amount: amountOfPages,

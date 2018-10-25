@@ -13,16 +13,19 @@ class SimpleSelect extends React.Component {
   }
 
   render() {
-
-    var options = this.props.options.map(function(option,i) {
+    var options = this.props.options.map(function(option, i) {
       return (
-        <option key={i + '-opt'} value={option.value}>{option.label}</option>
+        <option key={i + '-opt'} value={option.value}>
+          {option.label}
+        </option>
       );
     });
     options.unshift(
-      <option key={'no-opt'} value="">Не выбрано</option>
+      <option key={'no-opt'} value="">
+        Не выбрано
+      </option>
     );
- 
+
     return (
       <select value={this.props.value} onChange={this.onChange}>
         {options}
