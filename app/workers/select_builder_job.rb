@@ -106,7 +106,6 @@ class SelectBuilderJob
 
   def self.render_sel_ped(dbm_generator)
     gen_tables = dbm_generator.systems
-    data_tot = ''
     is_rus = dbm_generator.rus?(dbm_generator.project_id)
     enc = dbm_generator.project_encoding(dbm_generator.project_id)
     ssh = dbm_generator.project_ssh(dbm_generator.project_id)

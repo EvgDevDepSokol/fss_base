@@ -1,7 +1,6 @@
 import XLSX from 'xlsx';
 
 function sheet_from_data_and_cols(data, columns) {
-  debugger;
   var label = '';
   var value = '';
   var new_data = [];
@@ -42,7 +41,6 @@ var exportData = function(data, columns, bookname){
 var workbook_to_json =function(workbook) {
   var result = [];
   workbook.SheetNames.forEach(function(sheetName) {
-    debugger;
     //var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName],{raw: true, defval: null});
     var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName],{raw: false, defval: null});
     roa = roa.map(function(line){

@@ -97,7 +97,7 @@ var ImportStep1 = React.createClass(
     render: function ()
     {
       var message = this.state.message;
-      var message = $.map(message, function (m, i)
+      message = $.map(message, function (m, i)
       {
         return( <
           p key = {
