@@ -1,28 +1,27 @@
 // selector to be used for projects
 'use strict';
+var createReactClass = require('create-react-class');
+import PropTypes from 'prop-types';
 
 var React = require('react');
 var Select = require('react-select');
 
-module.exports = React.createClass({
-  displayName: 'ProjectSelector',
+module.exports = class extends React.Component {
+  static displayName = 'ProjectSelector';
+  static propTypes = { label: PropTypes.string };
 
-  propTypes: { label: PropTypes.string },
+  state = {
+    value: this.props.value
+  };
 
-  getInitialState() {
-    return {
-      value: this.props.value
-    };
-  },
-
-  onChange(value, object) {
+  onChange = (value, object) => {
     if (object.length > 0) this.setState({ value: object[0].label });
     var h = {};
     h[this.props.attribute] = value;
     this.props.onValue(h);
-  },
+  };
 
-  render: function() {
+  render() {
     var getOptions = function(input, callback) {
       setTimeout(function() {
         var options = [];
@@ -53,13 +52,14 @@ module.exports = React.createClass({
       }, 5);
     };
 
-    return React.createElement(Select, {
-      name: 'Project',
-      asyncOptions: getOptions,
-      onChange: this.onChange,
-      value: this.state.value,
-      clearable: false,
-      cache: false
-    });
+    return (
+      <Select
+        name="Project"
+        asyncOptions={getOptions}
+        onChange={this.onChange}
+        value={this.state.value}
+        clearable={false}
+        cache={false} />
+    );
   }
-});
+};

@@ -1,29 +1,25 @@
 'use strict';
-
-var _ = require('lodash');
-
 var React = require('react');
-var ReactDOM = require('react-dom');
 import PropTypes from 'prop-types';
+var createReactClass = require('create-react-class');
 
-module.exports = React.createClass({
-  displayName: 'ColumnFilters',
+module.exports = class extends React.Component {
+  static displayName = 'ColumnFilters';
 
-  propTypes: {
-    ChangeFilter: React.PropTypes.func,
-    columns: React.PropTypes.array
-    //    disabled: React.PropTypes.boolean
-  },
+  static propTypes = {
+    onUserInput: PropTypes.func,
+    ChangeFilter: PropTypes.func,
+    columns: PropTypes.array,
+    disabled: PropTypes.bool
+  };
 
-  getInitialState() {
-    return { columns: this.props.columns, disabled: this.props.disabled };
-  },
+  state = { columns: this.props.columns, disabled: this.props.disabled };
 
-  ChangeFilter: function(e) {
+  ChangeFilter = (e) => {
     var columns = this.props.columns;
     columns[e.target.id].filter = e.target.value;
     this.props.onUserInput(columns);
-  },
+  };
 
   // this is just an example of a possible custom header component...
   // inputs does nothing right now (but we can implement filtering or insertion here)
@@ -53,4 +49,4 @@ module.exports = React.createClass({
       </tr>
     );
   }
-});
+};

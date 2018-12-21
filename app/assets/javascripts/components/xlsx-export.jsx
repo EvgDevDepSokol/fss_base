@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import XLSX from 'xlsx';
+import PropTypes from 'prop-types';
 
 const customStyles = {
   content: {
@@ -22,73 +21,30 @@ class ExportXlsxModal extends React.Component {
       modalIsOpen: false,
       exportIndex: 0
     };
-
-    this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.onExport = this.onExport.bind(this);
-    this.onRadioChange = this.onRadioChange.bind(this);
-    this.compare_kursks = this.compare_kursks.bind(this);
-    this.compare_balakovos = this.compare_balakovos.bind(this);
-    this.compare_projects = this.compare_projects.bind(this);
   }
 
-  openModal() {
+  openModal = () => {
     this.setState({ modalIsOpen: true });
-  }
+  };
 
-  afterOpenModal() {
+  afterOpenModal = () => {
     this.refs.subtitle.style.color = '#0081c2';
-  }
+  };
 
-  closeModal() {
+  closeModal = () => {
     this.setState({ modalIsOpen: false });
-  }
+  };
 
-  onRadioChange(e) {
+  onRadioChange = e => {
     var exportIndex = parseInt(e.target.value, 10);
     this.setState({ exportIndex: exportIndex });
-  }
+  };
 
-  onExport() {
+  onExport = () => {
     var exportIndex = this.state.exportIndex;
     this.props.onExport(exportIndex);
     this.setState({ modalIsOpen: false });
-  }
-
-  compare_balakovos() {
-    this.compare_projects(80000004, 88, 'balakovo_diff.xls');
-  }
-
-  compare_kursks() {
-    this.compare_projects(80000001, 80000003, 'kursk_diff.xls');
-  }
-
-  compare_projects(project_old_id, project_new_id, bookname) {
-    var data = {
-      project_old_id: project_old_id,
-      project_new_id: project_new_id
-    };
-    $.ajax({
-      url: '/compare_projects',
-      dataType: 'json',
-      data: data,
-      type: 'PUT',
-      success: function(responce) {
-        var wb = XLSX.utils.book_new();
-        var ws;
-        ws = XLSX.utils.json_to_sheet(responce.pag1);
-        XLSX.utils.book_append_sheet(wb, ws, 'Удалено');
-        ws = XLSX.utils.json_to_sheet(responce.pag2);
-        XLSX.utils.book_append_sheet(wb, ws, 'Добавлено');
-        ws = XLSX.utils.json_to_sheet(responce.pag3);
-        XLSX.utils.book_append_sheet(wb, ws, 'Изменено');
-        XLSX.writeFile(wb, bookname, { bookType: 'biff8' });
-      },
-      error: function(xhr, status, err) {},
-      async: true
-    });
-  }
+  };
 
   render() {
     var data = this.props.data;
@@ -134,20 +90,6 @@ class ExportXlsxModal extends React.Component {
           <h3 />
           <button onClick={this.onExport}>Экспорт</button>
           <button onClick={this.closeModal}>Отмена</button>
-          <h3 />
-          <h3 />
-          <div>
-            <button onClick={this.compare_kursks}>
-              Различия курских проектов
-            </button>
-          </div>
-          <h3 />
-          <h3 />
-          <div>
-            <button onClick={this.compare_balakovos}>
-              Различия балаковских проектов
-            </button>
-          </div>
         </Modal>
       </div>
     );

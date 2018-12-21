@@ -1,26 +1,22 @@
 // selector to be used for booleans
 'use strict';
 import React from 'react';
-import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
-module.exports = React.createClass({
-  displayName: 'ProjectShortSelector',
+module.exports = class extends React.Component {
+  static displayName = 'ProjectShortSelector';
+  static propTypes = { label: PropTypes.string };
 
-  propTypes: { label: PropTypes.string },
+  state = {
+    value: this.props.value
+  };
 
-  getInitialState() {
-    return {
-      value: this.props.value
-    };
-  },
-
-  setValue(value) {
+  setValue = value => {
     onChange(value, this);
-  },
+  };
 
-  render: function() {
+  render() {
     var options = [
       { value: 90, label: 'ПМТ Смоленск-2' },
       { value: 87, label: 'ПМТ СмАЭС-3' },
@@ -30,14 +26,16 @@ module.exports = React.createClass({
       { value: 88, label: 'ПМТ БалАЭС-1' }
     ];
 
-    return React.createElement(Select, {
-      name: 'Project',
-      options: options,
-      onChange: this.setValue,
-      value: this.state.value,
-      simpleValue: true,
-      multi: false,
-      clearable: false
-    });
+    return (
+      <Select
+        name="Project"
+        options={options}
+        onChange={this.setValue}
+        value={this.state.value}
+        simpleValue={true}
+        multi={false}
+        clearable={false}
+      />
+    );
   }
-});
+};

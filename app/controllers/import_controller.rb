@@ -1,5 +1,5 @@
+# Import data from excel module
 class ImportController < ApplicationController
-  # Import data from excel module
   include GeneralControllerHelper
 
   before_action :current_project, :key_column

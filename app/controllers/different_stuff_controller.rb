@@ -5,7 +5,7 @@ class DifferentStuffController < ApplicationController
     project_old_id = params[:project_old_id]
     project_new_id = params[:project_new_id]
     ref1 = HwIc.where(Project: project_old_id).pluck(:ref) # old
-    ref3 = HwIc.where(Project: project_new_id).pluck(:ref) # 2014
+    ref3 = HwIc.where(Project: project_new_id).pluck(:ref) # new
     pag1 = []
     pag2 = []
     pag3 = []
@@ -34,14 +34,10 @@ class DifferentStuffController < ApplicationController
 
         line['ref'] = ref
         line['Сист.'] = hw_ic3['sys']
-        hw_ic1.each do |k, v|
-          if v != hw_ic3[k]
-            line[k] = v
-            line[k + '_new'] = hw_ic3[k]
-          else
-            line[k] = ''
-            line[k + '_new'] = ''
-          end
+        hw_ic1.each do |key, val|
+          equal_fields = val != hw_ic3[key]
+          line[key] = equal_fields ? val : ''
+          line[key + '_new'] = equal_fields ? hw_ic3[key] : ''
         end
         pag3.push(line)
       end
@@ -55,15 +51,15 @@ class DifferentStuffController < ApplicationController
     sql = "SELECT  pds_syslist.System, `hw_ic`.`tag_no`, `hw_ic`.`Description`, hw_peds.ped,hw_devtype.RuName, `hw_ic`.`scaleMin`, `hw_ic`.`scaleMax`, pds_unit.Unit_RU FROM `hw_ic` LEFT OUTER JOIN `pds_project_unit` ON `pds_project_unit`.`ProjUnitID` = `hw_ic`.`Unit` LEFT OUTER JOIN `pds_unit` ON `pds_unit`.`UnitID` = `pds_project_unit`.`Unit` LEFT OUTER JOIN `hw_peds` ON `hw_peds`.`ped_N` = `hw_ic`.`ped` LEFT OUTER JOIN `hw_devtype` ON `hw_devtype`.`typeID` = `hw_peds`.`type` LEFT OUTER JOIN `pds_syslist` ON `pds_syslist`.`SystemID` = `hw_ic`.`sys` WHERE `hw_ic`.`Project` = #{proj} AND `hw_ic`.`ref` in (#{ref_arr.map { |str| "\"#{str}\"" }.join(',')}) order by `hw_ic`.`ref`"
     ActiveRecord::Base.connection.execute(sql).each.map do |e|
       e1 = {}
-      e1['sys']              = e[0]
-      e1['tag']              = e[1] ? e[1].upcase : e[1]
-      e1['desc']             = e[2]
-      e1['ped']              = e[3]
-      e1['dev']              = e[4]
-      e1['min']              = e[5]
-      e1['max']              = e[6]
-      e1['unit']             = e[7]
-      e = e1
+      e1['sys']              = e[0] || ''
+      e1['tag']              = (e[1] || '').upcase
+      e1['desc']             = e[2] || ''
+      e1['ped']              = e[3] || ''
+      e1['dev']              = e[4] || ''
+      e1['min']              = e[5] || ''
+      e1['max']              = e[6] || ''
+      e1['unit']             = e[7] || ''
+      e1
     end || []
   end
 end

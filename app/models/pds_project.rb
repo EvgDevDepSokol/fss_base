@@ -1,3 +1,4 @@
+# Project. Contains copy/destroy all project objets procedures
 class PdsProject < ApplicationRecord
   self.table_name = 'pds_project'
   include EquipmentPanelsHelper
@@ -6,12 +7,6 @@ class PdsProject < ApplicationRecord
   has_one :project_properties, foreign_key: :ProjectID, class_name: 'PdsProjectProperty'
 
   has_many :hw_ic, dependent: :restrict_with_error, foreign_key: 'Project'
-
-  SKIP_TABLES = %w[news pds_algo_input].freeze
-  attr_reader :skip_tables
-  def skip_tables
-    SKIP_TABLES
-  end
 
   def name
     project_name
@@ -31,6 +26,7 @@ class PdsProject < ApplicationRecord
     old2new = {}
     # create list of tables with 'project' attribute
     tbls_with_callbacks = %w[HwIc PdsMalfunction]
+    skip_tables = %w[news pds_algo_input]
     tbls.each do |tbl_name|
       next if skip_tables.include?(tbl_name)
 

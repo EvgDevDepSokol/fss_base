@@ -1,36 +1,37 @@
-'use strict';
+"use strict";
 
-var React = require('react');
-import PropTypes from 'prop-types';
+var React = require("react");
+import PropTypes from "prop-types";
+var createReactClass = require("create-react-class");
 
-module.exports = React.createClass({
-  displayName: 'SelectRows',
+module.exports = class extends React.Component {
+  static displayName = "SelectRows";
 
-  propTypes: {
-    onChange: React.PropTypes.func,
-    columns: React.PropTypes.array
-  },
+  static propTypes = {
+    onChange: PropTypes.func,
+    columns: PropTypes.array
+  };
 
-  onChange: function() {},
+  onChange = () => {};
 
-  render: function() {
+  render() {
     return (
       <span />
 
-    //React.createElement("span", {className: "replace"},
-    //  React.createElement("input", {type: "checkbox", onChange: this.onChange})
-    //)
+      //React.createElement("span", {className: "replace"},
+      //  React.createElement("input", {type: "checkbox", onChange: this.onChange})
+      //)
     );
   }
-});
+};
 
 module.exports.addSelectColumn = function() {
   return {
-    header: 'select',
+    header: "select",
     style: {
-      width: '25px'
+      width: "25px"
     },
-    classes: 'select-rows-col',
+    classes: "select-rows-col",
     cell: function(value, celldata, rowIndex, property) {}
   };
 };
@@ -43,7 +44,7 @@ module.exports.getRows = function(search, columns, data) {
     return data;
   }
 
-  if (column !== 'all') {
+  if (column !== "all") {
     columns = columns.filter(function(col) {
       return col.property === column;
     });
@@ -62,7 +63,7 @@ module.exports.getRows = function(search, columns, data) {
     var formatter = col.search || formatters.identity;
 
     if (col.nested) {
-      var keys = property.split('.');
+      var keys = property.split(".");
       var tempVal = row;
       keys.forEach(function(key) {
         if (tempVal) {

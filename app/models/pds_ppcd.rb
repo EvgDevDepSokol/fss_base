@@ -14,13 +14,13 @@ class PdsPpcd < ApplicationRecord
       'pds_detectors.DetID', 'pds_detectors.tag').map do |e|
       {
         'id' => e[0],
-        'system'           => { System: e[2], id: e[1] },
-        'Shifr'            => e[3],
-        'Key'              => e[4],
-        'identif'          => e[5],
-        'Description'      => e[6],
-        'Description_EN'   => e[7],
-        'pds_detector'     => { id: e[8], tag: e[9] }
+        'system' => { System: e[2], id: e[1] },
+        'Shifr' => e[3],
+        'Key' => e[4],
+        'identif' => e[5],
+        'Description' => e[6],
+        'Description_EN' => e[7],
+        'pds_detector' => { id: e[8], tag: e[9] }
       }
     end
   end

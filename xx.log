@@ -1,0 +1,322 @@
+Inspecting 233 files
+......C....................C...........C....................C..C....C........C...........C.....CC......W......WW..W............C....C.............C.................CWCC...C.C.........W.C.........CC..C........W..C.C....CC........CC...
+
+Offenses:
+
+spec/controllers/general_controller_spec.rb:3:1: C: Style/MixinUsage: include is used at the top level. Use inside class or module.
+include GeneralControllerHelper
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+bin/update:3:1: C: Style/MixinUsage: include is used at the top level. Use inside class or module.
+include FileUtils
+^^^^^^^^^^^^^^^^^
+bin/setup:3:1: C: Style/MixinUsage: include is used at the top level. Use inside class or module.
+include FileUtils
+^^^^^^^^^^^^^^^^^
+config/application.rb:23:121: C: Metrics/LineLength: Line is too long. [131/120]
+    config.browserify_rails.commandline_options = ['-t [ babelify --presets [ env react ] --extensions .babel .js .jsx .es .es6 ]']
+                                                                                                                        ^^^^^^^^^^^
+config/initializers/devise.rb:7:121: C: Metrics/LineLength: Line is too long. [152/120]
+  config.secret_key = '59a806d7769b310389bdfa67a34de47076170b4a511514a36268d4c7e734d19185a4f48d4dd1b17d33e58e956569f5ca63f8181b6d30b585c10f87286075272c'
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/devise.rb:100:121: C: Metrics/LineLength: Line is too long. [150/120]
+  # config.pepper = '36dd5b5d7e926cf650ebcda730f7653d306229fed99e7e7aec66de925ad31686c17a2ce52435abffa54503d220ec3f91a498fa548f4099e52a32fbad3ca1f801'
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/wice_grid_config.rb:14:121: C: Metrics/LineLength: Line is too long. [126/120]
+  # If REUSE_LAST_COLUMN_FOR_FILTER_ICONS is true and the last column doesn't have any filter and column name, it will be used
+                                                                                                                        ^^^^^^
+config/initializers/wice_grid_config.rb:99:121: C: Metrics/LineLength: Line is too long. [124/120]
+  # With Calendar helpers enabled the parameter sent is the string displayed. This lambda will be given a date string in the
+                                                                                                                        ^^^^
+config/initializers/wice_grid_config.rb:101:121: C: Metrics/LineLength: Line is too long. [142/120]
+  # In many cases <tt>Time.zone.parse</tt> is enough, for instance,  <tt>%Y-%m-%d</tt>. If you change the format, make sure to check this code
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/wice_grid_config.rb:118:121: C: Metrics/LineLength: Line is too long. [124/120]
+  # With Calendar helpers enabled the parameter sent is the string displayed. This lambda will be given a date string in the
+                                                                                                                        ^^^^
+config/initializers/wice_grid_config.rb:120:121: C: Metrics/LineLength: Line is too long. [137/120]
+  # In many cases <tt>Date.parse</tt> is enough, for instance,  <tt>%Y-%m-%d</tt>. If you change the format, make sure to check this code
+                                                                                                                        ^^^^^^^^^^^^^^^^^
+config/initializers/simple_form.rb:18:121: C: Metrics/LineLength: Line is too long. [132/120]
+                            hint_class: :field_with_hint, error_class: :field_with_errors, valid_class: :field_without_errors do |b|
+                                                                                                                        ^^^^^^^^^^^^
+app/models/pds_malfunction_dim.rb:9:19: C: Style/Lambda: Use the lambda method for multiline lambdas.
+  scope :ordered, -> {
+                  ^^
+app/models/pds_engineer.rb:38:14: C: Naming/UncommunicativeMethodParamName: Method parameter must be at least 3 characters long.
+  def email=(v)
+             ^
+app/models/hw_iosignal.rb:29:5: C: Style/GuardClause: Use a guard clause instead of wrapping the code inside a conditional expression.
+    if hw_ped.gen_ext? && !@skip_check_ped
+    ^^
+app/models/hw_iosignal.rb:37:5: C: Style/GuardClause: Use a guard clause instead of wrapping the code inside a conditional expression.
+    if hw_ped.gen_ext? && (signID != signID_before_last_save) && !@skip_check_ped
+    ^^
+app/models/dbm_generator.rb:14:17: W: Lint/AmbiguousOperator: Ambiguous splat operator. Parenthesize the method arguments if it's surely a splat operator, or add a whitespace to the right of the * if it should be a multiplication.
+  attr_accessor *ATTRIBUTE_LIST
+                ^
+app/models/dbm_generator.rb:54:121: C: Metrics/LineLength: Line is too long. [130/120]
+    { ip: properties.HostIP, pass: properties.LoadPass, remote_path: '/home/' + (properties.SimDir || '') + 'load/pds_sel_test/' }
+                                                                                                                        ^^^^^^^^^^
+app/models/hw_ic.rb:79:7: C: Layout/ConditionPosition: Place the condition on the same line as elsif.
+      e = Object.const_get(tbl_name.classify).new
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/hw_ic.rb:79:9: W: Lint/AssignmentInCondition: Use == if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+      e = Object.const_get(tbl_name.classify).new
+        ^
+app/models/hw_ic.rb:92:7: C: Layout/ConditionPosition: Place the condition on the same line as elsif.
+      tbl = Object.const_get(tbl_name.classify)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/hw_ic.rb:92:11: W: Lint/AssignmentInCondition: Use == if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
+      tbl = Object.const_get(tbl_name.classify)
+          ^
+app/models/pds_documentation.rb:25:7: W: Lint/UselessAssignment: Useless assignment to variable - e.
+      e = e1
+      ^
+app/models/pds_documentation.rb:34:8: C: Style/DoubleNegation: Avoid the use of double negation (!!).
+    if !!new_list
+       ^
+app/models/pds_documentation.rb:55:121: C: Metrics/LineLength: Line is too long. [160/120]
+    list['extra_data'] = PdsDocOnSy.where(Doc: doc_id).includes(:system).order('pds_syslist.System').pluck('pds_doc_on_sys.sys', 'pds_syslist.System').transpose
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/pds_documentation.rb:56:30: C: Style/DoubleNegation: Avoid the use of double negation (!!).
+    list['extra_label'] = if !!list['extra_data'][1]
+                             ^
+app/models/pds_project.rb:12:3: W: Lint/DuplicateMethods: Method PdsProject#skip_tables is defined at both app/models/pds_project.rb:11 and app/models/pds_project.rb:12.
+  def skip_tables
+  ^^^^^^^^^^^^^^^
+app/models/pds_project.rb:24:3: W: Lint/UselessAccessModifier: Useless public access modifier.
+  public
+  ^^^^^^
+app/models/pds_project.rb:53:9: W: Lint/Loop: Use Kernel#loop with break rather than begin/end/until(or while).
+    end while repeat == true
+        ^^^^^
+app/models/pds_malfunction.rb:59:5: C: Style/GuardClause: Use a guard clause instead of wrapping the code inside a conditional expression.
+    if pds_malfunction.Dimension == 1
+    ^^
+app/models/pds_malfunction.rb:72:121: C: Metrics/LineLength: Line is too long. [143/120]
+  # (*) – В случае, если длина описания больше 66 символов, то общая длина 2-ой строки обрезается по 72-ой символ и при этом ниже генерятся две
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+app/models/pds_malfunction.rb:82:15: C: Naming/UncommunicativeMethodParamName: Method parameter must be at least 3 characters long.
+  def type_b?(t)
+              ^
+app/models/pds_malfunction.rb:86:15: C: Naming/UncommunicativeMethodParamName: Method parameter must be at least 3 characters long.
+  def type_r?(t)
+              ^
+app/models/pds_recorder.rb:18:121: C: Metrics/LineLength: Line is too long. [152/120]
+                        hw_ic: { only: %i[ref tag_no Description scaleMin scaleMax], include: { hw_ped: { only: [:ped] }, pds_project_unit: { include: {
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/pds_recorder.rb:21:121: C: Metrics/LineLength: Line is too long. [157/120]
+                                                                                                                                              only: [] } } },
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/pds_rf.rb:61:15: C: Naming/UncommunicativeMethodParamName: Method parameter must be at least 3 characters long.
+  def type_b?(t)
+              ^
+app/models/pds_rf.rb:65:15: C: Naming/UncommunicativeMethodParamName: Method parameter must be at least 3 characters long.
+  def type_i?(t)
+              ^
+app/models/pds_rf.rb:69:15: C: Naming/UncommunicativeMethodParamName: Method parameter must be at least 3 characters long.
+  def type_r?(t)
+              ^
+app/workers/select_builder_job.rb:1:1: C: Metrics/ClassLength: Class has too many lines. [220/213]
+class SelectBuilderJob ...
+^^^^^^^^^^^^^^^^^^^^^^
+app/workers/select_builder_job.rb:64:121: C: Metrics/LineLength: Line is too long. [127/120]
+        pds_mfs = PdsMalfunction.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order(:Numb).all
+                                                                                                                        ^^^^^^^
+app/workers/select_builder_job.rb:128:121: C: Metrics/LineLength: Line is too long. [145/120]
+        objects = tbl.where(Project: dbm_generator.project_id).includes(:system, hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).to_a
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+app/workers/select_builder_job.rb:157:121: C: Metrics/LineLength: Line is too long. [193/120]
+                ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus, dim: hw_ped[sig_name].to_i, hw_iosignals: hw_iosignals)
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/project_settings_controller.rb:29:7: W: Lint/UselessAssignment: Useless assignment to variable - e.
+      e = e1
+      ^
+app/controllers/equipment_panels_controller.rb:32:121: C: Metrics/LineLength: Line is too long. [954/120]
+    sql = "SELECT `hw_ic`.`icID`, `hw_ic`.`ref`, pds_syslist.SystemID, pds_syslist.System, `hw_ic`.`Description`, hw_peds.ped_N, hw_peds.ped, hw_devtype.typeID, hw_devtype.RuName, `hw_ic`.`scaleMin`, `hw_ic`.`scaleMax`, pds_project_unit.ProjUnitID, pds_unit.UnitID, pds_unit.Unit_RU, `hw_ic`.`tag_no`, `hw_ic`.`UniquePTAG`, `hw_ic`.`un`, `hw_ic`.`Description_EN`, `hw_ic`.`rev`, pds_panel.pID, pds_panel.panel, date_format(hw_ic.t,'%Y-%m-%d %H:%i') FROM `hw_ic` LEFT OUTER JOIN `pds_panel` ON `pds_panel`.`pID` = `hw_ic`.`panel_id` LEFT OUTER JOIN `pds_project_unit` ON `pds_project_unit`.`ProjUnitID` = `hw_ic`.`Unit` LEFT OUTER JOIN `pds_unit` ON `pds_unit`.`UnitID` = `pds_project_unit`.`Unit` LEFT OUTER JOIN `hw_peds` ON `hw_peds`.`ped_N` = `hw_ic`.`ped` LEFT OUTER JOIN `hw_devtype` ON `hw_devtype`.`typeID` = `hw_peds`.`type` LEFT OUTER JOIN `pds_syslist` ON `pds_syslist`.`SystemID` = `hw_ic`.`sys` WHERE `hw_ic`.`Project` = #{project.ProjectID}"
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/base_controller.rb:31:5: C: [Corrected] Layout/RescueEnsureAlignment: rescue at 31, 4 is not aligned with def update at 20, 2.
+    rescue StandardError
+    ^^^^^^
+app/controllers/users_controller.rb:71:121: C: Metrics/LineLength: Line is too long. [224/120]
+    params.require(:pds_engineer).permit(:name, :TH, :TO, :L, :EL, :CR, :D, :SWM, :HWM, :PM, :t, :EMail, :CheifDirector, :login, :pwd, :dismiss, :coreID, :phoneNum, :cellNum, :IP, :compJack, :phoneJack, :sectorID1, :enabled)
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/mass_operations_controller.rb:46:22: C: [Corrected] Layout/RescueEnsureAlignment: rescue at 46, 21 is not aligned with begin at 44, 23.
+                     rescue StandardError
+                     ^^^^^^
+app/controllers/mass_operations_controller.rb:51:20: C: [Corrected] Layout/RescueEnsureAlignment: rescue at 51, 19 is not aligned with begin at 49, 21.
+                   rescue StandardError
+                   ^^^^^^
+app/controllers/mass_operations_controller.rb:88:20: C: [Corrected] Layout/RescueEnsureAlignment: rescue at 88, 19 is not aligned with begin at 86, 21.
+                   rescue StandardError
+                   ^^^^^^
+app/controllers/different_stuff_controller.rb:5:5: W: Lint/UselessAssignment: Useless assignment to variable - hash.
+    hash = params[:data]
+    ^^^^
+app/controllers/different_stuff_controller.rb:60:121: C: Metrics/LineLength: Line is too long. [684/120]
+    sql = "SELECT  pds_syslist.System, `hw_ic`.`tag_no`, `hw_ic`.`Description`, hw_peds.ped,hw_devtype.RuName, `hw_ic`.`scaleMin`, `hw_ic`.`scaleMax`, pds_unit.Unit_RU FROM `hw_ic` LEFT OUTER JOIN `pds_project_unit` ON `pds_project_unit`.`ProjUnitID` = `hw_ic`.`Unit` LEFT OUTER JOIN `pds_unit` ON `pds_unit`.`UnitID` = `pds_project_unit`.`Unit` LEFT OUTER JOIN `hw_peds` ON `hw_peds`.`ped_N` = `hw_ic`.`ped` LEFT OUTER JOIN `hw_devtype` ON `hw_devtype`.`typeID` = `hw_peds`.`type` LEFT OUTER JOIN `pds_syslist` ON `pds_syslist`.`SystemID` = `hw_ic`.`sys` WHERE `hw_ic`.`Project` = #{proj} AND `hw_ic`.`ref` in (#{ref_arr.map { |str| "\"#{str}\"" }.join(',')}) order by `hw_ic`.`ref`"
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/different_stuff_controller.rb:71:7: W: Lint/UselessAssignment: Useless assignment to variable - e.
+      e = e1
+      ^
+app/controllers/pds_projects_controller.rb:71:121: C: Metrics/LineLength: Line is too long. [271/120]
+    params.require(:pds_project).permit(:project_number, :project_name, :project_name_EN, :Contractor, :companyID, :contract_number, :contract_date, :ProjectManager, :SWManager, :HWManager, :Factor, :Description, :Description_EN, :Notes, :BlobObj, :t, :contract_end_date)
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/selectors/dbm_sys_mfs_controller.rb:5:121: C: Metrics/LineLength: Line is too long. [170/120]
+    @dbm_sys_mfs = PdsMalfunction.where(Project: project.ProjectID).includes(:system).order('pds_syslist.System').pluck('pds_syslist.SystemID', 'pds_syslist.System').uniq
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/selectors/dbm_sys_rfs_controller.rb:5:121: C: Metrics/LineLength: Line is too long. [161/120]
+    @dbm_sys_rfs = PdsRf.where(Project: project.ProjectID).includes(:system).order('pds_syslist.System').pluck('pds_syslist.SystemID', 'pds_syslist.System').uniq
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/selectors/pds_sys_descriptions_controller.rb:5:121: C: Metrics/LineLength: Line is too long. [177/120]
+    @pds_sys_descriptions = PdsSysDescription.where(Project: project.ProjectID).includes(:system).order('pds_syslist.System').pluck('pds_syslist.SystemID', 'pds_syslist.System')
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dbm_generator_controller.rb:1:1: C: Metrics/ClassLength: Class has too many lines. [348/213]
+class DbmGeneratorController < ApplicationController ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dbm_generator_controller.rb:30:7: C: Naming/AccessorMethodName: Do not prefix reader method names with get_.
+  def get_log
+      ^^^^^^^
+app/controllers/dbm_generator_controller.rb:43:5: C: Style/GuardClause: Use a guard clause instead of wrapping the code inside a conditional expression.
+    if session
+    ^^
+app/controllers/dbm_generator_controller.rb:82:5: C: Style/GuardClause: Use a guard clause instead of wrapping the code inside a conditional expression.
+    if session
+    ^^
+app/controllers/dbm_generator_controller.rb:89:121: C: Metrics/LineLength: Line is too long. [127/120]
+        pds_mfs = PdsMalfunction.where(Project: dbm_generator.project_id).where(sys: sys_id).includes(:system).order(:Numb).all
+                                                                                                                        ^^^^^^^
+app/controllers/dbm_generator_controller.rb:135:5: W: Lint/UselessAssignment: Useless assignment to variable - data_tot.
+    data_tot = ''
+    ^^^^^^^^
+app/controllers/dbm_generator_controller.rb:141:5: C: Style/GuardClause: Use a guard clause instead of wrapping the code inside a conditional expression.
+    if session
+    ^^
+app/controllers/dbm_generator_controller.rb:157:121: C: Metrics/LineLength: Line is too long. [212/120]
+        objects = tbl.where(Project: dbm_generator.project_id).includes(:system).where.not('pds_syslist.System': 'N/A').includes(hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).order('hw_ic.ref').to_a
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dbm_generator_controller.rb:193:121: C: Metrics/LineLength: Line is too long. [217/120]
+                  ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus, dim: hw_ped[sig_name].to_i, hw_iosignals: hw_iosignals, gen_tag_b: gen_tag_b)
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dbm_generator_controller.rb:214:5: W: Lint/UselessAssignment: Useless assignment to variable - data_tot.
+    data_tot = ''
+    ^^^^^^^^
+app/controllers/dbm_generator_controller.rb:220:5: C: Style/GuardClause: Use a guard clause instead of wrapping the code inside a conditional expression.
+    if session
+    ^^
+app/controllers/dbm_generator_controller.rb:228:9: W: Lint/UselessAssignment: Useless assignment to variable - data_tbl.
+        data_tbl = ''
+        ^^^^^^^^
+app/controllers/dbm_generator_controller.rb:234:121: C: Metrics/LineLength: Line is too long. [124/120]
+        objects = tbl.where(Project: dbm_generator.project_id).includes(:system).where.not('pds_syslist.System': 'N/A').to_a
+                                                                                                                        ^^^^
+app/controllers/dbm_generator_controller.rb:273:121: C: Metrics/LineLength: Line is too long. [210/120]
+      objects = tbl.where(Project: dbm_generator.project_id).includes(:system).where.not('pds_syslist.System': 'N/A').includes(hw_ic: [:pds_panel, pds_project_unit: [:unit], hw_ped: []]).order('hw_ic.ref').to_a
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dbm_generator_controller.rb:290:15: W: Lint/UselessAssignment: Useless assignment to variable - path.
+              path = 'sel_ped_lodi.sel.erb'
+              ^^^^
+app/controllers/dbm_generator_controller.rb:293:15: W: Lint/UselessAssignment: Useless assignment to variable - path.
+              path = 'sel_ped_aoai.sel.erb'
+              ^^^^
+app/controllers/dbm_generator_controller.rb:309:121: C: Metrics/LineLength: Line is too long. [123/120]
+                data_tbl = add_name("z#{global}#{hw_ic.tag_no.downcase}", data_tbl, hw_ic, tbl_name_ru, lvl, sig_name, sys)
+                                                                                                                        ^^^
+app/controllers/dbm_generator_controller.rb:314:59: C: Metrics/BlockNesting: Avoid more than 5 levels of block nesting.
+                      data_tbl = add_name("z#{global}" + (gen_tag_b ? hw_ic.tag_no : hw_ic.ref).downcase + (hw_iosignal.comment ? "_#{hw_iosignal.comment.downcase}" : ''), data_tbl, hw_ic, tbl_name_ru, lvl, sig_name, sys)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dbm_generator_controller.rb:314:109: C: Metrics/BlockNesting: Avoid more than 5 levels of block nesting.
+                      data_tbl = add_name("z#{global}" + (gen_tag_b ? hw_ic.tag_no : hw_ic.ref).downcase + (hw_iosignal.comment ? "_#{hw_iosignal.comment.downcase}" : ''), data_tbl, hw_ic, tbl_name_ru, lvl, sig_name, sys)
+                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dbm_generator_controller.rb:314:121: C: Metrics/LineLength: Line is too long. [221/120]
+                      data_tbl = add_name("z#{global}" + (gen_tag_b ? hw_ic.tag_no : hw_ic.ref).downcase + (hw_iosignal.comment ? "_#{hw_iosignal.comment.downcase}" : ''), data_tbl, hw_ic, tbl_name_ru, lvl, sig_name, sys)
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dbm_generator_controller.rb:331:15: C: Metrics/ParameterLists: Avoid parameter lists longer than 5 parameters. [7/5]
+  def add_name(name, hash, hw_ic, tbl_name_ru, lvl, sig, sys)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dbm_generator_controller.rb:364:5: W: Lint/UselessAssignment: Useless assignment to variable - session.
+    session = Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass])
+    ^^^^^^^
+app/helpers/equipment_panels_helper.rb:10:7: C: Naming/AccessorMethodName: Do not prefix writer method names with set_.
+  def set_sys_to_hw_ic(element)
+      ^^^^^^^^^^^^^^^^
+app/helpers/equipment_panels_helper.rb:11:5: C: Style/GuardClause: Use a guard clause instead of wrapping the code inside a conditional expression.
+    if element.sys != element.sys_before_last_save
+    ^^
+app/helpers/dbm_generator_helper.rb:6:8: C: Style/DoubleNegation: Avoid the use of double negation (!!).
+       !!pds_project_unit ? pds_project_unit.unit.Unit_RU : (defined? regidity_unit) ? regidity_unit : ''
+       ^
+app/helpers/dbm_generator_helper.rb:6:61: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer if or else constructs instead.
+       !!pds_project_unit ? pds_project_unit.unit.Unit_RU : (defined? regidity_unit) ? regidity_unit : ''
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:6:61: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+       !!pds_project_unit ? pds_project_unit.unit.Unit_RU : (defined? regidity_unit) ? regidity_unit : ''
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:8:8: C: Style/DoubleNegation: Avoid the use of double negation (!!).
+       !!pds_project_unit ? pds_project_unit.unit.Unit_EN : (defined? regidity_unit) ? regidity_unit : ''
+       ^
+app/helpers/dbm_generator_helper.rb:8:61: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer if or else constructs instead.
+       !!pds_project_unit ? pds_project_unit.unit.Unit_EN : (defined? regidity_unit) ? regidity_unit : ''
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:8:61: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+       !!pds_project_unit ? pds_project_unit.unit.Unit_EN : (defined? regidity_unit) ? regidity_unit : ''
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:9:41: C: Style/RegexpLiteral: Use %r around regular expression.
+     end).unicode_normalize(:nfkd).gsub(/[^0-9a-zа-я\/%\.\*\+\- ]/i, '')
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:14:14: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+             (defined? shortDesc) ? shortDesc : (defined? self.Desc) ? self.Desc : (defined? self.Description) ? self.Description : ''
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:14:49: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer if or else constructs instead.
+             (defined? shortDesc) ? shortDesc : (defined? self.Desc) ? self.Desc : (defined? self.Description) ? self.Description : ''
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:14:49: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+             (defined? shortDesc) ? shortDesc : (defined? self.Desc) ? self.Desc : (defined? self.Description) ? self.Description : ''
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:14:84: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer if or else constructs instead.
+             (defined? shortDesc) ? shortDesc : (defined? self.Desc) ? self.Desc : (defined? self.Description) ? self.Description : ''
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:14:84: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+             (defined? shortDesc) ? shortDesc : (defined? self.Desc) ? self.Desc : (defined? self.Description) ? self.Description : ''
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:14:121: C: Metrics/LineLength: Line is too long. [134/120]
+             (defined? shortDesc) ? shortDesc : (defined? self.Desc) ? self.Desc : (defined? self.Description) ? self.Description : ''
+                                                                                                                        ^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:16:14: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+             (defined? shortDesc_EN) ? shortDesc_EN : (defined? self.Desc_EN) ? self.Desc_EN : (defined? self.Description_EN) ? self.Description_EN : ''
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:16:55: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer if or else constructs instead.
+             (defined? shortDesc_EN) ? shortDesc_EN : (defined? self.Desc_EN) ? self.Desc_EN : (defined? self.Description_EN) ? self.Description_EN : ''
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:16:55: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+             (defined? shortDesc_EN) ? shortDesc_EN : (defined? self.Desc_EN) ? self.Desc_EN : (defined? self.Description_EN) ? self.Description_EN : ''
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:16:96: C: Style/NestedTernaryOperator: Ternary operators must not be nested. Prefer if or else constructs instead.
+             (defined? shortDesc_EN) ? shortDesc_EN : (defined? self.Desc_EN) ? self.Desc_EN : (defined? self.Description_EN) ? self.Description_EN : ''
+                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:16:96: C: Style/TernaryParentheses: Omit parentheses for ternary conditions.
+             (defined? shortDesc_EN) ? shortDesc_EN : (defined? self.Desc_EN) ? self.Desc_EN : (defined? self.Description_EN) ? self.Description_EN : ''
+                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:16:121: C: Metrics/LineLength: Line is too long. [152/120]
+             (defined? shortDesc_EN) ? shortDesc_EN : (defined? self.Desc_EN) ? self.Desc_EN : (defined? self.Description_EN) ? self.Description_EN : ''
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:55:7: C: Style/IdenticalConditionalBranches: Move @desc0 = '.DESC ' + desc_ref out of the conditional.
+      @desc0 = '.DESC ' + desc_ref
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dbm_generator_helper.rb:59:7: C: Style/IdenticalConditionalBranches: Move @desc0 = '.DESC ' + desc_ref out of the conditional.
+      @desc0 = '.DESC ' + desc_ref
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/pds_project_properties/show.json.jbuilder:1:121: C: Metrics/LineLength: Line is too long. [373/120]
+json.extract! @pds_project_property, :id, :HostName, :HostIP, :SimDir, :ISName, :ISIP, :RootPass, :IOPass, :LoadPass, :TgisPass, :OSType, :LowLimKeyField, :UpLimKeyField, :Language, :Enabled, :ResName, :ClassLib, :ServicePort, :StatsInterval, :pdsCode, :fdsCode, :portS3serv, :report_prefix, :Encoding, :pmCode, :pmShortCode, :stCode, :stShortCode, :created_at, :updated_at
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/pds_project_properties/index.json.jbuilder:2:121: C: Metrics/LineLength: Line is too long. [348/120]
+  json.extract! pds_project_property, :id, :HostName, :HostIP, :SimDir, :ISName, :ISIP, :RootPass, :IOPass, :LoadPass, :TgisPass, :OSType, :LowLimKeyField, :UpLimKeyField, :Language, :Enabled, :ResName, :ClassLib, :ServicePort, :StatsInterval, :pdsCode, :fdsCode, :portS3serv, :report_prefix, :Encoding, :pmCode, :pmShortCode, :stCode, :stShortCode
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/show.json.jbuilder:1:121: C: Metrics/LineLength: Line is too long. [242/120]
+json.extract! @pds_engineer, :id, :name, :TH, :TO, :L, :EL, :CR, :D, :SWM, :HWM, :PM, :t, :EMail, :CheifDirector, :login, :pwd, :dismiss, :coreID, :phoneNum, :cellNum, :IP, :compJack, :phoneJack, :sectorID1, :enabled, :created_at, :updated_at
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/views/users/index.json.jbuilder:2:121: C: Metrics/LineLength: Line is too long. [217/120]
+  json.extract! pds_engineer, :id, :name, :TH, :TO, :L, :EL, :CR, :D, :SWM, :HWM, :PM, :t, :EMail, :CheifDirector, :login, :pwd, :dismiss, :coreID, :phoneNum, :cellNum, :IP, :compJack, :phoneJack, :sectorID1, :enabled
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+233 files inspected, 105 offenses detected, 4 offenses corrected

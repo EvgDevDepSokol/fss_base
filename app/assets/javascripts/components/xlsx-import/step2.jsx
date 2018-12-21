@@ -1,25 +1,28 @@
 var React = require('react');
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 var SimpleSelect = require('../../modules/simple-select.jsx');
-var XlsxImport = require('../xlsx-import.jsx');
+var createReactClass = require('create-react-class');
 var _ = require('underscore');
 
-var ImportStep2 = React.createClass({
-  displayName: 'ImportStep2',
+class ImportStep2 extends React.Component {
+  static displayName = 'ImportStep2';
 
-  getInitialState: function() {
-    return {
-      message: [],
-      options: [],
-      options3: []
-    };
-  },
+  static propTypes = {
+    onCloseModal: PropTypes.func
+  };
 
-  closeModal: function() {
+  state = {
+    message: [],
+    options: [],
+    options3: []
+  };
+
+  closeModal = () => {
     this.props.onCloseModal();
-  },
+  };
 
-  nextModal: function() {
+  nextModal = () => {
     var importHeaders = this.props.columns;
     var options = [];
     var message = [];
@@ -72,15 +75,15 @@ var ImportStep2 = React.createClass({
       this.props.rememberColumns(importHeaders);
       this.checkKeyColumn();
     }
-  },
+  };
 
-  findColumnData: function(colProperty) {
+  findColumnData = colProperty => {
     return _.find(columns, function(col) {
       return col.property == colProperty;
     });
-  },
+  };
 
-  afterOpenModal() {
+  afterOpenModal = () => {
     var isEmptyObj = function(obj) {
       return Object.keys(obj).length === 0 && obj.constructor === Object;
     };
@@ -130,9 +133,9 @@ var ImportStep2 = React.createClass({
     });
     this.props.rememberColumns(importHeaders);
     this.refreshKeyColumnSelector();
-  },
+  };
 
-  refreshKeyColumnSelector() {
+  refreshKeyColumnSelector = () => {
     var options3 = [];
     var importHeaders = this.props.columns;
     Object.keys(importHeaders).forEach(function(key) {
@@ -150,17 +153,17 @@ var ImportStep2 = React.createClass({
     this.setState({
       options3: options3
     });
-  },
+  };
 
-  prevModal: function() {
+  prevModal = () => {
     this.props.onPrevModal();
-  },
+  };
 
-  onKeyColumnChange: function(value) {
+  onKeyColumnChange = value => {
     this.props.rememberKeyColumn(value);
-  },
+  };
 
-  checkKeyColumn: function() {
+  checkKeyColumn = () => {
     var keyColumn = this.props.keyColumn;
     var importHeaders = this.props.columns;
     var importData = this.props.importData;
@@ -224,9 +227,9 @@ var ImportStep2 = React.createClass({
       });
       this.props.onNextModal();
     }
-  },
+  };
 
-  render: function() {
+  render() {
     var importHeaders = this.props.columns;
     var options = this.state.options;
     var context = this;
@@ -250,22 +253,24 @@ var ImportStep2 = React.createClass({
 
       Object.keys(importHeaders).forEach(function(key) {
         var selectVal = context.props.columns[key]['to'];
-        var toColumnSelector = React.createElement(SimpleSelect, {
-          onSelectChange: function(value) {
-            var importHeaders = context.props.columns;
-            var findColumnData = context.findColumnData;
-            var columnKey = this.columnKey;
-            importHeaders[columnKey]['to'] = value;
-            importHeaders[columnKey]['toColumn'] = context.findColumnData(
-              value
-            );
-            context.props.rememberColumns(importHeaders);
-            context.refreshKeyColumnSelector();
-          },
-          value: selectVal,
-          options: options,
-          columnKey: key
-        });
+        var toColumnSelector = (
+          <SimpleSelect
+            onSelectChange={function(value) {
+              var importHeaders = context.props.columns;
+              var findColumnData = context.findColumnData;
+              var columnKey = this.columnKey;
+              importHeaders[columnKey]['to'] = value;
+              importHeaders[columnKey]['toColumn'] = context.findColumnData(
+                value
+              );
+              context.props.rememberColumns(importHeaders);
+              context.refreshKeyColumnSelector();
+            }}
+            value={selectVal}
+            options={options}
+            columnKey={key}
+          />
+        );
 
         importHeaders[key] = {
           selector: toColumnSelector,
@@ -313,7 +318,6 @@ var ImportStep2 = React.createClass({
           <Modal
             isOpen={this.props.isOpen}
             onRequestClose={this.closeModal}
-            style={this.props.style}
             contentLabel={this.props.contentLabel}
             onAfterOpen={this.afterOpenModal}
           >
@@ -349,8 +353,8 @@ var ImportStep2 = React.createClass({
               импортруемый файл и начните импорт заново.{' '}
             </div>
             <div>{keyColumnSelector}</div>
-            <button onClick={this.closeModal}> Отмена </button>
             <button onClick={this.nextModal}> Далее </button>
+            <button onClick={this.closeModal}> Отмена </button>
             <p>
               {' '}
               В файле должны содержаться данные для текущей таблицы текущего
@@ -364,6 +368,6 @@ var ImportStep2 = React.createClass({
       return <div />;
     }
   }
-});
+}
 
 module.exports = ImportStep2;

@@ -11,9 +11,9 @@ module DbmGeneratorHelper
 
   def desc12(is_rus)
     desc = if is_rus
-             (defined? shortDesc) ? shortDesc : (defined? self.Desc) ? self.Desc : (defined? self.Description) ? self.Description : ''
+             (defined? shortDesc) ? shortDesc : defined? self.Desc || defined? self.Description || ''
            else
-             (defined? shortDesc_EN) ? shortDesc_EN : (defined? self.Desc_EN) ? self.Desc_EN : (defined? self.Description_EN) ? self.Description_EN : ''
+             (defined? shortDesc_EN) ? shortDesc_EN : defined? self.Desc_EN || defined? self.Description_EN || ''
            end
     desc = desc ? desc.split.join(' ').strip : ''
     if desc.length > 66
@@ -51,12 +51,11 @@ module DbmGeneratorHelper
     desc_ref = is_rus ? 'Компонентный отказ ' : 'Component malfunction '
     desc_ref += ref.downcase
     desc_ref = desc_ref.split.join(' ').strip
+    @desc0 = '.DESC ' + desc_ref
     if desc.length > 66
-      @desc0 = '.DESC ' + desc_ref
       @desc1 = '@DESC1(' + desc[0..desc.rindex(' ', 66) - 1] + ')'
       @desc2 = '@DESC2(' + desc[desc.rindex(' ', 66) + 1..-1] + ')'
     else
-      @desc0 = '.DESC ' + desc_ref
       @desc1 = '@DESC1(' + desc[0..64] + ')'
       @desc2 = ''
     end

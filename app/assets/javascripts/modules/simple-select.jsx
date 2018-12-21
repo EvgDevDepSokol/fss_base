@@ -3,14 +3,9 @@ var React = require('react');
 var _ = require('underscore');
 
 class SimpleSelect extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange(event) {
+  onChange = event => {
     this.props.onSelectChange(event.target.value);
-  }
+  };
 
   render() {
     var options = this.props.options.map(function(option, i) {

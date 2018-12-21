@@ -2,22 +2,30 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+var createReactClass = require('create-react-class');
 var _ = require('underscore');
 var exportData = require('../xlsx-djet.js.jsx').exportData;
 
-var Paginator = require('react-pagify').default;
+//var Paginator = require('react-pagify').default;
 
-import {
-  Table,
-  ColumnNames,
-  sortColumn,
-  formatters,
-  cells,
-  editors
-} from 'reactabular';
+import { ColumnNames } from 'reactabular';
+import { sortColumn } from 'reactabular';
+import { formatters } from 'reactabular';
+import { Table } from 'reactabular';
+//import * as Table1 from 'reactabular-table';
+//import { formatters } from 'searchtabular';
+//import * as search from 'searchtabular';
+//import { byColumn as sortColumn } from 'sortabular';
+//import * as sort from 'sortabular';
+//import * as resizable from 'reactabular-resizable';
+//import * as resolve from 'table-resolver';
+//import * as edit from 'react-edit';
+
+import { Paginator } from '../helpers';
+import { paginate } from '../helpers';
 
 var LocalStorageMixin = require('react-localstorage');
-var segmentize = require('segmentize');
+//var segmentize = require('segmentize');
 
 var findIndex = require('lodash').findIndex;
 var orderBy = require('lodash').orderBy;
@@ -84,7 +92,7 @@ var Replace = require('../modules/replace.jsx');
 var ColumnFilters = require('../modules/column_filters.jsx');
 
 var stringEditor = require('../inputs/input.jsx')();
-var dateEditor = require('../inputs/input.jsx')();
+//import { input as stringEditor } from 'react-edit';
 var TextEditor = require('../inputs/text_editor.jsx')();
 var WideTextEditor = require('../inputs/wide_text_editor.jsx')();
 
@@ -92,7 +100,7 @@ import Modal from 'react-modal';
 
 var ExportXlsxModal = require('../components/xlsx-export.jsx');
 
-var TableContainer = React.createClass({
+var TableContainer = createReactClass({
   displayName: 'VniiaesFullTable',
 
   mixins: [LocalStorageMixin],
@@ -112,20 +120,6 @@ var TableContainer = React.createClass({
         type: 'string'
       }
     });
-
-    var editable = cells.edit.bind(
-      this,
-      'editedCell',
-      function(value, celldata, rowIndex, property) {
-        var idx = findIndex(this.state.data, {
-          tEquipID: celldata[rowIndex].tEquipID
-        });
-
-        this.state.data[idx][property] = value;
-
-        this.setState({ data: data });
-      }.bind(this)
-    );
 
     var highlighter = function(column) {
       return formatters.highlight(function(value) {
@@ -297,10 +291,8 @@ var TableContainer = React.createClass({
       if (column.editor) {
         column['editor'] = eval(column.editor);
         h['cell'] = [editableField(column), highlighter(h.property)];
-        //h["cell"] = [editableField(column)]
       } else if (column.nested) {
         h['cell'] = [nestedValue(column), highlighter(h.property)];
-        //h["cell"] = [nestedValue(column)];
       }
       return h;
     });
@@ -326,8 +318,9 @@ var TableContainer = React.createClass({
             if (current_user.user_rights >= 2) {
               var res = confirm('Вы действительно желаете удалить запись?');
               if (!res) return;
+              var idx;
               if (newRow) {
-                var idx = findIndex(this.state.data, {
+                idx = findIndex(this.state.data, {
                   _id: celldata[rowIndex]._id
                 });
 
@@ -339,7 +332,7 @@ var TableContainer = React.createClass({
                   sendData: {}
                 });
               } else {
-                var idx = findIndex(this.state.data, { id: itemId });
+                idx = findIndex(this.state.data, { id: itemId });
                 $.ajax({
                   url: url + '/' + itemId,
                   dataType: 'json',
@@ -391,6 +384,7 @@ var TableContainer = React.createClass({
             <span
               className="edit btn btn-xs btn-default"
               onClick={editClick.bind(this)}
+              key="editButton"
               style={{
                 cursor: 'pointer'
               }}
@@ -403,6 +397,7 @@ var TableContainer = React.createClass({
           var saveButton = (
             <span
               className="edit btn btn-xs btn-default"
+              key="saveButton"
               onClick={saveClick.bind(this)}
               style={{
                 cursor: 'pointer'
@@ -417,6 +412,7 @@ var TableContainer = React.createClass({
             var cancelButton = (
               <span
                 className="edit btn btn-xs btn-default"
+                key="cancelButton"
                 onClick={cancelClick.bind(this)}
                 style={{
                   cursor: 'pointer'
@@ -431,6 +427,7 @@ var TableContainer = React.createClass({
           var deleteButton = (
             <span
               className="remove btn btn-xs btn-danger"
+              key="removeButton"
               onClick={remove.bind(this)}
               style={{
                 cursor: 'pointer'
@@ -444,6 +441,7 @@ var TableContainer = React.createClass({
           var copyButton = (
             <span
               className="remove btn btn-xs btn-default"
+              key="copyButton"
               onClick={copy.bind(this)}
               style={{
                 cursor: 'pointer'
@@ -471,13 +469,11 @@ var TableContainer = React.createClass({
       }
     ]);
 
-    var clickMainCheckboxY = function(e) {
-      this.state.mainCheckbox_new = true;
+    var clickMainCheckboxY = function() {
       this.setState({ mainCheckbox_new: true, mainCheckbox_old: false });
     };
 
-    var clickMainCheckboxN = function(e) {
-      this.state.mainCheckbox_new = false;
+    var clickMainCheckboxN = function() {
       this.setState({ mainCheckbox_new: false, mainCheckbox_old: true });
     };
 
@@ -507,12 +503,14 @@ var TableContainer = React.createClass({
           var itemId = celldata[rowIndex].id;
           var idx = findIndex(this.state.data, { id: itemId });
           var clickCheckBox = function() {
-            this.state.data[idx].checked = !this.state.data[idx].checked;
-            this.setState({ data: this.state.data });
+            var data = this.state.data;
+            data[idx].checked = !this.state.data[idx].checked;
+            this.setState({ data });
           };
+          var checkBox;
 
           if (idx > -1) {
-            var checkBox = (
+            checkBox = (
               <span className="checkbox">
                 <input
                   type="checkbox"
@@ -526,7 +524,7 @@ var TableContainer = React.createClass({
               </span>
             );
           } else {
-            var checkBox = (
+            checkBox = (
               <span className="checkbox">
                 <input type="checkbox" />
               </span>
@@ -554,20 +552,6 @@ var TableContainer = React.createClass({
     columns.map(function(column) {
       column.label = column.header;
     });
-    var myDefaultSorter = function(data, column) {
-      var property = column.property;
-
-      data.sort(function(a, b) {
-        var p1 = getNestedKey(a, property) || '';
-        var p2 = getNestedKey(b, property) || '';
-
-        if (p1.localeCompare) {
-          return p1.localeCompare(p2) * column.sort;
-        }
-
-        return (p1 - p2) * column.sort;
-      });
-    };
 
     return {
       editedRow: null,
@@ -623,15 +607,18 @@ var TableContainer = React.createClass({
       return !e.show_on_request || (e.show_on_request && show_hidden_columns);
     });
 
-    var isEditableColumn = function(column) {
+    columns.map(function(column, i) {
       var className = column.editor ? 'editableColumn' : 'notEditableColumn';
       var header = column.header;
       if (!header.props) {
-        column.header = <span className={className}>{header}</span>;
+        column.header = (
+          <span className={className} key={'col' + i}>
+            {header}
+          </span>
+        );
       }
       return column;
-    };
-    columns.every(isEditableColumn);
+    });
 
     // if you don't want an header, just return;
     return this.state.showFilters ? (
@@ -888,25 +875,6 @@ var TableContainer = React.createClass({
 
   onSystemSelectorChange: function(value) {
     this.setState({ systemFilter: value.system });
-    //    var val = valueHash.system;
-    //    var column = _.find(this.state.columns, function(c){ return c.property == 'system.System'; });
-    //    if(!column) {column = _.find(this.state.columns, function(c){ return c.property == 'pds_malfunction.system.System'; });};
-    //    if(!column) return;
-    //
-    //    if(val){
-    //      if(val == -1 ){
-    //        // we reset data
-    //        this.setState({data: this.props.data});
-    //      } else {
-    //        var data = _.filter(this.props.data, function(row){ return row.system && row.system.id == val; });
-    //        this.setState({data: data});
-    //      }
-    //    }else{
-    //      // we reset data
-    //      this.setState({data: this.props.data});
-    //    }
-    //
-    //    var system = valueHash.system;
   },
 
   render: function() {
@@ -919,8 +887,17 @@ var TableContainer = React.createClass({
     columns = columns.filter(function(e) {
       return !e.show_on_request || (e.show_on_request && show_hidden_columns);
     });
-    debugger;
     var columns2 = columns;
+    var cols = [];
+    columns.forEach(function(column) {
+      var col = {
+        header: { label: column['header'] },
+        property: column['property']
+        //cell: { transforms: [column['editor']] }
+      };
+
+      cols.push(col);
+    });
 
     columns.forEach(function(column) {
       if (
@@ -960,9 +937,6 @@ var TableContainer = React.createClass({
         }
       });
     }
-    if (this.state.search.query) {
-      data = Search.search(this.state.search, this.state.columns, data);
-    }
     var mainCheckbox_new = this.state.mainCheckbox_new;
     if (mainCheckbox_new !== this.state.mainCheckbox_old) {
       data.forEach(function(row) {
@@ -983,11 +957,14 @@ var TableContainer = React.createClass({
     }
     data = sortColumn.sort(data, sortingColumn, orderBy);
     this.state.dataxls = data;
-    var paginated = paginate(data, pagination);
-    var pages = Math.ceil(
-      data.length /
-        Math.max(isNaN(pagination.perPage) ? 1 : pagination.perPage, 1)
-    );
+    //const resolver = resolve.resolve({
+    //  columns,
+    //  method: resolve.nested
+    //});
+
+    const paginated = paginate(pagination)(data);
+    var pages = paginated.amount;
+    //const data2 = resolver(paginated.rows);
 
     return (
       <div className="main-container-inner" key={'main-table'}>
@@ -1084,52 +1061,22 @@ var TableContainer = React.createClass({
           }
           key={'table-filters'}
         >
-          <div className="left">
-            <div className="replace-container">
-              <Replace
-                columns={this.state.columns}
-                data={this.state.data}
-                onReplaceDone={this.onReplaceDone}
-                disabled={this.state.lockRow}
-              />
-            </div>
+          <div className="replace-container">
+            <Replace
+              columns={this.state.columns}
+              data={this.state.data}
+              onReplaceDone={this.onReplaceDone}
+              disabled={this.state.lockRow}
+            />
           </div>
         </div>
 
-        <div className="pagination">
-          <Paginator.Context
-            className="pagify-pagination"
-            segments={segmentize({
-              page: pagination.page,
-              pages: pages,
-              beginPages: 3,
-              endPages: 3,
-              sidePages: 2
-            })}
+        <div className="controls">
+          <Paginator
+            pagination={pagination}
+            pages={paginated.amount}
             onSelect={this.onSelect}
-          >
-            <Paginator.Button page={pagination.page - 1}>
-              Предыдущая
-            </Paginator.Button>
-            <Paginator.Segment field="beginPages" />
-            <Paginator.Ellipsis
-              className="ellipsis"
-              previousField="beginPages"
-              nextField="previousPages"
-            />
-            <Paginator.Segment field="previousPages" />
-            <Paginator.Segment field="centerPage" className="selected" />
-            <Paginator.Segment field="nextPages" />
-            <Paginator.Ellipsis
-              className="ellipsis"
-              previousField="nextPages"
-              nextField="endPages"
-            />
-            <Paginator.Segment field="endPages" />
-            <Paginator.Button page={pagination.page + 1}>
-              Следующая
-            </Paginator.Button>
-          </Paginator.Context>
+          />
         </div>
 
         <div
@@ -1143,7 +1090,7 @@ var TableContainer = React.createClass({
           <Table
             className="table table-bordered"
             columnNames={this.columnFilters}
-            data={paginated.data}
+            data={paginated.rows}
             columns={columns2}
             row={(d, rowIndex) => {
               var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
@@ -1152,6 +1099,20 @@ var TableContainer = React.createClass({
             }}
             rowKey="id"
           />
+          {/*<Table1.Provider
+            className="pure-table pure-table-striped"
+            columns={cols}
+            style={{ overflowX: 'auto' }}
+          >
+            <Table1.Header>
+              <search.Columns
+                query={search}
+                columns={cols}
+                onChange={this.onSearch}
+              />
+            </Table1.Header>
+            <Table1.Body rows={data2} rowKey="id" />
+          </Table1.Provider>*/}
         </div>
         <div id="panel-sticker" onClick={this.onHideTreeViewClick}>
           <p />
@@ -1161,9 +1122,6 @@ var TableContainer = React.createClass({
   }
 });
 
-//  <div className='search-container'>
-//    Поиск <Search columns={this.state.columns} data={this.state.data} onChange={this.onSearch} />
-//  </div>
 $(document).ready(function() {
   var appElement = document.getElementById('general_table');
   Modal.setAppElement(appElement);
@@ -1179,38 +1137,10 @@ $(document).ready(function() {
   );
 });
 
-function paginate(data, o) {
-  data = data || [];
-
-  // adapt to zero indexed logic
-  var page = o.page - 1 || 0;
-  var perPage = o.perPage;
-
-  var amountOfPages = Math.ceil(data.length / perPage);
-  var startPage = page < amountOfPages ? page : 0;
-
-  return {
-    amount: amountOfPages,
-    data: data.slice(startPage * perPage, startPage * perPage + perPage),
-    page: startPage
-  };
-}
-
 function augmentWithTitles(o) {
   for (var property in o) {
     o[property].title = titleCase(property);
   }
 
   return o;
-}
-
-function getNestedKey(obj, keys) {
-  var tempVal = obj;
-
-  keys.split('.').forEach(function(key) {
-    if (tempVal) {
-      tempVal = tempVal[key];
-    }
-  });
-  return tempVal;
 }

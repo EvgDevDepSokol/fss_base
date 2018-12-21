@@ -2,6 +2,7 @@ var React = require('react');
 import Modal from 'react-modal';
 var Paginator = require('react-pagify').default;
 var segmentize = require('segmentize');
+var createReactClass = require('create-react-class');
 
 const HEADER_STATE = 'Статус';
 const HEADER_WARN = 'Предупреждение';
@@ -10,24 +11,22 @@ const HEADER_ERR0 = 'err0';
 const HEADER_RESULT = 'Результат';
 
 // preview results
-var ImportStep4 = React.createClass({
-  displayName: 'ImportStep4',
+class ImportStep4 extends React.Component {
+  static displayName = 'ImportStep4';
 
-  getInitialState: function() {
-    return {
-      filter_add: 0,
-      filter_err: 0,
-      filter_warn: 0,
-      filter_uoi: 0,
-      to_exit: false,
-      pagination: {
-        page: 1,
-        perPage: 20
-      }
-    };
-  },
+  state = {
+    filter_add: 0,
+    filter_err: 0,
+    filter_warn: 0,
+    filter_uoi: 0,
+    to_exit: false,
+    pagination: {
+      page: 1,
+      perPage: 20
+    }
+  };
 
-  afterOpenModal() {
+  afterOpenModal = () => {
     this.setState({
       filter_add: 0,
       filter_err: 0,
@@ -35,9 +34,9 @@ var ImportStep4 = React.createClass({
       filter_uoi: 0,
       to_exit: false
     });
-  },
+  };
 
-  closeModal: function() {
+  closeModal = () => {
     var to_exit = this.state.to_exit;
     this.setState({
       filter_add: 0,
@@ -50,44 +49,44 @@ var ImportStep4 = React.createClass({
       window.location.reload();
     }
     this.props.onCloseModal();
-  },
+  };
 
-  nextModal: function() {
+  nextModal = () => {
     this.props.onNextModal(this.state.to_exit, this.state.filter_uoi);
     this.setState({
       to_exit: true
     });
-  },
+  };
 
-  onFilterErrChange: function(e) {
+  onFilterErrChange = e => {
     var filter_err = parseInt(e.target.value, 10);
     this.setState({
       filter_err: filter_err
     });
-  },
+  };
 
-  onFilterAddChange: function(e) {
+  onFilterAddChange = e => {
     var filter_add = parseInt(e.target.value, 10);
     this.setState({
       filter_add: filter_add
     });
-  },
+  };
 
-  onFilterWarnChange: function(e) {
+  onFilterWarnChange = e => {
     var filter_warn = parseInt(e.target.value, 10);
     this.setState({
       filter_warn: filter_warn
     });
-  },
+  };
 
-  onFilterUOIChange: function(e) {
+  onFilterUOIChange = e => {
     var filter_uoi = parseInt(e.target.value, 10);
     this.setState({
       filter_uoi: filter_uoi
     });
-  },
+  };
 
-  onSelect: function(page) {
+  onSelect = page => {
     var pagination = this.state.pagination || {};
     var pages = Math.ceil(this.props.importData.length / pagination.perPage);
 
@@ -96,9 +95,9 @@ var ImportStep4 = React.createClass({
     this.setState({
       pagination: pagination
     });
-  },
+  };
 
-  render: function() {
+  render() {
     var importHeaders = this.props.columns;
     var importData = this.props.importData;
     var msg = this.props.msg;
@@ -402,7 +401,6 @@ var ImportStep4 = React.createClass({
       <div className="import-from-excel-3">
         <Modal
           isOpen={this.props.isOpen}
-          style={this.props.style}
           contentLabel={this.props.contentLabel}
           onAfterOpen={this.afterOpenModal}
         >
@@ -461,13 +459,13 @@ var ImportStep4 = React.createClass({
           <div className={'modal-warning'}> {message} </div>
           {wait_message}
           {success_message}
-          {exit_button}
           {next_button}
+          {exit_button}
         </Modal>
       </div>
     );
   }
-});
+}
 
 function paginate(data, o) {
   data = data || [];

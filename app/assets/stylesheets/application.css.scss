@@ -165,9 +165,9 @@ body {
       }
     }
 
-    #navbar_reports {
+    #navbar_compare_projects {
       a {
-        padding-left: 12px;
+        //padding-left: 12px;
       }
     }
 
@@ -503,6 +503,7 @@ body {
 
             .Select-value {
               display: inline-block;
+              padding-left: 10px;
             }
           }
 
@@ -621,12 +622,22 @@ body {
 
     .replace-container {
       display: flex;
+      height: 100%;
     }
 
     .replace {
       display: flex;
+      align-items: center;
       margin-left: 2px;
       margin-top: 2px;
+
+      span,
+      button {
+        margin-left: 15px;
+        margin-right: 15px;
+        //font-size: large;
+        color: blue;
+      }
     }
 
     .search-container {
@@ -1223,7 +1234,8 @@ footer {
     }
   }
   .generate-dbm-run {
-    color: #333;
+    color: rgb(0, 90, 194);
+    font-weight: bold;
   }
   .generate-dbm-xls-button {
     position: absolute;
@@ -1260,6 +1272,18 @@ footer {
 .import-from-excel {
   .header-icon {
     background-image: asset_data_url("import_export.png");
+  }
+}
+
+.compare-projects {
+  .header-icon {
+    background-image: asset_data_url("reports.png");
+  }
+}
+
+.compare-projects-inner {
+  button {
+    width: 200px;
   }
 }
 .modal-close-button {

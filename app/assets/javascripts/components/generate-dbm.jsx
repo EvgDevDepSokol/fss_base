@@ -71,31 +71,17 @@ class GenerateDbm extends React.Component {
       log: '',
       systems: []
     };
-    this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.onExport = this.onExport.bind(this);
-    this.onExportXls = this.onExportXls.bind(this);
-    this.onModRadioChange = this.onModRadioChange.bind(this);
-    this.onVarRadioChange = this.onVarRadioChange.bind(this);
-    this.onSysCheckChange = this.onSysCheckChange.bind(this);
-    this.onSysAllChange = this.onSysAllChange.bind(this);
-    this.onGenTagChange = this.onGenTagChange.bind(this);
-    this.onPredecessorChange = this.onPredecessorChange.bind(this);
-    this.refreshSystems = this.refreshSystems.bind(this);
-    this.refreshLog = this.refreshLog.bind(this);
-    this.onCheckPeds = this.onCheckPeds.bind(this);
   }
 
-  openModal() {
+  openModal = () => {
     this.setState({
       varIndex: 0,
       modalIsOpen: true
     });
     //this.refreshSystems(0);
-  }
+  };
 
-  refreshLog() {
+  refreshLog = () => {
     var _this = this;
     const ajaxcall = _this => {
       $.ajax({
@@ -120,18 +106,19 @@ class GenerateDbm extends React.Component {
         ajaxcall(_this);
       }, 1000);
     } while (this.state.isProcessing);
-  }
+  };
 
-  afterOpenModal() {
+  afterOpenModal = () => {
     // references are now sync'd and can be accessed.
     this.setState({ varIndex: 0 });
     this.refs.subtitle.style.color = '#0081c2';
     this.refreshSystems(0);
-  }
+  };
 
-  refreshSystems(varIndex) {
+  refreshSystems = varIndex => {
+    var systems;
     if ([0, 1, 2].includes(varIndex)) {
-      var systems = getSelectorOptions(
+      systems = getSelectorOptions(
         SEL_PATH[varIndex],
         { pds_project_id: project.ProjectID },
         this
@@ -172,7 +159,7 @@ class GenerateDbm extends React.Component {
         systems: systems
       });
     } else if (varIndex == 4) {
-      var systems = [{ value: 4, isChecked: true }];
+      systems = [{ value: 4, isChecked: true }];
       this.setState({
         gen_tag: false,
         systems_warn: { na: false, all: false, empty: false },
@@ -181,7 +168,7 @@ class GenerateDbm extends React.Component {
         systems: systems //announciators
       });
     } else {
-      var systems = [
+      systems = [
         { value: 51, label: 'Аналоговые точки контроля', isChecked: true },
         { value: 52, label: 'Дискретные точки контроля', isChecked: true }
       ];
@@ -193,28 +180,28 @@ class GenerateDbm extends React.Component {
         systems: systems //ppc
       });
     }
-  }
+  };
 
-  closeModal() {
+  closeModal = () => {
     this.setState({ modalIsOpen: false });
-  }
+  };
 
-  onModRadioChange(e) {
+  onModRadioChange = e => {
     var modIndex = parseInt(e.target.value, 10);
     this.setState({ modIndex: modIndex });
-  }
+  };
 
-  onVarRadioChange(e) {
+  onVarRadioChange = e => {
     var varIndex = parseInt(e.target.value, 10);
     this.setState({ varIndex: varIndex });
     this.refreshSystems(varIndex);
-  }
+  };
 
-  onPredecessorChange(e) {
+  onPredecessorChange = e => {
     this.setState({ predecessor: e.target.value });
-  }
+  };
 
-  onSysCheckChange(e) {
+  onSysCheckChange = e => {
     var systems = this.state.systems;
     var l_all = true;
     var l_some = false;
@@ -231,9 +218,9 @@ class GenerateDbm extends React.Component {
       systems_all: l_all,
       systems_none: !l_some
     });
-  }
+  };
 
-  onSysAllChange(e) {
+  onSysAllChange = () => {
     var systems = this.state.systems;
     var systems_all = !this.state.systems_all;
     systems = systems.map(sys => {
@@ -245,16 +232,16 @@ class GenerateDbm extends React.Component {
       systems_all: systems_all,
       systems_none: !systems_all
     });
-  }
+  };
 
-  onGenTagChange(e) {
+  onGenTagChange = () => {
     var gen_tag = !this.state.gen_tag;
     this.setState({
       gen_tag: gen_tag
     });
-  }
+  };
 
-  onExport() {
+  onExport = () => {
     if (!this.state.systems_none) {
       var _this = this;
       var systems = [];
@@ -299,9 +286,9 @@ class GenerateDbm extends React.Component {
         alert('Выберите системы для генерации селект-файлов!');
       }
     }
-  }
+  };
 
-  onExportXls() {
+  onExportXls = () => {
     var new_data = [];
     var hash = {};
 
@@ -320,9 +307,9 @@ class GenerateDbm extends React.Component {
     var ws = XLSX.utils.json_to_sheet(new_data);
     XLSX.utils.book_append_sheet(wb, ws, 'Провека PED');
     XLSX.writeFile(wb, bookname, { bookType: 'biff8' });
-  }
+  };
 
-  onCheckPeds() {
+  onCheckPeds = () => {
     var _this = this;
     var systems = [];
     this.state.systems.forEach(function(sys) {
@@ -370,7 +357,7 @@ class GenerateDbm extends React.Component {
       log: 'Начата проверка. Ждите...',
       log_as_table: false
     });
-  }
+  };
 
   render() {
     var this_ = this;

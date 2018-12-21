@@ -1,5 +1,6 @@
 // selector to be used for systems for all projects
 'use strict';
+import PropTypes from 'prop-types';
 
 var React = require('react');
 var Select = require('react-select');
@@ -8,52 +9,54 @@ var getSelectorOptions = require('../selectors/selectors.jsx')
   .getSelectorOptions;
 var path = '/selectors/pds_sys_descriptions';
 
-module.exports = React.createClass({
-  displayName: 'SystemSelector',
+module.exports = class extends React.Component {
+  static displayName = 'SystemSelector';
 
-  propTypes: { label: PropTypes.string },
+  static propTypes = {
+    label: PropTypes.string,
+    value: PropTypes.number,
+    disabled: PropTypes.bool
+  };
 
-  getInitialState() {
-    return {
-      value: this.props.value,
-      disabled: this.props.disabled
-    };
-  },
+  state = {
+    value: this.props.value,
+    disabled: this.props.disabled
+  };
 
-  setValue(value) {
-    this.state.value = value.system;
+  setValue = value => {
+    this.setState({ value: value.system });
     onChange(value, this);
-  },
+  };
 
-  render: function() {
+  render() {
     var getOptions = function(input, callback) {
-      setTimeout(function() {
-        var options = getSelectorOptions(
-          path,
-          { pds_project_id: project.ProjectID },
-          this
-        );
-        options.unshift({ value: -1, label: 'Все' });
-        callback(null, {
-          options: options,
-          complete: true
-        });
-      }, 0);
+      var options = getSelectorOptions(
+        path,
+        { pds_project_id: project.ProjectID },
+        this
+      );
+      options.unshift({ value: -1, label: 'Все' });
+      callback(null, {
+        options: options,
+        complete: true
+      });
     };
 
-    return React.createElement(Select.Async, {
-      name: 'System',
-      loadOptions: getOptions,
-      onChange: this.setValue,
-      value: this.props.value,
-      simpleValue: true,
-      multi: false,
-      clearable: false,
-      disabled: this.props.disabled,
-      cache: false
-    });
+    return (
+      <Select.Async
+        name="System"
+        loadOptions={getOptions}
+        onChange={this.setValue}
+        value={this.props.value}
+        simpleValue={true}
+        multi={false}
+        clearable={false}
+        disabled={this.props.disabled}
+        cache={false}
+      />
+    );
   }
-});
+};
 module.exports.options = function() {
   var options = getSelectorOptions(
     path,

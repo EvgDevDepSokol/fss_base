@@ -1,6 +1,7 @@
+/* global $ */
 var React = require('react');
-//var SimpleSelect = require('../modules/simple-select.jsx');
 var _ = require('underscore');
+var createReactClass = require('create-react-class');
 
 var ImportStep1 = require('./xlsx-import/step1.jsx');
 var ImportStep2 = require('./xlsx-import/step2.jsx');
@@ -8,17 +9,7 @@ var ImportStep4 = require('./xlsx-import/step4.jsx');
 const HEADER_ERR0 = 'err0';
 const N_ROWS = 1000;
 
-const customStyles = {
-  content: {
-    //    position              : 'absolute',
-    //    top                   : '100px',
-    //    left                  : '40px',
-    //    right                 : '40px',
-    //    bottom                : '40px'
-  }
-};
-
-var ImportXlsxModal = React.createClass({
+var ImportXlsxModal = createReactClass({
   displayName: 'ImportXlsxModal',
 
   getInitialState: function() {
@@ -137,7 +128,7 @@ var ImportXlsxModal = React.createClass({
     };
   }.bind(this),
 
-  step1Finished: function(file) {
+  step1Finished: function() {
     this.setState({
       step: 2
     });
@@ -197,8 +188,7 @@ var ImportXlsxModal = React.createClass({
   },
 
   sendDataToServer: function(data, path) {
-    var i1, i2, msg;
-    var ajaxcall = [];
+    var msg;
     var n = Math.floor(data.length / N_ROWS);
     var context = this;
     var promise = $.when();
@@ -256,7 +246,7 @@ var ImportXlsxModal = React.createClass({
           rememberData={this.rememberData}
           rememberColumns={this.rememberColumns}
           onSelectChange={this.onSelectChange}
-          style={customStyles}
+          //style={customStyles}
           contentLabel="Импорт. Выбор файла."
         />
 
@@ -270,7 +260,7 @@ var ImportXlsxModal = React.createClass({
           importData={this.state.importData[0].data}
           rememberColumns={this.rememberColumns}
           rememberKeyColumn={this.rememberKeyColumn}
-          style={customStyles}
+          //style={customStyles}
           contentLabel="Импорт. Выбор соответствия столбцов."
         />
 
@@ -284,7 +274,7 @@ var ImportXlsxModal = React.createClass({
           msg={this.state.msg}
           processed={this.state.processed}
           isProcessing={this.state.isProcessing}
-          style={customStyles}
+          //style={customStyles}
           contentLabel="Импорт. Обработка."
         />
       </div>

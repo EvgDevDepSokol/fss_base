@@ -2,77 +2,6 @@
 
 var isNumber = require('lodash').isNumber;
 var isString = require('lodash').isString;
-var React = require('react');
-var ReactDOM = require('react-dom');
-import PropTypes from 'prop-types';
-
-var formatters = require('reactabular').formatters;
-var predicates = require('reactabular').predicates;
-
-module.exports = React.createClass({
-  displayName: 'Search',
-
-  propTypes: {
-    onChange: React.PropTypes.func,
-    data: React.PropTypes.array,
-    columns: React.PropTypes.array
-  },
-
-  render: function() {
-    var columns = this.props.columns || [];
-    var options = [
-      {
-        value: 'all',
-        name: 'Везде'
-      }
-    ].concat(
-      columns
-        .map(function(column) {
-          if (column.property && column.label) {
-            return { value: column.property, name: column.label };
-          }
-        })
-        .filter(id)
-    );
-
-    return React.createElement(
-      'span',
-      {
-        className: 'search'
-      },
-      React.createElement(
-        'select',
-        {
-          ref: 'column',
-          onChange: this.change
-        },
-        options.map(function(option) {
-          return React.createElement(
-            'option',
-            {
-              key: option.value + '-option',
-              value: option.value
-            },
-            option.name
-          );
-        })
-      ),
-      React.createElement('input', {
-        ref: 'query',
-        onChange: this.change
-      })
-    );
-  },
-
-  change: function() {
-    (this.props.onChange || noop)({
-      search: {
-        query: ReactDOM.findDOMNode(this.refs.query).value,
-        column: ReactDOM.findDOMNode(this.refs.column).value
-      }
-    });
-  }
-});
 
 module.exports.search = function(search, columns, data) {
   var query = search.query;
@@ -94,7 +23,11 @@ module.exports.search = function(search, columns, data) {
   function isColumnVisible(row, col) {
     var property = col.property;
     var value = row[property];
-    var formatter = col.search || formatters.identity;
+    var formatter =
+      col.search ||
+      function(val) {
+        return val;
+      };
     var editor = col.editor;
 
     function labelFromSelectorList(array, value) {
@@ -210,9 +143,3 @@ module.exports.matches = (column, value, query, options) => {
     ];
   return matches;
 };
-
-function id(a) {
-  return a;
-}
-
-function noop() {}

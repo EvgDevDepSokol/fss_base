@@ -30,8 +30,7 @@ class EquipmentPanelsController < BaseController
     #                   'pds_panel.pID', 'pds_panel.panel'
     #                 )
     sql = "SELECT `hw_ic`.`icID`, `hw_ic`.`ref`, pds_syslist.SystemID, pds_syslist.System, `hw_ic`.`Description`, hw_peds.ped_N, hw_peds.ped, hw_devtype.typeID, hw_devtype.RuName, `hw_ic`.`scaleMin`, `hw_ic`.`scaleMax`, pds_project_unit.ProjUnitID, pds_unit.UnitID, pds_unit.Unit_RU, `hw_ic`.`tag_no`, `hw_ic`.`UniquePTAG`, `hw_ic`.`un`, `hw_ic`.`Description_EN`, `hw_ic`.`rev`, pds_panel.pID, pds_panel.panel, date_format(hw_ic.t,'%Y-%m-%d %H:%i') FROM `hw_ic` LEFT OUTER JOIN `pds_panel` ON `pds_panel`.`pID` = `hw_ic`.`panel_id` LEFT OUTER JOIN `pds_project_unit` ON `pds_project_unit`.`ProjUnitID` = `hw_ic`.`Unit` LEFT OUTER JOIN `pds_unit` ON `pds_unit`.`UnitID` = `pds_project_unit`.`Unit` LEFT OUTER JOIN `hw_peds` ON `hw_peds`.`ped_N` = `hw_ic`.`ped` LEFT OUTER JOIN `hw_devtype` ON `hw_devtype`.`typeID` = `hw_peds`.`type` LEFT OUTER JOIN `pds_syslist` ON `pds_syslist`.`SystemID` = `hw_ic`.`sys` WHERE `hw_ic`.`Project` = #{project.ProjectID}"
-    @data_list = ActiveRecord::Base.connection.execute(sql)
-    @data_list = @data_list.each.map do |e|
+    @data_list = ActiveRecord::Base.connection.execute(sql).each.map do |e|
       e1 = {}
       e1['id']               = e[0]
       e1['ref']              = e[1]
@@ -76,9 +75,7 @@ class EquipmentPanelsController < BaseController
                                  'hw_peds.ped_N', :'hw_peds.ped',
                                  'pds_syslist.SystemID', 'pds_syslist.System',
                                  'range'
-                               )
-
-    @data_list = @data_list.each.map do |e|
+                               ).each.map do |e|
       e1 = {}
       e1['id']               = e[0]
       e1['hw_ic']            = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
@@ -97,9 +94,7 @@ class EquipmentPanelsController < BaseController
                                'hw_peds.ped_N', :'hw_peds.ped',
                                'pds_syslist.SystemID', 'pds_syslist.System',
                                'range'
-                             )
-
-    @data_list = @data_list.each.map do |e|
+                             ).each.map do |e|
       e1 = {}
       e1['id']               = e[0]
       e1['hw_ic']            = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
@@ -118,9 +113,7 @@ class EquipmentPanelsController < BaseController
                             'hw_peds.ped_N', :'hw_peds.ped',
                             'pds_syslist.SystemID', 'pds_syslist.System',
                             'range', 'Fixed'
-                          )
-
-    @data_list = @data_list.each.map do |e|
+                          ).each.map do |e|
       e1 = {}
       e1['id']               = e[0]
       e1['hw_ic']            = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4], hw_ped: { id: e[5], ped: e[6] } }
@@ -141,9 +134,7 @@ class EquipmentPanelsController < BaseController
                                   'pds_syslist.SystemID', 'pds_syslist.System',
                                   'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
                                   'range', 'Fixed'
-                                )
-
-    @data_list = @data_list.each.map do |e|
+                                ).each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
       e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4],
@@ -165,9 +156,7 @@ class EquipmentPanelsController < BaseController
                           'hw_peds.ped_N', :'hw_peds.ped',
                           'pds_syslist.SystemID', 'pds_syslist.System',
                           'pds_section_assembler.section_N', 'pds_section_assembler.section_name'
-                        )
-
-    @data_list = @data_list.each.map do |e|
+                        ).each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
       e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4],
@@ -200,8 +189,7 @@ class EquipmentPanelsController < BaseController
                                    'pds_syslist.SystemID', 'pds_syslist.System',
                                    'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
                                    'hw_ic.scaleMin', 'hw_ic.scaleMax',
-                                   'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU')
-    @data_list = @data_list.each.map do |e|
+                                   'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU').each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
       e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4],
@@ -235,9 +223,7 @@ class EquipmentPanelsController < BaseController
                                   'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
                                   'pds_detectors.DetID', 'pds_detectors.tag',
                                   'Type', 'sign'
-                                )
-
-    @data_list = @data_list.each.map do |e|
+                                ).each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
       e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4],
@@ -251,7 +237,6 @@ class EquipmentPanelsController < BaseController
     end
   end
 
-  # TODO: add unit to scope
   def pds_meters_channels
     @data_list = PdsMetersChannel.where(Project: project.ProjectID)
                                  .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system,

@@ -1,41 +1,41 @@
 'use strict';
 
-//var React = require('react/addons');
-//var React = require('react-addons-{addon}');
 var React = require('react');
-var ReactDOM = require('react-dom');
 import PropTypes from 'prop-types';
+var createReactClass = require('create-react-class');
 
 module.exports = function() {
-  return React.createClass({
-    displayName: 'stringEditor',
+  return class extends React.Component {
+    static displayName = 'stringEditor';
 
-    propTypes: {
-      value: React.PropTypes.string,
-      onValue: React.PropTypes.func
-    },
+    static propTypes = {
+      value: PropTypes.string,
+      attribute: PropTypes.string,
+      onValue: PropTypes.func,
+      onCancel: PropTypes.func,
+      onSave: PropTypes.func
+    };
 
-    getInitialState: function() {
-      return { value: this.props.value };
-    },
+    state = { value: this.props.value };
 
-    render: function() {
-      return React.createElement('input', {
-        value: this.state.value,
-        onChange: this.onChange,
-        onKeyUp: this.keyUp,
-        onBlur: this.done
-      });
-    },
+    render() {
+      return (
+        <input
+          value={this.state.value}
+          onChange={this.onChange}
+          onKeyUp={this.keyUp}
+          onBlur={this.done}
+        />
+      );
+    }
 
-    onChange: function(e) {
+    onChange = (e) => {
       this.setState({
-        //value: (e.target.value).trim()
         value: e.target.value
       });
-    },
+    };
 
-    keyUp: function(e) {
+    keyUp = (e) => {
       if (e.keyCode == 13) {
         // Enter pressed
         this.done();
@@ -48,20 +48,22 @@ module.exports = function() {
         // Ctrl-Enter pressed
         this.save();
       }
-    },
+    };
 
-    done: function() {
+    done = () => {
       var h = {};
-      h[this.props.attribute] = ReactDOM.findDOMNode(this).value;
+      h[this.props.attribute] = this.state.value;
       this.props.onValue(h);
-    },
-    cancel: function() {
+    };
+
+    cancel = () => {
       this.props.onCancel();
-    },
-    save: function() {
+    };
+
+    save = () => {
       var h = {};
-      h[this.props.attribute] = ReactDOM.findDOMNode(this).value;
+      h[this.props.attribute] = this.state.value;
       this.props.onSave(h);
-    }
-  });
+    };
+  };
 }.bind(this);

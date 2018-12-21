@@ -1,8 +1,8 @@
 'use strict';
 import React from 'react';
-import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+var createReactClass = require('create-react-class');
 
 const DATA_VALVE_TYPES = require('../selectors/data/valve_types.js');
 const DATA_MALFUNCTION_TYPES = require('../selectors/data/malfunction_types.js');
@@ -29,178 +29,200 @@ const DATA_SYSLIST_CATEGORY = [
   { value: '3', label: '3' }
 ];
 
-var StaticSelector = React.createClass({
-  propTypes: { label: PropTypes.string },
+class StaticSelector extends React.Component {
+  static propTypes = {
+    label: PropTypes.string,
+    value: PropTypes.string,
+    attribute: PropTypes.string,
+    clearable: PropTypes.bool,
+    displayName: PropTypes.string,
+    name: PropTypes.string,
+    options: PropTypes.array,
+    onValue: PropTypes.func
+  };
 
-  getInitialState() {
+  constructor(props) {
+    super(props);
     var value = null;
-    var label = this.props.value;
-    const OPTIONS = this.props.options;
+    var label = props.value;
+    const OPTIONS = props.options;
     OPTIONS.forEach(function(obj) {
       if (obj.label == label) {
         value = obj.value;
       }
     });
-    return {
+
+    this.state = {
       value: value
     };
-  },
+  }
 
-  setValue(value) {
-    var _this = this.props._this;
+  setValue = (value) => {
     this.setState({ value: value });
     var h = {};
-    h[_this.props.attribute] = value;
-    _this.props.onValue(h);
-  },
+    h[this.props.attribute] = value;
+    this.props.onValue(h);
+  };
 
-  render: function() {
+  render() {
     var clearable = this.props.clearable ? this.props.clearable : false;
-    return React.createElement(Select, {
-      displayName: this.props.displayName,
-      name: this.props.name,
-      options: this.props.options,
-      onChange: this.setValue,
-      value: this.state.value,
-      simpleValue: true,
-      multi: false,
-      clearable: clearable
-    });
+    return (
+      <Select
+        displayName={this.props.displayName}
+        name={this.props.name}
+        options={this.props.options}
+        onChange={this.setValue}
+        value={this.state.value}
+        simpleValue={true}
+        multi={false}
+        clearable={clearable}
+      />
+    );
   }
-});
+}
 
-var ValveTypeSelector = React.createClass({
-  render: function() {
+class ValveTypeSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_VALVE_TYPES}
         displayName="ValveTypeSelector"
         name="ValveType"
       />
     );
   }
-});
+}
 
-var MalfunctionTypeSelector = React.createClass({
-  render: function() {
+class MalfunctionTypeSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_MALFUNCTION_TYPES}
         displayName="MalfunctionTypeSelector"
         name="MalfunctionType"
       />
     );
   }
-});
+}
 
-var BooleanSelector = React.createClass({
-  render: function() {
+class BooleanSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_BOOLEAN}
         displayName="BooleanSelector"
         name="Boolean"
       />
     );
   }
-});
+}
 
-var BooleanYNSelector = React.createClass({
-  render: function() {
+class BooleanYNSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_BOOLEANYN}
         displayName="BooleanYNSelector"
         name="BooleanYN"
       />
     );
   }
-});
+}
 
-var BooleanNumbSelector = React.createClass({
-  render: function() {
+class BooleanNumbSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_BOOLEANNUMB}
         displayName="BooleanNumbSelector"
         name="BooleanNumb"
       />
     );
   }
-});
+}
 
-var RFTypeSelector = React.createClass({
-  render: function() {
+class RFTypeSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_RF_TYPES}
         displayName="RFTypeSelector"
         name="RFType"
       />
     );
   }
-});
+}
 
-var MotorZmnSelector = React.createClass({
-  render: function() {
+class MotorZmnSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_MOTOR_ZMNS}
         displayName="MotorZmnSelector"
         name="MotorZmn"
       />
     );
   }
-});
+}
 
-var UserRightsSelector = React.createClass({
-  render: function() {
+class UserRightsSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_USER_RIGHTS}
         displayName="UserRightsSelector"
         name="UserRights"
       />
     );
   }
-});
+}
 
-var RegidityUnitSelector = React.createClass({
-  render: function() {
+class RegidityUnitSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_REGIDITY_UNIT}
         displayName="RegidityUnitSelector"
         name="RegidityUnit"
       />
     );
   }
-});
+}
 
-var AnnounciatorTypeSelector = React.createClass({
-  render: function() {
+class AnnounciatorTypeSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_ANNOUNCIATOR_TYPE}
         displayName="AnnounciatorTypeSelector"
         name="AnnounciatorType"
@@ -208,14 +230,15 @@ var AnnounciatorTypeSelector = React.createClass({
       />
     );
   }
-});
+}
 
-var AnnounciatorSignSelector = React.createClass({
-  render: function() {
+class AnnounciatorSignSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_ANNOUNCIATOR_SIGN}
         displayName="AnnounciatorSignSelector"
         name="AnnounciatorSign"
@@ -223,14 +246,15 @@ var AnnounciatorSignSelector = React.createClass({
       />
     );
   }
-});
+}
 
-var SyslistDescriptorSelector = React.createClass({
-  render: function() {
+class SyslistDescriptorSelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_SYSLIST_DESCRIPTOR}
         displayName="SyslistDescriptorSelector"
         name="SyslistDescriptor"
@@ -238,14 +262,15 @@ var SyslistDescriptorSelector = React.createClass({
       />
     );
   }
-});
+}
 
-var SyslistCategorySelector = React.createClass({
-  render: function() {
+class SyslistCategorySelector extends React.Component {
+  render() {
     return (
       <StaticSelector
         value={this.props.value}
-        _this={this}
+        attribute={this.props.attribute}
+        onValue={this.props.onValue}
         options={DATA_SYSLIST_CATEGORY}
         displayName="SyslistCategorySelector"
         name="SyslistCategory"
@@ -253,7 +278,7 @@ var SyslistCategorySelector = React.createClass({
       />
     );
   }
-});
+}
 
 module.exports.ValveTypeSelector = ValveTypeSelector;
 module.exports.RFTypeSelector = RFTypeSelector;

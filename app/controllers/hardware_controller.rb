@@ -36,7 +36,7 @@ class HardwareController < BaseController
       e1['remarks']   = e[13]
       e1['pds_panel'] = { id: e[14], panel: e[15] }
       e1['hw_ic']     = { id: e[16], ref: e[17] }
-      e = e1
+      e1
     end
   end
 

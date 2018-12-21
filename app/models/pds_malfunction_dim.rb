@@ -18,15 +18,15 @@ class PdsMalfunctionDim < ApplicationRecord
       'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link'
     ).map do |e|
       {
-        id:                e[0],
-        Character:         e[1],
-        Target:            e[2],
-        Target_EN:         e[3],
-        is_main:           e[4],
+        id: e[0],
+        Character: e[1],
+        Target: e[2],
+        Target_EN: e[3],
+        is_main: e[4],
         # pds_malfunction:   { id: e[5], system: { id: e[6], System: e[7] }, Numb: e[8] },
-        pds_malfunction:   { id: e[5], Numb: e[8] },
-        sd_sys_numb:       { id: e[9], sd_link: e[10] },
-        system:            { id: e[6], System: e[7] }
+        pds_malfunction: { id: e[5], Numb: e[8] },
+        sd_sys_numb: { id: e[9], sd_link: e[10] },
+        system: { id: e[6], System: e[7] }
       }
     end
   end
