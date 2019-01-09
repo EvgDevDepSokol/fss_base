@@ -6,7 +6,7 @@ class PdsMalfunctionDim < ApplicationRecord
   alias_attribute :pds_malfunction_id, :Malfunction
   alias_attribute :sd_sys_numb_id, :sd_N
 
-  scope :ordered, -> {
+  scope :ordered, lambda {
     includes(:pds_malfunction).order('pds_malfunction.sys', 'pds_malfunction.Numb',
       "lpad(pds_malfunction_dim.Character, 5, '*')")
   }
