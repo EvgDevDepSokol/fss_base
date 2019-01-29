@@ -4,8 +4,8 @@
   var columns = [
     {property: "id", header: "DrID", hidden: true},
     {property: "system.System", header: "Сист.",
-      editor: "SystemSelector", attribute: 'system_id', nested: true},
-    {property: "pds_engineer_author.name", header: "Автор", attribute: 'pds_engineer_author_id', nested: true},
-    {property: "pds_engineer_worker", header: "Исполнитель"},
+      attribute: 'system_id', nested: true},
+    {property: "pds_engineer_author.name", header: "Автор", attribute: 'pds_engineer_author_id', nested: true, headerClassStyle: 'header-pds_engineer-col'},
+    {property: "pds_engineer_worker", header: "Исполнитель", headerClassStyle: 'header-pds_engineer-col'},
     {property: "query", header: "Описание"},
     ];

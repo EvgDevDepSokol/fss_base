@@ -276,7 +276,9 @@ var TableContainer = createReactClass({
 
     var columns = this.props.columns.map(function(column) {
       var h = column; //  {property: column.property, header: column.header, };
-      if (column.editor == 'TextEditor') {
+      if (column.headerClassStyle) {
+        //do nothing
+      } else if (column.editor == 'TextEditor') {
         column.headerClassStyle = 'header-text-col';
       } else if (column.editor == 'WideTextEditor') {
         column.headerClassStyle = 'header-wide_text-col';
