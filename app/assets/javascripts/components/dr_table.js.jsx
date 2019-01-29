@@ -305,7 +305,7 @@ var TableContainer = createReactClass({
     // add buttons
     columns = columns.concat([
       {
-        header: <div className="buttons-col">Опции</div>,
+        header: <div className="buttons-col">X</div>,
         headerClassStyle: 'header-buttons-col',
         cell: function(value, celldata, rowIndex, property) {
           var url = window.location.href;
@@ -313,56 +313,56 @@ var TableContainer = createReactClass({
           var itemId = celldata[rowIndex].id;
           var idx = findIndex(this.state.data, { id: itemId });
 
-          var remove = function() {
-            if (this.props.objectType == 'pds_malfunction_dim') return;
-            if (current_user.user_rights >= 2) {
-              var res = confirm('Вы действительно желаете удалить запись?');
-              if (!res) return;
-              var idx;
-              if (newRow) {
-                idx = findIndex(this.state.data, {
-                  _id: celldata[rowIndex]._id
-                });
+          //var remove = function() {
+          //  if (this.props.objectType == 'pds_malfunction_dim') return;
+          //  if (current_user.user_rights >= 2) {
+          //    var res = confirm('Вы действительно желаете удалить запись?');
+          //    if (!res) return;
+          //    var idx;
+          //    if (newRow) {
+          //      idx = findIndex(this.state.data, {
+          //        _id: celldata[rowIndex]._id
+          //      });
 
-                this.state.data.splice(idx, 1);
-                this.setState({
-                  data: this.state.data,
-                  editedRow: null,
-                  lockRow: false,
-                  sendData: {}
-                });
-              } else {
-                idx = findIndex(this.state.data, { id: itemId });
-                $.ajax({
-                  url: url + '/' + itemId,
-                  dataType: 'json',
-                  type: 'DELETE',
-                  success: function(data) {
-                    this.state.data.splice(idx, 1);
-                    this.setState({ data: this.state.data, editedRow: null });
-                  }.bind(this),
-                  error: function(xhr, status, err) {
-                    var jtmp = xhr.responseJSON['errors'];
-                    var result = 'Не удалось удалить запись. Причина:\n\n';
-                    for (key in jtmp) {
-                      result += jtmp[key] + '\n';
-                    }
-                    alert(result);
-                  }.bind(this)
-                });
-              }
-            } else {
-              alert('У Вас недостаточно прав для удаления записи!');
-            }
-          }.bind(this);
+          //      this.state.data.splice(idx, 1);
+          //      this.setState({
+          //        data: this.state.data,
+          //        editedRow: null,
+          //        lockRow: false,
+          //        sendData: {}
+          //      });
+          //    } else {
+          //      idx = findIndex(this.state.data, { id: itemId });
+          //      $.ajax({
+          //        url: url + '/' + itemId,
+          //        dataType: 'json',
+          //        type: 'DELETE',
+          //        success: function(data) {
+          //          this.state.data.splice(idx, 1);
+          //          this.setState({ data: this.state.data, editedRow: null });
+          //        }.bind(this),
+          //        error: function(xhr, status, err) {
+          //          var jtmp = xhr.responseJSON['errors'];
+          //          var result = 'Не удалось удалить запись. Причина:\n\n';
+          //          for (key in jtmp) {
+          //            result += jtmp[key] + '\n';
+          //          }
+          //          alert(result);
+          //        }.bind(this)
+          //      });
+          //    }
+          //  } else {
+          //    alert('У Вас недостаточно прав для удаления записи!');
+          //  }
+          //}.bind(this);
 
-          var copy = function() {
-            if (current_user.user_rights >= 2) {
-              this.onAddRowClick(celldata[rowIndex]);
-            } else {
-              alert('У Вас недостаточно прав для дублирования записи!');
-            }
-          }.bind(this);
+          //var copy = function() {
+          //  if (current_user.user_rights >= 2) {
+          //    this.onAddRowClick(celldata[rowIndex]);
+          //  } else {
+          //    alert('У Вас недостаточно прав для дублирования записи!');
+          //  }
+          //}.bind(this);
 
           var editClick = function() {
             if (current_user.user_rights >= 1) {
@@ -372,13 +372,13 @@ var TableContainer = createReactClass({
             }
           }.bind(this);
 
-          var cancelClick = function() {
-            this.setState({ editedRow: null, lockRow: false, sendData: {} });
-          }.bind(this);
+          //var cancelClick = function() {
+          //  this.setState({ editedRow: null, lockRow: false, sendData: {} });
+          //}.bind(this);
 
-          var saveClick = function() {
-            this.onSaveClick(celldata[rowIndex]);
-          }.bind(this);
+          //var saveClick = function() {
+          //  this.onSaveClick(celldata[rowIndex]);
+          //}.bind(this);
 
           var editButton = (
             <span
@@ -394,74 +394,71 @@ var TableContainer = createReactClass({
             </span>
           );
 
-          var saveButton = (
-            <span
-              className="edit btn btn-xs btn-default"
-              key="saveButton"
-              onClick={saveClick.bind(this)}
-              style={{
-                cursor: 'pointer'
-              }}
-              title="Сохранить изменения"
-            >
-              <i className="fas fa-check" />
-            </span>
-          );
+          //var saveButton = (
+          //  <span
+          //    className="edit btn btn-xs btn-default"
+          //    key="saveButton"
+          //    onClick={saveClick.bind(this)}
+          //    style={{
+          //      cursor: 'pointer'
+          //    }}
+          //    title="Сохранить изменения"
+          //  >
+          //    <i className="fas fa-check" />
+          //  </span>
+          //);
 
-          if (!newRow) {
-            var cancelButton = (
-              <span
-                className="edit btn btn-xs btn-default"
-                key="cancelButton"
-                onClick={cancelClick.bind(this)}
-                style={{
-                  cursor: 'pointer'
-                }}
-                title="Отменить изменения"
-              >
-                <i className="fas fa-undo" />
-              </span>
-            );
-          }
+          //if (!newRow) {
+          //  var cancelButton = (
+          //    <span
+          //      className="edit btn btn-xs btn-default"
+          //      key="cancelButton"
+          //      onClick={cancelClick.bind(this)}
+          //      style={{
+          //        cursor: 'pointer'
+          //      }}
+          //      title="Отменить изменения"
+          //    >
+          //      <i className="fas fa-undo" />
+          //    </span>
+          //  );
+          //}
 
-          var deleteButton = (
-            <span
-              className="remove btn btn-xs btn-danger"
-              key="removeButton"
-              onClick={remove.bind(this)}
-              style={{
-                cursor: 'pointer'
-              }}
-              title="Удалить запись"
-            >
-              <i className="fas fa-times" />
-            </span>
-          );
+          //var deleteButton = (
+          //  <span
+          //    className="remove btn btn-xs btn-danger"
+          //    key="removeButton"
+          //    onClick={remove.bind(this)}
+          //    style={{
+          //      cursor: 'pointer'
+          //    }}
+          //    title="Удалить запись"
+          //  >
+          //    <i className="fas fa-times" />
+          //  </span>
+          //);
 
-          var copyButton = (
-            <span
-              className="remove btn btn-xs btn-default"
-              key="copyButton"
-              onClick={copy.bind(this)}
-              style={{
-                cursor: 'pointer'
-              }}
-              title="Дублировать запись"
-            >
-              <i className="far fa-copy" />
-            </span>
-          );
+          //var copyButton = (
+          //  <span
+          //    className="remove btn btn-xs btn-default"
+          //    key="copyButton"
+          //    onClick={copy.bind(this)}
+          //    style={{
+          //      cursor: 'pointer'
+          //    }}
+          //    title="Дублировать запись"
+          //  >
+          //    <i className="far fa-copy" />
+          //  </span>
+          //);
           return {
             value: (
-              <span
-                style={{
-                  width: '100px'
-                }}
-              >
-                {this.state['editedRow'] === rowIndex
+              <span>
+                {editButton}
+                {/*{this.state['editedRow'] === rowIndex
                   ? [saveButton, cancelButton]
                   : [editButton, copyButton]}
-                {deleteButton}
+                {deleteButton}*/}
               </span>
             )
           };
@@ -830,6 +827,7 @@ var TableContainer = createReactClass({
     return sendData;
   },
 
+  /*
   onHideTreeViewClick: function() {
     var left_menu = $('#left_menu');
     var main_table = $('#main_table');
@@ -850,8 +848,9 @@ var TableContainer = createReactClass({
       navbar_middle_container[0].style.left = '520px';
     }
   },
+  */
 
-  onExportClick: function(exportIndex) {
+  /*onExportClick: function(exportIndex) {
     var bookname = model_name + '_' + project.id.toString() + '.xls';
 
     if (exportIndex === 1) {
@@ -867,7 +866,7 @@ var TableContainer = createReactClass({
       }
     });
     exportData(dataxls, columns, bookname);
-  },
+  }, */
 
   onReplaceDone: function(data) {
     this.setState({ data: data });
@@ -956,7 +955,7 @@ var TableContainer = createReactClass({
       });
     }
     data = sortColumn.sort(data, sortingColumn, orderBy);
-    this.state.dataxls = data;
+    //this.state.dataxls = data;
     //const resolver = resolve.resolve({
     //  columns,
     //  method: resolve.nested
@@ -1042,7 +1041,7 @@ var TableContainer = createReactClass({
                 </div>
               </div>
             </div>
-            <div className="right">
+            {/*<div className="right">
               <div className="show-filters" onClick={this.onShowHidden}>
                 Скрыть/ Показать поля
               </div>
@@ -1050,7 +1049,7 @@ var TableContainer = createReactClass({
                 data={this.state.dataxls}
                 onExport={this.onExportClick}
               />
-            </div>
+            </div>*/}
           </div>
         </div>
         <div
@@ -1114,16 +1113,16 @@ var TableContainer = createReactClass({
             <Table1.Body rows={data2} rowKey="id" />
           </Table1.Provider>*/}
         </div>
-        <div id="panel-sticker" onClick={this.onHideTreeViewClick}>
+        {/*<div id="panel-sticker" onClick={this.onHideTreeViewClick}>
           <p />
-        </div>
+        </div>*/}
       </div>
     );
   }
 });
 
 $(document).ready(function() {
-  var appElement = document.getElementById('general_table');
+  var appElement = document.getElementById('dr_table');
   if (appElement) {
     Modal.setAppElement(appElement);
     ReactDOM.render(

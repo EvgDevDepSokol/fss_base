@@ -1,10 +1,10 @@
-- content_for :content_table do
-  #general_table
+- content_for :content_dr do
+  #dr_table
 
   = yield
 
   :javascript
-    var project = #{project ? project.serializable_hash.to_json : 'nil'};
+    var project = #{project.serializable_hash.to_json};
     var title = "#{title}";
     var data = #{table_data};
     var model_name = "#{hash_model_name}";

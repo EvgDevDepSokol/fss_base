@@ -73,7 +73,7 @@
                 = image_tag('tables.png')
                 Таблицы
             %li#navbar_protocols
-              = link_to '#' do
+              = link_to index_pds_project_pds_drs_path(pds_project_id: @project? @project : 90) do
                 = image_tag('blog_accept.png')
                 Протоколы рассогласований
           .container#navbar-middle-container      
@@ -90,13 +90,12 @@
                 = link_to '#' do
                   = image_tag('import_export.png')
                   Импорт
-              - if @project
-                %li#navbar_generate_dbm_modal
+              %li#navbar_generate_dbm_modal
+                - if @project
                   = link_to generate_dbm_sel_path do
                     = image_tag('generate.png')
                     Генерация
-              - else
-                %li#navbar_generate_dbm_modal
+                - else
                   = link_to root_url do
                     = image_tag('generate.png')
                     Генерация
@@ -112,9 +111,14 @@
                   Выход
     .container.app-container
       .container.inner-container
-        .col.left-menu#left_menu
-          = render 'shared/table_list', hash: get_tables_list
-        .col.main-container#main_table
-          = content_for?(:content) ? yield(:content) : yield
+        - if content_for?(:content_table)
+          .col.left-menu#left_menu
+            = render 'shared/table_list', hash: get_tables_list
+          .col.main-container#main_table
+            = content_for?(:content_table) ? yield(:content_table) : yield
+        - else
+          .col.main-container.dr#dr_table
+            = content_for?(:content_dr) ? yield(:content_dr) : yield
+
 
          

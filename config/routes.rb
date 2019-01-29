@@ -8,6 +8,13 @@ Rails.application.routes.draw do
 
     # member do
     resources :pds_syslist
+
+    PdsDrsController::ACTIONS.each do |table|
+      resources table.to_s.pluralize, controller: :pds_drs, model: table do
+        get :index, as: :index, on: :collection, action: table.to_s.pluralize.to_sym
+      end
+    end
+
     # resources :hw_ic
     # resource :select_builder
 
@@ -76,10 +83,6 @@ Rails.application.routes.draw do
   YAML.load_file('public/data/tables.yml').each do |table, _name|
     resources table.to_s.pluralize, only: %i[edit update], controller: :general, model: table
   end
-
-  # controller :import do
-  #  put :update_all
-  # end
 
   put :import_prepare, to: 'import#import_prepare'
   put :import_finish,  to: 'import#import_finish'
