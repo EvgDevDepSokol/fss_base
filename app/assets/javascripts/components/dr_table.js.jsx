@@ -293,6 +293,8 @@ var TableContainer = createReactClass({
         h['cell'] = [editableField(column), highlighter(h.property)];
       } else if (column.nested) {
         h['cell'] = [nestedValue(column), highlighter(h.property)];
+      } else {
+        h['cell'] = [highlighter(h.property)];
       }
       return h;
     });
