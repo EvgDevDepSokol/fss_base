@@ -309,8 +309,8 @@ var TableContainer = createReactClass({
     // add buttons
     columns = columns.concat([
       {
-        header: <div className="buttons-col">X</div>,
-        headerClassStyle: 'header-buttons-col',
+        header: <div className="buttons_dr-col">X</div>,
+        headerClassStyle: 'header-buttons_dr-col',
         cell: function(value, celldata, rowIndex, property) {
           var url = window.location.href;
           var newRow = celldata[rowIndex].newRow;
@@ -609,7 +609,7 @@ var TableContainer = createReactClass({
     });
 
     columns.map(function(column, i) {
-      var className = column.editor ? 'editableColumn' : 'notEditableColumn';
+      var className = 'editableColumn';
       var header = column.header;
       if (!header.props) {
         column.header = (
@@ -637,6 +637,8 @@ var TableContainer = createReactClass({
       </thead>
     );
   },
+
+  none: function() {},
 
   onShowHidden: function() {
     this.setState({
@@ -1093,15 +1095,18 @@ var TableContainer = createReactClass({
           <Table
             className="table table-bordered"
             columnNames={this.columnFilters}
+            /*columnNames={this.none}*/
             data={paginated.rows}
             columns={columns2}
             row={(d, rowIndex) => {
-              var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
+              //var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
+              var rowClass = 'dr_table-row';
               if (rowIndex == this.state.editedRow) rowClass = 'edited-row';
               return { className: rowClass };
             }}
             rowKey="id"
           />
+
           {/*<Table1.Provider
             className="pure-table pure-table-striped"
             columns={cols}

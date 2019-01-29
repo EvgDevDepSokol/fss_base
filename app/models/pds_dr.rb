@@ -10,23 +10,25 @@ class PdsDr < ApplicationRecord
     super options.merge(methods: :id)
   end
 
-  def self.plucked
+  def self.plucked(project_id)
     eng_list = {}
-    PdsEngOnSy.where(project: 88).includes(:pds_engineer).pluck(:sys, 'pds_engineers.name').each.map do |e|
+    PdsEngOnSy.where(project: project_id).includes(:pds_engineer).pluck(:sys, 'pds_engineers.name').each.map do |e|
       eng_list[e[0]] = e[1]
     end
     pluck(:id,
       'pds_syslist.SystemID', 'pds_syslist.System',
       'pds_engineers.Engineer_N', 'pds_engineers.name',
       :query,
-      :sys)
+      :drNum, :status)
       .each.map do |e|
       e1 = {}
       e1['id'] = e[0]
       e1['system'] = { id: e[1], System: e[2] }
       e1['pds_engineer_author'] = { id: e[3], name: e[4] }
       e1['query'] = e[5]
-      e1['pds_engineer_worker'] = eng_list[e[6]]
+      e1['pds_engineer_worker'] = eng_list[e[1]]
+      e1['drNum'] = e[6]
+      e1['status'] = e[7]
       e = e1
     end
   end

@@ -6,7 +6,7 @@ class PdsDrsController < BaseController
 
   def pds_drs
     @data_list = PdsDr.where(Project: project.ProjectID)
-                      .includes(:system, :pds_engineer_author).plucked
+                      .includes(:system, :pds_engineer_author).plucked(project.ProjectID)
   end
 
   helper_method :table_header
