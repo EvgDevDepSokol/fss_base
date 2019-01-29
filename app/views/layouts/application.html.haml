@@ -111,14 +111,20 @@
                   Выход
     .container.app-container
       .container.inner-container
-        - if content_for?(:content_table)
+        - if content_for?(:content_dr)
+          .col.main-container.dr#dr_table
+            = content_for?(:content_dr) ? yield(:content_dr) : yield
+        - elsif content_for?(:content_table)
           .col.left-menu#left_menu
             = render 'shared/table_list', hash: get_tables_list
           .col.main-container#main_table
-            = content_for?(:content_table) ? yield(:content_table) : yield
+            = yield(:content_table)
         - else
-          .col.main-container.dr#dr_table
-            = content_for?(:content_dr) ? yield(:content_dr) : yield
+          .col.left-menu#left_menu
+          .col.main-container#main_table
+            = yield
+
+
 
 
          
