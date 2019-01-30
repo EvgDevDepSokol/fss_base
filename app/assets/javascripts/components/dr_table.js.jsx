@@ -972,82 +972,84 @@ var TableContainer = createReactClass({
     //const data2 = resolver(paginated.rows);
 
     return (
-      <div className="main-container-inner" key={'main-table'}>
-        <div className="table-info" key={'table-info'}>
-          <div className="title">{this.props.title}</div>
-          <div className="info">
-            <div className="left">
-              <div className="left-left">
-                <div className="total">
-                  <p>Записей -</p>
-                  <p>{data.length}</p>
-                  <p>{'на ' + pages + ' стр.'}</p>
+      <div>
+        <div className="col main-container dr_table">
+          <div className="main-container-inner" key={'main-table'}>
+            <div className="table-info" key={'table-info'}>
+              <div className="title">{this.props.title}</div>
+              <div className="info">
+                <div className="left">
+                  <div className="left-left">
+                    <div className="total">
+                      <p>Записей -</p>
+                      <p>{data.length}</p>
+                      <p>{'на ' + pages + ' стр.'}</p>
+                    </div>
+                    <div className="system-selector">
+                      <SystemFilterSelector
+                        attribute="system"
+                        onValue={this.onSystemSelectorChange}
+                        disabled={this.state.lockRow}
+                        value={this.state.systemFilter}
+                      />
+                      <p>cистема</p>
+                    </div>
+                    <div className="per-page-container">
+                      <input
+                        type="number"
+                        min="1"
+                        max="200"
+                        defaultValue={pagination.perPage}
+                        onChange={this.onPerPage}
+                        disabled={this.state.lockRow}
+                      />
+                      <p>строк</p>
+                    </div>
+                    <div className="page-container">
+                      <input
+                        type="number"
+                        min="1"
+                        value={this.state.pagination.page}
+                        onChange={this.onPage}
+                        disabled={this.state.lockRow}
+                      />
+                      <p>cтр.</p>
+                    </div>
+                  </div>
+                  <div className="left-right">
+                    <div
+                      className={
+                        this.state.showFilters
+                          ? 'icon-filter info-buttons border-inset'
+                          : 'icon-filter info-buttons'
+                      }
+                      onClick={this.onIconFilterClick}
+                    >
+                      Фильтр
+                    </div>
+                    <div
+                      className={
+                        this.state.showReplace
+                          ? 'icon-replace info-buttons border-inset'
+                          : 'icon-replace info-buttons'
+                      }
+                      onClick={this.onIconReplaceClick}
+                    >
+                      Замена
+                    </div>
+                    <div
+                      className={
+                        false
+                          ? 'add-row info-buttons border-inset'
+                          : 'add-row info-buttons'
+                      }
+                      onClick={this.onAddRowClick}
+                    >
+                      Добавить запись
+                    </div>
+                  </div>
                 </div>
-                <div className="system-selector">
-                  <SystemFilterSelector
-                    attribute="system"
-                    onValue={this.onSystemSelectorChange}
-                    disabled={this.state.lockRow}
-                    value={this.state.systemFilter}
-                  />
-                  <p>cистема</p>
-                </div>
-                <div className="per-page-container">
-                  <input
-                    type="number"
-                    min="1"
-                    max="200"
-                    defaultValue={pagination.perPage}
-                    onChange={this.onPerPage}
-                    disabled={this.state.lockRow}
-                  />
-                  <p>строк</p>
-                </div>
-                <div className="page-container">
-                  <input
-                    type="number"
-                    min="1"
-                    value={this.state.pagination.page}
-                    onChange={this.onPage}
-                    disabled={this.state.lockRow}
-                  />
-                  <p>cтр.</p>
-                </div>
-              </div>
-              <div className="left-right">
-                <div
-                  className={
-                    this.state.showFilters
-                      ? 'icon-filter info-buttons border-inset'
-                      : 'icon-filter info-buttons'
-                  }
-                  onClick={this.onIconFilterClick}
-                >
-                  Фильтр
-                </div>
-                <div
-                  className={
-                    this.state.showReplace
-                      ? 'icon-replace info-buttons border-inset'
-                      : 'icon-replace info-buttons'
-                  }
-                  onClick={this.onIconReplaceClick}
-                >
-                  Замена
-                </div>
-                <div
-                  className={
-                    false
-                      ? 'add-row info-buttons border-inset'
-                      : 'add-row info-buttons'
-                  }
-                  onClick={this.onAddRowClick}
-                >
-                  Добавить запись
-                </div>
-              </div>
-            </div>
-            {/*<div className="right">
+                {/*<div className="right">
               <div className="show-filters" onClick={this.onShowHidden}>
                 Скрыть/ Показать поля
               </div>
@@ -1056,58 +1058,58 @@ var TableContainer = createReactClass({
                 onExport={this.onExportClick}
               />
             </div>*/}
-          </div>
-        </div>
-        <div
-          className={
-            this.state.showReplace
-              ? 'table-filters'
-              : 'table-filters hidden-element'
-          }
-          key={'table-filters'}
-        >
-          <div className="replace-container">
-            <Replace
-              columns={this.state.columns}
-              data={this.state.data}
-              onReplaceDone={this.onReplaceDone}
-              disabled={this.state.lockRow}
-            />
-          </div>
-        </div>
+              </div>
+            </div>
+            <div
+              className={
+                this.state.showReplace
+                  ? 'table-filters'
+                  : 'table-filters hidden-element'
+              }
+              key={'table-filters'}
+            >
+              <div className="replace-container">
+                <Replace
+                  columns={this.state.columns}
+                  data={this.state.data}
+                  onReplaceDone={this.onReplaceDone}
+                  disabled={this.state.lockRow}
+                />
+              </div>
+            </div>
 
-        <div className="controls">
-          <Paginator
-            pagination={pagination}
-            pages={paginated.amount}
-            onSelect={this.onSelect}
-          />
-        </div>
+            <div className="controls">
+              <Paginator
+                pagination={pagination}
+                pages={paginated.amount}
+                onSelect={this.onSelect}
+              />
+            </div>
 
-        <div
-          className={
-            this.state.showReplace
-              ? 'table-container table-container-replace-show'
-              : 'table-container table-container-replace-hide'
-          }
-          key={'table-container'}
-        >
-          <Table
-            className="table table-bordered"
-            columnNames={this.columnFilters}
-            /*columnNames={this.none}*/
-            data={paginated.rows}
-            columns={columns2}
-            row={(d, rowIndex) => {
-              //var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
-              var rowClass = 'dr_table-row';
-              if (rowIndex == this.state.editedRow) rowClass = 'edited-row';
-              return { className: rowClass };
-            }}
-            rowKey="id"
-          />
+            <div
+              className={
+                this.state.showReplace
+                  ? 'table-container table-container-replace-show'
+                  : 'table-container table-container-replace-hide'
+              }
+              key={'table-container'}
+            >
+              <Table
+                className="table table-bordered"
+                columnNames={this.columnFilters}
+                /*columnNames={this.none}*/
+                data={paginated.rows}
+                columns={columns2}
+                row={(d, rowIndex) => {
+                  //var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
+                  var rowClass = 'dr_table-row';
+                  if (rowIndex == this.state.editedRow) rowClass = 'edited-row';
+                  return { className: rowClass };
+                }}
+                rowKey="id"
+              />
 
-          {/*<Table1.Provider
+              {/*<Table1.Provider
             className="pure-table pure-table-striped"
             columns={cols}
             style={{ overflowX: 'auto' }}
@@ -1121,10 +1123,10 @@ var TableContainer = createReactClass({
             </Table1.Header>
             <Table1.Body rows={data2} rowKey="id" />
           </Table1.Provider>*/}
+            </div>
+          </div>
         </div>
-        {/*<div id="panel-sticker" onClick={this.onHideTreeViewClick}>
-          <p />
-        </div>*/}
+        <div className="col main-container dr_view" />
       </div>
     );
   }

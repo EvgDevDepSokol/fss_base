@@ -353,11 +353,19 @@ body {
 .col.main-container {
   background-color: #abd2e6;
   //padding-top: 5px;
-  left: 245px;
-  &.dr {
+  &.dr_table {
     left: 0px;
     right: 50%;
   }
+  &.dr_view {
+    left: 50%;
+    right: 0;
+  }
+  &.main_table {
+    left: 245px;
+    right: 0;
+  }
+  left: 0px;
   right: 0;
   position: absolute;
   overflow: hidden;
