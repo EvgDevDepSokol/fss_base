@@ -1,4 +1,5 @@
 {
+    "parser": "babel-eslint",
     "env": {
         "browser": true,
         "es6": true,
@@ -6,8 +7,8 @@
         "amd": true
     },
     "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended"
+        "eslint:recommended",
+        "plugin:react/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -38,16 +39,16 @@
         ]
     },
     "settings": {
-    "react": {
-      "createClass": "createReactClass", // Regex for Component Factory to use,
-                                         // default to "createReactClass"
-      "pragma": "React",  // Pragma to use, default to "React"
-      "version": "15.6.1", // React version, default to the latest React stable release
-      "flowVersion": "0.53" // Flow version
-    },
-    "propWrapperFunctions": [ "forbidExtraProps" ] // The names of any functions used to wrap the
-                                                   // propTypes object, e.g. `forbidExtraProps`.
-                                                   // If this isn't set, any propTypes wrapped in
-                                                   // a function will be skipped.
-  }    
+        "react": {
+            "createClass": "createReactClass", // Regex for Component Factory to use,
+            // default to "createReactClass"
+            "pragma": "React", // Pragma to use, default to "React"
+            "version": "15.6.2", // React version, default to the latest React stable release
+            "flowVersion": "6.4.1" // Flow version
+        },
+        "propWrapperFunctions": ["forbidExtraProps"] // The names of any functions used to wrap the
+        // propTypes object, e.g. `forbidExtraProps`.
+        // If this isn't set, any propTypes wrapped in
+        // a function will be skipped.
+    }
 }

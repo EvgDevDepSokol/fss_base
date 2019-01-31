@@ -4,7 +4,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var createReactClass = require('create-react-class');
 var _ = require('underscore');
-var exportData = require('../xlsx-djet.js.jsx').exportData;
+//var exportData = require('../xlsx-djet.js.jsx').exportData;
 
 //var Paginator = require('react-pagify').default;
 
@@ -90,6 +90,7 @@ var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 var Search = require('../modules/search.jsx');
 var Replace = require('../modules/replace.jsx');
 var ColumnFilters = require('../modules/column_filters.jsx');
+var DrView = require('../modules/dr_view.jsx');
 
 var stringEditor = require('../inputs/input.jsx')();
 //import { input as stringEditor } from 'react-edit';
@@ -370,7 +371,10 @@ var TableContainer = createReactClass({
 
           var editClick = function() {
             if (current_user.user_rights >= 1) {
-              this.setState({ editedRow: rowIndex });
+              this.setState({
+                editedRow: rowIndex,
+                editedDr: celldata[rowIndex]
+              });
             } else {
               alert('У Вас недостаточно прав для редактирования записи!');
             }
@@ -456,15 +460,7 @@ var TableContainer = createReactClass({
           //  </span>
           //);
           return {
-            value: (
-              <span>
-                {editButton}
-                {/*{this.state['editedRow'] === rowIndex
-                  ? [saveButton, cancelButton]
-                  : [editButton, copyButton]}
-                {deleteButton}*/}
-              </span>
-            )
+            value: <span>{editButton}</span>
           };
         }.bind(this)
       }
@@ -556,6 +552,7 @@ var TableContainer = createReactClass({
 
     return {
       editedRow: null,
+      editedDr: null,
       lockRow: false,
       sendData: {},
       data: this.props.data,
@@ -681,119 +678,119 @@ var TableContainer = createReactClass({
     this.setState({ pagination: pagination });
   },
 
-  onSaveClick: function(celldata) {
-    if (!$.isEmptyObject(this.state.sendData)) {
-      var newRow = celldata.newRow;
-      var url = window.location.href;
-      var itemId = celldata.id;
-      var idx = findIndex(this.state.data, { id: itemId });
-      var d = {};
-      d[this.props.objectType] = this.state.sendData;
-      if (newRow) {
-        idx = findIndex(this.state.data, { _id: celldata._id });
-        d[this.props.objectType].Project = project.id;
-        $.ajax({
-          url: url,
-          dataType: 'json',
-          contentType: 'application/json; charset=UTF-8',
-          type: 'POST',
-          data: JSON.stringify(d),
-          success: function(response) {
-            this.state.data[idx] = response.data;
-            this.setState({
-              data: this.state.data,
-              lockRow: false,
-              sendData: {},
-              editedRow: null
-            });
-          }.bind(this),
-          error: function(xhr, status, err) {
-            var jtmp = xhr.responseJSON['errors'];
-            var result = 'Не удалось сохранить запись. Причина:\n\n';
-            for (key in jtmp) {
-              result += jtmp[key] + '\n';
-            }
-            alert(result);
-          }.bind(this)
-        });
-      } else {
-        $.ajax({
-          url: url + '/' + itemId,
-          dataType: 'json',
-          type: 'PUT',
-          data: d,
-          success: function(response) {
-            if (response.data.MalfunctDimID) {
-              response.data.system = response.data.pds_malfunction.system;
-            }
-            this.state.data[idx] = response.data;
-            this.setState({
-              data: this.state.data,
-              lockRow: false,
-              sendData: {},
-              editedRow: null
-            });
-          }.bind(this),
-          error: function(xhr, status, err) {
-            var jtmp = xhr.responseJSON['errors'];
-            var result = 'Не удалось сохранить запись. Причина:\n\n';
-            for (key in jtmp) {
-              result += jtmp[key] + '\n';
-            }
-            alert(result);
-          }.bind(this)
-        });
-      }
-    } else {
-      this.setState({ lockRow: false, sendData: {}, editedRow: null });
-    }
-  },
+  //onSaveClick: function(celldata) {
+  //  if (!$.isEmptyObject(this.state.sendData)) {
+  //    var newRow = celldata.newRow;
+  //    var url = window.location.href;
+  //    var itemId = celldata.id;
+  //    var idx = findIndex(this.state.data, { id: itemId });
+  //    var d = {};
+  //    d[this.props.objectType] = this.state.sendData;
+  //    if (newRow) {
+  //      idx = findIndex(this.state.data, { _id: celldata._id });
+  //      d[this.props.objectType].Project = project.id;
+  //      $.ajax({
+  //        url: url,
+  //        dataType: 'json',
+  //        contentType: 'application/json; charset=UTF-8',
+  //        type: 'POST',
+  //        data: JSON.stringify(d),
+  //        success: function(response) {
+  //          this.state.data[idx] = response.data;
+  //          this.setState({
+  //            data: this.state.data,
+  //            lockRow: false,
+  //            sendData: {},
+  //            editedRow: null
+  //          });
+  //        }.bind(this),
+  //        error: function(xhr, status, err) {
+  //          var jtmp = xhr.responseJSON['errors'];
+  //          var result = 'Не удалось сохранить запись. Причина:\n\n';
+  //          for (key in jtmp) {
+  //            result += jtmp[key] + '\n';
+  //          }
+  //          alert(result);
+  //        }.bind(this)
+  //      });
+  //    } else {
+  //      $.ajax({
+  //        url: url + '/' + itemId,
+  //        dataType: 'json',
+  //        type: 'PUT',
+  //        data: d,
+  //        success: function(response) {
+  //          if (response.data.MalfunctDimID) {
+  //            response.data.system = response.data.pds_malfunction.system;
+  //          }
+  //          this.state.data[idx] = response.data;
+  //          this.setState({
+  //            data: this.state.data,
+  //            lockRow: false,
+  //            sendData: {},
+  //            editedRow: null
+  //          });
+  //        }.bind(this),
+  //        error: function(xhr, status, err) {
+  //          var jtmp = xhr.responseJSON['errors'];
+  //          var result = 'Не удалось сохранить запись. Причина:\n\n';
+  //          for (key in jtmp) {
+  //            result += jtmp[key] + '\n';
+  //          }
+  //          alert(result);
+  //        }.bind(this)
+  //      });
+  //    }
+  //  } else {
+  //    this.setState({ lockRow: false, sendData: {}, editedRow: null });
+  //  }
+  //},
 
-  onAddRowClick: function(copiedRow) {
-    if (this.state.lockRow) return;
-    if (this.props.objectType == 'pds_malfunction_dim') return;
-    if (current_user.user_rights >= 2) {
-      var copyRow = {};
-      if (copiedRow.id) {
-        copyRow = $.extend({}, copiedRow);
-      } else if (this.state.showFilters) {
-        alert(
-          'Добавить запись при работающих фильтрах можно только дублированием одной из записей. Либо нужно отключить фильтры.'
-        );
-        return;
-      } else {
-        var columns = this.state.columns;
-        columns.forEach(function(col) {
-          col.sort = null;
-        });
-        this.setState({ columns: columns, sortingColumn: null });
-      }
-      // var copyRow  = newRow || {};
-      var data = this.state.data;
+  //onAddRowClick: function(copiedRow) {
+  //  if (this.state.lockRow) return;
+  //  if (this.props.objectType == 'pds_malfunction_dim') return;
+  //  if (current_user.user_rights >= 2) {
+  //    var copyRow = {};
+  //    if (copiedRow.id) {
+  //      copyRow = $.extend({}, copiedRow);
+  //    } else if (this.state.showFilters) {
+  //      alert(
+  //        'Добавить запись при работающих фильтрах можно только дублированием одной из записей. Либо нужно отключить фильтры.'
+  //      );
+  //      return;
+  //    } else {
+  //      var columns = this.state.columns;
+  //      columns.forEach(function(col) {
+  //        col.sort = null;
+  //      });
+  //      this.setState({ columns: columns, sortingColumn: null });
+  //    }
+  //    // var copyRow  = newRow || {};
+  //    var data = this.state.data;
 
-      // чтобы добавить строку в начало, находим индекс первой строки
-      var p = this.state.pagination;
-      var idx = (p.page - 1) * p.perPage;
+  //    // чтобы добавить строку в начало, находим индекс первой строки
+  //    var p = this.state.pagination;
+  //    var idx = (p.page - 1) * p.perPage;
 
-      //data.unshift({newRow: true, id: "new-" +  Date.now()});
-      delete copyRow['id'];
-      copyRow.system = {};
-      if (this.state.systemFilter != -1)
-        copyRow.system.id = this.state.systemFilter;
-      var sendData = copyRow;
-      copyRow['newRow'] = true;
-      copyRow['_id'] = 'new-' + Date.now();
-      data.splice(idx, 0, copyRow);
-      this.setState({
-        data: data,
-        editedRow: 0,
-        lockRow: true,
-        sendData: this.getDuplicatedRowsendData(copyRow)
-      });
-    } else {
-      alert('У Вас недостаточно прав для добавления записи!');
-    }
-  },
+  //    //data.unshift({newRow: true, id: "new-" +  Date.now()});
+  //    delete copyRow['id'];
+  //    copyRow.system = {};
+  //    if (this.state.systemFilter != -1)
+  //      copyRow.system.id = this.state.systemFilter;
+  //    var sendData = copyRow;
+  //    copyRow['newRow'] = true;
+  //    copyRow['_id'] = 'new-' + Date.now();
+  //    data.splice(idx, 0, copyRow);
+  //    this.setState({
+  //      data: data,
+  //      editedRow: 0,
+  //      lockRow: true,
+  //      sendData: this.getDuplicatedRowsendData(copyRow)
+  //    });
+  //  } else {
+  //    alert('У Вас недостаточно прав для добавления записи!');
+  //  }
+  //},
 
   onIconFilterClick: function() {
     var showFilters = !this.state.showFilters;
@@ -969,7 +966,21 @@ var TableContainer = createReactClass({
 
     const paginated = paginate(pagination)(data);
     var pages = paginated.amount;
+    //var project_name = project.project_name;
     //const data2 = resolver(paginated.rows);
+    //var dr_details = data[this.state.editedRow];
+    var editedRow = null;
+    var editedDr = this.state.editedDr;
+    if (editedDr) {
+      paginated.rows.forEach(function(item, i) {
+        if (editedDr.id == item.id) {
+          editedRow = i;
+        }
+      });
+    }
+    debugger;
+    var dr_details = editedDr ? editedDr : data[0];
+    //data[0];
 
     return (
       <div>
@@ -1043,7 +1054,7 @@ var TableContainer = createReactClass({
                           ? 'add-row info-buttons border-inset'
                           : 'add-row info-buttons'
                       }
-                      onClick={this.onAddRowClick}
+                      //onClick={this.onAddRowClick}
                     >
                       Добавить запись
                     </div>
@@ -1103,7 +1114,8 @@ var TableContainer = createReactClass({
                 row={(d, rowIndex) => {
                   //var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
                   var rowClass = 'dr_table-row';
-                  if (rowIndex == this.state.editedRow) rowClass = 'edited-row';
+                  if (rowIndex == editedRow)
+                    rowClass = 'dr_table-row edited-row';
                   return { className: rowClass };
                 }}
                 rowKey="id"
@@ -1126,7 +1138,13 @@ var TableContainer = createReactClass({
             </div>
           </div>
         </div>
-        <div className="col main-container dr_view" />
+        <div className="col main-container dr_view">
+          <DrView
+            className="dr-view"
+            project={project}
+            dr_details={dr_details}
+          />
+        </div>
       </div>
     );
   }

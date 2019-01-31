@@ -1343,3 +1343,22 @@ footer {
   background: white;
   width: 50px;
 }
+.dr_view_form {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: white;
+  .dr_header {
+    p {
+      text-align: center;
+      font-size: larger;
+      font-weight: bold;
+    }
+  }
+  .dr_body {
+    textarea {
+      width: 100%;
+      resize: none;
+    }
+  }
+}
