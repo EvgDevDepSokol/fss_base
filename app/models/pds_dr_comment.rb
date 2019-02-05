@@ -1,3 +1,4 @@
+# commetn to pds_dr
 class PdsDrComment < ApplicationRecord
   self.table_name = 'pds_dr_comment'
   alias_attribute :id, primary_key

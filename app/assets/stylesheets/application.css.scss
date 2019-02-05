@@ -1152,10 +1152,10 @@ footer {
 
 .dr_table-row {
   td {
-    overflow: auto;
     span {
       max-height: 30px;
       display: block;
+      overflow-y: auto;
       span {
         display: unset;
       }
@@ -1353,12 +1353,54 @@ footer {
       text-align: center;
       font-size: larger;
       font-weight: bold;
+      color: #0081c2;
+    }
+  }
+  .dr_info {
+    margin: 5px;
+    margin-bottom: 15px;
+    table {
+      width: 100%;
+    }
+    td {
+      width: 25%;
+      border-style: solid;
+      border-color: #427fa1;
+      border-width: thin;
+      //border-bottom-width: 0px;
+      //background-color: gainsboro;
     }
   }
   .dr_body {
-    textarea {
-      width: 100%;
-      resize: none;
+    .dr_comment {
+      margin: 5px;
+      table {
+        width: 75%;
+      }
+      tr {
+        &.eng {
+          background-color: gainsboro;
+        }
+        &.tec {
+          background-color: antiquewhite;
+        }
+      }
+      td {
+        width: 25%;
+        border-style: solid;
+        border-color: #427fa1;
+        border-width: thin;
+        border-bottom-width: 0px;
+      }
+      textarea {
+        width: 100%;
+        resize: none;
+        border-style: solid;
+        border-color: #427fa1;
+        border-width: thin;
+        min-height: 60px;
+        background-color: aliceblue;
+      }
     }
   }
 }

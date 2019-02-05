@@ -36,12 +36,21 @@ class PdsDr < ApplicationRecord
       e1['query'] = e[5]
       e1['pds_engineer_worker'] = eng_list[e[1]]
       e1['drNum'] = e[6]
-      e1['status'] = e[7]
-      e1['reply'] = e[8]
-      e1['pds_engineer_reply'] = { id: e[9], name: e[10] }
-      e1['replyDate'] = e[11]
-      e1['pds_engineer_closed'] = { id: e[12], name: e[13] }
-      e1['closedDate'] = e[14]
+      e1['comments'] = list_of_comments(e[0])
+      e1['status'] = e1['comments'].last['status']
+      e = e1
+    end
+  end
+
+  def self.list_of_comments(dr_id)
+    PdsDrComment.where(pds_dr_id: dr_id).includes(:pds_engineer).order(comment_date: :asc).pluck(:id,
+      'pds_engineers.engineer_N', 'pds_engineers.name', :comment_date, :comment_text, :status).each.map do |e|
+      e1 = {}
+      e1['id'] = e[0]
+      e1['pds_engineer'] = { id: e[1], name: e[2] }
+      e1['comment_date'] = e[3]
+      e1['comment_text'] = e[4]
+      e1['status'] = e[5]
       e = e1
     end
   end

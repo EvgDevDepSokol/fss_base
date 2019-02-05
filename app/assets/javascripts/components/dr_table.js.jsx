@@ -240,22 +240,23 @@ var TableContainer = createReactClass({
             })
           };
         }
-        if (editor) {
-          return {
-            value: value,
-            props: {
-              onDoubleClick: function() {
-                if (!context.state.lockRow) {
-                  if (current_user.user_rights >= 1) {
-                    context.setState({ editedRow: rowIndex, lockRow: true });
-                  } else {
-                    alert('У Вас недостаточно прав для редактирования записи!');
-                  }
-                }
+        return {
+          value: value,
+          onClick: function() {
+            debugger;
+            if (!context.state.lockRow) {
+              if (current_user.user_rights >= 1) {
+                context.setState({
+                  editedRow: rowIndex,
+                  lockRow: true,
+                  editedDr: data[rowIndex]
+                });
+              } else {
+                alert('У Вас недостаточно прав для редактирования записи!');
               }
             }
-          };
-        }
+          }
+        };
       };
     }.bind(this);
 
@@ -308,163 +309,163 @@ var TableContainer = createReactClass({
     });
 
     // add buttons
-    columns = columns.concat([
-      {
-        header: <div className="buttons_dr-col">X</div>,
-        headerClassStyle: 'header-buttons_dr-col',
-        cell: function(value, celldata, rowIndex, property) {
-          var url = window.location.href;
-          var newRow = celldata[rowIndex].newRow;
-          var itemId = celldata[rowIndex].id;
-          var idx = findIndex(this.state.data, { id: itemId });
+    //columns = columns.concat([
+    //  {
+    //    header: <div className="buttons_dr-col">X</div>,
+    //    headerClassStyle: 'header-buttons_dr-col',
+    //    cell: function(value, celldata, rowIndex, property) {
+    //      var url = window.location.href;
+    //      var newRow = celldata[rowIndex].newRow;
+    //      var itemId = celldata[rowIndex].id;
+    //      var idx = findIndex(this.state.data, { id: itemId });
 
-          //var remove = function() {
-          //  if (this.props.objectType == 'pds_malfunction_dim') return;
-          //  if (current_user.user_rights >= 2) {
-          //    var res = confirm('Вы действительно желаете удалить запись?');
-          //    if (!res) return;
-          //    var idx;
-          //    if (newRow) {
-          //      idx = findIndex(this.state.data, {
-          //        _id: celldata[rowIndex]._id
-          //      });
+    //      //var remove = function() {
+    //      //  if (this.props.objectType == 'pds_malfunction_dim') return;
+    //      //  if (current_user.user_rights >= 2) {
+    //      //    var res = confirm('Вы действительно желаете удалить запись?');
+    //      //    if (!res) return;
+    //      //    var idx;
+    //      //    if (newRow) {
+    //      //      idx = findIndex(this.state.data, {
+    //      //        _id: celldata[rowIndex]._id
+    //      //      });
 
-          //      this.state.data.splice(idx, 1);
-          //      this.setState({
-          //        data: this.state.data,
-          //        editedRow: null,
-          //        lockRow: false,
-          //        sendData: {}
-          //      });
-          //    } else {
-          //      idx = findIndex(this.state.data, { id: itemId });
-          //      $.ajax({
-          //        url: url + '/' + itemId,
-          //        dataType: 'json',
-          //        type: 'DELETE',
-          //        success: function(data) {
-          //          this.state.data.splice(idx, 1);
-          //          this.setState({ data: this.state.data, editedRow: null });
-          //        }.bind(this),
-          //        error: function(xhr, status, err) {
-          //          var jtmp = xhr.responseJSON['errors'];
-          //          var result = 'Не удалось удалить запись. Причина:\n\n';
-          //          for (key in jtmp) {
-          //            result += jtmp[key] + '\n';
-          //          }
-          //          alert(result);
-          //        }.bind(this)
-          //      });
-          //    }
-          //  } else {
-          //    alert('У Вас недостаточно прав для удаления записи!');
-          //  }
-          //}.bind(this);
+    //      //      this.state.data.splice(idx, 1);
+    //      //      this.setState({
+    //      //        data: this.state.data,
+    //      //        editedRow: null,
+    //      //        lockRow: false,
+    //      //        sendData: {}
+    //      //      });
+    //      //    } else {
+    //      //      idx = findIndex(this.state.data, { id: itemId });
+    //      //      $.ajax({
+    //      //        url: url + '/' + itemId,
+    //      //        dataType: 'json',
+    //      //        type: 'DELETE',
+    //      //        success: function(data) {
+    //      //          this.state.data.splice(idx, 1);
+    //      //          this.setState({ data: this.state.data, editedRow: null });
+    //      //        }.bind(this),
+    //      //        error: function(xhr, status, err) {
+    //      //          var jtmp = xhr.responseJSON['errors'];
+    //      //          var result = 'Не удалось удалить запись. Причина:\n\n';
+    //      //          for (key in jtmp) {
+    //      //            result += jtmp[key] + '\n';
+    //      //          }
+    //      //          alert(result);
+    //      //        }.bind(this)
+    //      //      });
+    //      //    }
+    //      //  } else {
+    //      //    alert('У Вас недостаточно прав для удаления записи!');
+    //      //  }
+    //      //}.bind(this);
 
-          //var copy = function() {
-          //  if (current_user.user_rights >= 2) {
-          //    this.onAddRowClick(celldata[rowIndex]);
-          //  } else {
-          //    alert('У Вас недостаточно прав для дублирования записи!');
-          //  }
-          //}.bind(this);
+    //      //var copy = function() {
+    //      //  if (current_user.user_rights >= 2) {
+    //      //    this.onAddRowClick(celldata[rowIndex]);
+    //      //  } else {
+    //      //    alert('У Вас недостаточно прав для дублирования записи!');
+    //      //  }
+    //      //}.bind(this);
 
-          var editClick = function() {
-            if (current_user.user_rights >= 1) {
-              this.setState({
-                editedRow: rowIndex,
-                editedDr: celldata[rowIndex]
-              });
-            } else {
-              alert('У Вас недостаточно прав для редактирования записи!');
-            }
-          }.bind(this);
+    //      var editClick = function() {
+    //        if (current_user.user_rights >= 1) {
+    //          this.setState({
+    //            editedRow: rowIndex,
+    //            editedDr: celldata[rowIndex]
+    //          });
+    //        } else {
+    //          alert('У Вас недостаточно прав для редактирования записи!');
+    //        }
+    //      }.bind(this);
 
-          //var cancelClick = function() {
-          //  this.setState({ editedRow: null, lockRow: false, sendData: {} });
-          //}.bind(this);
+    //      //var cancelClick = function() {
+    //      //  this.setState({ editedRow: null, lockRow: false, sendData: {} });
+    //      //}.bind(this);
 
-          //var saveClick = function() {
-          //  this.onSaveClick(celldata[rowIndex]);
-          //}.bind(this);
+    //      //var saveClick = function() {
+    //      //  this.onSaveClick(celldata[rowIndex]);
+    //      //}.bind(this);
 
-          var editButton = (
-            <span
-              className="edit btn btn-xs btn-default"
-              onClick={editClick.bind(this)}
-              key="editButton"
-              style={{
-                cursor: 'pointer'
-              }}
-              title="Редактировать запись"
-            >
-              <i className="far fa-edit" />
-            </span>
-          );
+    //      var editButton = (
+    //        <span
+    //          className="edit btn btn-xs btn-default"
+    //          onClick={editClick.bind(this)}
+    //          key="editButton"
+    //          style={{
+    //            cursor: 'pointer'
+    //          }}
+    //          title="Редактировать запись"
+    //        >
+    //          <i className="far fa-edit" />
+    //        </span>
+    //      );
 
-          //var saveButton = (
-          //  <span
-          //    className="edit btn btn-xs btn-default"
-          //    key="saveButton"
-          //    onClick={saveClick.bind(this)}
-          //    style={{
-          //      cursor: 'pointer'
-          //    }}
-          //    title="Сохранить изменения"
-          //  >
-          //    <i className="fas fa-check" />
-          //  </span>
-          //);
+    //      //var saveButton = (
+    //      //  <span
+    //      //    className="edit btn btn-xs btn-default"
+    //      //    key="saveButton"
+    //      //    onClick={saveClick.bind(this)}
+    //      //    style={{
+    //      //      cursor: 'pointer'
+    //      //    }}
+    //      //    title="Сохранить изменения"
+    //      //  >
+    //      //    <i className="fas fa-check" />
+    //      //  </span>
+    //      //);
 
-          //if (!newRow) {
-          //  var cancelButton = (
-          //    <span
-          //      className="edit btn btn-xs btn-default"
-          //      key="cancelButton"
-          //      onClick={cancelClick.bind(this)}
-          //      style={{
-          //        cursor: 'pointer'
-          //      }}
-          //      title="Отменить изменения"
-          //    >
-          //      <i className="fas fa-undo" />
-          //    </span>
-          //  );
-          //}
+    //      //if (!newRow) {
+    //      //  var cancelButton = (
+    //      //    <span
+    //      //      className="edit btn btn-xs btn-default"
+    //      //      key="cancelButton"
+    //      //      onClick={cancelClick.bind(this)}
+    //      //      style={{
+    //      //        cursor: 'pointer'
+    //      //      }}
+    //      //      title="Отменить изменения"
+    //      //    >
+    //      //      <i className="fas fa-undo" />
+    //      //    </span>
+    //      //  );
+    //      //}
 
-          //var deleteButton = (
-          //  <span
-          //    className="remove btn btn-xs btn-danger"
-          //    key="removeButton"
-          //    onClick={remove.bind(this)}
-          //    style={{
-          //      cursor: 'pointer'
-          //    }}
-          //    title="Удалить запись"
-          //  >
-          //    <i className="fas fa-times" />
-          //  </span>
-          //);
+    //      //var deleteButton = (
+    //      //  <span
+    //      //    className="remove btn btn-xs btn-danger"
+    //      //    key="removeButton"
+    //      //    onClick={remove.bind(this)}
+    //      //    style={{
+    //      //      cursor: 'pointer'
+    //      //    }}
+    //      //    title="Удалить запись"
+    //      //  >
+    //      //    <i className="fas fa-times" />
+    //      //  </span>
+    //      //);
 
-          //var copyButton = (
-          //  <span
-          //    className="remove btn btn-xs btn-default"
-          //    key="copyButton"
-          //    onClick={copy.bind(this)}
-          //    style={{
-          //      cursor: 'pointer'
-          //    }}
-          //    title="Дублировать запись"
-          //  >
-          //    <i className="far fa-copy" />
-          //  </span>
-          //);
-          return {
-            value: <span>{editButton}</span>
-          };
-        }.bind(this)
-      }
-    ]);
+    //      //var copyButton = (
+    //      //  <span
+    //      //    className="remove btn btn-xs btn-default"
+    //      //    key="copyButton"
+    //      //    onClick={copy.bind(this)}
+    //      //    style={{
+    //      //      cursor: 'pointer'
+    //      //    }}
+    //      //    title="Дублировать запись"
+    //      //  >
+    //      //    <i className="far fa-copy" />
+    //      //  </span>
+    //      //);
+    //      return {
+    //        value: <span>{editButton}</span>
+    //      };
+    //    }.bind(this)
+    //  }
+    //]);
 
     var clickMainCheckboxY = function() {
       this.setState({ mainCheckbox_new: true, mainCheckbox_old: false });
@@ -595,6 +596,13 @@ var TableContainer = createReactClass({
 
   onSearch: function(search) {
     this.setState(search);
+  },
+
+  onClickRow: function(rowIndex, rowData) {
+    this.setState({
+      editedRow: rowIndex,
+      editedDr: rowData
+    });
   },
 
   columnFilters() {
@@ -978,7 +986,6 @@ var TableContainer = createReactClass({
         }
       });
     }
-    debugger;
     var dr_details = editedDr ? editedDr : data[0];
     //data[0];
 
@@ -1038,7 +1045,7 @@ var TableContainer = createReactClass({
                     >
                       Фильтр
                     </div>
-                    <div
+                    {/*<div
                       className={
                         this.state.showReplace
                           ? 'icon-replace info-buttons border-inset'
@@ -1047,7 +1054,7 @@ var TableContainer = createReactClass({
                       onClick={this.onIconReplaceClick}
                     >
                       Замена
-                    </div>
+                    </div> */}
                     <div
                       className={
                         false
@@ -1056,7 +1063,7 @@ var TableContainer = createReactClass({
                       }
                       //onClick={this.onAddRowClick}
                     >
-                      Добавить запись
+                      Добавить DR
                     </div>
                   </div>
                 </div>
@@ -1116,7 +1123,11 @@ var TableContainer = createReactClass({
                   var rowClass = 'dr_table-row';
                   if (rowIndex == editedRow)
                     rowClass = 'dr_table-row edited-row';
-                  return { className: rowClass };
+                  return {
+                    className: rowClass,
+                    onClick: () =>
+                      this.onClickRow(rowIndex, paginated.rows[rowIndex])
+                  };
                 }}
                 rowKey="id"
               />
