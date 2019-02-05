@@ -1153,7 +1153,7 @@ footer {
 .dr_table-row {
   td {
     span {
-      max-height: 30px;
+      max-height: 60px;
       display: block;
       overflow-y: auto;
       span {
@@ -1348,6 +1348,11 @@ footer {
   height: 100%;
   width: 100%;
   background: white;
+  button {
+    width: 250px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
   .dr_header {
     p {
       text-align: center;

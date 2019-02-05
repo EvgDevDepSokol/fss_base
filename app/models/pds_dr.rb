@@ -48,7 +48,7 @@ class PdsDr < ApplicationRecord
       e1 = {}
       e1['id'] = e[0]
       e1['pds_engineer'] = { id: e[1], name: e[2] }
-      e1['comment_date'] = e[3]
+      e1['comment_date'] = e[3].strftime('%FT%T')
       e1['comment_text'] = e[4]
       e1['status'] = e[5]
       e = e1
