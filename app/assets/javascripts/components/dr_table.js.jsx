@@ -887,6 +887,78 @@ var TableContainer = createReactClass({
     this.setState({ systemFilter: value.system });
   },
 
+  //onSaveClick: function(celldata) {
+  //  if (!$.isEmptyObject(this.state.sendData)) {
+  //    var newRow = celldata.newRow;
+  //    var itemId = celldata.id;
+  //    var d = {};
+  //    d[this.props.objectType] = this.state.sendData;
+  //    if (newRow) {
+  //      idx = findIndex(this.state.data, { _id: celldata._id });
+  //      d[this.props.objectType].Project = project.id;
+  //    } else {
+  //      $.ajax({
+  //        url: url + '/' + itemId,
+  //        dataType: 'json',
+  //        type: 'PUT',
+  //        data: d,
+  //        success: function(response) {
+  //          if (response.data.MalfunctDimID) {
+  //            response.data.system = response.data.pds_malfunction.system;
+  //          }
+  //          this.state.data[idx] = response.data;
+  //          this.setState({
+  //            data: this.state.data,
+  //            lockRow: false,
+  //            sendData: {},
+  //            editedRow: null
+  //          });
+  //        }.bind(this),
+  //        error: function(xhr, status, err) {
+  //          var jtmp = xhr.responseJSON['errors'];
+  //          var result = 'Не удалось сохранить запись. Причина:\n\n';
+  //          for (key in jtmp) {
+  //            result += jtmp[key] + '\n';
+  //          }
+  //          alert(result);
+  //        }.bind(this)
+  //      });
+  //    }
+  //  } else {
+  //    this.setState({ lockRow: false, sendData: {}, editedRow: null });
+  //  }
+  //},
+
+  onCommentSave: function(comment) {
+    var url = window.location.href.replace('pds_drs', 'pds_dr_comments');
+    var idx = findIndex(this.state.data, { id: comment.pds_dr_id });
+    var d = {};
+    comment.comment_author_id = comment.pds_engineer.engineer_N;
+    delete comment.pds_engineer;
+    comment.Project = project.id;
+    d['pds_dr_comment'] = comment;
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      contentType: 'application/json; charset=UTF-8',
+      type: 'POST',
+      data: JSON.stringify(d),
+      success: function(response) {
+        var data = this.state.data;
+        data[idx]['comments'].push(response.data);
+        data[idx]['status'] = response.data.status;
+        this.setState({
+          data: this.state.data
+        });
+      }.bind(this),
+      error: function(xhr, status, err) {
+        var jtmp = xhr.responseJSON['errors'];
+        var result = 'Не удалось сохранить запись. Причина:\n\n';
+        alert(result);
+      }.bind(this)
+    });
+  },
+
   render: function() {
     var data = this.state.data || [];
     var pagination = this.state.pagination || {};
@@ -1154,6 +1226,7 @@ var TableContainer = createReactClass({
             className="dr-view"
             project={project}
             dr_details={dr_details}
+            onCommentSave={this.onCommentSave}
           />
         </div>
       </div>

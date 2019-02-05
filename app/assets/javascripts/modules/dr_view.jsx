@@ -46,7 +46,8 @@ class DrView extends React.Component {
 
   static propTypes = {
     project: PropTypes.object,
-    dr_details: PropTypes.object
+    dr_details: PropTypes.object,
+    onCommentSave: PropTypes.func
   };
 
   state = {
@@ -56,18 +57,9 @@ class DrView extends React.Component {
       status: 1,
       comment_date: Date(),
       pds_engineer: current_user,
+      comment_text: '',
       pds_dr_id: -1
     }
-  };
-
-  addComment = function(val) {
-    var comment = {
-      status: val,
-      comment_date: moment().format(),
-      pds_engineer: current_user,
-      pds_dr_id: this.props.dr_details.id
-    };
-    this.setState({ comment: comment });
   };
 
   onTextEditorChange = e => {
@@ -124,16 +116,57 @@ class DrView extends React.Component {
     );
   };
 
-  comment_buttons = (
-    <div className="comment_buttons">
-      <button key="comment_button_ok" onClick={() => this.commentSave}>
-        Сохранить
-      </button>
-      <button key="comment_button_cancel" onClick={() => this.commentCancel}>
-        Отмена
-      </button>
-    </div>
-  );
+  comment_buttons = function() {
+    var disabled = true;
+    var comment = this.state.comment;
+    if (comment) {
+      if (comment.comment_text) {
+        if (comment.comment_text.length > 0) {
+          disabled = false;
+        }
+      }
+    }
+    return (
+      <div className="comment_buttons">
+        <button
+          key="comment_button_ok"
+          onClick={() => this.onCommentSave()}
+          disabled={disabled}
+        >
+          Сохранить
+        </button>
+        <button
+          key="comment_button_cancel"
+          onClick={() => this.onCommentCancel()}
+        >
+          Отмена
+        </button>
+      </div>
+    );
+  };
+
+  onCommentAdd = function(val) {
+    var comment = {
+      status: val,
+      comment_date: moment().format(),
+      pds_engineer: current_user,
+      pds_dr_id: this.props.dr_details.id
+    };
+    this.setState({ comment: comment });
+  };
+
+  onCommentSave = function() {
+    var comment = this.state.comment;
+    this.props.onCommentSave(comment);
+    this.onCommentCancel();
+  };
+
+  onCommentCancel = function() {
+    var comment = this.state.comment;
+    comment.pds_dr_id = -1;
+    comment.comment_text = '';
+    this.setState({ comment: comment });
+  };
 
   render() {
     var this_ = this;
@@ -145,9 +178,10 @@ class DrView extends React.Component {
       return this_.comment_table(comment, i);
     });
     var last_comment = dr_details['comments'].slice(-1)[0];
+
     var dr_buttons = DRSTATUS[last_comment.status].links.map(function(l, i) {
       return (
-        <button key={i + 'dr_button'} onClick={() => this_.addComment(l.val)}>
+        <button key={i + 'dr_button'} onClick={() => this_.onCommentAdd(l.val)}>
           {l.label}
         </button>
       );
@@ -175,7 +209,7 @@ class DrView extends React.Component {
         <div className="dr_buttons">{dr_buttons}</div>
         <div className="dr_body">
           {show_new_comment ? this.comment_table(comment, -1) : null}
-          {show_new_comment ? this.comment_buttons : null}
+          {show_new_comment ? this.comment_buttons() : null}
         </div>
       </div>
     );

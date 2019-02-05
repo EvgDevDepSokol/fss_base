@@ -2,7 +2,7 @@
 class PdsDrsController < BaseController
   layout nil # resets layouts/table
   # layout 'pds_drs' # resets layouts/table
-  ACTIONS = %i[pds_drs].freeze
+  ACTIONS = %i[pds_drs pds_dr_comments].freeze
 
   def pds_drs
     @data_list = PdsDr.where(Project: project.ProjectID)
