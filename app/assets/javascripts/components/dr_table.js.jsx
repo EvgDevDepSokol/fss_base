@@ -4,6 +4,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var createReactClass = require('create-react-class');
 var _ = require('underscore');
+import { DRSTATUS } from './drs/dr_data.jsx';
 //var exportData = require('../xlsx-djet.js.jsx').exportData;
 
 //var Paginator = require('react-pagify').default;
@@ -90,7 +91,7 @@ var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 var Search = require('../modules/search.jsx');
 var Replace = require('../modules/replace.jsx');
 var ColumnFilters = require('../modules/column_filters.jsx');
-var DrView = require('../modules/dr_view.jsx');
+var DrView = require('./drs/dr_view.jsx');
 
 var stringEditor = require('../inputs/input.jsx')();
 //import { input as stringEditor } from 'react-edit';
@@ -988,6 +989,10 @@ var TableContainer = createReactClass({
       ) {
         column.headerClass = column.headerClassStyle + ' ' + column.headerClass;
       }
+    });
+
+    data.forEach(function(row) {
+      row['status_desc'] = DRSTATUS[row['status']].label;
     });
 
     if (systemFilter && systemFilter != -1) {
