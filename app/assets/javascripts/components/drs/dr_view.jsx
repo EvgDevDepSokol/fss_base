@@ -10,18 +10,33 @@ class DrView extends React.Component {
   static propTypes = {
     project: PropTypes.object,
     dr_details: PropTypes.object,
-    onCommentSave: PropTypes.func
+    onCommentSave: PropTypes.func,
+    onDrCancel: PropTypes.func,
+    isDrNew: PropTypes.bool
   };
 
   state = {
     project: this.props.project,
     dr_details: this.props.dr_details,
+    isDrNew: this.props.isDrNew,
     comment: {
       status: 1,
       comment_date: Date(),
       pds_engineer: current_user,
       comment_text: '',
       pds_dr_id: -1
+    },
+    dr_details_new: {
+      drNum: 0,
+      sys: -1,
+      drAuthor: current_user.id,
+      status: 0,
+      query: 'Описание рассогласования',
+      comments: [],
+      system: {
+        id: -1,
+        System: 'Не выбрано'
+      }
     }
   };
 
@@ -61,7 +76,7 @@ class DrView extends React.Component {
           </tbody>
         </table>
         {i != -1 ? (
-          <textarea value={comment.comment_text} />
+          <span> {comment.comment_text} </span>
         ) : (
           <textarea
             value={comment.comment_text}
@@ -125,41 +140,45 @@ class DrView extends React.Component {
     comment.pds_dr_id = -1;
     comment.comment_text = '';
     this.setState({ comment: comment });
+    this.props.onDrCancel();
   };
 
   render() {
     var this_ = this;
     var project = this.props.project.project_name;
-    var dr_details = this.props.dr_details;
+    var isDrNew = this.props.isDrNew;
+    var dr_details = isDrNew
+      ? this.state.dr_details_new
+      : this.props.dr_details;
     var comment = this.state.comment;
-    var show_new_comment = comment.pds_dr_id == dr_details.id;
+    var show_new_comment = isDrNew || comment.pds_dr_id == dr_details.id;
     var dr_comments = dr_details['comments'].map(function(comment, i) {
       return this_.comment_table(comment, i);
     });
-    var last_comment = dr_details['comments'].slice(-1)[0];
+    var last_status = isDrNew ? 6 : dr_details['comments'].slice(-1)[0].status;
 
-    var dr_buttons = DRSTATUS[last_comment.status].links.map(function(l, i) {
+    var dr_buttons = DRSTATUS[last_status].links.map(function(l, i) {
       return (
         <button key={i + 'dr_button'} onClick={() => this_.onCommentAdd(l.val)}>
           {l.label}
         </button>
       );
     });
+
     return (
       <div className="dr_view_form">
         <div className="dr_header">
           <p />
-          <p> Протокол Рассогласования </p>
+          <p> Протокол Рассогласования № {dr_details.drNum}</p>
           <p> {project} </p>
         </div>
         <div className="dr_info">
           <table>
             <tbody>
               <tr>
-                <td>№ {dr_details.drNum}</td>
                 <td>Система: {dr_details.system.System}</td>
                 <td>Ответственный: {dr_details.pds_engineer_worker}</td>
-                <td>Текущий статус: {DRSTATUS[last_comment.status].label}</td>
+                <td>Текущий статус: {DRSTATUS[last_status].label}</td>
               </tr>
             </tbody>
           </table>

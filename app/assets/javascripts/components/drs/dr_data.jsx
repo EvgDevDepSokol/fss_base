@@ -1,4 +1,9 @@
 const DRSTATUS = {
+  6: {
+    label: 'Открыт',
+    tr_classname: 'tec',
+    links: []
+  },
   0: {
     label: 'На уточнении',
     tr_classname: 'eng',
@@ -32,7 +37,7 @@ const DRSTATUS = {
   },
   5: {
     label: 'Вернут на доработку',
-    tr_classname: 'eng',
+    tr_classname: 'tec',
     links: [{ val: 3, label: 'Готов к проверке' }]
   }
 };

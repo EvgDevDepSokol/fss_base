@@ -114,15 +114,6 @@ var TableContainer = createReactClass({
   getInitialState: function() {
     var _this = this;
 
-    var properties = augmentWithTitles({
-      TEquipID: {
-        type: 'number'
-      },
-      typeE: {
-        type: 'string'
-      }
-    });
-
     var highlighter = function(column) {
       return formatters.highlight(function(value) {
         var columns = _this.props.columns;
@@ -565,6 +556,7 @@ var TableContainer = createReactClass({
       mainCheckbox_new: false,
       mainCheckbox_old: false,
       exportIndex: 0,
+      isDrNew: false,
       systemFilter: null,
       show_hidden_columns: false,
       pagination: {
@@ -602,7 +594,8 @@ var TableContainer = createReactClass({
   onClickRow: function(rowIndex, rowData) {
     this.setState({
       editedRow: rowIndex,
-      editedDr: rowData
+      editedDr: rowData,
+      isDrNew: false
     });
   },
 
@@ -754,6 +747,17 @@ var TableContainer = createReactClass({
   //    this.setState({ lockRow: false, sendData: {}, editedRow: null });
   //  }
   //},
+  //
+  onAddRowClick: function() {
+    this.setState({
+      isDrNew: true
+    });
+  },
+  onDrCancel: function() {
+    this.setState({
+      isDrNew: false
+    });
+  },
 
   //onAddRowClick: function(copiedRow) {
   //  if (this.state.lockRow) return;
@@ -1138,7 +1142,7 @@ var TableContainer = createReactClass({
                           ? 'add-row info-buttons border-inset'
                           : 'add-row info-buttons'
                       }
-                      //onClick={this.onAddRowClick}
+                      onClick={this.onAddRowClick}
                     >
                       Добавить DR
                     </div>
@@ -1232,6 +1236,8 @@ var TableContainer = createReactClass({
             project={project}
             dr_details={dr_details}
             onCommentSave={this.onCommentSave}
+            isDrNew={this.state.isDrNew}
+            onDrCancel={this.onDrCancel}
           />
         </div>
       </div>
