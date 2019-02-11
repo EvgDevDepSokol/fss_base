@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { DRSTATUS } from './dr_data.jsx';
+var SystemEngineerSelector = require('../../selectors/system_engineer.jsx');
 
 class DrView extends React.Component {
   static displayName = 'DrView';
@@ -143,6 +144,12 @@ class DrView extends React.Component {
     this.props.onDrCancel();
   };
 
+  onSystemEngineerChange = function(value) {
+    debugger;
+    var dr_details_new = this.state.dr_details_new;
+    dr_details_new.system.id = value.id;
+    this.setState({ dr_details_new: dr_details_new });
+  }.bind(this);
   render() {
     var this_ = this;
     var project = this.props.project.project_name;
@@ -176,13 +183,22 @@ class DrView extends React.Component {
           <table>
             <tbody>
               <tr>
-                <td>Система: {dr_details.system.System}</td>
                 <td>Ответственный: {dr_details.pds_engineer_worker}</td>
+                <td>Система: {dr_details.system.System}</td>
                 <td>Текущий статус: {DRSTATUS[last_status].label}</td>
               </tr>
             </tbody>
           </table>
         </div>
+        <div className="system-selector">
+          <SystemEngineerSelector
+            attribute="id"
+            onValue={this.onSystemEngineerChange}
+            value={this.state.dr_details_new.system.id}
+          />
+          <p>cистема</p>
+        </div>
+
         <div className="dr_body">{dr_comments}</div>
         <div className="dr_buttons">{dr_buttons}</div>
         <div className="dr_body">
