@@ -148,6 +148,8 @@ class DrView extends React.Component {
     debugger;
     var dr_details_new = this.state.dr_details_new;
     dr_details_new.system.id = value.id;
+    dr_details_new.system.System = sys_eng_list[value.id]['sys_name'];
+    dr_details_new.pds_engineer_worker = sys_eng_list[value.id]['eng_name'];
     this.setState({ dr_details_new: dr_details_new });
   }.bind(this);
   render() {

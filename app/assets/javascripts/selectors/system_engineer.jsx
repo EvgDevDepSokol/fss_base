@@ -35,7 +35,6 @@ module.exports = class extends React.Component {
         { pds_project_id: project.ProjectID },
         this
       );
-      options.unshift({ value: -1, label: 'Все' });
       callback(null, {
         options: options,
         complete: true
