@@ -36,7 +36,11 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "no-unused-vars": ["off"],
+        "no-undef": ["off"],
+        "react/jsx-no-undef":["off"],
+        "react/react-in-jsx-scope":["off"]
     },
     "settings": {
         "react": {

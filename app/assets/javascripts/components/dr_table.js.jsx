@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+import PropTypes from 'prop-types';
 var ReactDOM = require('react-dom');
 var createReactClass = require('create-react-class');
 var _ = require('underscore');
@@ -104,6 +105,16 @@ var ExportXlsxModal = require('../components/xlsx-export.jsx');
 
 var TableContainer = createReactClass({
   displayName: 'VniiaesFullTable',
+
+  propTypes: {
+    data: PropTypes.array,
+    columns: PropTypes.array,
+    title: PropTypes.string,
+    dr_details: PropTypes.object,
+    onCommentSave: PropTypes.func,
+    onDrCancel: PropTypes.func,
+    isDrNew: PropTypes.bool
+  },
 
   mixins: [LocalStorageMixin],
 
@@ -235,7 +246,6 @@ var TableContainer = createReactClass({
         return {
           value: value,
           onClick: function() {
-            debugger;
             if (!context.state.lockRow) {
               if (current_user.user_rights >= 1) {
                 context.setState({
@@ -1033,7 +1043,7 @@ var TableContainer = createReactClass({
       data.forEach(function(row) {
         row.checked = mainCheckbox_new;
       });
-      this.state.mainCheckbox_old = mainCheckbox_new;
+      this.setState({ mainCheckbox_old: mainCheckbox_new });
     }
 
     var sortingColumn = this.state.sortingColumn;
@@ -1137,11 +1147,7 @@ var TableContainer = createReactClass({
                       Замена
                     </div> */}
                     <div
-                      className={
-                        false
-                          ? 'add-row info-buttons border-inset'
-                          : 'add-row info-buttons'
-                      }
+                      className={'add-row info-buttons'}
                       onClick={this.onAddRowClick}
                     >
                       Добавить DR
