@@ -162,17 +162,19 @@ class DrView extends React.Component {
     var select = this.state.select;
     select.sys_id = event.target.value;
     this.setState({ select });
+    if (select.sys_id == -1) {
+      select.eng_id = -1;
+    }
   }.bind(this);
 
   onEngChange = function(event) {
     var select = this.state.select;
     select.eng_id = event.target.value;
+    if (select.eng_id == -1) {
+      select.sys_id = -1;
+    }
     this.setState({ select });
   }.bind(this);
-
-  onResetSysEng = function() {
-    this.setState({ select: { sys_id: -1, eng_id: -1 } });
-  };
 
   sys_eng_selector = function() {
     var sys_opt = [];
@@ -181,58 +183,59 @@ class DrView extends React.Component {
     var eng_id = this.state.select.eng_id;
     if (sys_id > -1) {
       eng_opt = sys_eng_list[sys_id]['engineers'].map(function(eng, i) {
-        return (
-          <option key={'opt-' + i} value={eng.eng_id}>
-            {eng.eng_name}
-          </option>
-        );
+        return { value: eng.eng_id, label: eng.eng_name };
       });
     } else {
       Object.keys(eng_sys_list).forEach(function(key) {
-        eng_opt.push(
-          <option key={'opt-' + key} value={key}>
-            {eng_sys_list[key].eng_name}
-          </option>
-        );
+        eng_opt.push({ value: key, label: eng_sys_list[key].eng_name });
       });
-      eng_opt.unshift(
-        <option key={'opt-' + -1} value={-1}>
-          {'Не выбрано'}
-        </option>
-      );
     }
     if (eng_id > -1) {
       sys_opt = eng_sys_list[eng_id]['systems'].map(function(sys, i) {
-        return (
-          <option key={'opt-' + i} value={sys.sys_id}>
-            {sys.sys_name}
-          </option>
-        );
+        return { value: sys.sys_id, label: sys.sys_name };
       });
     } else {
       Object.keys(sys_eng_list).forEach(function(key) {
-        sys_opt.push(
-          <option key={'opt-' + key} value={key}>
-            {sys_eng_list[key].sys_name}
-          </option>
-        );
+        sys_opt.push({ value: key, label: sys_eng_list[key].sys_name });
       });
-      sys_opt.unshift(
-        <option key={'opt-' + -1} value={-1}>
-          {'Не выбрано'}
+    }
+    eng_opt = eng_opt.sort(function(a, b) {
+      if (a.label < b.label) return -1;
+      if (a.label > b.label) return 1;
+      return 0;
+    });
+    eng_opt.unshift({ value: -1, label: 'Не выбрано' });
+    sys_opt.unshift({ value: -1, label: 'Не выбрано' });
+    sys_opt = sys_opt.map(function(opt, i) {
+      return (
+        <option key={'opt-' + i} value={opt.value}>
+          {opt.label}
         </option>
       );
-    }
+    });
+    eng_opt = eng_opt.map(function(opt, i) {
+      return (
+        <option key={'opt-' + i} value={opt.value}>
+          {opt.label}
+        </option>
+      );
+    });
     return (
-      <div className="system-selector">
-        <select value={this.state.select.eng_id} onChange={this.onEngChange}>
+      <div className="dr-system-selector">
+        <select
+          size="20"
+          value={this.state.select.eng_id}
+          onChange={this.onEngChange}
+        >
           {eng_opt}
         </select>
-        <select value={this.state.select.sys_id} onChange={this.onSysChange}>
+        <select
+          size="20"
+          value={this.state.select.sys_id}
+          onChange={this.onSysChange}
+        >
           {sys_opt}
         </select>
-        <p />
-        <button onClick={() => this.onResetSysEng()}>Сбросить фильтры</button>
       </div>
     );
   };
