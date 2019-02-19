@@ -14,7 +14,8 @@ class ImportStep1 extends React.Component {
     onNextModal: PropTypes.func,
     rememberData: PropTypes.func,
     rememberColumns: PropTypes.func,
-    isOpen: PropTypes.bool
+    isOpen: PropTypes.bool,
+    contentLabel: PropTypes.string
   };
 
   state = {

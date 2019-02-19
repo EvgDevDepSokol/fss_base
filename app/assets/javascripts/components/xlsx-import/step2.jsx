@@ -9,7 +9,10 @@ class ImportStep2 extends React.Component {
   static displayName = 'ImportStep2';
 
   static propTypes = {
-    onCloseModal: PropTypes.func
+    onCloseModal: PropTypes.func,
+    columns: PropTypes.array,
+    //rememberColumns: PropTypes.array,
+    isOpen: PropTypes.bool
   };
 
   state = {
@@ -94,7 +97,6 @@ class ImportStep2 extends React.Component {
       if (property == 'id') {
         label = 'id';
       }
-      debugger;
       if (col.nested) {
         if (!!col.attribute && col.attribute != 'extra_label') {
           options.push({

@@ -95,7 +95,7 @@ class GenerateDbm extends React.Component {
           });
         },
         error: function(xhr, status, err) {
-          console.error(_this.props.url, status, err.toString());
+          //console.error(_this.props.url, status, err.toString());
         },
         async: true
       });
@@ -269,7 +269,7 @@ class GenerateDbm extends React.Component {
           _this.refreshLog();
         },
         error: function(xhr, status, err) {
-          console.error(_this.props.url, status, err.toString());
+          //console.error(_this.props.url, status, err.toString());
           _this.setState({ isProcessing: false });
           _this.refreshLog();
         },
@@ -343,7 +343,7 @@ class GenerateDbm extends React.Component {
         }
       },
       error: function(xhr, status, err) {
-        console.error(_this.props.url, status, err.toString());
+        //console.error(_this.props.url, status, err.toString());
         _this.setState({ isProcessing: false });
         _this.setState({
           log: 'Ошибка при проверке. Обратитесь к разработчику',
@@ -362,15 +362,17 @@ class GenerateDbm extends React.Component {
   render() {
     var this_ = this;
     const systems = this.state.systems;
+    var sys_check_group_label = '';
+    var none_label = '';
     if (this.state.varIndex == 2) {
-      var sys_check_group_label = 'Типы оборудования:';
-      var none_label = 'Ни одного типа оборудования';
+      sys_check_group_label = 'Типы оборудования:';
+      none_label = 'Ни одного типа оборудования';
     } else if (this.state.varIndex == 3) {
-      var sys_check_group_label = 'Системы отображения:';
-      var none_label = 'Ни одной системы отображения';
+      sys_check_group_label = 'Системы отображения:';
+      none_label = 'Ни одной системы отображения';
     } else {
-      var sys_check_group_label = 'Системы:';
-      var none_label = 'Ни одной системы';
+      sys_check_group_label = 'Системы:';
+      none_label = 'Ни одной системы';
     }
 
     const mod_radio_group = MOD.map((data, idx) => (
@@ -529,6 +531,7 @@ class GenerateDbm extends React.Component {
     );
 
     var rows = null;
+    var log_container;
     if (this.state.log_as_table) {
       var tbl_header = CHECK_HEADERS.map(function(key, k) {
         return <th key={'header' + k + '-cell'}>{CHECK_HEADERS[k]}</th>;
@@ -552,7 +555,7 @@ class GenerateDbm extends React.Component {
         });
         return row_info;
       });
-      var log_container = (
+      log_container = (
         <table>
           <tbody>
             <tr>{tbl_header}</tr>
@@ -561,7 +564,7 @@ class GenerateDbm extends React.Component {
         </table>
       );
     } else {
-      var log_container = <textarea value={this.state.log} readOnly />;
+      log_container = <textarea value={this.state.log} readOnly />;
     }
 
     return (

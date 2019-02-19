@@ -389,7 +389,7 @@ class ImportStep4 extends React.Component {
       );
       var success_message = <div />;
       if (to_exit && !isProcessing) {
-        var success_message = (
+        success_message = (
           <div>
             <h3> Импорт завершен, внесенные изменения сохранены в базе. </h3>
           </div>

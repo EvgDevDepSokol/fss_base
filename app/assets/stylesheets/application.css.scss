@@ -185,6 +185,7 @@ body {
     }
 
     .navbar-nav {
+
       div,
       li {
         a {
@@ -265,6 +266,7 @@ body {
     }
   }
 }
+
 //todo сделать исчезающую панель
 
 .left-menu.col {
@@ -352,19 +354,23 @@ body {
 
 .col.main-container {
   background-color: #abd2e6;
+
   //padding-top: 5px;
   &.dr_table {
     left: 0px;
     right: 50%;
   }
+
   &.dr_view {
     left: 50%;
     right: 0;
   }
+
   &.main_table {
     left: 245px;
     right: 0;
   }
+
   left: 0px;
   right: 0;
   position: absolute;
@@ -856,18 +862,21 @@ body {
         max-width: 605px;
         display: table-cell;
       }
+
       .header-pds_engineer-col {
         width: 110px;
         min-width: 110px;
         max-width: 110px;
         display: table-cell;
       }
+
       .header-dr_num-col {
         width: 40px;
         min-width: 40px;
         max-width: 40px;
         display: table-cell;
       }
+
       .header-dr_status-col {
         width: 130px;
         min-width: 73px;
@@ -937,6 +946,7 @@ body {
       font-size: 13px;
       text-decoration: none;
     }
+
     width: 215px;
 
     h3 {
@@ -961,10 +971,12 @@ body {
     }
   }
 }
+
 /* the tree node's style */
 .tree-view {
   overflow-y: hidden;
 }
+
 /* style for the container */
 .tree-view_children {
   margin-left: 16px;
@@ -991,6 +1003,7 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
+
 /* rotate the triangle to close it */
 .tree-view_arrow-collapsed {
   -webkit-transform: rotate(-90deg);
@@ -1135,9 +1148,6 @@ footer {
   bottom: 0;
 }
 
-.system-selector {
-}
-
 .navbar-middle {
   padding-left: 15%;
 }
@@ -1156,6 +1166,7 @@ footer {
       max-height: 60px;
       display: block;
       overflow-y: auto;
+
       span {
         display: unset;
       }
@@ -1165,6 +1176,7 @@ footer {
 
 .two-checkboxes {
   display: inline-flex;
+
   input {
     height: 16px;
     width: 16px;
@@ -1229,46 +1241,57 @@ footer {
     }
   }
 }
+
 .generate-dbm {
   height: 95%;
+
   button {
     width: 250px;
   }
+
   .generate-dbm-all {
     display: block;
     width: 100%;
     min-height: 60%;
   }
+
   .generate-dbm-top {
     display: inline-block;
     width: 50%;
     vertical-align: top;
     margin-top: 10px;
+
     //border: 1px solid #dddddd;
     p {
       margin: 0;
     }
   }
+
   .generate-dbm-sys-container {
     border: 1px solid #dddddd;
     margin-top: 10px;
+
     label {
       min-width: 300px;
       margin: 0;
     }
   }
+
   .generate-dbm-rf-container {
     margin-top: 10px;
     //border: 1px solid #dddddd;
   }
+
   .generate-dbm-log {
     border: 1px solid #dddddd;
     min-height: 30%;
     display: grid;
     overflow: auto;
     margin-top: 10px;
+
     table {
       width: 100%;
+
       th,
       td {
         border-width: 1px;
@@ -1276,16 +1299,19 @@ footer {
         border-color: rgb(169, 169, 169);
       }
     }
+
     textarea {
       width: 100%;
       height: 100%;
       resize: none;
     }
   }
+
   .generate-dbm-run {
     color: rgb(0, 90, 194);
     font-weight: bold;
   }
+
   .generate-dbm-xls-button {
     position: absolute;
     right: 2%;
@@ -1298,15 +1324,19 @@ footer {
     background-image: asset_data_url("icons/excel.png");
     //color: #dc322f;
   }
+
   .generate-dbm-warn {
     color: rgb(0, 129, 194);
   }
+
   .generate-dbm-err {
     color: #dc322f;
   }
+
   .generate-dbm-systems {
     margin-bottom: 10px;
   }
+
   .generate-dbm-sys-all {
     font-style: italic;
     margin-bottom: 10px;
@@ -1318,6 +1348,7 @@ footer {
     background-image: asset_data_url("generate.png");
   }
 }
+
 .import-from-excel {
   .header-icon {
     background-image: asset_data_url("import_export.png");
@@ -1335,6 +1366,7 @@ footer {
     width: 200px;
   }
 }
+
 .modal-close-button {
   position: absolute;
   right: 1%;
@@ -1343,6 +1375,7 @@ footer {
   background: white;
   width: 50px;
 }
+
 .dr_view_form {
   position: absolute;
   height: 100%;
@@ -1350,11 +1383,13 @@ footer {
   background: white;
   border-radius: 10px;
   border: 1px solid #6da3bd;
+
   button {
     width: 250px;
     margin-right: 5px;
     margin-left: 5px;
   }
+
   .dr_header {
     p {
       text-align: center;
@@ -1363,42 +1398,55 @@ footer {
       color: #0081c2;
     }
   }
+
   .dr_info {
     margin: 5px;
     margin-bottom: 15px;
+
     table {
       width: 100%;
     }
+
     td {
       width: 25%;
       border-style: solid;
       border-color: #427fa1;
       border-width: thin;
+      padding-left: 3px;
+      padding-right: 3px;
       //border-bottom-width: 0px;
       //background-color: gainsboro;
     }
   }
+
   .dr_body {
     .dr_comment {
       margin: 5px;
+
       table {
         width: 75%;
       }
+
       tr {
         &.eng {
           background-color: gainsboro;
         }
+
         &.tec {
           background-color: antiquewhite;
         }
       }
+
       td {
         width: 25%;
         border-style: solid;
         border-color: #427fa1;
         border-width: thin;
         border-bottom-width: 0px;
+        padding-left: 3px;
+        padding-right: 3px;
       }
+
       textarea {
         width: 100%;
         resize: none;
@@ -1407,7 +1455,10 @@ footer {
         border-width: medium;
         min-height: 60px;
         background-color: whitesmoke;
+        padding-left: 3px;
+        padding-right: 3px;
       }
+
       span {
         width: 100%;
         display: block;
@@ -1415,6 +1466,8 @@ footer {
         border-color: #427fa1;
         border-width: thin;
         background-color: aliceblue;
+        padding-left: 3px;
+        padding-right: 3px;
       }
     }
   }

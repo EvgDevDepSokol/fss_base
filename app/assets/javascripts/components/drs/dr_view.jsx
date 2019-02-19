@@ -145,7 +145,6 @@ class DrView extends React.Component {
   };
 
   onSystemEngineerChange = function(value) {
-    debugger;
     var dr_details_new = this.state.dr_details_new;
     dr_details_new.system.id = value.id;
     dr_details_new.system.System = sys_eng_list[value.id]['sys_name'];

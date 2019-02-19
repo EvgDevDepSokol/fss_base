@@ -42,4 +42,5 @@ const DRSTATUS = {
   }
 };
 
-module.exports.DRSTATUS = DRSTATUS;
+const _DRSTATUS = DRSTATUS;
+export { _DRSTATUS as DRSTATUS };
