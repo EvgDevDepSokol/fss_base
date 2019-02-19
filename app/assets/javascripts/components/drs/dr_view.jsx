@@ -29,7 +29,6 @@ class DrView extends React.Component {
     },
     dr_details_new: {
       drNum: 0,
-      sys: -1,
       drAuthor: current_user.id,
       status: 0,
       query: 'Описание рассогласования',
@@ -37,7 +36,12 @@ class DrView extends React.Component {
       system: {
         id: -1,
         System: 'Не выбрано'
-      }
+      },
+      pds_engineer_worker: 'Не выбрано'
+    },
+    select: {
+      sys_id: -1,
+      eng_id: -1
     }
   };
 
@@ -148,9 +152,91 @@ class DrView extends React.Component {
     var dr_details_new = this.state.dr_details_new;
     dr_details_new.system.id = value.id;
     dr_details_new.system.System = sys_eng_list[value.id]['sys_name'];
-    dr_details_new.pds_engineer_worker = sys_eng_list[value.id]['eng_name'];
+    dr_details_new.pds_engineer_worker = sys_eng_list[value.id]['eng_name']
+      ? sys_eng_list[value.id]['eng_name']
+      : 'Не выбрано';
     this.setState({ dr_details_new: dr_details_new });
   }.bind(this);
+
+  onSysChange = function(event) {
+    var select = this.state.select;
+    select.sys_id = event.target.value;
+    this.setState({ select });
+  }.bind(this);
+
+  onEngChange = function(event) {
+    var select = this.state.select;
+    select.eng_id = event.target.value;
+    this.setState({ select });
+  }.bind(this);
+
+  onResetSysEng = function() {
+    this.setState({ select: { sys_id: -1, eng_id: -1 } });
+  };
+
+  sys_eng_selector = function() {
+    var sys_opt = [];
+    var eng_opt = [];
+    var sys_id = this.state.select.sys_id;
+    var eng_id = this.state.select.eng_id;
+    if (sys_id > -1) {
+      eng_opt = sys_eng_list[sys_id]['engineers'].map(function(eng, i) {
+        return (
+          <option key={'opt-' + i} value={eng.eng_id}>
+            {eng.eng_name}
+          </option>
+        );
+      });
+    } else {
+      Object.keys(eng_sys_list).forEach(function(key) {
+        eng_opt.push(
+          <option key={'opt-' + key} value={key}>
+            {eng_sys_list[key].eng_name}
+          </option>
+        );
+      });
+      eng_opt.unshift(
+        <option key={'opt-' + -1} value={-1}>
+          {'Не выбрано'}
+        </option>
+      );
+    }
+    if (eng_id > -1) {
+      sys_opt = eng_sys_list[eng_id]['systems'].map(function(sys, i) {
+        return (
+          <option key={'opt-' + i} value={sys.sys_id}>
+            {sys.sys_name}
+          </option>
+        );
+      });
+    } else {
+      Object.keys(sys_eng_list).forEach(function(key) {
+        sys_opt.push(
+          <option key={'opt-' + key} value={key}>
+            {sys_eng_list[key].sys_name}
+          </option>
+        );
+      });
+      sys_opt.unshift(
+        <option key={'opt-' + -1} value={-1}>
+          {'Не выбрано'}
+        </option>
+      );
+    }
+    return (
+      <div className="system-selector">
+        <select value={this.state.select.eng_id} onChange={this.onEngChange}>
+          {eng_opt}
+        </select>
+        <select value={this.state.select.sys_id} onChange={this.onSysChange}>
+          {sys_opt}
+        </select>
+        <p />
+        <button onClick={() => this.onResetSysEng()}>Сбросить фильтры</button>
+      </div>
+    );
+  };
+
   render() {
     var this_ = this;
     var project = this.props.project.project_name;
@@ -191,15 +277,7 @@ class DrView extends React.Component {
             </tbody>
           </table>
         </div>
-        <div className="system-selector">
-          <SystemEngineerSelector
-            attribute="id"
-            onValue={this.onSystemEngineerChange}
-            value={this.state.dr_details_new.system.id}
-          />
-          <p>cистема</p>
-        </div>
-
+        {this.sys_eng_selector()}
         <div className="dr_body">{dr_comments}</div>
         <div className="dr_buttons">{dr_buttons}</div>
         <div className="dr_body">
