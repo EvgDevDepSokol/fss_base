@@ -10,7 +10,7 @@ class ImportStep2 extends React.Component {
 
   static propTypes = {
     onCloseModal: PropTypes.func,
-    columns: PropTypes.array,
+    columns: PropTypes.object,
     //rememberColumns: PropTypes.array,
     isOpen: PropTypes.bool
   };

@@ -34,70 +34,70 @@ var orderBy = require('lodash').orderBy;
 
 var titleCase = require('title-case');
 
-var SystemSelector = require('../selectors/system.jsx');
-var SystemDocSelector = require('../selectors/system_doc.jsx');
+//var SystemSelector = require('../selectors/system.jsx');
+//var SystemDocSelector = require('../selectors/system_doc.jsx');
 var SystemFilterSelector = require('../selectors/system_filter.jsx');
-var SystemAllSelector = require('../selectors/system_all.jsx');
+//var SystemAllSelector = require('../selectors/system_all.jsx');
 
-var HwIcSelector = require('../selectors/hw_ic.jsx');
-var DetectorSelector = require('../selectors/detector.jsx');
-var PdsManEquipSelector = require('../selectors/pds_man_equips.jsx');
-var PdsSectionAssemblerSelector = require('../selectors/pds_section_assembler.jsx');
-var HwPedSelector = require('../selectors/hw_ped.jsx');
-var HwIosignaldefSelector = require('../selectors/hw_iosignaldef.jsx');
-var PdsPanelSelector = require('../selectors/pds_panels.jsx');
-var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
-var PdsEquipSelector = require('../selectors/pds_equip.jsx');
+//var HwIcSelector = require('../selectors/hw_ic.jsx');
+//var DetectorSelector = require('../selectors/detector.jsx');
+//var PdsManEquipSelector = require('../selectors/pds_man_equips.jsx');
+//var PdsSectionAssemblerSelector = require('../selectors/pds_section_assembler.jsx');
+//var HwPedSelector = require('../selectors/hw_ped.jsx');
+//var HwIosignaldefSelector = require('../selectors/hw_iosignaldef.jsx');
+//var PdsPanelSelector = require('../selectors/pds_panels.jsx');
+//var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
+//var PdsEquipSelector = require('../selectors/pds_equip.jsx');
 
-var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
+//var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
 
 //some static selectors
-var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx')
-  .MalfunctionTypeSelector;
-var RFTypeSelector = require('../selectors/static_selectors.jsx')
-  .RFTypeSelector;
-var ValveTypeSelector = require('../selectors/static_selectors.jsx')
-  .ValveTypeSelector;
-var BooleanSelector = require('../selectors/static_selectors.jsx')
-  .BooleanSelector;
-var BooleanYNSelector = require('../selectors/static_selectors.jsx')
-  .BooleanYNSelector;
-var BooleanNumbSelector = require('../selectors/static_selectors.jsx')
-  .BooleanNumbSelector;
-var MotorZmnSelector = require('../selectors/static_selectors.jsx')
-  .MotorZmnSelector;
-var UserRightsSelector = require('../selectors/static_selectors.jsx')
-  .UserRightsSelector;
-var RegidityUnitSelector = require('../selectors/static_selectors.jsx')
-  .RegidityUnitSelector;
-var AnnounciatorTypeSelector = require('../selectors/static_selectors.jsx')
-  .AnnounciatorTypeSelector;
-var AnnounciatorSignSelector = require('../selectors/static_selectors.jsx')
-  .AnnounciatorSignSelector;
-var SyslistDescriptorSelector = require('../selectors/static_selectors.jsx')
-  .SyslistDescriptorSelector;
-var SyslistCategorySelector = require('../selectors/static_selectors.jsx')
-  .SyslistCategorySelector;
+//var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx')
+//  .MalfunctionTypeSelector;
+//var RFTypeSelector = require('../selectors/static_selectors.jsx')
+//  .RFTypeSelector;
+//var ValveTypeSelector = require('../selectors/static_selectors.jsx')
+//  .ValveTypeSelector;
+//var BooleanSelector = require('../selectors/static_selectors.jsx')
+//  .BooleanSelector;
+//var BooleanYNSelector = require('../selectors/static_selectors.jsx')
+//  .BooleanYNSelector;
+//var BooleanNumbSelector = require('../selectors/static_selectors.jsx')
+//  .BooleanNumbSelector;
+//var MotorZmnSelector = require('../selectors/static_selectors.jsx')
+//  .MotorZmnSelector;
+//var UserRightsSelector = require('../selectors/static_selectors.jsx')
+//  .UserRightsSelector;
+//var RegidityUnitSelector = require('../selectors/static_selectors.jsx')
+//  .RegidityUnitSelector;
+//var AnnounciatorTypeSelector = require('../selectors/static_selectors.jsx')
+//  .AnnounciatorTypeSelector;
+//var AnnounciatorSignSelector = require('../selectors/static_selectors.jsx')
+//  .AnnounciatorSignSelector;
+//var SyslistDescriptorSelector = require('../selectors/static_selectors.jsx')
+//  .SyslistDescriptorSelector;
+//var SyslistCategorySelector = require('../selectors/static_selectors.jsx')
+//  .SyslistCategorySelector;
 
 // todo: fix
-var SdSelector = require('../selectors/pds_sds.jsx');
-var UnitSelector = require('../selectors/pds_project_units.jsx');
-var UnitAllSelector = require('../selectors/pds_units.jsx');
-var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');
-var PdsDocumentationsSelector = require('../selectors/pds_documentation.jsx');
-var PdsValvesSelector = require('../selectors/pds_valves.jsx');
+//var SdSelector = require('../selectors/pds_sds.jsx');
+//var UnitSelector = require('../selectors/pds_project_units.jsx');
+//var UnitAllSelector = require('../selectors/pds_units.jsx');
+//var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');
+//var PdsDocumentationsSelector = require('../selectors/pds_documentation.jsx');
+//var PdsValvesSelector = require('../selectors/pds_valves.jsx');
 
 // modules
 var Search = require('../modules/search.jsx');
-var Replace = require('../modules/replace.jsx');
+//var Replace = require('../modules/replace.jsx');
 var ColumnFilters = require('../modules/column_filters.jsx');
 var DrView = require('./drs/dr_view.jsx');
 
-var stringEditor = require('../inputs/input.jsx')();
+//var stringEditor = require('../inputs/input.jsx')();
 //import { input as stringEditor } from 'react-edit';
-var TextEditor = require('../inputs/text_editor.jsx')();
-var WideTextEditor = require('../inputs/wide_text_editor.jsx')();
+//var TextEditor = require('../inputs/text_editor.jsx')();
+//var WideTextEditor = require('../inputs/wide_text_editor.jsx')();
 
 import Modal from 'react-modal';
 
@@ -824,14 +824,14 @@ var TableContainer = createReactClass({
       });
     this.setState({ showFilters: showFilters, columns: columns });
   },
-  onIconReplaceClick: function() {
-    if (current_user.user_rights >= 1) {
-      var showReplace = !this.state.showReplace;
-      this.setState({ showReplace: showReplace });
-    } else {
-      alert('У Вас недостаточно прав для редактирования записей!');
-    }
-  },
+  //onIconReplaceClick: function() {
+  //  if (current_user.user_rights >= 1) {
+  //    var showReplace = !this.state.showReplace;
+  //    this.setState({ showReplace: showReplace });
+  //  } else {
+  //    alert('У Вас недостаточно прав для редактирования записей!');
+  //  }
+  //},
 
   getDuplicatedRowsendData: function(row) {
     var sendData = {};
@@ -894,9 +894,9 @@ var TableContainer = createReactClass({
     exportData(dataxls, columns, bookname);
   }, */
 
-  onReplaceDone: function(data) {
-    this.setState({ data: data });
-  },
+  //onReplaceDone: function(data) {
+  //  this.setState({ data: data });
+  //},
 
   onSystemSelectorChange: function(value) {
     this.setState({ systemFilter: value.system });
@@ -1173,14 +1173,14 @@ var TableContainer = createReactClass({
               }
               key={'table-filters'}
             >
-              <div className="replace-container">
+              {/*<div className="replace-container">
                 <Replace
                   columns={this.state.columns}
                   data={this.state.data}
                   onReplaceDone={this.onReplaceDone}
                   disabled={this.state.lockRow}
                 />
-              </div>
+              </div>*/}
             </div>
 
             <div className="controls">
