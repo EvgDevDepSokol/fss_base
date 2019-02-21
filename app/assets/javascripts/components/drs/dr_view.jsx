@@ -70,6 +70,7 @@ class DrView extends React.Component {
   };
 
   comment_table = function(comment, i) {
+    debugger;
     return (
       <div key={i + '-dr-comment'} className="dr_comment">
         <table>
@@ -148,19 +149,20 @@ class DrView extends React.Component {
     pds_dr.Project = project.id;
     pds_dr.sys = dr_details_new.system.id;
     pds_dr.drNum = -1;
-
+    debugger;
     if (this.props.isDrNew) {
       this.props.onDrInsert(pds_dr, comment);
     } else {
       this.props.onCommentSave(comment);
-      this.onCommentCancel();
     }
+    this.onCommentCancel();
   };
 
   onCommentCancel = function() {
     var comment = this.state.comment;
     comment.pds_dr_id = -1;
     comment.comment_text = '';
+    comment.pds_engineer = current_user;
     this.setState({ comment: comment });
     this.props.onDrCancel();
   };

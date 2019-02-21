@@ -22,13 +22,15 @@ class PdsDrsController < BaseController
     end
   end
 
-  def create
-    @current_object = model_class.new permit_params
-    if @current_object.save permit_params
-      render json: { status: :created, data: data }
-    else
-      render json: { errors: @current_object.errors.full_messages }, status: :unprocessable_entity
-      Rails.logger.info(@current_object.errors.full_messages)
-    end
+  def create_dr_and_comment
+    pds_dr = PdsDr.new params[:pds_dr].permit!
+    pds_dr.save
+    pds_dr_comment = PdsDrComment.new params[:pds_dr_comment].permit!
+    pds_dr_comment.pds_dr_id = pds_dr.id
+    pds_dr_comment.save
+    data = PdsDr.where(id: pds_dr.id)
+                .includes(:system, :pds_engineer_author, :pds_engineer_reply, :pds_engineer_closed)
+                .plucked(pds_dr.Project)
+    render json: { status: :created, data: data }
   end
 end

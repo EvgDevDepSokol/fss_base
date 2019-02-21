@@ -94,7 +94,7 @@ Rails.application.routes.draw do
   put :get_log, to: 'dbm_generator#get_log'
   put :generate_dbm_check_tags, to: 'dbm_generator#check_tags'
   put :compare_projects, to: 'different_stuff#compare_projects'
-  put :pds_dr_new, to: 'pds_drs#create'
+  put :create_dr_and_comment, to: 'pds_drs#create_dr_and_comment'
 
   resources :users
 

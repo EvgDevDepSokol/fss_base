@@ -944,7 +944,7 @@ var TableContainer = createReactClass({
   //  }
   //},
   onDrInsert: function(pds_dr, comment) {
-    var url = window.location.href;
+    var url = '/create_dr_and_comment';
     var idx = this.state.data.length;
     var d = {};
     d['pds_dr'] = pds_dr;
@@ -953,26 +953,14 @@ var TableContainer = createReactClass({
       url: url,
       dataType: 'json',
       contentType: 'application/json; charset=UTF-8',
-      type: 'POST',
+      type: 'PUT',
       data: JSON.stringify(d),
       success: function(response) {
-        debugger;
         var data = this.state.data;
-        var new_dr = response.data;
-        comment.pds_dr_id = new_dr.id;
-        data[idx] = {
-          comments: [],
-          drNum: new_dr.drNum,
-          query: new_dr.query,
-          status: 1,
-          system: new_dr.system,
-          id: new_dr.id
-        };
+        data.push(response.data[0]);
         this.setState({
-          data,
-          isDrNew: false
+          data
         });
-        this.onCommentSave(comment);
       }.bind(this),
       error: function(xhr, status, err) {
         var jtmp = xhr.responseJSON['errors'];
@@ -994,7 +982,6 @@ var TableContainer = createReactClass({
       type: 'POST',
       data: JSON.stringify(d),
       success: function(response) {
-        debugger;
         var data = this.state.data;
         data[idx]['comments'].push(response.data);
         data[idx]['status'] = response.data.status;
