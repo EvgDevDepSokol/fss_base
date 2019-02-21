@@ -943,14 +943,11 @@ var TableContainer = createReactClass({
   //    this.setState({ lockRow: false, sendData: {}, editedRow: null });
   //  }
   //},
-
-  onCommentSave: function(comment) {
-    var url = window.location.href.replace('pds_drs', 'pds_dr_comments');
-    var idx = findIndex(this.state.data, { id: comment.pds_dr_id });
+  onDrInsert: function(pds_dr, comment) {
+    var url = window.location.href;
+    var idx = this.state.data.length;
     var d = {};
-    comment.comment_author_id = comment.pds_engineer.engineer_N;
-    delete comment.pds_engineer;
-    comment.Project = project.id;
+    d['pds_dr'] = pds_dr;
     d['pds_dr_comment'] = comment;
     $.ajax({
       url: url,
@@ -959,6 +956,45 @@ var TableContainer = createReactClass({
       type: 'POST',
       data: JSON.stringify(d),
       success: function(response) {
+        debugger;
+        var data = this.state.data;
+        var new_dr = response.data;
+        comment.pds_dr_id = new_dr.id;
+        data[idx] = {
+          comments: [],
+          drNum: new_dr.drNum,
+          query: new_dr.query,
+          status: 1,
+          system: new_dr.system,
+          id: new_dr.id
+        };
+        this.setState({
+          data,
+          isDrNew: false
+        });
+        this.onCommentSave(comment);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        var jtmp = xhr.responseJSON['errors'];
+        var result = 'Не удалось сохранить запись. Причина:\n\n';
+        alert(result);
+      }.bind(this)
+    });
+  },
+
+  onCommentSave: function(comment) {
+    var url = window.location.href.replace('pds_drs', 'pds_dr_comments');
+    var idx = findIndex(this.state.data, { id: comment.pds_dr_id });
+    var d = {};
+    d['pds_dr_comment'] = comment;
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      contentType: 'application/json; charset=UTF-8',
+      type: 'POST',
+      data: JSON.stringify(d),
+      success: function(response) {
+        debugger;
         var data = this.state.data;
         data[idx]['comments'].push(response.data);
         data[idx]['status'] = response.data.status;
@@ -1006,7 +1042,7 @@ var TableContainer = createReactClass({
     });
 
     data.forEach(function(row) {
-      row['status_desc'] = DRSTATUS[row['status']].label;
+      row['status_desc'] = DRSTATUS[row['status'] ? row['status'] : 6].label;
     });
 
     if (systemFilter && systemFilter != -1) {
@@ -1242,6 +1278,7 @@ var TableContainer = createReactClass({
             project={project}
             dr_details={dr_details}
             onCommentSave={this.onCommentSave}
+            onDrInsert={this.onDrInsert}
             isDrNew={this.state.isDrNew}
             onDrCancel={this.onDrCancel}
           />

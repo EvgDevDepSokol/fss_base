@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { DRSTATUS } from './dr_data.jsx';
-var SystemEngineerSelector = require('../../selectors/system_engineer.jsx');
+const NOT_SELECTED = '-Не выбрано-';
 
 class DrView extends React.Component {
   static displayName = 'DrView';
@@ -13,6 +13,7 @@ class DrView extends React.Component {
     dr_details: PropTypes.object,
     onCommentSave: PropTypes.func,
     onDrCancel: PropTypes.func,
+    onDrInsert: PropTypes.func,
     isDrNew: PropTypes.bool
   };
 
@@ -35,9 +36,9 @@ class DrView extends React.Component {
       comments: [],
       system: {
         id: -1,
-        System: 'Не выбрано'
+        System: NOT_SELECTED
       },
-      pds_engineer_worker: 'Не выбрано'
+      pds_engineer_worker: NOT_SELECTED
     },
     select: {
       sys_id: -1,
@@ -105,6 +106,7 @@ class DrView extends React.Component {
         }
       }
     }
+    if (this.props.isDrNew && this.state.select.sys_id == -1) disabled = true;
     return (
       <div className="comment_buttons">
         <button
@@ -136,8 +138,23 @@ class DrView extends React.Component {
 
   onCommentSave = function() {
     var comment = this.state.comment;
-    this.props.onCommentSave(comment);
-    this.onCommentCancel();
+    comment.comment_author_id = comment.pds_engineer.engineer_N;
+    delete comment.pds_engineer;
+    comment.Project = project.id;
+    var dr_details_new = this.state.dr_details_new;
+    var pds_dr = {};
+    pds_dr.query = comment.comment_text;
+    pds_dr.drAuthor = dr_details_new.drAuthor;
+    pds_dr.Project = project.id;
+    pds_dr.sys = dr_details_new.system.id;
+    pds_dr.drNum = -1;
+
+    if (this.props.isDrNew) {
+      this.props.onDrInsert(pds_dr, comment);
+    } else {
+      this.props.onCommentSave(comment);
+      this.onCommentCancel();
+    }
   };
 
   onCommentCancel = function() {
@@ -148,32 +165,39 @@ class DrView extends React.Component {
     this.props.onDrCancel();
   };
 
-  onSystemEngineerChange = function(value) {
-    var dr_details_new = this.state.dr_details_new;
-    dr_details_new.system.id = value.id;
-    dr_details_new.system.System = sys_eng_list[value.id]['sys_name'];
-    dr_details_new.pds_engineer_worker = sys_eng_list[value.id]['eng_name']
-      ? sys_eng_list[value.id]['eng_name']
-      : 'Не выбрано';
-    this.setState({ dr_details_new: dr_details_new });
-  }.bind(this);
-
   onSysChange = function(event) {
     var select = this.state.select;
+    var dr_details_new = this.state.dr_details_new;
     select.sys_id = event.target.value;
-    this.setState({ select });
+    dr_details_new.system.id = select.sys_id;
     if (select.sys_id == -1) {
       select.eng_id = -1;
+      dr_details_new.system.System = NOT_SELECTED;
+      dr_details_new.pds_engineer_worker = NOT_SELECTED;
+    } else {
+      dr_details_new.system.System = sys_eng_list[select.sys_id]['sys_name'];
+      dr_details_new.pds_engineer_worker = sys_eng_list[select.sys_id][
+        'engineers'
+      ]
+        .map(function(eng, i) {
+          return eng.eng_name;
+        })
+        .sort()
+        .join(', ');
     }
+    this.setState({ select, dr_details_new });
   }.bind(this);
 
   onEngChange = function(event) {
     var select = this.state.select;
+    var dr_details_new = this.state.dr_details_new;
     select.eng_id = event.target.value;
     if (select.eng_id == -1) {
       select.sys_id = -1;
+      dr_details_new.system.System = NOT_SELECTED;
+      dr_details_new.pds_engineer_worker = NOT_SELECTED;
     }
-    this.setState({ select });
+    this.setState({ select, dr_details_new });
   }.bind(this);
 
   sys_eng_selector = function() {
@@ -204,8 +228,8 @@ class DrView extends React.Component {
       if (a.label > b.label) return 1;
       return 0;
     });
-    eng_opt.unshift({ value: -1, label: 'Не выбрано' });
-    sys_opt.unshift({ value: -1, label: 'Не выбрано' });
+    eng_opt.unshift({ value: -1, label: NOT_SELECTED });
+    sys_opt.unshift({ value: -1, label: NOT_SELECTED });
     sys_opt = sys_opt.map(function(opt, i) {
       return (
         <option key={'opt-' + i} value={opt.value}>
@@ -221,16 +245,16 @@ class DrView extends React.Component {
       );
     });
     return (
-      <div className="dr-system-selector">
+      <div className="dr_system_selector">
         <select
-          size="20"
+          size="17"
           value={this.state.select.eng_id}
           onChange={this.onEngChange}
         >
           {eng_opt}
         </select>
         <select
-          size="20"
+          size="17"
           value={this.state.select.sys_id}
           onChange={this.onSysChange}
         >
@@ -249,10 +273,18 @@ class DrView extends React.Component {
       : this.props.dr_details;
     var comment = this.state.comment;
     var show_new_comment = isDrNew || comment.pds_dr_id == dr_details.id;
-    var dr_comments = dr_details['comments'].map(function(comment, i) {
-      return this_.comment_table(comment, i);
-    });
-    var last_status = isDrNew ? 6 : dr_details['comments'].slice(-1)[0].status;
+    var dr_comments =
+      dr_details['comments'].length == 0
+        ? null
+        : dr_details['comments'].map(function(comment, i) {
+          return this_.comment_table(comment, i);
+        });
+    var last_status;
+    if (isDrNew || dr_details['comments'].length == 0) {
+      last_status = 6;
+    } else {
+      last_status = dr_details['comments'].slice(-1)[0].status;
+    }
 
     var dr_buttons = DRSTATUS[last_status].links.map(function(l, i) {
       return (
@@ -272,15 +304,20 @@ class DrView extends React.Component {
         <div className="dr_info">
           <table>
             <tbody>
+              <tr className="header">
+                <td className="dr_eng">Ответственный</td>
+                <td className="dr_sys">Система</td>
+                <td className="dr_status">Текущий статус</td>
+              </tr>
               <tr>
-                <td>Ответственный: {dr_details.pds_engineer_worker}</td>
-                <td>Система: {dr_details.system.System}</td>
-                <td>Текущий статус: {DRSTATUS[last_status].label}</td>
+                <td className="dr_eng">{dr_details.pds_engineer_worker}</td>
+                <td className="dr_sys">{dr_details.system.System}</td>
+                <td className="dr_status">{DRSTATUS[last_status].label}</td>
               </tr>
             </tbody>
           </table>
         </div>
-        {this.sys_eng_selector()}
+        {isDrNew ? this.sys_eng_selector() : null}
         <div className="dr_body">{dr_comments}</div>
         <div className="dr_buttons">{dr_buttons}</div>
         <div className="dr_body">

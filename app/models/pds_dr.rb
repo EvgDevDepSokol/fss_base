@@ -36,8 +36,13 @@ class PdsDr < ApplicationRecord
       e1['query'] = e[5]
       e1['pds_engineer_worker'] = eng_list[e[1]]
       e1['drNum'] = e[6]
-      e1['comments'] = list_of_comments(e[0])
-      e1['status'] = e1['comments'].last['status']
+      if !list_of_comments(e[0]).empty?
+        e1['comments'] = list_of_comments(e[0])
+        e1['status'] = e1['comments'].last['status']
+      else
+        e1['comments'] = []
+        e1['status'] = 0
+      end
       e = e1
     end
   end

@@ -22,8 +22,13 @@ class PdsDrsController < BaseController
     end
   end
 
-  # helper_method :table_header
-  # def table_header
-  #  model_class.attribute_names.map { |attr| { property: attr, header: attr } }.to_json
-  # end
+  def create
+    @current_object = model_class.new permit_params
+    if @current_object.save permit_params
+      render json: { status: :created, data: data }
+    else
+      render json: { errors: @current_object.errors.full_messages }, status: :unprocessable_entity
+      Rails.logger.info(@current_object.errors.full_messages)
+    end
+  end
 end
