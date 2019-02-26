@@ -1431,16 +1431,36 @@ footer {
       padding-right: 3px;
     }
   }
+  .dr_selectors {
+    margin: 5px;
+    table {
+      width: 100%;
+    }
+  }
   .dr_system_selector {
     margin-left: 5px;
     margin-right: 5px;
+    width: 60%;
     select {
       width: 50%;
       padding-left: 3px;
       padding-right: 3px;
     }
   }
-
+  .dr_priority_selector {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 40%;
+    select {
+      width: 100%;
+      padding-left: 3px;
+      padding-right: 3px;
+    }
+  }
+  .attention {
+    border-color: transparent;
+    box-shadow: 0 0 0 2px red;
+  }
   .dr_body {
     .dr_comment {
       margin: 5px;

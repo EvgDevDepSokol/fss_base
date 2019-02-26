@@ -958,9 +958,11 @@ var TableContainer = createReactClass({
       data: JSON.stringify(d),
       success: function(response) {
         var data = this.state.data;
-        data.push(response.data[0]);
+        var editedDr = response.data[0];
+        data.push(editedDr);
         this.setState({
-          data
+          data,
+          editedDr
         });
       }.bind(this),
       error: function(xhr, status, err) {
@@ -1096,7 +1098,6 @@ var TableContainer = createReactClass({
         return h;
       });
     }
-    debugger;
     data = sortColumn.sort(data, sortingColumn, orderBy);
     //this.state.dataxls = data;
     //const resolver = resolve.resolve({

@@ -87,6 +87,12 @@ class DrView extends React.Component {
           <span> {comment.comment_text} </span>
         ) : (
           <textarea
+            className={
+              comment &&
+              (!comment.comment_text || comment.comment_text.length < 1)
+                ? 'attention'
+                : ''
+            }
             value={comment.comment_text}
             onChange={this.onTextEditorChange}
             onKeyUp={this.onTextEditorKeyUp}
@@ -204,6 +210,39 @@ class DrView extends React.Component {
     this.setState({ select, dr_details_new });
   }.bind(this);
 
+  onPriorityChange = function(event) {
+    var dr_details_new = this.state.dr_details_new;
+    dr_details_new.Priority = event.target.value;
+    this.setState({ dr_details_new });
+  }.bind(this);
+
+  priority_selector = function() {
+    var priority_opt = [];
+    Object.keys(DRPRIORITY).forEach(function(key) {
+      priority_opt.push({
+        value: key,
+        label: DRPRIORITY[key].label + ' ' + DRPRIORITY[key].period + ' дней'
+      });
+    });
+    priority_opt = priority_opt.map(function(opt, i) {
+      return (
+        <option key={'opt-' + i} value={opt.value}>
+          {opt.label}
+        </option>
+      );
+    });
+    return (
+      <td className="dr_priority_selector">
+        <select
+          size="17"
+          value={this.state.dr_details_new.Priority}
+          onChange={this.onPriorityChange}
+        >
+          {priority_opt}
+        </select>
+      </td>
+    );
+  };
   sys_eng_selector = function() {
     var sys_opt = [];
     var eng_opt = [];
@@ -249,7 +288,7 @@ class DrView extends React.Component {
       );
     });
     return (
-      <div className="dr_system_selector">
+      <td className="dr_system_selector">
         <select
           size="17"
           value={this.state.select.eng_id}
@@ -258,13 +297,14 @@ class DrView extends React.Component {
           {eng_opt}
         </select>
         <select
+          className={this.state.select.sys_id < 0 ? 'attention' : ''}
           size="17"
           value={this.state.select.sys_id}
           onChange={this.onSysChange}
         >
           {sys_opt}
         </select>
-      </div>
+      </td>
     );
   };
 
@@ -325,7 +365,16 @@ class DrView extends React.Component {
             </tbody>
           </table>
         </div>
-        {isDrNew ? this.sys_eng_selector() : null}
+        <div className="dr_selectors">
+          <table>
+            <tbody>
+              <tr>
+                {isDrNew ? this.sys_eng_selector() : null}
+                {isDrNew ? this.priority_selector() : null}
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="dr_body">{dr_comments}</div>
         <div className="dr_buttons">{dr_buttons}</div>
         <div className="dr_body">
