@@ -5,8 +5,10 @@ class PdsDrsController < BaseController
   ACTIONS = %i[pds_drs pds_dr_comments].freeze
 
   def pds_drs
+    # @data_list = PdsDr.where(Project: project.ProjectID)
+    #                   .includes(:system, :pds_engineer_author, :pds_engineer_reply, :pds_engineer_closed).plucked(project.ProjectID)
     @data_list = PdsDr.where(Project: project.ProjectID)
-                      .includes(:system, :pds_engineer_author, :pds_engineer_reply, :pds_engineer_closed).plucked(project.ProjectID)
+                      .includes(:system, :pds_engineer_author).plucked(project.ProjectID)
 
     @sys_eng_list = {}
     @eng_sys_list = {}

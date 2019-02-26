@@ -21,13 +21,12 @@ class PdsDr < ApplicationRecord
     PdsEngOnSy.where(project: project_id).includes(:pds_engineer).pluck(:sys, 'pds_engineers.name').each.map do |e|
       eng_list[e[0]] = e[1]
     end
+    # 'pds_engineer_closeds_pds_dr.engineer_N', 'pds_engineer_closeds_pds_dr.name', :closedDate
     pluck(:id,
       'pds_syslist.SystemID', 'pds_syslist.System',
       'pds_engineers.Engineer_N', 'pds_engineers.name',
       :query,
-      :drNum, :status,
-      :reply, 'pds_engineer_replies_pds_dr.engineer_N', 'pds_engineer_replies_pds_dr.name', :replyDate,
-      'pds_engineer_closeds_pds_dr.engineer_N', 'pds_engineer_closeds_pds_dr.name', :closedDate)
+      :drNum, :Priority, :openedDate)
       .each.map do |e|
       e1 = {}
       e1['id'] = e[0]
@@ -36,6 +35,8 @@ class PdsDr < ApplicationRecord
       e1['query'] = e[5]
       e1['pds_engineer_worker'] = eng_list[e[1]]
       e1['drNum'] = e[6]
+      e1['Priority'] = e[7]
+      e1['openedDate'] = e[8]
       if !list_of_comments(e[0]).empty?
         e1['comments'] = list_of_comments(e[0])
         e1['status'] = e1['comments'].last['status']

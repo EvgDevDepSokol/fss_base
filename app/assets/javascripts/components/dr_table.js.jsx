@@ -6,6 +6,7 @@ var ReactDOM = require('react-dom');
 var createReactClass = require('create-react-class');
 var _ = require('underscore');
 import { DRSTATUS } from './drs/dr_data.jsx';
+import { DRPRIORITY } from './drs/dr_data.jsx';
 //var exportData = require('../xlsx-djet.js.jsx').exportData;
 
 //var Paginator = require('react-pagify').default;
@@ -1028,8 +1029,24 @@ var TableContainer = createReactClass({
       }
     });
 
+    var date2 = new Date(Date.now());
     data.forEach(function(row) {
-      row['status_desc'] = DRSTATUS[row['status'] ? row['status'] : 6].label;
+      row['status'] = row['status'] ? row['status'] : 6;
+      row['status_desc'] = DRSTATUS[row['status']].label;
+      row['Priority'] = row['Priority'] ? row['Priority'] : 0;
+      row['priority_desc'] = DRPRIORITY[row['Priority']].label;
+      if (row['status'] == 4) {
+        row['time_left'] = 'Закрыт';
+      } else {
+        var date1 = new Date(row['openedDate']);
+        var timeDiff = date2 - date1;
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        var time_left = DRPRIORITY[row['Priority']].period - diffDays;
+        row['time_left'] =
+          time_left > 0
+            ? 'Осталось ' + time_left + ' дней'
+            : 'Просрочен на ' + Math.abs(time_left) + ' дней';
+      }
     });
 
     if (systemFilter && systemFilter != -1) {
@@ -1079,6 +1096,7 @@ var TableContainer = createReactClass({
         return h;
       });
     }
+    debugger;
     data = sortColumn.sort(data, sortingColumn, orderBy);
     //this.state.dataxls = data;
     //const resolver = resolve.resolve({

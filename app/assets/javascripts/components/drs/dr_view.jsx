@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { DRSTATUS } from './dr_data.jsx';
+import { DRSTATUS, DRPRIORITY } from './dr_data.jsx';
 const NOT_SELECTED = '-Не выбрано-';
 
 class DrView extends React.Component {
@@ -38,7 +38,9 @@ class DrView extends React.Component {
         id: -1,
         System: NOT_SELECTED
       },
-      pds_engineer_worker: NOT_SELECTED
+      pds_engineer_worker: NOT_SELECTED,
+      Priority: 0,
+      time_left: 0
     },
     select: {
       sys_id: -1,
@@ -70,7 +72,6 @@ class DrView extends React.Component {
   };
 
   comment_table = function(comment, i) {
-    debugger;
     return (
       <div key={i + '-dr-comment'} className="dr_comment">
         <table>
@@ -149,6 +150,7 @@ class DrView extends React.Component {
     pds_dr.Project = project.id;
     pds_dr.sys = dr_details_new.system.id;
     pds_dr.drNum = -1;
+    pds_dr.Priority = dr_details_new.Priority;
     debugger;
     if (this.props.isDrNew) {
       this.props.onDrInsert(pds_dr, comment);
@@ -310,11 +312,15 @@ class DrView extends React.Component {
                 <td className="dr_eng">Ответственный</td>
                 <td className="dr_sys">Система</td>
                 <td className="dr_status">Текущий статус</td>
+                <td className="dr_priority">Приоритет</td>
               </tr>
               <tr>
                 <td className="dr_eng">{dr_details.pds_engineer_worker}</td>
                 <td className="dr_sys">{dr_details.system.System}</td>
                 <td className="dr_status">{DRSTATUS[last_status].label}</td>
+                <td className="dr_priority">
+                  {DRPRIORITY[dr_details.Priority].label}
+                </td>
               </tr>
             </tbody>
           </table>

@@ -42,5 +42,15 @@ const DRSTATUS = {
   }
 };
 
+const DRPRIORITY = {
+  0: { label: 'Бессрочный', period: 200 },
+  1: { label: 'Обычный', period: 40 },
+  2: { label: 'Важный', period: 30 },
+  3: { label: 'Очень важный', period: 20 },
+  4: { label: 'Критический', period: 10 }
+};
+
 const _DRSTATUS = DRSTATUS;
+const _DRPRIORITY = DRPRIORITY;
 export { _DRSTATUS as DRSTATUS };
+export { _DRPRIORITY as DRPRIORITY };
