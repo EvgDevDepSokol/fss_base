@@ -1039,11 +1039,13 @@ var TableContainer = createReactClass({
       row['priority_desc'] = DRPRIORITY[row['Priority']].label;
       if (row['status'] == 4) {
         row['time_left'] = 'Закрыт';
+        row['time_left_val'] = 36500;
       } else {
         var date1 = new Date(row['openedDate']);
         var timeDiff = date2 - date1;
         var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
         var time_left = DRPRIORITY[row['Priority']].period - diffDays;
+        row['time_left_val'] = time_left;
         row['time_left'] =
           time_left > 0
             ? 'Осталось ' + time_left + ' дней'
@@ -1098,7 +1100,12 @@ var TableContainer = createReactClass({
         return h;
       });
     }
-    data = sortColumn.sort(data, sortingColumn, orderBy);
+    debugger;
+    if (sortingColumn && sortingColumn.property == 'time_left') {
+      data = orderBy(data, 'time_left_val', sortingColumn.sort);
+    } else {
+      data = sortColumn.sort(data, sortingColumn, orderBy);
+    }
     //this.state.dataxls = data;
     //const resolver = resolve.resolve({
     //  columns,
@@ -1120,7 +1127,6 @@ var TableContainer = createReactClass({
       });
     }
     var dr_details = editedDr ? editedDr : data[0];
-    //data[0];
 
     return (
       <div>

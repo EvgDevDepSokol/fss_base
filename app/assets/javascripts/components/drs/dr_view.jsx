@@ -157,7 +157,6 @@ class DrView extends React.Component {
     pds_dr.sys = dr_details_new.system.id;
     pds_dr.drNum = -1;
     pds_dr.Priority = dr_details_new.Priority;
-    debugger;
     if (this.props.isDrNew) {
       this.props.onDrInsert(pds_dr, comment);
     } else {
