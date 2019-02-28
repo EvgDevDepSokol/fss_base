@@ -7,7 +7,7 @@ const DRSTATUS = {
   0: {
     label: 'На уточнении',
     tr_classname: 'eng',
-    links: [{ val: 1, label: 'Уточнить и открыть.' }]
+    links: [{ val: 1, label: 'Уточнить и открыть' }]
   },
   1: {
     label: 'Открыт',
@@ -36,7 +36,7 @@ const DRSTATUS = {
     links: []
   },
   5: {
-    label: 'Вернут на доработку',
+    label: 'Возвращен на доработку',
     tr_classname: 'tec',
     links: [{ val: 3, label: 'Готов к проверке' }]
   }
