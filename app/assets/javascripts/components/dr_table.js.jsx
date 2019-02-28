@@ -123,6 +123,28 @@ var TableContainer = createReactClass({
     return { stateFilterKeys: ['systemFilter'] };
   },
 
+  componentDidMount: function() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+
+  handleScroll: function(event) {
+    if (event.target.localName == 'div') {
+      var translate =
+        'translatez(1000px) translate(0,' + event.target.scrollTop + 'px)';
+      event.target.firstElementChild.firstElementChild.style.transform = translate;
+      event.target.firstElementChild.firstElementChild.style['top'] =
+        event.target.scrollTop + 'px';
+      //event.target.firstElementChild.firstElementChild.style['position'] =
+      //  'relative';
+      event.target.firstElementChild.firstElementChild.style['z-index'] =
+        '9999';
+    }
+  },
+
   getInitialState: function() {
     var _this = this;
 
@@ -512,7 +534,7 @@ var TableContainer = createReactClass({
 
           if (idx > -1) {
             checkBox = (
-              <span className="checkbox">
+              <div className="checkbox">
                 <input
                   type="checkbox"
                   onChange={clickCheckBox.bind(this)}
@@ -522,7 +544,7 @@ var TableContainer = createReactClass({
                       : false
                   }
                 />
-              </span>
+              </div>
             );
           } else {
             checkBox = (
@@ -1100,7 +1122,6 @@ var TableContainer = createReactClass({
         return h;
       });
     }
-    debugger;
     if (sortingColumn && sortingColumn.property == 'time_left') {
       data = orderBy(data, 'time_left_val', sortingColumn.sort);
     } else {
@@ -1245,7 +1266,8 @@ var TableContainer = createReactClass({
                   ? 'table-container table-container-replace-show'
                   : 'table-container table-container-replace-hide'
               }
-              key={'table-container'}
+              id={'table_container'}
+              onScroll={this.handleScroll}
             >
               <Table
                 className="table table-bordered"

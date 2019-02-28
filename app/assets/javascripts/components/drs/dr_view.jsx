@@ -28,10 +28,10 @@ class DrView extends React.Component {
       comment_text: '',
       pds_dr_id: -1
     },
-    dr_details_new: {
+    dr_details_local: {
       drNum: 0,
       drAuthor: current_user.id,
-      status: 0,
+      status: 1,
       query: 'Описание рассогласования',
       comments: [],
       system: {
@@ -149,14 +149,14 @@ class DrView extends React.Component {
     comment.comment_author_id = comment.pds_engineer.engineer_N;
     delete comment.pds_engineer;
     comment.Project = project.id;
-    var dr_details_new = this.state.dr_details_new;
+    var dr_details_local = this.state.dr_details_local;
     var pds_dr = {};
     pds_dr.query = comment.comment_text;
-    pds_dr.drAuthor = dr_details_new.drAuthor;
+    pds_dr.drAuthor = dr_details_local.drAuthor;
     pds_dr.Project = project.id;
-    pds_dr.sys = dr_details_new.system.id;
+    pds_dr.sys = dr_details_local.system.id;
     pds_dr.drNum = -1;
-    pds_dr.Priority = dr_details_new.Priority;
+    pds_dr.Priority = dr_details_local.Priority;
     if (this.props.isDrNew) {
       this.props.onDrInsert(pds_dr, comment);
     } else {
@@ -170,22 +170,23 @@ class DrView extends React.Component {
     comment.pds_dr_id = -1;
     comment.comment_text = '';
     comment.pds_engineer = current_user;
+    comment.status = 1;
     this.setState({ comment: comment });
     this.props.onDrCancel();
   };
 
   onSysChange = function(event) {
     var select = this.state.select;
-    var dr_details_new = this.state.dr_details_new;
+    var dr_details_local = this.state.dr_details_local;
     select.sys_id = event.target.value;
-    dr_details_new.system.id = select.sys_id;
+    dr_details_local.system.id = select.sys_id;
     if (select.sys_id == -1) {
       select.eng_id = -1;
-      dr_details_new.system.System = NOT_SELECTED;
-      dr_details_new.pds_engineer_worker = NOT_SELECTED;
+      dr_details_local.system.System = NOT_SELECTED;
+      dr_details_local.pds_engineer_worker = NOT_SELECTED;
     } else {
-      dr_details_new.system.System = sys_eng_list[select.sys_id]['sys_name'];
-      dr_details_new.pds_engineer_worker = sys_eng_list[select.sys_id][
+      dr_details_local.system.System = sys_eng_list[select.sys_id]['sys_name'];
+      dr_details_local.pds_engineer_worker = sys_eng_list[select.sys_id][
         'engineers'
       ]
         .map(function(eng, i) {
@@ -194,25 +195,25 @@ class DrView extends React.Component {
         .sort()
         .join(', ');
     }
-    this.setState({ select, dr_details_new });
+    this.setState({ select, dr_details_local });
   }.bind(this);
 
   onEngChange = function(event) {
     var select = this.state.select;
-    var dr_details_new = this.state.dr_details_new;
+    var dr_details_local = this.state.dr_details_local;
     select.eng_id = event.target.value;
     if (select.eng_id == -1) {
       select.sys_id = -1;
-      dr_details_new.system.System = NOT_SELECTED;
-      dr_details_new.pds_engineer_worker = NOT_SELECTED;
+      dr_details_local.system.System = NOT_SELECTED;
+      dr_details_local.pds_engineer_worker = NOT_SELECTED;
     }
-    this.setState({ select, dr_details_new });
+    this.setState({ select, dr_details_local });
   }.bind(this);
 
   onPriorityChange = function(event) {
-    var dr_details_new = this.state.dr_details_new;
-    dr_details_new.Priority = event.target.value;
-    this.setState({ dr_details_new });
+    var dr_details_local = this.state.dr_details_local;
+    dr_details_local.Priority = event.target.value;
+    this.setState({ dr_details_local });
   }.bind(this);
 
   priority_selector = function() {
@@ -234,7 +235,7 @@ class DrView extends React.Component {
       <td className="dr_priority_selector">
         <select
           size="17"
-          value={this.state.dr_details_new.Priority}
+          value={this.state.dr_details_local.Priority}
           onChange={this.onPriorityChange}
         >
           {priority_opt}
@@ -312,7 +313,7 @@ class DrView extends React.Component {
     var project = this.props.project.project_name;
     var isDrNew = this.props.isDrNew;
     var dr_details = isDrNew
-      ? this.state.dr_details_new
+      ? this.state.dr_details_local
       : this.props.dr_details;
     var comment = this.state.comment;
     var show_new_comment = isDrNew || comment.pds_dr_id == dr_details.id;
