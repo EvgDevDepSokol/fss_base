@@ -23,6 +23,8 @@ class PdsRf < ApplicationRecord
   enum typerf:  { 'v' => 'v', 'p' => 'p', 'p1' => 'p1' }
   enum scale:   { '1' => '1', '2' => '2' }
 
+  validates :sys, presence: true
+
   def self.plucked
     pluck(:rfID, :name, :Ptag, :tag_RU, :Desc, :Desc_EN, :range, :type, :range_FB,
       :Type_FB,
