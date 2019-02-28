@@ -149,15 +149,16 @@ class DrView extends React.Component {
     comment.comment_author_id = comment.pds_engineer.engineer_N;
     delete comment.pds_engineer;
     comment.Project = project.id;
-    var dr_details_local = this.state.dr_details_local;
-    var pds_dr = {};
-    pds_dr.query = comment.comment_text;
-    pds_dr.drAuthor = dr_details_local.drAuthor;
-    pds_dr.Project = project.id;
-    pds_dr.sys = dr_details_local.system.id;
-    pds_dr.drNum = -1;
-    pds_dr.Priority = dr_details_local.Priority;
     if (this.props.isDrNew) {
+      var dr_details_local = this.state.dr_details_local;
+      var pds_dr = {};
+      pds_dr.query = comment.comment_text;
+      pds_dr.drAuthor = dr_details_local.drAuthor;
+      pds_dr.Project = project.id;
+      pds_dr.sys = dr_details_local.system.id;
+      pds_dr.drNum = -1;
+      pds_dr.Priority = dr_details_local.Priority;
+
       this.props.onDrInsert(pds_dr, comment);
     } else {
       this.props.onCommentSave(comment);
@@ -171,6 +172,7 @@ class DrView extends React.Component {
     comment.comment_text = '';
     comment.pds_engineer = current_user;
     comment.status = 1;
+    comment.comment_text = '';
     this.setState({ comment: comment });
     this.props.onDrCancel();
   };
@@ -216,7 +218,7 @@ class DrView extends React.Component {
     this.setState({ dr_details_local });
   }.bind(this);
 
-  priority_selector = function() {
+  priority_selector = function(height) {
     var priority_opt = [];
     Object.keys(DRPRIORITY).forEach(function(key) {
       priority_opt.push({
@@ -234,7 +236,7 @@ class DrView extends React.Component {
     return (
       <td className="dr_priority_selector">
         <select
-          size="17"
+          size={height}
           value={this.state.dr_details_local.Priority}
           onChange={this.onPriorityChange}
         >
@@ -243,7 +245,7 @@ class DrView extends React.Component {
       </td>
     );
   };
-  sys_eng_selector = function() {
+  sys_eng_selector = function(height) {
     var sys_opt = [];
     var eng_opt = [];
     var sys_id = this.state.select.sys_id;
@@ -290,7 +292,7 @@ class DrView extends React.Component {
     return (
       <td className="dr_system_selector">
         <select
-          size="17"
+          size={height}
           value={this.state.select.eng_id}
           onChange={this.onEngChange}
         >
@@ -298,7 +300,7 @@ class DrView extends React.Component {
         </select>
         <select
           className={this.state.select.sys_id < 0 ? 'attention' : ''}
-          size="17"
+          size={height}
           value={this.state.select.sys_id}
           onChange={this.onSysChange}
         >
@@ -369,8 +371,8 @@ class DrView extends React.Component {
           <table>
             <tbody>
               <tr>
-                {isDrNew ? this.sys_eng_selector() : null}
-                {isDrNew ? this.priority_selector() : null}
+                {isDrNew ? this.sys_eng_selector(17) : null}
+                {isDrNew ? this.priority_selector(17) : null}
               </tr>
             </tbody>
           </table>
