@@ -21,6 +21,7 @@ class DrView extends React.Component {
     project: this.props.project,
     dr_details: this.props.dr_details,
     isDrNew: this.props.isDrNew,
+    isDrEdit: false,
     comment: {
       status: 1,
       comment_date: Date(),
@@ -67,8 +68,9 @@ class DrView extends React.Component {
 
   onTextEditorCancel = function() {
     var comment = this.state.comment;
+    var isDrEdit = false;
     comment.comment_text = '';
-    this.setState({ comment: comment });
+    this.setState({ comment, isDrEdit });
   };
 
   comment_table = function(comment, i) {
@@ -115,6 +117,10 @@ class DrView extends React.Component {
       }
     }
     if (this.props.isDrNew && this.state.select.sys_id == -1) disabled = true;
+    if (this.state.isDrEdit) {
+      var dr_details = this.props.dr_details;
+      var dr_details_local = this.state.dr_details_local;
+    }
     return (
       <div className="comment_buttons">
         <button
@@ -173,7 +179,7 @@ class DrView extends React.Component {
     comment.pds_engineer = current_user;
     comment.status = 1;
     comment.comment_text = '';
-    this.setState({ comment: comment });
+    this.setState({ comment: comment, isDrEdit: false });
     this.props.onDrCancel();
   };
 
@@ -310,13 +316,37 @@ class DrView extends React.Component {
     );
   };
 
+  onDrEditClick = function(last_status) {
+    var dr_details = this.props.dr_details;
+    var dr_details_local = this.state.dr_details_local;
+    var comment = this.state.comment;
+    comment.status = last_status;
+    //comment.comment_text = dr_details.query;
+    dr_details_local.Priority = dr_details.Priority;
+    dr_details_local.drNum = dr_details.drNum;
+    dr_details_local.id = dr_details.id;
+    dr_details_local.query = dr_details.query;
+    dr_details_local.status = dr_details.status;
+    dr_details_local.system.id = dr_details.system.id;
+    dr_details_local.comments = dr_details.comments;
+    var isDrEdit = true;
+    var select = {
+      sys_id: dr_details_local.system.id,
+      eng_id: -1
+    };
+
+    this.setState({ dr_details_local, isDrEdit, select });
+    var e = { target: { value: select.sys_id } };
+    this.onSysChange(e);
+  };
+
   render() {
     var this_ = this;
     var project = this.props.project.project_name;
     var isDrNew = this.props.isDrNew;
-    var dr_details = isDrNew
-      ? this.state.dr_details_local
-      : this.props.dr_details;
+    var isDrEdit = this.state.isDrEdit;
+    var dr_details =
+      isDrNew || isDrEdit ? this.state.dr_details_local : this.props.dr_details;
     var comment = this.state.comment;
     var show_new_comment = isDrNew || comment.pds_dr_id == dr_details.id;
     var dr_comments =
@@ -339,6 +369,15 @@ class DrView extends React.Component {
         </button>
       );
     });
+
+    var dr_edit_button = [0, 1, 2, 3, 5, 6].includes(last_status) ? (
+      <button
+        className="dr_edit_button"
+        onClick={() => this_.onDrEditClick(last_status)}
+      >
+        Редактировать DR
+      </button>
+    ) : null;
 
     return (
       <div className="dr_view_form">
@@ -371,17 +410,19 @@ class DrView extends React.Component {
           <table>
             <tbody>
               <tr>
-                {isDrNew ? this.sys_eng_selector(17) : null}
-                {isDrNew ? this.priority_selector(17) : null}
+                {isDrNew || isDrEdit ? this.sys_eng_selector(15) : null}
+                {isDrNew || isDrEdit ? this.priority_selector(15) : null}
               </tr>
             </tbody>
           </table>
         </div>
         <div className="dr_body">{dr_comments}</div>
-        <div className="dr_buttons">{dr_buttons}</div>
+        <div className="dr_buttons">
+          {show_new_comment || isDrEdit ? null : [dr_buttons, dr_edit_button]}
+        </div>
         <div className="dr_body">
           {show_new_comment ? this.comment_table(comment, -1) : null}
-          {show_new_comment ? this.comment_buttons() : null}
+          {show_new_comment || isDrEdit ? this.comment_buttons() : null}
         </div>
       </div>
     );
