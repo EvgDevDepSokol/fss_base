@@ -118,8 +118,16 @@ class DrView extends React.Component {
     }
     if (this.props.isDrNew && this.state.select.sys_id == -1) disabled = true;
     if (this.state.isDrEdit) {
+      disabled = true;
       var dr_details = this.props.dr_details;
       var dr_details_local = this.state.dr_details_local;
+      var select = this.state.select;
+      if (
+        (dr_details_local.Priority != dr_details.Priority ||
+          select.sys_id != dr_details.system.id) &&
+        select.sys_id != -1
+      )
+        disabled = false;
     }
     return (
       <div className="comment_buttons">
