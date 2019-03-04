@@ -89,12 +89,7 @@ class DrView extends React.Component {
           <span> {comment.comment_text} </span>
         ) : (
           <textarea
-            className={
-              comment &&
-              (!comment.comment_text || comment.comment_text.length < 1)
-                ? 'attention'
-                : ''
-            }
+            className={this.isCommentEmpty() ? 'attention' : ''}
             value={comment.comment_text}
             onChange={this.onTextEditorChange}
             onKeyUp={this.onTextEditorKeyUp}
@@ -106,16 +101,16 @@ class DrView extends React.Component {
     );
   };
 
+  isCommentEmpty = function() {
+    var comment = this.state.comment;
+    return (
+      comment && (!comment.comment_text || comment.comment_text.length < 1)
+    );
+  };
+
   comment_buttons = function() {
     var disabled = true;
-    var comment = this.state.comment;
-    if (comment) {
-      if (comment.comment_text) {
-        if (comment.comment_text.length > 0) {
-          disabled = false;
-        }
-      }
-    }
+    disabled = this.isCommentEmpty();
     if (this.props.isDrNew && this.state.select.sys_id == -1) disabled = true;
     if (this.state.isDrEdit) {
       disabled = true;
