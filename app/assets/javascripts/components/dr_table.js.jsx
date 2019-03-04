@@ -103,6 +103,7 @@ var DrView = require('./drs/dr_view.jsx');
 import Modal from 'react-modal';
 
 var ExportXlsxModal = require('../components/xlsx-export.jsx');
+var DrStatisticsModal = require('../components/drs/dr_statistics.jsx');
 
 var TableContainer = createReactClass({
   displayName: 'VniiaesFullTable',
@@ -1211,39 +1212,18 @@ var TableContainer = createReactClass({
                     >
                       Фильтр
                     </div>
-                    {/*<div
-                      className={
-                        this.state.showReplace
-                          ? 'icon-replace info-buttons border-inset'
-                          : 'icon-replace info-buttons'
-                      }
-                      onClick={this.onIconReplaceClick}
-                    >
-                      Замена
-                    </div> */}
                     <div
                       className={'add-row info-buttons'}
                       onClick={this.onAddRowClick}
                     >
                       Добавить DR
                     </div>
-                    <div
-                      className={'dr-statistics info-buttons'}
-                      onClick={this.onDrStatisticsClick}
-                    >
-                      Статистика
-                    </div>
+                    <DrStatisticsModal
+                      data={this.state.data}
+                      onExport={this.onExportClick}
+                    />
                   </div>
                 </div>
-                {/*<div className="right">
-              <div className="show-filters" onClick={this.onShowHidden}>
-                Скрыть/ Показать поля
-              </div>
-              <ExportXlsxModal
-                data={this.state.dataxls}
-                onExport={this.onExportClick}
-              />
-            </div>*/}
               </div>
             </div>
             <div
