@@ -577,18 +577,22 @@ body {
 
         .icon-filter {
           background-image: asset_data_url("icons/filter.png");
-          padding-left: 50px;
+          padding-left: 45px;
           margin-left: 20%;
         }
 
         .icon-replace {
           background-image: asset_data_url("icons/replace.png");
-          padding-left: 50px;
+          padding-left: 40px;
         }
 
         .add-row {
           background-image: asset_data_url("icons/add_row.png");
-          padding-left: 55px;
+          padding-left: 45px;
+        }
+        .dr-statistics {
+          background-image: asset_data_url("icons/statistics.png");
+          padding-left: 45px;
         }
       }
 

@@ -114,7 +114,7 @@ var TableContainer = createReactClass({
     dr_details: PropTypes.object,
     onCommentSave: PropTypes.func,
     onDrCancel: PropTypes.func,
-    isDrNew: PropTypes.bool
+    is_dr_new: PropTypes.bool
   },
 
   mixins: [LocalStorageMixin],
@@ -589,7 +589,7 @@ var TableContainer = createReactClass({
       mainCheckbox_new: false,
       mainCheckbox_old: false,
       exportIndex: 0,
-      isDrNew: false,
+      is_dr_new: false,
       systemFilter: null,
       show_hidden_columns: false,
       pagination: {
@@ -628,7 +628,7 @@ var TableContainer = createReactClass({
     this.setState({
       editedRow: rowIndex,
       editedDr: rowData,
-      isDrNew: false
+      is_dr_new: false
     });
   },
 
@@ -783,12 +783,12 @@ var TableContainer = createReactClass({
   //
   onAddRowClick: function() {
     this.setState({
-      isDrNew: true
+      is_dr_new: true
     });
   },
   onDrCancel: function() {
     this.setState({
-      isDrNew: false
+      is_dr_new: false
     });
   },
 
@@ -966,12 +966,13 @@ var TableContainer = createReactClass({
   //    this.setState({ lockRow: false, sendData: {}, editedRow: null });
   //  }
   //},
-  onDrInsert: function(pds_dr, comment) {
+  onDrInsert: function(pds_dr, comment, is_new) {
+    debugger;
     var url = '/create_dr_and_comment';
-    var idx = this.state.data.length;
     var d = {};
     d['pds_dr'] = pds_dr;
     d['pds_dr_comment'] = comment;
+    d['is_new'] = is_new;
     $.ajax({
       url: url,
       dataType: 'json',
@@ -981,7 +982,12 @@ var TableContainer = createReactClass({
       success: function(response) {
         var data = this.state.data;
         var editedDr = response.data[0];
-        data.push(editedDr);
+        if (is_new) {
+          data.push(editedDr);
+        } else {
+          var idx = findIndex(this.state.data, { id: editedDr.id });
+          data[idx] = editedDr;
+        }
         this.setState({
           data,
           editedDr
@@ -1221,6 +1227,12 @@ var TableContainer = createReactClass({
                     >
                       Добавить DR
                     </div>
+                    <div
+                      className={'dr-statistics info-buttons'}
+                      onClick={this.onDrStatisticsClick}
+                    >
+                      Статистика
+                    </div>
                   </div>
                 </div>
                 {/*<div className="right">
@@ -1313,7 +1325,7 @@ var TableContainer = createReactClass({
             dr_details={dr_details}
             onCommentSave={this.onCommentSave}
             onDrInsert={this.onDrInsert}
-            isDrNew={this.state.isDrNew}
+            is_dr_new={this.state.is_dr_new}
             onDrCancel={this.onDrCancel}
           />
         </div>

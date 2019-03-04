@@ -25,7 +25,14 @@ class PdsDrsController < BaseController
   end
 
   def create_dr_and_comment
-    pds_dr = PdsDr.new params[:pds_dr].permit!
+    if params[:is_new]
+      pds_dr = PdsDr.new params[:pds_dr].permit!
+    else
+      pds_dr_u = params[:pds_dr]
+      pds_dr = PdsDr.find(pds_dr_u[:id])
+      pds_dr.sys = pds_dr_u[:sys]
+      pds_dr.Priority = pds_dr_u[:Priority]
+    end
     pds_dr.save
     pds_dr_comment = PdsDrComment.new params[:pds_dr_comment].permit!
     pds_dr_comment.pds_dr_id = pds_dr.id

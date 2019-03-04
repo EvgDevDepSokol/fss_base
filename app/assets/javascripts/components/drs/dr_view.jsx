@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { DRSTATUS, DRPRIORITY } from './dr_data.jsx';
 const NOT_SELECTED = '-Не выбрано-';
+const TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 class DrView extends React.Component {
   static displayName = 'DrView';
@@ -14,17 +15,17 @@ class DrView extends React.Component {
     onCommentSave: PropTypes.func,
     onDrCancel: PropTypes.func,
     onDrInsert: PropTypes.func,
-    isDrNew: PropTypes.bool
+    is_dr_new: PropTypes.bool
   };
 
   state = {
     project: this.props.project,
     dr_details: this.props.dr_details,
-    isDrNew: this.props.isDrNew,
-    isDrEdit: false,
+    is_dr_new: this.props.is_dr_new,
+    is_dr_edit: false,
     comment: {
       status: 1,
-      comment_date: Date(),
+      comment_date: moment().format(TIME_FORMAT),
       pds_engineer: current_user,
       comment_text: '',
       pds_dr_id: -1
@@ -68,9 +69,9 @@ class DrView extends React.Component {
 
   onTextEditorCancel = function() {
     var comment = this.state.comment;
-    var isDrEdit = false;
+    var is_dr_edit = false;
     comment.comment_text = '';
-    this.setState({ comment, isDrEdit });
+    this.setState({ comment, is_dr_edit });
   };
 
   comment_table = function(comment, i) {
@@ -111,8 +112,8 @@ class DrView extends React.Component {
   comment_buttons = function() {
     var disabled = true;
     disabled = this.isCommentEmpty();
-    if (this.props.isDrNew && this.state.select.sys_id == -1) disabled = true;
-    if (this.state.isDrEdit) {
+    if (this.props.is_dr_new && this.state.select.sys_id == -1) disabled = true;
+    if (this.state.is_dr_edit) {
       disabled = true;
       var dr_details = this.props.dr_details;
       var dr_details_local = this.state.dr_details_local;
@@ -146,7 +147,7 @@ class DrView extends React.Component {
   onCommentAdd = function(val) {
     var comment = {
       status: val,
-      comment_date: moment().format(),
+      comment_date: moment().format(TIME_FORMAT),
       pds_engineer: current_user,
       pds_dr_id: this.props.dr_details.id
     };
@@ -158,9 +159,9 @@ class DrView extends React.Component {
     comment.comment_author_id = comment.pds_engineer.engineer_N;
     delete comment.pds_engineer;
     comment.Project = project.id;
-    if (this.props.isDrNew) {
-      var dr_details_local = this.state.dr_details_local;
-      var pds_dr = {};
+    var pds_dr = {};
+    var dr_details_local = this.state.dr_details_local;
+    if (this.props.is_dr_new) {
       pds_dr.query = comment.comment_text;
       pds_dr.drAuthor = dr_details_local.drAuthor;
       pds_dr.Project = project.id;
@@ -168,7 +169,29 @@ class DrView extends React.Component {
       pds_dr.drNum = -1;
       pds_dr.Priority = dr_details_local.Priority;
 
-      this.props.onDrInsert(pds_dr, comment);
+      this.props.onDrInsert(pds_dr, comment, true);
+    } else if (this.state.is_dr_edit) {
+      var msg = [];
+      var dr_details = this.props.dr_details;
+      pds_dr.sys = dr_details_local.system.id;
+      pds_dr.Priority = dr_details_local.Priority;
+      pds_dr.id = dr_details.id;
+      if (dr_details_local.system.id != dr_details.system.id)
+        msg.push(
+          `система '${dr_details.system.System}' на '${
+            dr_details_local.system.System
+          }'`
+        );
+      if (dr_details_local.Priority != dr_details.Priority)
+        msg.push(
+          `приоритет '${DRPRIORITY[dr_details.Priority].label}' на '${
+            DRPRIORITY[dr_details_local.Priority].label
+          }'`
+        );
+
+      comment.comment_text = 'Изменено: ' + msg.join(', ') + '.';
+
+      this.props.onDrInsert(pds_dr, comment, false);
     } else {
       this.props.onCommentSave(comment);
     }
@@ -182,7 +205,7 @@ class DrView extends React.Component {
     comment.pds_engineer = current_user;
     comment.status = 1;
     comment.comment_text = '';
-    this.setState({ comment: comment, isDrEdit: false });
+    this.setState({ comment: comment, is_dr_edit: false });
     this.props.onDrCancel();
   };
 
@@ -324,7 +347,8 @@ class DrView extends React.Component {
     var dr_details_local = this.state.dr_details_local;
     var comment = this.state.comment;
     comment.status = last_status;
-    //comment.comment_text = dr_details.query;
+    comment.comment_date = moment().format(TIME_FORMAT);
+
     dr_details_local.Priority = dr_details.Priority;
     dr_details_local.drNum = dr_details.drNum;
     dr_details_local.id = dr_details.id;
@@ -332,13 +356,13 @@ class DrView extends React.Component {
     dr_details_local.status = dr_details.status;
     dr_details_local.system.id = dr_details.system.id;
     dr_details_local.comments = dr_details.comments;
-    var isDrEdit = true;
+    var is_dr_edit = true;
     var select = {
       sys_id: dr_details_local.system.id,
       eng_id: -1
     };
 
-    this.setState({ dr_details_local, isDrEdit, select });
+    this.setState({ dr_details_local, is_dr_edit, select });
     var e = { target: { value: select.sys_id } };
     this.onSysChange(e);
   };
@@ -346,12 +370,14 @@ class DrView extends React.Component {
   render() {
     var this_ = this;
     var project = this.props.project.project_name;
-    var isDrNew = this.props.isDrNew;
-    var isDrEdit = this.state.isDrEdit;
+    var is_dr_new = this.props.is_dr_new;
+    var is_dr_edit = this.state.is_dr_edit;
     var dr_details =
-      isDrNew || isDrEdit ? this.state.dr_details_local : this.props.dr_details;
+      is_dr_new || is_dr_edit
+        ? this.state.dr_details_local
+        : this.props.dr_details;
     var comment = this.state.comment;
-    var show_new_comment = isDrNew || comment.pds_dr_id == dr_details.id;
+    var show_new_comment = is_dr_new || comment.pds_dr_id == dr_details.id;
     var dr_comments =
       dr_details['comments'].length == 0
         ? null
@@ -359,7 +385,7 @@ class DrView extends React.Component {
           return this_.comment_table(comment, i);
         });
     var last_status;
-    if (isDrNew || dr_details['comments'].length == 0) {
+    if (is_dr_new || dr_details['comments'].length == 0) {
       last_status = 6;
     } else {
       last_status = dr_details['comments'].slice(-1)[0].status;
@@ -373,14 +399,15 @@ class DrView extends React.Component {
       );
     });
 
-    var dr_edit_button = [0, 1, 2, 3, 5, 6].includes(last_status) ? (
-      <button
-        className="dr_edit_button"
-        onClick={() => this_.onDrEditClick(last_status)}
-      >
-        Редактировать DR
-      </button>
-    ) : null;
+    var dr_edit_button =
+      [0, 1, 2, 3, 5, 6].indexOf(last_status) != -1 ? (
+        <button
+          className="dr_edit_button"
+          onClick={() => this_.onDrEditClick(last_status)}
+        >
+          Редактировать DR
+        </button>
+      ) : null;
 
     return (
       <div className="dr_view_form">
@@ -413,19 +440,19 @@ class DrView extends React.Component {
           <table>
             <tbody>
               <tr>
-                {isDrNew || isDrEdit ? this.sys_eng_selector(15) : null}
-                {isDrNew || isDrEdit ? this.priority_selector(15) : null}
+                {is_dr_new || is_dr_edit ? this.sys_eng_selector(15) : null}
+                {is_dr_new || is_dr_edit ? this.priority_selector(15) : null}
               </tr>
             </tbody>
           </table>
         </div>
         <div className="dr_body">{dr_comments}</div>
         <div className="dr_buttons">
-          {show_new_comment || isDrEdit ? null : [dr_buttons, dr_edit_button]}
+          {show_new_comment || is_dr_edit ? null : [dr_buttons, dr_edit_button]}
         </div>
         <div className="dr_body">
           {show_new_comment ? this.comment_table(comment, -1) : null}
-          {show_new_comment || isDrEdit ? this.comment_buttons() : null}
+          {show_new_comment || is_dr_edit ? this.comment_buttons() : null}
         </div>
       </div>
     );
