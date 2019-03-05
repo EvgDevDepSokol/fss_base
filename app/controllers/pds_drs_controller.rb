@@ -12,6 +12,7 @@ class PdsDrsController < BaseController
 
     @sys_eng_list = {}
     @eng_sys_list = {}
+    @sys_eng_list[34] = { 'sys_name': 'ALL', 'engineers': [] }
     PdsEngOnSy.where(project: project.ProjectID)
               .includes(:pds_engineer, :system)
               .order('pds_syslist.System')

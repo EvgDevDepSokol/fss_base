@@ -305,6 +305,11 @@ class DrView extends React.Component {
       if (a.label > b.label) return 1;
       return 0;
     });
+    sys_opt = sys_opt.sort(function(a, b) {
+      if (a.label < b.label) return -1;
+      if (a.label > b.label) return 1;
+      return 0;
+    });
     eng_opt.unshift({ value: -1, label: NOT_SELECTED });
     sys_opt.unshift({ value: -1, label: NOT_SELECTED });
     sys_opt = sys_opt.map(function(opt, i) {
