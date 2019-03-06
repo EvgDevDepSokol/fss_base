@@ -27,6 +27,7 @@
     "reactabular-sticky": "^8.14.0",
     "reactabular-table": "^8.14.0",
     "reactabular-virtualized": "^8.17.0",
+    "recharts": "^1.5.0",
     "redux": "^4.0.1",
     "segmentize": ">=0.4.1",
     "sortabular": "^1.6.0",

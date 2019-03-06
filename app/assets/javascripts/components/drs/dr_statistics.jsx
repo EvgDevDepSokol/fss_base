@@ -54,7 +54,7 @@ class DrStatisticsModal extends React.Component {
       row = prepareRow(row, date_now);
       sys_id = row.system.id;
       if (stat_sys[sys_id]) {
-        stat_sys[sys_id]['tot'] += 1;
+        stat_sys[sys_id]['tot']++;
       } else {
         stat_sys[sys_id] = {
           opn: 0,
@@ -73,11 +73,59 @@ class DrStatisticsModal extends React.Component {
         if (row['time_left_val'] < 0) stat_sys[sys_id]['ovd']++;
       }
     });
-    this.setState({ stat_sys, data });
+
+    var stat_eng_table = [];
+    Object.keys(eng_sys_list).forEach(function(eng_id) {
+      var eng_name = eng_sys_list[eng_id]['eng_name'];
+      var eng_table = [];
+      eng_sys_list[eng_id]['systems'].forEach(function(system, i) {
+        var key;
+        if (stat_eng[eng_id]) {
+          for (key in stat_sys[system.sys_id])
+            stat_eng[eng_id][key] += stat_sys[system.sys_id][key];
+        } else {
+          stat_eng[eng_id] = {};
+          for (key in stat_sys[system.sys_id])
+            stat_eng[eng_id][key] = stat_sys[system.sys_id][key];
+        }
+      });
+      Object.keys(HEADERS).forEach(function(header) {
+        eng_table.push(stat_eng[eng_id][header]);
+      });
+      var row = [eng_name].concat(eng_table);
+      stat_eng_table.push(row);
+    });
+
+    var stat_sys_table = [];
+
+    Object.keys(sys_eng_list).forEach(function(sys_id) {
+      var sys_name = sys_eng_list[sys_id]['sys_name'];
+      var sys_table = [];
+      Object.keys(HEADERS).forEach(function(header) {
+        sys_table.push(stat_sys[sys_id][header]);
+      });
+      var row = [sys_name].concat(sys_table);
+      stat_sys_table.push(row);
+    });
+    stat_sys_table = stat_sys_table.sort(this.sortList);
+    var last_row = ['Всего', 0, 0, 0, 0, 0];
+    stat_sys_table.forEach(function(row) {
+      for (var i = 1; i < 6; i++) {
+        last_row[i] += row[i];
+      }
+    });
+    stat_sys_table.push(last_row);
+
+    this.setState({ stat_sys_table, stat_eng_table, data });
   };
 
   closeModal = () => {
-    this.setState({ modalIsOpen: false, stat_sys: null, data: null });
+    this.setState({
+      modalIsOpen: false,
+      stat_eng_table: null,
+      stat_sys_table: null,
+      data: null
+    });
   };
 
   //onRadioChange = e => {
@@ -90,15 +138,21 @@ class DrStatisticsModal extends React.Component {
   //  this.props.onExport(exportIndex);
   //  this.setState({ modalIsOpen: false });
   //};
+  sortList = (a, b) => {
+    if (a[0] < b[0]) return -1;
+    if (a[0] > b[0]) return 1;
+    return 0;
+  };
 
   render() {
     var data = this.state.data;
-    var stat_sys = this.state.stat_sys;
-    var table1 = null;
-    if (this.state.modalIsOpen && stat_sys) {
-      var stat_sys_table = [];
-      var header = (
-        <tr className="header">
+    var stat_sys_table = this.state.stat_sys_table;
+    var stat_eng_table = this.state.stat_eng_table;
+    var table_sys = null;
+    var table_eng = null;
+    if (this.state.modalIsOpen && stat_sys_table) {
+      var stat_sys_header = (
+        <tr className="stat_sys_header">
           <td>Система</td>
           <td>Открытых</td>
           <td>Закрытых</td>
@@ -107,37 +161,43 @@ class DrStatisticsModal extends React.Component {
           <td>Всего</td>
         </tr>
       );
-
-      //Object.keys(stat_sys).forEach(function(key) {
-      Object.keys(sys_eng_list).forEach(function(key) {
-        //var sys_name = <td key="td-sys">{sys_eng_list[key]['sys_name']}</td>;
-        var sys_name = sys_eng_list[key]['sys_name'];
-        var sys_table = [];
-        Object.keys(HEADERS).forEach(function(header, i) {
-          sys_table.push(stat_sys[key][header]);
-          //sys_table.push(<td key={'td-' + i}>{stat_sys[key][header]}</td>);
-        });
-        //var row = <tr key={'row' + key}>{[sys_name, sys_table]}</tr>;
-        var row = [sys_name].concat(sys_table);
-        stat_sys_table.push(row);
-      });
-      debugger;
-      stat_sys_table = stat_sys_table.sort(function(a, b) {
-        if (a[0] < b[0]) return -1;
-        if (a[0] > b[0]) return 1;
-        return 0;
-      });
       stat_sys_table = stat_sys_table.map(function(row, i) {
         row = row.map(function(col, j) {
           return <td key={'td-' + j}>{col}</td>;
         });
         return <tr key={'row-' + i}>{row}</tr>;
       });
-      table1 = (
+      table_sys = (
         <div>
           <table>
-            <thead>{header}</thead>
+            <thead>{stat_sys_header}</thead>
             <tbody>{stat_sys_table}</tbody>
+          </table>
+        </div>
+      );
+    }
+    if (this.state.modalIsOpen && stat_eng_table) {
+      var stat_eng_header = (
+        <tr className="stat_eng_header">
+          <td>Инженер</td>
+          <td>Открытых</td>
+          <td>Закрытых</td>
+          <td>Готовых к проверке</td>
+          <td>Просроченных</td>
+          <td>Всего</td>
+        </tr>
+      );
+      stat_eng_table = stat_eng_table.map(function(row, i) {
+        row = row.map(function(col, j) {
+          return <td key={'td-' + j}>{col}</td>;
+        });
+        return <tr key={'row-' + i}>{row}</tr>;
+      });
+      table_eng = (
+        <div>
+          <table>
+            <thead>{stat_eng_header}</thead>
+            <tbody>{stat_eng_table}</tbody>
           </table>
         </div>
       );
@@ -154,7 +214,8 @@ class DrStatisticsModal extends React.Component {
           contentLabel="Статистика рассогласований"
         >
           <h4>Статистика рассогласований</h4>
-          {table1}
+          {table_sys}
+          {table_eng}
           {/*<button onClick={this.onExport}>Экспорт</button>*/}
           <button onClick={this.closeModal}>Отмена</button>
         </Modal>
