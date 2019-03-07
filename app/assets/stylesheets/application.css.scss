@@ -590,7 +590,7 @@ body {
           background-image: asset_data_url("icons/add_row.png");
           padding-left: 45px;
         }
-        .dr-statistics {
+        .dr-statistics-modal {
           background-image: asset_data_url("icons/statistics.png");
           padding-left: 45px;
         }
@@ -1244,7 +1244,42 @@ footer {
     }
   }
 }
+.dr-statistics {
+  height: 100%;
+  overflow: auto;
+  tr {
+    &.header {
+      background-color: cornsilk;
+    }
+  }
 
+  table {
+    width: 100%;
+  }
+  .dr_sys {
+    width: 20%;
+  }
+  .dr_eng {
+    width: 30%;
+  }
+  .dr_status {
+    width: 25%;
+  }
+  .dr_priority {
+    width: 25%;
+  }
+
+  td {
+    width: 100px;
+    border-style: solid;
+    border-color: #427fa1;
+    border-width: thin;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
+  //width: 90%;
+}
 .generate-dbm {
   height: 95%;
 

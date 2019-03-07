@@ -12,11 +12,14 @@ const HEADERS = {
 
 const customStyles = {
   content: {
+    height: '90%',
+    width: '80%',
     top: '50%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
+    marginBottom: '-50%',
     transform: 'translate(-50%, -50%)'
   }
 };
@@ -204,7 +207,10 @@ class DrStatisticsModal extends React.Component {
     }
 
     return (
-      <div className="dr-statistics info-buttons" onClick={this.openModal}>
+      <div
+        className="dr-statistics-modal info-buttons"
+        onClick={this.openModal}
+      >
         Статистика
         <Modal
           isOpen={this.state.modalIsOpen}
@@ -213,11 +219,24 @@ class DrStatisticsModal extends React.Component {
           style={customStyles}
           contentLabel="Статистика рассогласований"
         >
-          <h4>Статистика рассогласований</h4>
-          {table_sys}
-          {table_eng}
-          {/*<button onClick={this.onExport}>Экспорт</button>*/}
-          <button onClick={this.closeModal}>Отмена</button>
+          <button
+            className="modal-close-button"
+            data-close
+            aria-label="Close modal"
+            type="button"
+            onClick={this.closeModal}
+            /*disabled={this.state.isProcessing}*/
+            title="Закрыть"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div className="dr-statistics">
+            <h4>Статистика рассогласований</h4>
+            {table_sys}
+            {table_eng}
+            {/*<button onClick={this.onExport}>Экспорт</button>*/}
+            {/*<button onClick={this.closeModal}>Отмена</button>*/}
+          </div>
         </Modal>
       </div>
     );
