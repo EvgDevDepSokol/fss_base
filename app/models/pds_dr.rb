@@ -12,6 +12,7 @@ class PdsDr < ApplicationRecord
   alias_attribute :pds_engineer_author_id, :drAuthor
   alias_attribute :pds_engineer_closed_id, :closedBy
   alias_attribute :pds_engineer_reply_id, :closedBy
+  NOBODY = { eng_id: 0, eng_name: 'никто' }.freeze
   def serializable_hash(options = {})
     super options.merge(methods: :id)
   end
