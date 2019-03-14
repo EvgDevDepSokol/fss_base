@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { prepareRow } from './dr_data.jsx';
@@ -10,7 +10,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend
+  Legend,
+  LabelList
 } from 'recharts';
 const HEADERS = {
   opn: 'Открытых',
@@ -33,6 +34,27 @@ const customStyles = {
     transform: 'translate(-50%, -50%)'
   }
 };
+
+class CustomizedAxisTick extends PureComponent {
+  render() {
+    const { x, y, stroke, payload } = this.props;
+
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text
+          x={0}
+          y={0}
+          dy={16}
+          textAnchor="end"
+          fill="#666"
+          transform="rotate(-35)"
+        >
+          {payload.value}
+        </text>
+      </g>
+    );
+  }
+}
 
 class DrStatisticsModal extends React.Component {
   static displayName = 'DrStatisticsModal';
@@ -245,8 +267,8 @@ class DrStatisticsModal extends React.Component {
             margin={{
               top: 5,
               right: 5,
-              left: 80,
-              bottom: 5
+              left: 5,
+              bottom: 20
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -254,7 +276,9 @@ class DrStatisticsModal extends React.Component {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых" />
+            <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых">
+              {/*<LabelList dataKey="opn" position="Top" />*/}
+            </Bar>
             <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" />
           </BarChart>
         </div>
@@ -267,21 +291,25 @@ class DrStatisticsModal extends React.Component {
             width={1000}
             height={500}
             data={stat_eng_chart}
-            layout="vertical"
             margin={{
               top: 5,
               right: 5,
-              left: 80,
-              bottom: 5
+              left: 5,
+              bottom: 20
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" />
-            <YAxis type="category" dataKey="name" />
             <Tooltip />
+            <Bar dataKey="opn" fill="#8884d8" name="Открытых" />
+            <Bar dataKey="cls" fill="#82ca9d" name="Закрытых" />
+            <XAxis
+              dataKey="name"
+              height={100}
+              interval={0}
+              tick={<CustomizedAxisTick />}
+            />
+            <YAxis />
             <Legend />
-            <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых" />
-            <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" />
           </BarChart>
         </div>
       );
