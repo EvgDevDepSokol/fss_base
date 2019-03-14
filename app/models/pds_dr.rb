@@ -17,11 +17,11 @@ class PdsDr < ApplicationRecord
     super options.merge(methods: :id)
   end
 
-  def self.plucked(project_id)
-    eng_list = {}
-    PdsEngOnSy.where(project: project_id).includes(:pds_engineer).pluck(:sys, 'pds_engineers.name').each.map do |e|
-      eng_list[e[0]] = e[1]
-    end
+  def self.plucked(_project_id)
+    # eng_list = {}
+    # PdsEngOnSy.where(project: project_id).includes(:pds_engineer).pluck(:sys, 'pds_engineers.name').each.map do |e|
+    #  eng_list[e[0]] = e[1]
+    # end
     # 'pds_engineer_closeds_pds_dr.engineer_N', 'pds_engineer_closeds_pds_dr.name', :closedDate
     pluck(:id,
       'pds_syslist.SystemID', 'pds_syslist.System',
@@ -34,7 +34,7 @@ class PdsDr < ApplicationRecord
       e1['system'] = { id: e[1], System: e[2] }
       e1['pds_engineer_author'] = { id: e[3], name: e[4] }
       e1['query'] = e[5]
-      e1['pds_engineer_worker'] = eng_list[e[1]]
+      # e1['pds_engineer_worker'] = eng_list[e[1]]
       e1['drNum'] = e[6]
       e1['Priority'] = e[7]
       e1['openedDate'] = e[8]
