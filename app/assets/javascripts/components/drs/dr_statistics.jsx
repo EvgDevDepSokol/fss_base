@@ -245,7 +245,7 @@ class DrStatisticsModal extends React.Component {
             margin={{
               top: 5,
               right: 5,
-              left: 5,
+              left: 80,
               bottom: 5
             }}
           >
@@ -265,18 +265,19 @@ class DrStatisticsModal extends React.Component {
         <div className="bar-chart-container">
           <BarChart
             width={1000}
-            height={400}
+            height={500}
             data={stat_eng_chart}
+            layout="vertical"
             margin={{
               top: 5,
               right: 5,
-              left: 5,
+              left: 80,
               bottom: 5
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
+            <XAxis type="number" />
+            <YAxis type="category" dataKey="name" />
             <Tooltip />
             <Legend />
             <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых" />
