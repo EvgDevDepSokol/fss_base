@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { DRSTATUS, DRPRIORITY } from './dr_data.jsx';
+import { DRSTATUS, DRPRIORITY, getEngBySysId } from './dr_data.jsx';
 const NOT_SELECTED = '-Не выбрано-';
 const TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
@@ -220,14 +220,7 @@ class DrView extends React.Component {
       dr_details_local.pds_engineer_worker = NOT_SELECTED;
     } else {
       dr_details_local.system.System = sys_eng_list[select.sys_id]['sys_name'];
-      dr_details_local.pds_engineer_worker = sys_eng_list[select.sys_id][
-        'engineers'
-      ]
-        .map(function(eng, i) {
-          return eng.eng_name;
-        })
-        .sort()
-        .join(', ');
+      dr_details_local.pds_engineer_worker = getEngBySysId(select.sys_id);
     }
     this.setState({ select, dr_details_local });
   }.bind(this);

@@ -55,6 +55,7 @@ var prepareRow = function(row, date_now) {
   row['status_desc'] = DRSTATUS[row['status']].label;
   row['Priority'] = row['Priority'] ? row['Priority'] : 0;
   row['priority_desc'] = DRPRIORITY[row['Priority']].label;
+  row['pds_engineer_worker'] = getEngBySysId(row['system']['id']);
   if (row['status'] == 4) {
     row['time_left'] = 'Закрыт';
     row['time_left_val'] = 36500;
@@ -72,8 +73,18 @@ var prepareRow = function(row, date_now) {
   return row;
 };
 
+var getEngBySysId = function(sys_id) {
+  return sys_eng_list[sys_id]['engineers']
+    .map(function(eng, i) {
+      return eng.eng_name;
+    })
+    .sort()
+    .join(', ');
+};
+
 const _DRSTATUS = DRSTATUS;
 const _DRPRIORITY = DRPRIORITY;
 export { _DRSTATUS as DRSTATUS };
 export { _DRPRIORITY as DRPRIORITY };
 export { prepareRow };
+export { getEngBySysId };

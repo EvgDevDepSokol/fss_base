@@ -969,7 +969,6 @@ var TableContainer = createReactClass({
   //  }
   //},
   onDrInsert: function(pds_dr, comment, is_new) {
-    debugger;
     var url = '/create_dr_and_comment';
     var d = {};
     d['pds_dr'] = pds_dr;
@@ -1064,24 +1063,6 @@ var TableContainer = createReactClass({
     var date_now = new Date(Date.now());
     data.forEach(function(row) {
       prepareRow(row, date_now);
-      //row['status'] = row['status'] ? row['status'] : 6;
-      //row['status_desc'] = DRSTATUS[row['status']].label;
-      //row['Priority'] = row['Priority'] ? row['Priority'] : 0;
-      //row['priority_desc'] = DRPRIORITY[row['Priority']].label;
-      //if (row['status'] == 4) {
-      //  row['time_left'] = 'Закрыт';
-      //  row['time_left_val'] = 36500;
-      //} else {
-      //  var date1 = new Date(row['openedDate']);
-      //  var timeDiff = date2 - date1;
-      //  var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      //  var time_left = DRPRIORITY[row['Priority']].period - diffDays;
-      //  row['time_left_val'] = time_left;
-      //  row['time_left'] =
-      //    time_left > 0
-      //      ? 'Осталось ' + time_left + ' дней'
-      //      : 'Просрочен на ' + Math.abs(time_left) + ' дней';
-      //}
     });
 
     if (systemFilter && systemFilter != -1) {

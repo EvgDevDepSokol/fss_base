@@ -34,7 +34,6 @@ class PdsDrsController < BaseController
       @eng_sys_list[nobody[:eng_id]] = { eng_name: nobody[:eng_name], systems: [] } if @eng_sys_list[nobody[:eng_id]].nil?
       @eng_sys_list[nobody[:eng_id]][:systems].push(sys_id: key, sys_name: sys_eng[:sys_name])
     end
-    byebug
   end
 
   def create_dr_and_comment
