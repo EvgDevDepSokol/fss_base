@@ -88,6 +88,7 @@ class DrStatisticsModal extends React.Component {
     });
 
     var stat_eng_table = [];
+    var stat_eng_chart = [];
     Object.keys(eng_sys_list).forEach(function(eng_id) {
       var eng_name = eng_sys_list[eng_id]['eng_name'];
       var eng_table = [];
@@ -108,6 +109,7 @@ class DrStatisticsModal extends React.Component {
       var row = [eng_name].concat(eng_table);
       stat_eng_table.push(row);
     });
+    stat_eng_chart = this.tableToChart(stat_eng_table);
 
     var stat_sys_table = [];
     var stat_sys_chart = [];
@@ -122,9 +124,7 @@ class DrStatisticsModal extends React.Component {
       stat_sys_table.push(row);
     });
     stat_sys_table = stat_sys_table.sort(this.sortList);
-    stat_sys_chart = stat_sys_table.map(function(sys, i) {
-      return { sys_name: sys[0], opn: sys[1], cls: sys[2] };
-    });
+    stat_sys_chart = this.tableToChart(stat_sys_table);
     var last_row = ['Всего', 0, 0, 0, 0, 0];
     stat_sys_table.forEach(function(row) {
       for (var i = 1; i < 6; i++) {
@@ -133,7 +133,13 @@ class DrStatisticsModal extends React.Component {
     });
     stat_sys_table.push(last_row);
 
-    this.setState({ stat_sys_table, stat_eng_table, data, stat_sys_chart });
+    this.setState({
+      stat_sys_table,
+      stat_eng_table,
+      data,
+      stat_sys_chart,
+      stat_eng_chart
+    });
   };
 
   closeModal = () => {
@@ -142,6 +148,12 @@ class DrStatisticsModal extends React.Component {
       stat_eng_table: null,
       stat_sys_table: null,
       data: null
+    });
+  };
+
+  tableToChart = table => {
+    return table.map(function(row, i) {
+      return { name: row[0], opn: row[1], cls: row[2] };
     });
   };
 
@@ -166,9 +178,11 @@ class DrStatisticsModal extends React.Component {
     var stat_sys_table = this.state.stat_sys_table;
     var stat_eng_table = this.state.stat_eng_table;
     var stat_sys_chart = this.state.stat_sys_chart;
+    var stat_eng_chart = this.state.stat_eng_chart;
     var table_sys = null;
     var table_eng = null;
-    var bar_chart = null;
+    var bar_chart_sys = null;
+    var bar_chart_eng = null;
     if (this.state.modalIsOpen && stat_sys_table) {
       var stat_sys_header = (
         <tr className="stat_sys_header">
@@ -222,7 +236,7 @@ class DrStatisticsModal extends React.Component {
       );
     }
     if (this.state.modalIsOpen && stat_sys_chart) {
-      bar_chart = (
+      bar_chart_sys = (
         <div className="bar-chart-container">
           <BarChart
             width={1000}
@@ -236,7 +250,32 @@ class DrStatisticsModal extends React.Component {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="sys_name" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых" />
+            <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" />
+          </BarChart>
+        </div>
+      );
+    }
+    if (this.state.modalIsOpen && stat_eng_chart) {
+      bar_chart_eng = (
+        <div className="bar-chart-container">
+          <BarChart
+            width={1000}
+            height={400}
+            data={stat_eng_chart}
+            margin={{
+              top: 5,
+              right: 5,
+              left: 5,
+              bottom: 5
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
             <Legend />
@@ -275,7 +314,8 @@ class DrStatisticsModal extends React.Component {
             <h4>Статистика рассогласований</h4>
             {table_sys}
             {table_eng}
-            {bar_chart}
+            {bar_chart_sys}
+            {bar_chart_eng}
             {/*<button onClick={this.onExport}>Экспорт</button>*/}
             {/*<button onClick={this.closeModal}>Отмена</button>*/}
           </div>
