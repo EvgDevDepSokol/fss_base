@@ -12,6 +12,7 @@
     var current_user = #{current_user.to_json};
     var sys_eng_list = #{Oj.dump(@sys_eng_list)};
     var eng_sys_list = #{Oj.dump(@eng_sys_list)};
+    var time_period = #{Oj.dump(@time_period)};
 
 = render file: 'layouts/application'
 

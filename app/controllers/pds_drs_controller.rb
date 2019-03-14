@@ -10,6 +10,9 @@ class PdsDrsController < BaseController
 
     @sys_eng_list = {}
     @eng_sys_list = {}
+    @time_period = {}
+    @time_period[:date_max] = PdsDrComment.where(project: project.ProjectID).minimum(:comment_date)
+    @time_period[:date_min] = PdsDrComment.where(project: project.ProjectID).maximum(:comment_date)
     PdsSysDescription.where(project: project.ProjectID)
                      .includes(:system)
                      .order('pds_syslist.System')

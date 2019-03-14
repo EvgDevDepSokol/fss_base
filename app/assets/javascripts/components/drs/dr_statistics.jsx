@@ -2,6 +2,16 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { prepareRow } from './dr_data.jsx';
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend
+} from 'recharts';
 const HEADERS = {
   opn: 'Открытых',
   cls: 'Закрытых',
@@ -100,6 +110,7 @@ class DrStatisticsModal extends React.Component {
     });
 
     var stat_sys_table = [];
+    var stat_sys_chart = [];
 
     Object.keys(sys_eng_list).forEach(function(sys_id) {
       var sys_name = sys_eng_list[sys_id]['sys_name'];
@@ -111,6 +122,9 @@ class DrStatisticsModal extends React.Component {
       stat_sys_table.push(row);
     });
     stat_sys_table = stat_sys_table.sort(this.sortList);
+    stat_sys_chart = stat_sys_table.map(function(sys, i) {
+      return { sys_name: sys[0], opn: sys[1], cls: sys[2] };
+    });
     var last_row = ['Всего', 0, 0, 0, 0, 0];
     stat_sys_table.forEach(function(row) {
       for (var i = 1; i < 6; i++) {
@@ -119,7 +133,7 @@ class DrStatisticsModal extends React.Component {
     });
     stat_sys_table.push(last_row);
 
-    this.setState({ stat_sys_table, stat_eng_table, data });
+    this.setState({ stat_sys_table, stat_eng_table, data, stat_sys_chart });
   };
 
   closeModal = () => {
@@ -151,8 +165,10 @@ class DrStatisticsModal extends React.Component {
     var data = this.state.data;
     var stat_sys_table = this.state.stat_sys_table;
     var stat_eng_table = this.state.stat_eng_table;
+    var stat_sys_chart = this.state.stat_sys_chart;
     var table_sys = null;
     var table_eng = null;
+    var bar_chart = null;
     if (this.state.modalIsOpen && stat_sys_table) {
       var stat_sys_header = (
         <tr className="stat_sys_header">
@@ -205,6 +221,31 @@ class DrStatisticsModal extends React.Component {
         </div>
       );
     }
+    if (this.state.modalIsOpen && stat_sys_chart) {
+      bar_chart = (
+        <div className="bar-chart-container">
+          <BarChart
+            width={1000}
+            height={400}
+            data={stat_sys_chart}
+            margin={{
+              top: 5,
+              right: 5,
+              left: 5,
+              bottom: 5
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="sys_name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых" />
+            <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" />
+          </BarChart>
+        </div>
+      );
+    }
 
     return (
       <div
@@ -234,6 +275,7 @@ class DrStatisticsModal extends React.Component {
             <h4>Статистика рассогласований</h4>
             {table_sys}
             {table_eng}
+            {bar_chart}
             {/*<button onClick={this.onExport}>Экспорт</button>*/}
             {/*<button onClick={this.closeModal}>Отмена</button>*/}
           </div>
