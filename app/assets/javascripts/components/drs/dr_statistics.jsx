@@ -3,6 +3,8 @@ import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { prepareRow } from './dr_data.jsx';
 import {
+  LineChart,
+  Line,
   BarChart,
   Bar,
   Cell,
@@ -36,9 +38,14 @@ const customStyles = {
 };
 
 class CustomizedAxisTick extends PureComponent {
+  static propTypes = {
+    x: PropTypes.number,
+    y: PropTypes.number,
+    stroke: PropTypes.string,
+    payload: PropTypes.object
+  };
   render() {
     const { x, y, stroke, payload } = this.props;
-
     return (
       <g transform={`translate(${x},${y})`}>
         <text
@@ -75,6 +82,7 @@ class DrStatisticsModal extends React.Component {
     var stat_eng = {};
     var sys_id;
     var this_ = this;
+    var dateToArrayIndex = this.dateToArrayIndex;
     Object.keys(sys_eng_list).forEach(function(key) {
       stat_sys[key] = {
         opn: 0,
@@ -109,8 +117,10 @@ class DrStatisticsModal extends React.Component {
       }
     });
 
+    /*Таблица и столбчатый график по инженерам*/
     var stat_eng_table = [];
     var stat_eng_chart = [];
+
     Object.keys(eng_sys_list).forEach(function(eng_id) {
       var eng_name = eng_sys_list[eng_id]['eng_name'];
       var eng_table = [];
@@ -133,6 +143,7 @@ class DrStatisticsModal extends React.Component {
     });
     stat_eng_chart = this.tableToChart(stat_eng_table);
 
+    /*Таблица и столбчатый график по системам*/
     var stat_sys_table = [];
     var stat_sys_chart = [];
 
@@ -154,13 +165,65 @@ class DrStatisticsModal extends React.Component {
       }
     });
     stat_sys_table.push(last_row);
+    /*Закончил с таблицами и столбчатыми графиками*/
+    /*Начал набирать статистику для графиков с зависимостью от времени*/
+    var t1 = new Date(time_period.date_min);
+    var t_min = new Date(t1.getFullYear(), t1.getMonth(), t1.getDate());
+    var numDays = dateToArrayIndex(time_period.date_max, t_min) + 1;
+
+    var stat_sys_date_tot = {};
+    var stat_sys_date_dif = {};
+    Object.keys(sys_eng_list).forEach(function(key) {
+      stat_sys_date_tot[key] = [];
+      stat_sys_date_dif[key] = [];
+      for (var i = 0; i < numDays; i++) {
+        stat_sys_date_tot[key].push({ day: i, opn: 0, cls: 0, rdy: 0 });
+        stat_sys_date_dif[key].push({ day: i, opn: 0, cls: 0, rdy: 0 });
+      }
+    });
+
+    var data_chart = [];
+
+    data.forEach(function(dr) {
+      var sys_id = dr.system.id;
+      var com_arr = dr.comments.map(function(comment, j) {
+        var ind = dateToArrayIndex(comment.comment_date, t_min);
+        return { i_start: ind, status: comment.status };
+      });
+      var len = com_arr.length - 1;
+      var i;
+      for (i = 0; i < len; i++) {
+        com_arr[i]['i_finish'] = com_arr[i + 1]['i_start'];
+      }
+      com_arr[len]['i_finish'] = numDays;
+      com_arr.forEach(function(com) {
+        var st = com.status;
+        if (st == 4) {
+          stat_sys_date_dif[sys_id][com.i_start].cls++;
+          for (i = com.i_start; i < com.i_finish; i++) {
+            stat_sys_date_tot[sys_id][i].cls++;
+          }
+        } else {
+          if (st == 3) {
+            stat_sys_date_dif[sys_id][com.i_start].rdy++;
+          } else if (st == 6 || st == 1) {
+            stat_sys_date_dif[sys_id][com.i_start].opn++;
+          }
+          for (i = com.i_start; i < com.i_finish; i++) {
+            stat_sys_date_tot[sys_id][i].opn++;
+          }
+        }
+      });
+    });
 
     this.setState({
       stat_sys_table,
       stat_eng_table,
       data,
       stat_sys_chart,
-      stat_eng_chart
+      stat_eng_chart,
+      stat_sys_date_dif,
+      stat_sys_date_tot
     });
   };
 
@@ -177,6 +240,12 @@ class DrStatisticsModal extends React.Component {
     return table.map(function(row, i) {
       return { name: row[0], opn: row[1], cls: row[2] };
     });
+  };
+
+  dateToArrayIndex = (date, t_min) => {
+    var t2 = new Date(date);
+    var t_max = new Date(t2.getFullYear(), t2.getMonth(), t2.getDate());
+    return Math.floor((t_max - t_min) / 1000 / 60 / 60 / 24);
   };
 
   //onRadioChange = e => {
@@ -201,10 +270,13 @@ class DrStatisticsModal extends React.Component {
     var stat_eng_table = this.state.stat_eng_table;
     var stat_sys_chart = this.state.stat_sys_chart;
     var stat_eng_chart = this.state.stat_eng_chart;
+    var stat_sys_date_tot = this.state.stat_sys_date_tot;
+    var stat_sys_date_dif = this.state.stat_sys_date_dif;
     var table_sys = null;
     var table_eng = null;
     var bar_chart_sys = null;
     var bar_chart_eng = null;
+    var line_chart_eng = null;
     if (this.state.modalIsOpen && stat_sys_table) {
       var stat_sys_header = (
         <tr className="stat_sys_header">
@@ -301,7 +373,7 @@ class DrStatisticsModal extends React.Component {
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Bar dataKey="opn" fill="#8884d8" name="Открытых" />
-            <Bar dataKey="cls" fill="#82ca9d" name="Закрытых" />
+            {/*<Bar dataKey="cls" fill="#82ca9d" name="Закрытых" />*/}
             <XAxis
               dataKey="name"
               height={100}
@@ -311,6 +383,31 @@ class DrStatisticsModal extends React.Component {
             <YAxis />
             <Legend />
           </BarChart>
+        </div>
+      );
+    }
+    if (this.state.modalIsOpen && stat_sys_date_tot) {
+      line_chart_eng = (
+        <div className="bar-chart-container">
+          <LineChart
+            width={1000}
+            height={500}
+            data={stat_sys_date_tot[3]}
+            margin={{
+              top: 5,
+              right: 5,
+              left: 5,
+              bottom: 20
+            }}
+          >
+            <CartesianGrid />
+            <Tooltip />
+            <Line dataKey="opn" stroke="#8884d8" name="Открытых" />
+            <Line dataKey="cls" stroke="#82ca9d" name="Закрытых" />
+            <XAxis dataKey="day" height={100} />
+            <YAxis />
+            <Legend />
+          </LineChart>
         </div>
       );
     }
@@ -345,6 +442,7 @@ class DrStatisticsModal extends React.Component {
             {table_eng}
             {bar_chart_sys}
             {bar_chart_eng}
+            {line_chart_eng}
             {/*<button onClick={this.onExport}>Экспорт</button>*/}
             {/*<button onClick={this.closeModal}>Отмена</button>*/}
           </div>
