@@ -1245,8 +1245,32 @@ footer {
   }
 }
 .dr-statistics {
-  height: 100%;
-  overflow: auto;
+  height: 95%;
+  .dr-stat-list {
+    left: 0px;
+    right: 80%;
+    position: absolute;
+    overflow: auto;
+    height: 90%;
+    padding-left: 3px;
+    padding-right: 3px;
+    select {
+      overflow: hidden;
+      padding-left: 3px;
+      padding-right: 3px;
+      width: 100%;
+    }
+  }
+  .dr-stat-draw {
+    left: 20%;
+    right: 0px;
+    position: absolute;
+    overflow: auto;
+    height: 90%;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
   tr {
     &.header {
       background-color: cornsilk;

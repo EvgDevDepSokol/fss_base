@@ -82,9 +82,24 @@ var getEngBySysId = function(sys_id) {
     .join(', ');
 };
 
+var sortList = function(a, b) {
+  if (a.label < b.label) return -1;
+  if (a.label > b.label) return 1;
+  return 0;
+};
+
+var arrayToOpt = function(opt, i) {
+  return (
+    <option key={'opt-' + i} value={opt.value}>
+      {opt.label}
+    </option>
+  );
+};
 const _DRSTATUS = DRSTATUS;
 const _DRPRIORITY = DRPRIORITY;
 export { _DRSTATUS as DRSTATUS };
 export { _DRPRIORITY as DRPRIORITY };
 export { prepareRow };
 export { getEngBySysId };
+export { sortList };
+export { arrayToOpt };

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
-import { prepareRow } from './dr_data.jsx';
+import { prepareRow, sortList, arrayToOpt } from './dr_data.jsx';
 import {
   LineChart,
   Line,
@@ -22,6 +22,14 @@ const HEADERS = {
   ovd: 'Просроченных',
   tot: 'Всего'
 };
+const CHART_SELECTOR = [
+  { value: 0, label: 'Таблица. Системы.' },
+  { value: 1, label: 'Таблица. Инженеры.' },
+  { value: 2, label: 'Гистограмма. Системы.' },
+  { value: 3, label: 'Гистограмма. Инженеры.' },
+  { value: 4, label: 'График. Системы.' },
+  { value: 5, label: 'График. Инженеры.' }
+];
 
 const customStyles = {
   content: {
@@ -67,7 +75,10 @@ class DrStatisticsModal extends React.Component {
   static displayName = 'DrStatisticsModal';
   state = {
     modalIsOpen: false,
-    exportIndex: 0
+    exportIndex: 0,
+    chart_id: 0,
+    sys_id: Object.keys(sys_eng_list)[0],
+    eng_id: Object.keys(eng_sys_list)[0]
   };
 
   static propTypes = { data: PropTypes.array };
@@ -174,11 +185,27 @@ class DrStatisticsModal extends React.Component {
     var stat_sys_date_tot = {};
     var stat_sys_date_dif = {};
     Object.keys(sys_eng_list).forEach(function(key) {
+      t1 = new Date(time_period.date_min);
       stat_sys_date_tot[key] = [];
       stat_sys_date_dif[key] = [];
       for (var i = 0; i < numDays; i++) {
-        stat_sys_date_tot[key].push({ day: i, opn: 0, cls: 0, rdy: 0 });
-        stat_sys_date_dif[key].push({ day: i, opn: 0, cls: 0, rdy: 0 });
+        stat_sys_date_tot[key].push({
+          day: i,
+          date:
+            t1.getFullYear() + '-' + (t1.getMonth() + 1) + '-' + t1.getDate(),
+          opn: 0,
+          cls: 0,
+          rdy: 0
+        });
+        stat_sys_date_dif[key].push({
+          day: i,
+          date:
+            t1.getFullYear() + '-' + (t1.getMonth() + 1) + '-' + t1.getDate(),
+          opn: 0,
+          cls: 0,
+          rdy: 0
+        });
+        t1.setDate(t1.getDate() + 1);
       }
     });
 
@@ -236,6 +263,19 @@ class DrStatisticsModal extends React.Component {
     });
   };
 
+  onSysChange = function(event) {
+    var sys_id = event.target.value;
+    this.setState({ sys_id });
+  }.bind(this);
+  onEngChange = function(event) {
+    var eng_id = event.target.value;
+    this.setState({ eng_id });
+  }.bind(this);
+  onChartChange = function(event) {
+    var chart_id = event.target.value;
+    this.setState({ chart_id });
+  }.bind(this);
+
   tableToChart = table => {
     return table.map(function(row, i) {
       return { name: row[0], opn: row[1], cls: row[2] };
@@ -246,22 +286,6 @@ class DrStatisticsModal extends React.Component {
     var t2 = new Date(date);
     var t_max = new Date(t2.getFullYear(), t2.getMonth(), t2.getDate());
     return Math.floor((t_max - t_min) / 1000 / 60 / 60 / 24);
-  };
-
-  //onRadioChange = e => {
-  //  var exportIndex = parseInt(e.target.value, 10);
-  //  this.setState({ exportIndex: exportIndex });
-  //};
-
-  //onExport = () => {
-  //  var exportIndex = this.state.exportIndex;
-  //  this.props.onExport(exportIndex);
-  //  this.setState({ modalIsOpen: false });
-  //};
-  sortList = (a, b) => {
-    if (a[0] < b[0]) return -1;
-    if (a[0] > b[0]) return 1;
-    return 0;
   };
 
   render() {
@@ -276,8 +300,12 @@ class DrStatisticsModal extends React.Component {
     var table_eng = null;
     var bar_chart_sys = null;
     var bar_chart_eng = null;
-    var line_chart_eng = null;
-    if (this.state.modalIsOpen && stat_sys_table) {
+    var line_chart_sys = null;
+    var sys_selector = null;
+    var eng_selector = null;
+    var chart_id = this.state.chart_id;
+    var chart_data = [];
+    if (this.state.modalIsOpen && stat_sys_table && chart_id == 0) {
       var stat_sys_header = (
         <tr className="stat_sys_header">
           <td>Система</td>
@@ -303,7 +331,7 @@ class DrStatisticsModal extends React.Component {
         </div>
       );
     }
-    if (this.state.modalIsOpen && stat_eng_table) {
+    if (this.state.modalIsOpen && stat_eng_table && chart_id == 1) {
       var stat_eng_header = (
         <tr className="stat_eng_header">
           <td>Инженер</td>
@@ -329,18 +357,18 @@ class DrStatisticsModal extends React.Component {
         </div>
       );
     }
-    if (this.state.modalIsOpen && stat_sys_chart) {
+    if (this.state.modalIsOpen && stat_sys_chart && chart_id == 2) {
       bar_chart_sys = (
         <div className="bar-chart-container">
           <BarChart
             width={1000}
-            height={400}
+            height={500}
             data={stat_sys_chart}
             margin={{
               top: 5,
               right: 5,
               left: 5,
-              bottom: 20
+              bottom: 10
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -356,7 +384,7 @@ class DrStatisticsModal extends React.Component {
         </div>
       );
     }
-    if (this.state.modalIsOpen && stat_eng_chart) {
+    if (this.state.modalIsOpen && stat_eng_chart && chart_id == 3) {
       bar_chart_eng = (
         <div className="bar-chart-container">
           <BarChart
@@ -367,7 +395,7 @@ class DrStatisticsModal extends React.Component {
               top: 5,
               right: 5,
               left: 5,
-              bottom: 20
+              bottom: 10
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -386,31 +414,92 @@ class DrStatisticsModal extends React.Component {
         </div>
       );
     }
-    if (this.state.modalIsOpen && stat_sys_date_tot) {
-      line_chart_eng = (
+    if (this.state.modalIsOpen && stat_sys_date_tot && chart_id == 4) {
+      var l = stat_sys_date_tot[this.state.sys_id].length;
+      if (l > 100) {
+        var m = Math.ceil(l / 100);
+        for (var i = m; i < l; i += m) {
+          chart_data.push(stat_sys_date_tot[this.state.sys_id][i]);
+        }
+      } else {
+        chart_data = stat_sys_date_tot[this.state.sys_id];
+      }
+      line_chart_sys = (
         <div className="bar-chart-container">
           <LineChart
             width={1000}
             height={500}
-            data={stat_sys_date_tot[3]}
+            data={chart_data}
             margin={{
               top: 5,
               right: 5,
               left: 5,
-              bottom: 20
+              bottom: 10
             }}
           >
             <CartesianGrid />
             <Tooltip />
-            <Line dataKey="opn" stroke="#8884d8" name="Открытых" />
-            <Line dataKey="cls" stroke="#82ca9d" name="Закрытых" />
-            <XAxis dataKey="day" height={100} />
+            <Line
+              dataKey="opn"
+              stroke="#8884d8"
+              name="Открытых"
+              isAnimationActive={false}
+            />
+            <Line
+              dataKey="cls"
+              stroke="#82ca9d"
+              name="Закрытых"
+              isAnimationActive={false}
+            />
+            <XAxis
+              dataKey="date"
+              height={100}
+              interval={5}
+              tick={<CustomizedAxisTick />}
+            />
+
             <YAxis />
             <Legend />
           </LineChart>
         </div>
       );
+      var sys_opt = [];
+      Object.keys(sys_eng_list).forEach(function(key) {
+        sys_opt.push({ value: key, label: sys_eng_list[key].sys_name });
+      });
+      sys_opt = sys_opt.sort(sortList);
+      sys_opt = sys_opt.map(arrayToOpt);
+
+      sys_selector = (
+        <select size={15} value={this.state.sys_id} onChange={this.onSysChange}>
+          {sys_opt}
+        </select>
+      );
     }
+
+    if (this.state.modalIsOpen && stat_sys_date_tot && chart_id == 5) {
+      var eng_opt = [];
+      Object.keys(eng_sys_list).forEach(function(key) {
+        eng_opt.push({ value: key, label: eng_sys_list[key].eng_name });
+      });
+      eng_opt = eng_opt.sort(sortList);
+      eng_opt = eng_opt.map(arrayToOpt);
+      eng_selector = (
+        <select size={15} value={this.state.eng_id} onChange={this.onEngChange}>
+          {eng_opt}
+        </select>
+      );
+    }
+    var chart_opt = CHART_SELECTOR.map(arrayToOpt);
+    var chart_selector = (
+      <select
+        size={6}
+        value={this.state.chart_id}
+        onChange={this.onChartChange}
+      >
+        {chart_opt}
+      </select>
+    );
 
     return (
       <div
@@ -438,11 +527,18 @@ class DrStatisticsModal extends React.Component {
           </button>
           <div className="dr-statistics">
             <h4>Статистика рассогласований</h4>
-            {table_sys}
-            {table_eng}
-            {bar_chart_sys}
-            {bar_chart_eng}
-            {line_chart_eng}
+            <div className="dr-stat-list">
+              {chart_selector}
+              {sys_selector}
+              {eng_selector}
+            </div>
+            <div className="dr-stat-draw">
+              {table_sys}
+              {table_eng}
+              {bar_chart_sys}
+              {bar_chart_eng}
+              {line_chart_sys}
+            </div>
             {/*<button onClick={this.onExport}>Экспорт</button>*/}
             {/*<button onClick={this.closeModal}>Отмена</button>*/}
           </div>

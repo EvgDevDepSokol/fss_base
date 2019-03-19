@@ -2,7 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { DRSTATUS, DRPRIORITY, getEngBySysId } from './dr_data.jsx';
+import {
+  DRSTATUS,
+  DRPRIORITY,
+  getEngBySysId,
+  sortList,
+  arrayToOpt
+} from './dr_data.jsx';
 const NOT_SELECTED = '-Не выбрано-';
 const TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
@@ -293,32 +299,12 @@ class DrView extends React.Component {
         sys_opt.push({ value: key, label: sys_eng_list[key].sys_name });
       });
     }
-    eng_opt = eng_opt.sort(function(a, b) {
-      if (a.label < b.label) return -1;
-      if (a.label > b.label) return 1;
-      return 0;
-    });
-    sys_opt = sys_opt.sort(function(a, b) {
-      if (a.label < b.label) return -1;
-      if (a.label > b.label) return 1;
-      return 0;
-    });
+    eng_opt = eng_opt.sort(sortList);
+    sys_opt = sys_opt.sort(sortList);
     eng_opt.unshift({ value: -1, label: NOT_SELECTED });
     sys_opt.unshift({ value: -1, label: NOT_SELECTED });
-    sys_opt = sys_opt.map(function(opt, i) {
-      return (
-        <option key={'opt-' + i} value={opt.value}>
-          {opt.label}
-        </option>
-      );
-    });
-    eng_opt = eng_opt.map(function(opt, i) {
-      return (
-        <option key={'opt-' + i} value={opt.value}>
-          {opt.label}
-        </option>
-      );
-    });
+    eng_opt = eng_opt.map(arrayToOpt);
+    sys_opt = sys_opt.map(arrayToOpt);
     return (
       <td className="dr_system_selector">
         <select
