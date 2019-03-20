@@ -83,7 +83,8 @@ class DrStatisticsModal extends React.Component {
     exportIndex: 0,
     chart_id: 0,
     sys_id: Object.keys(sys_eng_list)[0],
-    eng_id: Object.keys(eng_sys_list)[0]
+    eng_id: Object.keys(eng_sys_list)[0],
+    initialized: false
   };
 
   static propTypes = { data: PropTypes.array };
@@ -246,7 +247,30 @@ class DrStatisticsModal extends React.Component {
         }
       });
     });
-
+    var stat_eng_date_tot = [];
+    var stat_eng_date_dif = [];
+    Object.keys(eng_sys_list).forEach(function(eng_id) {
+      var eng_name = eng_sys_list[eng_id]['eng_name'];
+      var eng_table = [];
+      eng_sys_list[eng_id]['systems'].forEach(function(system, i) {
+        var key;
+        if (stat_eng_date_tot[eng_id]) {
+          for (i = 0; i < stat_sys_date_tot[system.sys_id].length; i++) {
+            stat_eng_date_tot[eng_id][i].opn +=
+              stat_sys_date_tot[system.sys_id][i].opn;
+            stat_eng_date_tot[eng_id][i].cls +=
+              stat_sys_date_tot[system.sys_id][i].cls;
+            stat_eng_date_tot[eng_id][i].rdy +=
+              stat_sys_date_tot[system.sys_id][i].rdy;
+          }
+        } else {
+          stat_eng_date_tot[eng_id] = [];
+          for (i = 0; i < stat_sys_date_tot[system.sys_id].length; i++) {
+            stat_eng_date_tot[eng_id].push(stat_sys_date_tot[system.sys_id][i]);
+          }
+        }
+      });
+    });
     this.setState({
       stat_sys_table,
       stat_eng_table,
@@ -255,10 +279,13 @@ class DrStatisticsModal extends React.Component {
       stat_eng_chart,
       stat_sys_date_dif,
       stat_sys_date_tot,
+      stat_eng_date_dif,
+      stat_eng_date_tot,
       startDate: new Date(time_period.date_min).toISOString().substr(0, 10),
       minDate: new Date(time_period.date_min).toISOString().substr(0, 10),
       endDate: new Date(time_period.date_max).toISOString().substr(0, 10),
-      maxDate: new Date(time_period.date_max).toISOString().substr(0, 10)
+      maxDate: new Date(time_period.date_max).toISOString().substr(0, 10),
+      initialized: true
     });
   };
 
@@ -267,7 +294,8 @@ class DrStatisticsModal extends React.Component {
       modalIsOpen: false,
       stat_eng_table: null,
       stat_sys_table: null,
-      data: null
+      data: null,
+      initialized: false
     });
   };
 
@@ -323,6 +351,28 @@ class DrStatisticsModal extends React.Component {
     }
   };
 
+  getChartData = data => {
+    var chart_data = [];
+    var tmp_data = [];
+    var i1, i2;
+    var t_min = this.getTMin();
+    i1 = this.dateToArrayIndex(this.state.startDate, t_min);
+    i2 = this.dateToArrayIndex(this.state.endDate, t_min);
+    for (var i = i1; i <= i2; i++) {
+      tmp_data.push(data[i]);
+    }
+    var l = tmp_data.length;
+    if (l > 100) {
+      var m = Math.ceil(l / 100);
+      for (i = m; i <= l; i += m) {
+        chart_data.push(tmp_data[i]);
+      }
+    } else {
+      chart_data = tmp_data;
+    }
+    return chart_data;
+  };
+
   render() {
     var data = this.state.data;
     var stat_sys_table = this.state.stat_sys_table;
@@ -331,11 +381,14 @@ class DrStatisticsModal extends React.Component {
     var stat_eng_chart = this.state.stat_eng_chart;
     var stat_sys_date_tot = this.state.stat_sys_date_tot;
     var stat_sys_date_dif = this.state.stat_sys_date_dif;
+    var stat_eng_date_tot = this.state.stat_eng_date_tot;
+    var stat_eng_date_dif = this.state.stat_eng_date_dif;
     var table_sys = null;
     var table_eng = null;
     var bar_chart_sys = null;
     var bar_chart_eng = null;
     var line_chart_sys = null;
+    var line_chart_eng = null;
     var sys_selector = null;
     var eng_selector = null;
     var date_selector = null;
@@ -396,7 +449,7 @@ class DrStatisticsModal extends React.Component {
     if (this.state.modalIsOpen && stat_sys_chart && chart_id == 2) {
       bar_chart_sys = (
         <div className="bar-chart-container">
-          <ResponsiveContainer height="90%" width="90%">
+          <ResponsiveContainer height="90%" width="100%">
             <BarChart
               data={stat_sys_chart}
               margin={{
@@ -423,7 +476,7 @@ class DrStatisticsModal extends React.Component {
     if (this.state.modalIsOpen && stat_eng_chart && chart_id == 3) {
       bar_chart_eng = (
         <div className="bar-chart-container">
-          <ResponsiveContainer height="90%" width="90%">
+          <ResponsiveContainer height="90%" width="100%">
             <BarChart
               data={stat_eng_chart}
               margin={{
@@ -451,26 +504,12 @@ class DrStatisticsModal extends React.Component {
       );
     }
     if (this.state.modalIsOpen && stat_sys_date_tot && chart_id == 4) {
-      var tmp_data = [];
-      var i1, i2;
-      var t_min = this.getTMin();
-      i1 = this.dateToArrayIndex(this.state.startDate, t_min);
-      i2 = this.dateToArrayIndex(this.state.endDate, t_min);
-      for (var i = i1; i <= i2; i++) {
-        tmp_data.push(stat_sys_date_tot[this.state.sys_id][i]);
-      }
-      var l = tmp_data.length;
-      if (l > 100) {
-        var m = Math.ceil(l / 100);
-        for (i = m; i <= l; i += m) {
-          chart_data.push(tmp_data[i]);
-        }
-      } else {
-        chart_data = tmp_data;
-      }
+      chart_data = this.getChartData(stat_sys_date_tot[this.state.sys_id]);
+      debugger;
       line_chart_sys = (
         <div className="bar-chart-container">
-          <ResponsiveContainer height="90%" width="90%">
+          <h4>{sys_eng_list[this.state.sys_id].sys_name}</h4>
+          <ResponsiveContainer height="90%" width="100%">
             <LineChart
               data={chart_data}
               margin={{
@@ -515,33 +554,61 @@ class DrStatisticsModal extends React.Component {
       sys_opt = sys_opt.map(arrayToOpt);
 
       sys_selector = (
-        <select size={15} value={this.state.sys_id} onChange={this.onSysChange}>
-          {sys_opt}
-        </select>
-      );
-      date_selector = (
-        <div className="date-selector">
-          <input
-            type="date"
-            value={this.state.startDate}
-            onChange={this.startDateChange}
-            required={true}
-            min={this.state.minDate}
-            max={this.state.maxDate}
-          />
-          <input
-            type="date"
-            value={this.state.endDate}
-            onChange={this.endDateChange}
-            required={true}
-            min={this.state.minDate}
-            max={this.state.maxDate}
-          />
+        <div className="system-selector">
+          <select
+            size={15}
+            value={this.state.sys_id}
+            onChange={this.onSysChange}
+          >
+            {sys_opt}
+          </select>
         </div>
       );
     }
 
-    if (this.state.modalIsOpen && stat_sys_date_tot && chart_id == 5) {
+    if (this.state.modalIsOpen && stat_eng_date_tot && chart_id == 5) {
+      chart_data = this.getChartData(stat_eng_date_tot[this.state.eng_id]);
+      line_chart_eng = (
+        <div className="bar-chart-container">
+          <h4>{eng_sys_list[this.state.eng_id].eng_name}</h4>
+          <ResponsiveContainer height="90%" width="100%">
+            <LineChart
+              data={chart_data}
+              margin={{
+                top: 5,
+                right: 5,
+                left: 5,
+                bottom: 10
+              }}
+            >
+              <CartesianGrid />
+              <Tooltip />
+              <Line
+                dataKey="opn"
+                stroke="#8884d8"
+                name="Открытых"
+                isAnimationActive={false}
+              />
+              <Line
+                dataKey="cls"
+                stroke="#82ca9d"
+                name="Закрытых"
+                isAnimationActive={false}
+              />
+              <XAxis
+                dataKey="date"
+                height={100}
+                interval={5}
+                tick={<CustomizedAxisTick />}
+              />
+
+              <YAxis />
+              <Legend />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      );
+
       var eng_opt = [];
       Object.keys(eng_sys_list).forEach(function(key) {
         eng_opt.push({ value: key, label: eng_sys_list[key].eng_name });
@@ -554,15 +621,41 @@ class DrStatisticsModal extends React.Component {
         </select>
       );
     }
+    if (this.state.initialized && ['4', '5', '6'].includes(chart_id)) {
+      date_selector = (
+        <div className="date-selector">
+          <label>Начало диапазона:</label>
+          <input
+            type="date"
+            value={this.state.startDate}
+            onChange={this.startDateChange}
+            required={true}
+            min={this.state.minDate}
+            max={this.state.maxDate}
+          />
+          <label>Конец диапазона:</label>
+          <input
+            type="date"
+            value={this.state.endDate}
+            onChange={this.endDateChange}
+            required={true}
+            min={this.state.minDate}
+            max={this.state.maxDate}
+          />
+        </div>
+      );
+    }
     var chart_opt = CHART_SELECTOR.map(arrayToOpt);
     var chart_selector = (
-      <select
-        size={6}
-        value={this.state.chart_id}
-        onChange={this.onChartChange}
-      >
-        {chart_opt}
-      </select>
+      <div className="chart-selector">
+        <select
+          size={6}
+          value={this.state.chart_id}
+          onChange={this.onChartChange}
+        >
+          {chart_opt}
+        </select>
+      </div>
     );
 
     return (
@@ -603,6 +696,7 @@ class DrStatisticsModal extends React.Component {
               {bar_chart_sys}
               {bar_chart_eng}
               {line_chart_sys}
+              {line_chart_eng}
             </div>
             {/*<button onClick={this.onExport}>Экспорт</button>*/}
             {/*<button onClick={this.closeModal}>Отмена</button>*/}

@@ -1235,7 +1235,7 @@ footer {
   height: 95%;
 
   .dr-stat-list {
-    left: 0px;
+    left: 10px;
     right: 80%;
     position: absolute;
     overflow: auto;
@@ -1244,20 +1244,25 @@ footer {
     padding-right: 3px;
 
     select {
-      overflow: hidden;
       padding-left: 3px;
       padding-right: 3px;
       width: 100%;
     }
+    .chart-selector {
+      select {
+        overflow: hidden;
+      }
+    }
     input {
       line-height: normal;
-      width: 50%;
+      width: 100%;
+      border-color: gainsboro;
     }
   }
 
   .dr-stat-draw {
     left: 20%;
-    right: 0px;
+    right: 10px;
     position: absolute;
     overflow: auto;
     height: 90%;
@@ -1301,7 +1306,10 @@ footer {
   }
 
   .bar-chart-container {
-    height: 100%;
+    height: 95%;
+    h4 {
+      text-align: center;
+    }
   }
 }
 
