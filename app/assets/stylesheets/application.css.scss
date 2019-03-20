@@ -617,6 +617,10 @@ body {
           padding-top: 12px;
           float: left;
           height: 100%;
+
+          h3 h4 {
+            color: "#0081c2";
+          }
         }
       }
     }
@@ -1245,6 +1249,10 @@ footer {
       padding-right: 3px;
       width: 100%;
     }
+    input {
+      line-height: normal;
+      width: 50%;
+    }
   }
 
   .dr-stat-draw {
@@ -1308,6 +1316,10 @@ footer {
     display: block;
     width: 100%;
     min-height: 60%;
+
+    h2 {
+      color: "#0081c2";
+    }
   }
 
   .generate-dbm-top {

@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+
+//import DatePicker from 'react-datepicker';
+//import 'react-datepicker/dist/react-datepicker.css';
+
 import { prepareRow, sortList, arrayToOpt } from './dr_data.jsx';
 import {
   LineChart,
@@ -179,14 +183,13 @@ class DrStatisticsModal extends React.Component {
     stat_sys_table.push(last_row);
     /*Закончил с таблицами и столбчатыми графиками*/
     /*Начал набирать статистику для графиков с зависимостью от времени*/
-    var t1 = new Date(time_period.date_min);
-    var t_min = new Date(t1.getFullYear(), t1.getMonth(), t1.getDate());
+    var t_min = this.getTMin();
     var numDays = dateToArrayIndex(time_period.date_max, t_min) + 1;
 
     var stat_sys_date_tot = {};
     var stat_sys_date_dif = {};
     Object.keys(sys_eng_list).forEach(function(key) {
-      t1 = new Date(time_period.date_min);
+      var t1 = new Date(time_period.date_min);
       stat_sys_date_tot[key] = [];
       stat_sys_date_dif[key] = [];
       for (var i = 0; i < numDays; i++) {
@@ -251,7 +254,11 @@ class DrStatisticsModal extends React.Component {
       stat_sys_chart,
       stat_eng_chart,
       stat_sys_date_dif,
-      stat_sys_date_tot
+      stat_sys_date_tot,
+      startDate: new Date(time_period.date_min).toISOString().substr(0, 10),
+      minDate: new Date(time_period.date_min).toISOString().substr(0, 10),
+      endDate: new Date(time_period.date_max).toISOString().substr(0, 10),
+      maxDate: new Date(time_period.date_max).toISOString().substr(0, 10)
     });
   };
 
@@ -283,10 +290,37 @@ class DrStatisticsModal extends React.Component {
     });
   };
 
+  getTMin = () => {
+    var t1 = new Date(time_period.date_min);
+    return new Date(t1.getFullYear(), t1.getMonth(), t1.getDate());
+  };
+
   dateToArrayIndex = (date, t_min) => {
     var t2 = new Date(date);
     var t_max = new Date(t2.getFullYear(), t2.getMonth(), t2.getDate());
     return Math.floor((t_max - t_min) / 1000 / 60 / 60 / 24);
+  };
+
+  startDateChange = event => {
+    if (
+      event.target.value >= this.state.minDate &&
+      event.target.value <= this.state.maxDate
+    ) {
+      this.setState({
+        startDate: event.target.value
+      });
+    }
+  };
+
+  endDateChange = event => {
+    if (
+      event.target.value >= this.state.minDate &&
+      event.target.value <= this.state.maxDate
+    ) {
+      this.setState({
+        endDate: event.target.value
+      });
+    }
   };
 
   render() {
@@ -304,6 +338,7 @@ class DrStatisticsModal extends React.Component {
     var line_chart_sys = null;
     var sys_selector = null;
     var eng_selector = null;
+    var date_selector = null;
     var chart_id = this.state.chart_id;
     var chart_data = [];
     if (this.state.modalIsOpen && stat_sys_table && chart_id == 0) {
@@ -416,14 +451,22 @@ class DrStatisticsModal extends React.Component {
       );
     }
     if (this.state.modalIsOpen && stat_sys_date_tot && chart_id == 4) {
-      var l = stat_sys_date_tot[this.state.sys_id].length;
+      var tmp_data = [];
+      var i1, i2;
+      var t_min = this.getTMin();
+      i1 = this.dateToArrayIndex(this.state.startDate, t_min);
+      i2 = this.dateToArrayIndex(this.state.endDate, t_min);
+      for (var i = i1; i <= i2; i++) {
+        tmp_data.push(stat_sys_date_tot[this.state.sys_id][i]);
+      }
+      var l = tmp_data.length;
       if (l > 100) {
         var m = Math.ceil(l / 100);
-        for (var i = m; i < l; i += m) {
-          chart_data.push(stat_sys_date_tot[this.state.sys_id][i]);
+        for (i = m; i <= l; i += m) {
+          chart_data.push(tmp_data[i]);
         }
       } else {
-        chart_data = stat_sys_date_tot[this.state.sys_id];
+        chart_data = tmp_data;
       }
       line_chart_sys = (
         <div className="bar-chart-container">
@@ -475,6 +518,26 @@ class DrStatisticsModal extends React.Component {
         <select size={15} value={this.state.sys_id} onChange={this.onSysChange}>
           {sys_opt}
         </select>
+      );
+      date_selector = (
+        <div className="date-selector">
+          <input
+            type="date"
+            value={this.state.startDate}
+            onChange={this.startDateChange}
+            required={true}
+            min={this.state.minDate}
+            max={this.state.maxDate}
+          />
+          <input
+            type="date"
+            value={this.state.endDate}
+            onChange={this.endDateChange}
+            required={true}
+            min={this.state.minDate}
+            max={this.state.maxDate}
+          />
+        </div>
       );
     }
 
@@ -532,6 +595,7 @@ class DrStatisticsModal extends React.Component {
               {chart_selector}
               {sys_selector}
               {eng_selector}
+              {date_selector}
             </div>
             <div className="dr-stat-draw">
               {table_sys}
