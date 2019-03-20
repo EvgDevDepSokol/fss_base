@@ -111,7 +111,6 @@ class GenerateDbm extends React.Component {
   afterOpenModal = () => {
     // references are now sync'd and can be accessed.
     this.setState({ varIndex: 0 });
-    this.refs.subtitle.style.color = '#0081c2';
     this.refreshSystems(0);
   };
 
@@ -594,9 +593,7 @@ class GenerateDbm extends React.Component {
 
           <div className="generate-dbm">
             <div className="generate-dbm-all">
-              <h2 ref="subtitle">
-                Настройки создания SELECT файла и заполнения DBM
-              </h2>
+              <h2>Настройки создания SELECT файла и заполнения DBM</h2>
               <div>
                 <div className="generate-dbm-top">
                   {mod_radio_group}

@@ -1,3 +1,6 @@
+var React = require('react');
+import PropTypes from 'prop-types';
+
 const DRSTATUS = {
   6: {
     label: 'Открыт',

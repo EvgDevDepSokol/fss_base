@@ -24,10 +24,6 @@ class ExportXlsxModal extends React.Component {
     this.setState({ modalIsOpen: true });
   };
 
-  afterOpenModal = () => {
-    this.refs.subtitle.style.color = '#0081c2';
-  };
-
   closeModal = () => {
     this.setState({ modalIsOpen: false });
   };
@@ -59,10 +55,8 @@ class ExportXlsxModal extends React.Component {
           style={customStyles}
           contentLabel="Свойства экспорта в файл"
         >
-          <h4 ref="subtitle">
-            Экспорт производится с учетом активных фильтров.
-          </h4>
-          <h3 ref="subtitle">Свойства экспорта в файл:</h3>
+          <h4>Экспорт производится с учетом активных фильтров.</h4>
+          <h3>Свойства экспорта в файл:</h3>
           <div className="export-radio-group">
             <input
               type="radio"

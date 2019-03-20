@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+import PropTypes from 'prop-types';
 var ReactDOM = require('react-dom');
 var createReactClass = require('create-react-class');
 var _ = require('underscore');
@@ -955,7 +956,7 @@ var TableContainer = createReactClass({
       data.forEach(function(row) {
         row.checked = mainCheckbox_new;
       });
-      this.setState({mainCheckbox_old: mainCheckbox_new});
+      this.setState({ mainCheckbox_old: mainCheckbox_new });
     }
 
     var sortingColumn = this.state.sortingColumn;
@@ -1055,10 +1056,7 @@ var TableContainer = createReactClass({
               <div className="show-filters" onClick={this.onShowHidden}>
                 Скрыть/ Показать поля
               </div>
-              <ExportXlsxModal
-                data={dataxls}
-                onExport={this.onExportClick}
-              />
+              <ExportXlsxModal data={dataxls} onExport={this.onExportClick} />
             </div>
           </div>
         </div>
