@@ -103,6 +103,13 @@ var ExportXlsxModal = require('../components/xlsx-export.jsx');
 var TableContainer = createReactClass({
   displayName: 'VniiaesFullTable',
 
+  propTypes: {
+    data: PropTypes.array,
+    columns: PropTypes.array,
+    title: PropTypes.string,
+    objectType: PropTypes.string
+  },
+
   mixins: [LocalStorageMixin],
 
   getDefaultProps: function() {
@@ -700,7 +707,8 @@ var TableContainer = createReactClass({
           type: 'POST',
           data: JSON.stringify(d),
           success: function(response) {
-            this.state.data[idx] = response.data;
+            data = this.state.data;
+            data[idx] = response.data;
             this.setState({
               data: this.state.data,
               lockRow: false,
@@ -727,7 +735,8 @@ var TableContainer = createReactClass({
             if (response.data.MalfunctDimID) {
               response.data.system = response.data.pds_malfunction.system;
             }
-            this.state.data[idx] = response.data;
+            data = this.state.data;
+            data[idx] = response.data;
             this.setState({
               data: this.state.data,
               lockRow: false,
@@ -855,15 +864,15 @@ var TableContainer = createReactClass({
     }
   },
 
-  onExportClick: function(exportIndex) {
+  onExportClick: function(exportIndex, data) {
     var bookname = model_name + '_' + project.id.toString() + '.xls';
-
+    var dataxls = [];
     if (exportIndex === 1) {
-      var dataxls = this.state.dataxls.filter(function(elem) {
+      dataxls = data.filter(function(elem) {
         return elem.checked;
       });
     } else {
-      var dataxls = this.state.dataxls;
+      dataxls = data;
     }
     var columns = this.props.columns.filter(function(column) {
       if (column.attribute !== 'extra_label') {
@@ -946,7 +955,7 @@ var TableContainer = createReactClass({
       data.forEach(function(row) {
         row.checked = mainCheckbox_new;
       });
-      this.state.mainCheckbox_old = mainCheckbox_new;
+      this.setState({mainCheckbox_old: mainCheckbox_new});
     }
 
     var sortingColumn = this.state.sortingColumn;
@@ -960,7 +969,7 @@ var TableContainer = createReactClass({
       });
     }
     data = sortColumn.sort(data, sortingColumn, orderBy);
-    this.state.dataxls = data;
+    var dataxls = data;
     //const resolver = resolve.resolve({
     //  columns,
     //  method: resolve.nested
@@ -1035,11 +1044,7 @@ var TableContainer = createReactClass({
                   Замена
                 </div>
                 <div
-                  className={
-                    false
-                      ? 'add-row info-buttons border-inset'
-                      : 'add-row info-buttons'
-                  }
+                  className={'add-row info-buttons'}
                   onClick={this.onAddRowClick}
                 >
                   Добавить запись
@@ -1051,7 +1056,7 @@ var TableContainer = createReactClass({
                 Скрыть/ Показать поля
               </div>
               <ExportXlsxModal
-                data={this.state.dataxls}
+                data={dataxls}
                 onExport={this.onExportClick}
               />
             </div>

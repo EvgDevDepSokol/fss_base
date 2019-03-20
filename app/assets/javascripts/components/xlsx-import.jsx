@@ -288,31 +288,4 @@ var getColumnOptions = function(column) {
   if (!column.nested /* || !column.path*/) return;
 
   return column.editor ? column.editor.options() : [];
-  var properties = column.property.split('.');
-  if (properties.length != 2) return;
-
-  var key = _.last(properties);
-
-  var options = [];
-  $.ajax({
-    url: '/' + column.path,
-    dataType: 'json',
-    type: 'GET',
-    success: function(data) {
-      options = data;
-    }.bind(this),
-    error: function(xhr, status, err) {
-      console.error(this.props.url, status, err.toString());
-      options = [];
-    }.bind(this),
-    async: false
-  });
-
-  options = $.map(options, function(el) {
-    return {
-      value: el.id,
-      label: el[key]
-    };
-  });
-  return options;
 };

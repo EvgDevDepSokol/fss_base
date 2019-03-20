@@ -15,14 +15,10 @@ const customStyles = {
 };
 
 class CompareProjects extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      modalIsOpen: false,
-      exportIndex: 0
-    };
-  }
+  state = {
+    modalIsOpen: false,
+    exportIndex: 0
+  };
 
   openModal = () => {
     this.setState({ modalIsOpen: true });

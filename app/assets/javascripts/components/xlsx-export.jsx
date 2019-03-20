@@ -14,14 +14,11 @@ const customStyles = {
 };
 
 class ExportXlsxModal extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      modalIsOpen: false,
-      exportIndex: 0
-    };
-  }
+  state = {
+    modalIsOpen: false,
+    exportIndex: 0
+  };
+  static propTypes = { onExport: PropTypes.func, data: PropTypes.array };
 
   openModal = () => {
     this.setState({ modalIsOpen: true });
@@ -42,7 +39,7 @@ class ExportXlsxModal extends React.Component {
 
   onExport = () => {
     var exportIndex = this.state.exportIndex;
-    this.props.onExport(exportIndex);
+    this.props.onExport(exportIndex, this.props.data);
     this.setState({ modalIsOpen: false });
   };
 
