@@ -13,7 +13,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  LabelList
+  LabelList,
+  ResponsiveContainer
 } from 'recharts';
 const HEADERS = {
   opn: 'Открытых',
@@ -360,57 +361,57 @@ class DrStatisticsModal extends React.Component {
     if (this.state.modalIsOpen && stat_sys_chart && chart_id == 2) {
       bar_chart_sys = (
         <div className="bar-chart-container">
-          <BarChart
-            width={1000}
-            height={500}
-            data={stat_sys_chart}
-            margin={{
-              top: 5,
-              right: 5,
-              left: 5,
-              bottom: 10
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых">
-              {/*<LabelList dataKey="opn" position="Top" />*/}
-            </Bar>
-            <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" />
-          </BarChart>
+          <ResponsiveContainer height="90%" width="90%">
+            <BarChart
+              data={stat_sys_chart}
+              margin={{
+                top: 5,
+                right: 5,
+                left: 5,
+                bottom: 10
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых">
+                {/*<LabelList dataKey="opn" position="Top" />*/}
+              </Bar>
+              <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       );
     }
     if (this.state.modalIsOpen && stat_eng_chart && chart_id == 3) {
       bar_chart_eng = (
         <div className="bar-chart-container">
-          <BarChart
-            width={1000}
-            height={500}
-            data={stat_eng_chart}
-            margin={{
-              top: 5,
-              right: 5,
-              left: 5,
-              bottom: 10
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip />
-            <Bar dataKey="opn" fill="#8884d8" name="Открытых" />
-            {/*<Bar dataKey="cls" fill="#82ca9d" name="Закрытых" />*/}
-            <XAxis
-              dataKey="name"
-              height={100}
-              interval={0}
-              tick={<CustomizedAxisTick />}
-            />
-            <YAxis />
-            <Legend />
-          </BarChart>
+          <ResponsiveContainer height="90%" width="90%">
+            <BarChart
+              data={stat_eng_chart}
+              margin={{
+                top: 5,
+                right: 5,
+                left: 5,
+                bottom: 10
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
+              <Bar dataKey="opn" fill="#8884d8" name="Открытых" />
+              {/*<Bar dataKey="cls" fill="#82ca9d" name="Закрытых" />*/}
+              <XAxis
+                dataKey="name"
+                height={100}
+                interval={0}
+                tick={<CustomizedAxisTick />}
+              />
+              <YAxis />
+              <Legend />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       );
     }
@@ -426,41 +427,41 @@ class DrStatisticsModal extends React.Component {
       }
       line_chart_sys = (
         <div className="bar-chart-container">
-          <LineChart
-            width={1000}
-            height={500}
-            data={chart_data}
-            margin={{
-              top: 5,
-              right: 5,
-              left: 5,
-              bottom: 10
-            }}
-          >
-            <CartesianGrid />
-            <Tooltip />
-            <Line
-              dataKey="opn"
-              stroke="#8884d8"
-              name="Открытых"
-              isAnimationActive={false}
-            />
-            <Line
-              dataKey="cls"
-              stroke="#82ca9d"
-              name="Закрытых"
-              isAnimationActive={false}
-            />
-            <XAxis
-              dataKey="date"
-              height={100}
-              interval={5}
-              tick={<CustomizedAxisTick />}
-            />
+          <ResponsiveContainer height="90%" width="90%">
+            <LineChart
+              data={chart_data}
+              margin={{
+                top: 5,
+                right: 5,
+                left: 5,
+                bottom: 10
+              }}
+            >
+              <CartesianGrid />
+              <Tooltip />
+              <Line
+                dataKey="opn"
+                stroke="#8884d8"
+                name="Открытых"
+                isAnimationActive={false}
+              />
+              <Line
+                dataKey="cls"
+                stroke="#82ca9d"
+                name="Закрытых"
+                isAnimationActive={false}
+              />
+              <XAxis
+                dataKey="date"
+                height={100}
+                interval={5}
+                tick={<CustomizedAxisTick />}
+              />
 
-            <YAxis />
-            <Legend />
-          </LineChart>
+              <YAxis />
+              <Legend />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       );
       var sys_opt = [];

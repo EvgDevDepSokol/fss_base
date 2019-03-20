@@ -165,12 +165,6 @@ body {
       }
     }
 
-    #navbar_compare_projects {
-      a {
-        //padding-left: 12px;
-      }
-    }
-
     .navbar-text {
       margin: 9px;
       width: 235px;
@@ -405,10 +399,6 @@ body {
       height: 100%;
       width: 100%;
       overflow: hidden;
-
-      .table-container {
-        //min-height: 1465px;
-      }
     }
   }
 
@@ -590,6 +580,7 @@ body {
           background-image: asset_data_url("icons/add_row.png");
           padding-left: 45px;
         }
+
         .dr-statistics-modal {
           background-image: asset_data_url("icons/statistics.png");
           padding-left: 45px;
@@ -753,10 +744,6 @@ body {
               border-width: 1px;
               border-style: solid;
               border-color: rgb(169, 169, 169);
-
-              .Select-value {
-                //display: initial;
-              }
             }
           }
 
@@ -888,11 +875,6 @@ body {
       }
     }
   }
-}
-
-.editableColumn {
-  // font-style: italic;
-  // COLOR: #0372E1;
 }
 
 .notEditableColumn {
@@ -1244,8 +1226,10 @@ footer {
     }
   }
 }
+
 .dr-statistics {
   height: 95%;
+
   .dr-stat-list {
     left: 0px;
     right: 80%;
@@ -1254,6 +1238,7 @@ footer {
     height: 90%;
     padding-left: 3px;
     padding-right: 3px;
+
     select {
       overflow: hidden;
       padding-left: 3px;
@@ -1261,6 +1246,7 @@ footer {
       width: 100%;
     }
   }
+
   .dr-stat-draw {
     left: 20%;
     right: 0px;
@@ -1280,15 +1266,19 @@ footer {
   table {
     width: 100%;
   }
+
   .dr_sys {
     width: 20%;
   }
+
   .dr_eng {
     width: 30%;
   }
+
   .dr_status {
     width: 25%;
   }
+
   .dr_priority {
     width: 25%;
   }
@@ -1301,9 +1291,12 @@ footer {
     padding-left: 3px;
     padding-right: 3px;
   }
+
   .bar-chart-container {
+    height: 100%;
   }
 }
+
 .generate-dbm {
   height: 95%;
 
@@ -1464,6 +1457,7 @@ footer {
   .dr_info {
     margin: 5px;
     margin-bottom: 10px;
+
     tr {
       &.header {
         background-color: cornsilk;
@@ -1473,15 +1467,19 @@ footer {
     table {
       width: 100%;
     }
+
     .dr_sys {
       width: 20%;
     }
+
     .dr_eng {
       width: 30%;
     }
+
     .dr_status {
       width: 25%;
     }
+
     .dr_priority {
       width: 25%;
     }
@@ -1494,36 +1492,44 @@ footer {
       padding-right: 3px;
     }
   }
+
   .dr_selectors {
     margin: 5px;
+
     table {
       width: 100%;
     }
   }
+
   .dr_system_selector {
     margin-left: 5px;
     margin-right: 5px;
     width: 60%;
+
     select {
       width: 50%;
       padding-left: 3px;
       padding-right: 3px;
     }
   }
+
   .dr_priority_selector {
     margin-left: 5px;
     margin-right: 5px;
     width: 40%;
+
     select {
       width: 100%;
       padding-left: 3px;
       padding-right: 3px;
     }
   }
+
   .attention {
     border-color: transparent;
     box-shadow: 0 0 0 2px red;
   }
+
   .dr_body {
     .dr_comment {
       margin: 5px;
@@ -1548,6 +1554,7 @@ footer {
         padding-left: 3px;
         padding-right: 3px;
       }
+
       td {
         width: 25%;
         border-style: solid;
