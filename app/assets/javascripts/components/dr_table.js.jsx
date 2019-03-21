@@ -1138,6 +1138,10 @@ var TableContainer = createReactClass({
       });
     }
     var dr_details = editedDr ? editedDr : data[0];
+    var is_dr_new = this.state.is_dr_new;
+    if (data.length == 0) {
+      is_dr_new = true;
+    }
 
     return (
       <div>
@@ -1288,7 +1292,7 @@ var TableContainer = createReactClass({
             dr_details={dr_details}
             onCommentSave={this.onCommentSave}
             onDrInsert={this.onDrInsert}
-            is_dr_new={this.state.is_dr_new}
+            is_dr_new={is_dr_new}
             onDrCancel={this.onDrCancel}
           />
         </div>

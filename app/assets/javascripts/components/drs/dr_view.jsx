@@ -62,16 +62,18 @@ class DrView extends React.Component {
     this.setState({ comment: comment });
   };
 
-  onTextEditorKeyUp = e => {
+  onTextEditorKeyUp = function(e) {
     if (e.keyCode == 27) {
       // ESC pressed
       this.onTextEditorCancel();
     }
     if (e.ctrlKey && e.keyCode == 13) {
       // Ctrl-Enter pressed
-      this.onCommentSave();
+      if (!this.isSaveDisabled()) {
+        this.onCommentSave();
+      }
     }
-  };
+  }.bind(this);
 
   onTextEditorCancel = function() {
     var comment = this.state.comment;
@@ -115,7 +117,7 @@ class DrView extends React.Component {
     );
   };
 
-  comment_buttons = function() {
+  isSaveDisabled = function() {
     var disabled = true;
     disabled = this.isCommentEmpty();
     if (this.props.is_dr_new && this.state.select.sys_id == -1) disabled = true;
@@ -131,6 +133,10 @@ class DrView extends React.Component {
       )
         disabled = false;
     }
+    return disabled;
+  };
+  comment_buttons = function() {
+    var disabled = this.isSaveDisabled();
     return (
       <div className="comment_buttons">
         <button
@@ -211,7 +217,14 @@ class DrView extends React.Component {
     comment.pds_engineer = current_user;
     comment.status = 1;
     comment.comment_text = '';
-    this.setState({ comment: comment, is_dr_edit: false });
+    this.setState({
+      comment: comment,
+      is_dr_edit: false,
+      select: {
+        sys_id: -1,
+        eng_id: -1
+      }
+    });
     this.props.onDrCancel();
   };
 
