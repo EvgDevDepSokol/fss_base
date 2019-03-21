@@ -225,7 +225,9 @@ class DrView extends React.Component {
       dr_details_local.system.System = NOT_SELECTED;
       dr_details_local.pds_engineer_worker = NOT_SELECTED;
     } else {
-      dr_details_local.system.System = sys_eng_list[select.sys_id]['sys_name'];
+      dr_details_local.system.System = sys_eng_list[select.sys_id]
+        ? sys_eng_list[select.sys_id]['sys_name']
+        : NOT_SELECTED;
       dr_details_local.pds_engineer_worker = getEngBySysId(select.sys_id);
     }
     this.setState({ select, dr_details_local });
@@ -342,7 +344,9 @@ class DrView extends React.Component {
     dr_details_local.comments = dr_details.comments;
     var is_dr_edit = true;
     var select = {
-      sys_id: dr_details_local.system.id,
+      sys_id: sys_eng_list[dr_details_local.system.id]
+        ? dr_details_local.system.id
+        : -1,
       eng_id: -1
     };
 

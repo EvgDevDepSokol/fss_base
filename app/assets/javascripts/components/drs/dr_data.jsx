@@ -77,12 +77,14 @@ var prepareRow = function(row, date_now) {
 };
 
 var getEngBySysId = function(sys_id) {
-  return sys_eng_list[sys_id]['engineers']
-    .map(function(eng, i) {
-      return eng.eng_name;
-    })
-    .sort()
-    .join(', ');
+  return sys_eng_list[sys_id]
+    ? sys_eng_list[sys_id]['engineers']
+      .map(function(eng, i) {
+        return eng.eng_name;
+      })
+      .sort()
+      .join(', ')
+    : eng_sys_list[0]['eng_name'];
 };
 
 var sortList = function(a, b) {

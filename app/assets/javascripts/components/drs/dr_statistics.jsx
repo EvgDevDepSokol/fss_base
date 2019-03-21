@@ -218,34 +218,36 @@ class DrStatisticsModal extends React.Component {
 
     data.forEach(function(dr) {
       var sys_id = dr.system.id;
-      var com_arr = dr.comments.map(function(comment, j) {
-        var ind = dateToArrayIndex(comment.comment_date, t_min);
-        return { i_start: ind, status: comment.status };
-      });
-      var len = com_arr.length - 1;
-      var i;
-      for (i = 0; i < len; i++) {
-        com_arr[i]['i_finish'] = com_arr[i + 1]['i_start'];
-      }
-      com_arr[len]['i_finish'] = numDays;
-      com_arr.forEach(function(com) {
-        var st = com.status;
-        if (st == 4) {
-          stat_sys_date_dif[sys_id][com.i_start].cls++;
-          for (i = com.i_start; i < com.i_finish; i++) {
-            stat_sys_date_tot[sys_id][i].cls++;
-          }
-        } else {
-          if (st == 3) {
-            stat_sys_date_dif[sys_id][com.i_start].rdy++;
-          } else if (st == 6 || st == 1) {
-            stat_sys_date_dif[sys_id][com.i_start].opn++;
-          }
-          for (i = com.i_start; i < com.i_finish; i++) {
-            stat_sys_date_tot[sys_id][i].opn++;
-          }
+      if (sys_eng_list[sys_id]) {
+        var com_arr = dr.comments.map(function(comment, j) {
+          var ind = dateToArrayIndex(comment.comment_date, t_min);
+          return { i_start: ind, status: comment.status };
+        });
+        var len = com_arr.length - 1;
+        var i;
+        for (i = 0; i < len; i++) {
+          com_arr[i]['i_finish'] = com_arr[i + 1]['i_start'];
         }
-      });
+        com_arr[len]['i_finish'] = numDays;
+        com_arr.forEach(function(com) {
+          var st = com.status;
+          if (st == 4) {
+            stat_sys_date_dif[sys_id][com.i_start].cls++;
+            for (i = com.i_start; i < com.i_finish; i++) {
+              stat_sys_date_tot[sys_id][i].cls++;
+            }
+          } else {
+            if (st == 3) {
+              stat_sys_date_dif[sys_id][com.i_start].rdy++;
+            } else if (st == 6 || st == 1) {
+              stat_sys_date_dif[sys_id][com.i_start].opn++;
+            }
+            for (i = com.i_start; i < com.i_finish; i++) {
+              stat_sys_date_tot[sys_id][i].opn++;
+            }
+          }
+        });
+      }
     });
     var stat_eng_date_tot = [];
     var stat_eng_date_dif = [];
