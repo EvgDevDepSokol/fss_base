@@ -8,98 +8,22 @@ var _ = require('underscore');
 import { DRSTATUS } from './drs/dr_data.jsx';
 import { DRPRIORITY } from './drs/dr_data.jsx';
 import { prepareRow } from './drs/dr_data.jsx';
-//var exportData = require('../xlsx-djet.js.jsx').exportData;
-
-//var Paginator = require('react-pagify').default;
-
 import { ColumnNames } from 'reactabular';
 import { sortColumn } from 'reactabular';
 import { formatters } from 'reactabular';
 import { Table } from 'reactabular';
-//import * as Table1 from 'reactabular-table';
-//import { formatters } from 'searchtabular';
-//import * as search from 'searchtabular';
-//import { byColumn as sortColumn } from 'sortabular';
-//import * as sort from 'sortabular';
-//import * as resizable from 'reactabular-resizable';
-//import * as resolve from 'table-resolver';
-//import * as edit from 'react-edit';
-
 import { Paginator } from '../helpers';
 import { paginate } from '../helpers';
 
 var LocalStorageMixin = require('react-localstorage');
-//var segmentize = require('segmentize');
-
 var findIndex = require('lodash').findIndex;
 var orderBy = require('lodash').orderBy;
-
 var titleCase = require('title-case');
-
-//var SystemSelector = require('../selectors/system.jsx');
-//var SystemDocSelector = require('../selectors/system_doc.jsx');
 var SystemFilterSelector = require('../selectors/system_filter.jsx');
-//var SystemAllSelector = require('../selectors/system_all.jsx');
-
-//var HwIcSelector = require('../selectors/hw_ic.jsx');
-//var DetectorSelector = require('../selectors/detector.jsx');
-//var PdsManEquipSelector = require('../selectors/pds_man_equips.jsx');
-//var PdsSectionAssemblerSelector = require('../selectors/pds_section_assembler.jsx');
-//var HwPedSelector = require('../selectors/hw_ped.jsx');
-//var HwIosignaldefSelector = require('../selectors/hw_iosignaldef.jsx');
-//var PdsPanelSelector = require('../selectors/pds_panels.jsx');
-//var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
-//var PdsEquipSelector = require('../selectors/pds_equip.jsx');
-
-//var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
-
-//some static selectors
-//var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx')
-//  .MalfunctionTypeSelector;
-//var RFTypeSelector = require('../selectors/static_selectors.jsx')
-//  .RFTypeSelector;
-//var ValveTypeSelector = require('../selectors/static_selectors.jsx')
-//  .ValveTypeSelector;
-//var BooleanSelector = require('../selectors/static_selectors.jsx')
-//  .BooleanSelector;
-//var BooleanYNSelector = require('../selectors/static_selectors.jsx')
-//  .BooleanYNSelector;
-//var BooleanNumbSelector = require('../selectors/static_selectors.jsx')
-//  .BooleanNumbSelector;
-//var MotorZmnSelector = require('../selectors/static_selectors.jsx')
-//  .MotorZmnSelector;
-//var UserRightsSelector = require('../selectors/static_selectors.jsx')
-//  .UserRightsSelector;
-//var RegidityUnitSelector = require('../selectors/static_selectors.jsx')
-//  .RegidityUnitSelector;
-//var AnnounciatorTypeSelector = require('../selectors/static_selectors.jsx')
-//  .AnnounciatorTypeSelector;
-//var AnnounciatorSignSelector = require('../selectors/static_selectors.jsx')
-//  .AnnounciatorSignSelector;
-//var SyslistDescriptorSelector = require('../selectors/static_selectors.jsx')
-//  .SyslistDescriptorSelector;
-//var SyslistCategorySelector = require('../selectors/static_selectors.jsx')
-//  .SyslistCategorySelector;
-
-// todo: fix
-//var SdSelector = require('../selectors/pds_sds.jsx');
-//var UnitSelector = require('../selectors/pds_project_units.jsx');
-//var UnitAllSelector = require('../selectors/pds_units.jsx');
-//var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');
-//var PdsDocumentationsSelector = require('../selectors/pds_documentation.jsx');
-//var PdsValvesSelector = require('../selectors/pds_valves.jsx');
-
-// modules
 var Search = require('../modules/search.jsx');
-//var Replace = require('../modules/replace.jsx');
 var ColumnFilters = require('../modules/column_filters.jsx');
 var DrView = require('./drs/dr_view.jsx');
-
-//var stringEditor = require('../inputs/input.jsx')();
-//import { input as stringEditor } from 'react-edit';
-//var TextEditor = require('../inputs/text_editor.jsx')();
-//var WideTextEditor = require('../inputs/wide_text_editor.jsx')();
 
 import Modal from 'react-modal';
 
@@ -335,165 +259,6 @@ var TableContainer = createReactClass({
       return e.hidden != true;
     });
 
-    // add buttons
-    //columns = columns.concat([
-    //  {
-    //    header: <div className="buttons_dr-col">X</div>,
-    //    headerClassStyle: 'header-buttons_dr-col',
-    //    cell: function(value, celldata, rowIndex, property) {
-    //      var url = window.location.href;
-    //      var newRow = celldata[rowIndex].newRow;
-    //      var itemId = celldata[rowIndex].id;
-    //      var idx = findIndex(this.state.data, { id: itemId });
-
-    //      //var remove = function() {
-    //      //  if (this.props.objectType == 'pds_malfunction_dim') return;
-    //      //  if (current_user.user_rights >= 2) {
-    //      //    var res = confirm('Вы действительно желаете удалить запись?');
-    //      //    if (!res) return;
-    //      //    var idx;
-    //      //    if (newRow) {
-    //      //      idx = findIndex(this.state.data, {
-    //      //        _id: celldata[rowIndex]._id
-    //      //      });
-
-    //      //      this.state.data.splice(idx, 1);
-    //      //      this.setState({
-    //      //        data: this.state.data,
-    //      //        editedRow: null,
-    //      //        lockRow: false,
-    //      //        sendData: {}
-    //      //      });
-    //      //    } else {
-    //      //      idx = findIndex(this.state.data, { id: itemId });
-    //      //      $.ajax({
-    //      //        url: url + '/' + itemId,
-    //      //        dataType: 'json',
-    //      //        type: 'DELETE',
-    //      //        success: function(data) {
-    //      //          this.state.data.splice(idx, 1);
-    //      //          this.setState({ data: this.state.data, editedRow: null });
-    //      //        }.bind(this),
-    //      //        error: function(xhr, status, err) {
-    //      //          var jtmp = xhr.responseJSON['errors'];
-    //      //          var result = 'Не удалось удалить запись. Причина:\n\n';
-    //      //          for (key in jtmp) {
-    //      //            result += jtmp[key] + '\n';
-    //      //          }
-    //      //          alert(result);
-    //      //        }.bind(this)
-    //      //      });
-    //      //    }
-    //      //  } else {
-    //      //    alert('У Вас недостаточно прав для удаления записи!');
-    //      //  }
-    //      //}.bind(this);
-
-    //      //var copy = function() {
-    //      //  if (current_user.user_rights >= 2) {
-    //      //    this.onAddRowClick(celldata[rowIndex]);
-    //      //  } else {
-    //      //    alert('У Вас недостаточно прав для дублирования записи!');
-    //      //  }
-    //      //}.bind(this);
-
-    //      var editClick = function() {
-    //        if (current_user.user_rights >= 1) {
-    //          this.setState({
-    //            editedRow: rowIndex,
-    //            editedDr: celldata[rowIndex]
-    //          });
-    //        } else {
-    //          alert('У Вас недостаточно прав для редактирования записи!');
-    //        }
-    //      }.bind(this);
-
-    //      //var cancelClick = function() {
-    //      //  this.setState({ editedRow: null, lockRow: false, sendData: {} });
-    //      //}.bind(this);
-
-    //      //var saveClick = function() {
-    //      //  this.onSaveClick(celldata[rowIndex]);
-    //      //}.bind(this);
-
-    //      var editButton = (
-    //        <span
-    //          className="edit btn btn-xs btn-default"
-    //          onClick={editClick.bind(this)}
-    //          key="editButton"
-    //          style={{
-    //            cursor: 'pointer'
-    //          }}
-    //          title="Редактировать запись"
-    //        >
-    //          <i className="far fa-edit" />
-    //        </span>
-    //      );
-
-    //      //var saveButton = (
-    //      //  <span
-    //      //    className="edit btn btn-xs btn-default"
-    //      //    key="saveButton"
-    //      //    onClick={saveClick.bind(this)}
-    //      //    style={{
-    //      //      cursor: 'pointer'
-    //      //    }}
-    //      //    title="Сохранить изменения"
-    //      //  >
-    //      //    <i className="fas fa-check" />
-    //      //  </span>
-    //      //);
-
-    //      //if (!newRow) {
-    //      //  var cancelButton = (
-    //      //    <span
-    //      //      className="edit btn btn-xs btn-default"
-    //      //      key="cancelButton"
-    //      //      onClick={cancelClick.bind(this)}
-    //      //      style={{
-    //      //        cursor: 'pointer'
-    //      //      }}
-    //      //      title="Отменить изменения"
-    //      //    >
-    //      //      <i className="fas fa-undo" />
-    //      //    </span>
-    //      //  );
-    //      //}
-
-    //      //var deleteButton = (
-    //      //  <span
-    //      //    className="remove btn btn-xs btn-danger"
-    //      //    key="removeButton"
-    //      //    onClick={remove.bind(this)}
-    //      //    style={{
-    //      //      cursor: 'pointer'
-    //      //    }}
-    //      //    title="Удалить запись"
-    //      //  >
-    //      //    <i className="fas fa-times" />
-    //      //  </span>
-    //      //);
-
-    //      //var copyButton = (
-    //      //  <span
-    //      //    className="remove btn btn-xs btn-default"
-    //      //    key="copyButton"
-    //      //    onClick={copy.bind(this)}
-    //      //    style={{
-    //      //      cursor: 'pointer'
-    //      //    }}
-    //      //    title="Дублировать запись"
-    //      //  >
-    //      //    <i className="far fa-copy" />
-    //      //  </span>
-    //      //);
-    //      return {
-    //        value: <span>{editButton}</span>
-    //      };
-    //    }.bind(this)
-    //  }
-    //]);
-
     var clickMainCheckboxY = function() {
       this.setState({ mainCheckbox_new: true, mainCheckbox_old: false });
     };
@@ -715,74 +480,6 @@ var TableContainer = createReactClass({
     this.setState({ pagination: pagination });
   },
 
-  //onSaveClick: function(celldata) {
-  //  if (!$.isEmptyObject(this.state.sendData)) {
-  //    var newRow = celldata.newRow;
-  //    var url = window.location.href;
-  //    var itemId = celldata.id;
-  //    var idx = findIndex(this.state.data, { id: itemId });
-  //    var d = {};
-  //    d[this.props.objectType] = this.state.sendData;
-  //    if (newRow) {
-  //      idx = findIndex(this.state.data, { _id: celldata._id });
-  //      d[this.props.objectType].Project = project.id;
-  //      $.ajax({
-  //        url: url,
-  //        dataType: 'json',
-  //        contentType: 'application/json; charset=UTF-8',
-  //        type: 'POST',
-  //        data: JSON.stringify(d),
-  //        success: function(response) {
-  //          this.state.data[idx] = response.data;
-  //          this.setState({
-  //            data: this.state.data,
-  //            lockRow: false,
-  //            sendData: {},
-  //            editedRow: null
-  //          });
-  //        }.bind(this),
-  //        error: function(xhr, status, err) {
-  //          var jtmp = xhr.responseJSON['errors'];
-  //          var result = 'Не удалось сохранить запись. Причина:\n\n';
-  //          for (key in jtmp) {
-  //            result += jtmp[key] + '\n';
-  //          }
-  //          alert(result);
-  //        }.bind(this)
-  //      });
-  //    } else {
-  //      $.ajax({
-  //        url: url + '/' + itemId,
-  //        dataType: 'json',
-  //        type: 'PUT',
-  //        data: d,
-  //        success: function(response) {
-  //          if (response.data.MalfunctDimID) {
-  //            response.data.system = response.data.pds_malfunction.system;
-  //          }
-  //          this.state.data[idx] = response.data;
-  //          this.setState({
-  //            data: this.state.data,
-  //            lockRow: false,
-  //            sendData: {},
-  //            editedRow: null
-  //          });
-  //        }.bind(this),
-  //        error: function(xhr, status, err) {
-  //          var jtmp = xhr.responseJSON['errors'];
-  //          var result = 'Не удалось сохранить запись. Причина:\n\n';
-  //          for (key in jtmp) {
-  //            result += jtmp[key] + '\n';
-  //          }
-  //          alert(result);
-  //        }.bind(this)
-  //      });
-  //    }
-  //  } else {
-  //    this.setState({ lockRow: false, sendData: {}, editedRow: null });
-  //  }
-  //},
-  //
   onAddRowClick: function() {
     this.setState({
       is_dr_new: true
@@ -794,52 +491,6 @@ var TableContainer = createReactClass({
     });
   },
 
-  //onAddRowClick: function(copiedRow) {
-  //  if (this.state.lockRow) return;
-  //  if (this.props.objectType == 'pds_malfunction_dim') return;
-  //  if (current_user.user_rights >= 2) {
-  //    var copyRow = {};
-  //    if (copiedRow.id) {
-  //      copyRow = $.extend({}, copiedRow);
-  //    } else if (this.state.showFilters) {
-  //      alert(
-  //        'Добавить запись при работающих фильтрах можно только дублированием одной из записей. Либо нужно отключить фильтры.'
-  //      );
-  //      return;
-  //    } else {
-  //      var columns = this.state.columns;
-  //      columns.forEach(function(col) {
-  //        col.sort = null;
-  //      });
-  //      this.setState({ columns: columns, sortingColumn: null });
-  //    }
-  //    // var copyRow  = newRow || {};
-  //    var data = this.state.data;
-
-  //    // чтобы добавить строку в начало, находим индекс первой строки
-  //    var p = this.state.pagination;
-  //    var idx = (p.page - 1) * p.perPage;
-
-  //    //data.unshift({newRow: true, id: "new-" +  Date.now()});
-  //    delete copyRow['id'];
-  //    copyRow.system = {};
-  //    if (this.state.systemFilter != -1)
-  //      copyRow.system.id = this.state.systemFilter;
-  //    var sendData = copyRow;
-  //    copyRow['newRow'] = true;
-  //    copyRow['_id'] = 'new-' + Date.now();
-  //    data.splice(idx, 0, copyRow);
-  //    this.setState({
-  //      data: data,
-  //      editedRow: 0,
-  //      lockRow: true,
-  //      sendData: this.getDuplicatedRowsendData(copyRow)
-  //    });
-  //  } else {
-  //    alert('У Вас недостаточно прав для добавления записи!');
-  //  }
-  //},
-
   onIconFilterClick: function() {
     var showFilters = !this.state.showFilters;
     var columns = this.state.columns;
@@ -849,14 +500,6 @@ var TableContainer = createReactClass({
       });
     this.setState({ showFilters: showFilters, columns: columns });
   },
-  //onIconReplaceClick: function() {
-  //  if (current_user.user_rights >= 1) {
-  //    var showReplace = !this.state.showReplace;
-  //    this.setState({ showReplace: showReplace });
-  //  } else {
-  //    alert('У Вас недостаточно прав для редактирования записей!');
-  //  }
-  //},
 
   getDuplicatedRowsendData: function(row) {
     var sendData = {};
@@ -878,96 +521,10 @@ var TableContainer = createReactClass({
     return sendData;
   },
 
-  /*
-  onHideTreeViewClick: function() {
-    var left_menu = $('#left_menu');
-    var main_table = $('#main_table');
-    var panel_sticker = $('#panel-sticker');
-    var navbar_text_header = $('#navbar-text-header');
-    var navbar_middle_container = $('#navbar-middle-container');
-    if (left_menu[0].hidden == false) {
-      left_menu[0].hidden = true;
-      main_table[0].style.left = '0px';
-      panel_sticker[0].style.backgroundPosition = 'right';
-      navbar_text_header[0].hidden = true;
-      navbar_middle_container[0].style.left = '380px';
-    } else {
-      left_menu[0].hidden = false;
-      main_table[0].style.left = '245px';
-      panel_sticker[0].style.backgroundPosition = 'left';
-      navbar_text_header[0].hidden = false;
-      navbar_middle_container[0].style.left = '520px';
-    }
-  },
-  */
-
-  /*onExportClick: function(exportIndex) {
-    var bookname = model_name + '_' + project.id.toString() + '.xls';
-
-    if (exportIndex === 1) {
-      var dataxls = this.state.dataxls.filter(function(elem) {
-        return elem.checked;
-      });
-    } else {
-      var dataxls = this.state.dataxls;
-    }
-    var columns = this.props.columns.filter(function(column) {
-      if (column.attribute !== 'extra_label') {
-        return true;
-      }
-    });
-    exportData(dataxls, columns, bookname);
-  }, */
-
-  //onReplaceDone: function(data) {
-  //  this.setState({ data: data });
-  //},
-
   onSystemSelectorChange: function(value) {
     this.setState({ systemFilter: value.system });
   },
 
-  //onSaveClick: function(celldata) {
-  //  if (!$.isEmptyObject(this.state.sendData)) {
-  //    var newRow = celldata.newRow;
-  //    var itemId = celldata.id;
-  //    var d = {};
-  //    d[this.props.objectType] = this.state.sendData;
-  //    if (newRow) {
-  //      idx = findIndex(this.state.data, { _id: celldata._id });
-  //      d[this.props.objectType].Project = project.id;
-  //    } else {
-  //      $.ajax({
-  //        url: url + '/' + itemId,
-  //        dataType: 'json',
-  //        type: 'PUT',
-  //        data: d,
-  //        success: function(response) {
-  //          if (response.data.MalfunctDimID) {
-  //            response.data.system = response.data.pds_malfunction.system;
-  //          }
-  //          this.state.data[idx] = response.data;
-  //          this.setState({
-  //            data: this.state.data,
-  //            lockRow: false,
-  //            sendData: {},
-  //            editedRow: null
-  //          });
-  //        }.bind(this),
-  //        error: function(xhr, status, err) {
-  //          var jtmp = xhr.responseJSON['errors'];
-  //          var result = 'Не удалось сохранить запись. Причина:\n\n';
-  //          for (key in jtmp) {
-  //            result += jtmp[key] + '\n';
-  //          }
-  //          alert(result);
-  //        }.bind(this)
-  //      });
-  //    }
-  //  } else {
-  //    this.setState({ lockRow: false, sendData: {}, editedRow: null });
-  //  }
-  //},
   onDrInsert: function(pds_dr, comment, is_new) {
     var url = '/create_dr_and_comment';
     var d = {};
@@ -1117,17 +674,9 @@ var TableContainer = createReactClass({
     } else {
       data = sortColumn.sort(data, sortingColumn, orderBy);
     }
-    //this.state.dataxls = data;
-    //const resolver = resolve.resolve({
-    //  columns,
-    //  method: resolve.nested
-    //});
 
     const paginated = paginate(pagination)(data);
     var pages = paginated.amount;
-    //var project_name = project.project_name;
-    //const data2 = resolver(paginated.rows);
-    //var dr_details = data[this.state.editedRow];
     var editedRow = null;
     var editedDr = this.state.editedDr;
     if (editedDr) {
@@ -1220,16 +769,7 @@ var TableContainer = createReactClass({
                   : 'table-filters hidden-element'
               }
               key={'table-filters'}
-            >
-              {/*<div className="replace-container">
-                <Replace
-                  columns={this.state.columns}
-                  data={this.state.data}
-                  onReplaceDone={this.onReplaceDone}
-                  disabled={this.state.lockRow}
-                />
-              </div>*/}
-            </div>
+            />
 
             <div className="controls">
               <Paginator
@@ -1267,21 +807,6 @@ var TableContainer = createReactClass({
                 }}
                 rowKey="id"
               />
-
-              {/*<Table1.Provider
-            className="pure-table pure-table-striped"
-            columns={cols}
-            style={{ overflowX: 'auto' }}
-          >
-            <Table1.Header>
-              <search.Columns
-                query={search}
-                columns={cols}
-                onChange={this.onSearch}
-              />
-            </Table1.Header>
-            <Table1.Body rows={data2} rowKey="id" />
-          </Table1.Provider>*/}
             </div>
           </div>
         </div>

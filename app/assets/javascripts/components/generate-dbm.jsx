@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-//import MOD from 'ruby_constants.js.erb'
-//import VARIABLES from 'ruby_constants.js.erb'
-//import ATTRIBUTE_LIST from 'ruby_constants.jsx.haml'
 import XLSX from 'xlsx';
 
 var getSelectorOptions = require('../selectors/selectors.jsx')
   .getSelectorOptions;
 
 const MOD = ['MDD', 'ADD', 'OMOD'];
-//const MOD = ruby_constants.MOD;
 const VARIABLES = [
   'Дистанционное управление',
   'Отказы',
