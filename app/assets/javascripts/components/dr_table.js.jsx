@@ -1,8 +1,10 @@
 'use strict';
 
-var React = require('react');
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 var ReactDOM = require('react-dom');
+import ReactToPrint from 'react-to-print';
+
 var createReactClass = require('create-react-class');
 var _ = require('underscore');
 import { DRSTATUS } from './drs/dr_data.jsx';
@@ -491,6 +493,8 @@ var TableContainer = createReactClass({
     });
   },
 
+  onExportToPdfClick: function() {},
+
   onIconFilterClick: function() {
     var showFilters = !this.state.showFilters;
     var columns = this.state.columns;
@@ -758,6 +762,12 @@ var TableContainer = createReactClass({
                       data={this.state.data}
                       onExport={this.onExportClick}
                     />
+                    <ReactToPrint
+                      trigger={() => (
+                        <div className={'dr-print info-buttons'}>Печать</div>
+                      )}
+                      content={() => this.componentRef}
+                    />
                   </div>
                 </div>
               </div>
@@ -819,6 +829,7 @@ var TableContainer = createReactClass({
             onDrInsert={this.onDrInsert}
             is_dr_new={is_dr_new}
             onDrCancel={this.onDrCancel}
+            ref={el => (this.componentRef = el)}
           />
         </div>
       </div>

@@ -24,6 +24,18 @@
  *= require libs/react-virtualized/styles.css
  *= require libs/react-virtualized-select/styles.css
 */
+@media print {
+  .page-break {
+    display: block;
+    page-break-before: always;
+  }
+}
+.recharts-wrapper,
+.recharts-surface {
+  @media print {
+    width: calc(100%);
+  }
+}
 table {
   thead {
     background-color: #ccc;
@@ -583,6 +595,10 @@ body {
 
         .dr-statistics-modal {
           background-image: asset_data_url("icons/statistics.png");
+          padding-left: 45px;
+        }
+        .dr-print {
+          background-image: asset_data_url("icons/dr_print.png");
           padding-left: 45px;
         }
       }
