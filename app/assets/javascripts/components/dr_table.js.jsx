@@ -589,7 +589,9 @@ var TableContainer = createReactClass({
       }.bind(this)
     });
   },
-
+  onBeforePrint: function() {
+    return <div ref={el => (this.componentRef = el)}>test</div>;
+  },
   render: function() {
     var data = this.state.data || [];
     var pagination = this.state.pagination || {};
@@ -767,6 +769,7 @@ var TableContainer = createReactClass({
                         <div className={'dr-print info-buttons'}>Печать</div>
                       )}
                       content={() => this.componentRef}
+                      onBeforePrint={() => this.onBeforePrint}
                     />
                   </div>
                 </div>
@@ -829,7 +832,6 @@ var TableContainer = createReactClass({
             onDrInsert={this.onDrInsert}
             is_dr_new={is_dr_new}
             onDrCancel={this.onDrCancel}
-            ref={el => (this.componentRef = el)}
           />
         </div>
       </div>
