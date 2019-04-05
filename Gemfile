@@ -138,6 +138,7 @@ group :development do
   # gem 'rack-mini-profiler'
   gem 'rails_best_practices'
   gem 'rubocop', require: false
+  gem 'rubocop-performance'
   gem 'rubycritic', require: false
   gem 'stackprof'
   gem 'traceroute'
