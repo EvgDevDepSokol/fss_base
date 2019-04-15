@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 var ReactDOM = require('react-dom');
-import ReactToPrint from 'react-to-print';
+//import ReactToPrint from 'react-to-print';
 
 var createReactClass = require('create-react-class');
 var _ = require('underscore');
@@ -39,7 +39,7 @@ var TableContainer = createReactClass({
     data: PropTypes.array,
     columns: PropTypes.array,
     title: PropTypes.string,
-    dr_details: PropTypes.object,
+    dr_details: PropTypes.func,
     onCommentSave: PropTypes.func,
     onDrCancel: PropTypes.func,
     is_dr_new: PropTypes.bool
@@ -764,13 +764,13 @@ var TableContainer = createReactClass({
                       data={this.state.data}
                       onExport={this.onExportClick}
                     />
-                    <ReactToPrint
+                    {/*<ReactToPrint
                       trigger={() => (
                         <div className={'dr-print info-buttons'}>Печать</div>
                       )}
                       content={() => this.componentRef}
                       onBeforePrint={() => this.onBeforePrint}
-                    />
+                    />*/}
                   </div>
                 </div>
               </div>
