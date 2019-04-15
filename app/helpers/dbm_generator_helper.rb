@@ -11,9 +11,25 @@ module DbmGeneratorHelper
 
   def desc12(is_rus)
     desc = if is_rus
-             (defined? shortDesc) ? shortDesc : defined? self.Desc || defined? self.Description || ''
+             if defined? shortDesc
+               shortDesc
+             elsif defined? self.Desc
+               self.Desc
+             elsif defined? self.Description
+               self.Description
+             else
+               ''
+             end
            else
-             (defined? shortDesc_EN) ? shortDesc_EN : defined? self.Desc_EN || defined? self.Description_EN || ''
+             if defined? shortDesc_EN
+               shortDesc_EN
+             elsif defined? self.Desc_EN
+               self.Desc_EN
+             elsif defined? self.Description_EN
+               self.Description_EN
+             else
+               ''
+             end
            end
     desc = desc ? desc.split.join(' ').strip : ''
     if desc.length > 66
