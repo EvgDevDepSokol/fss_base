@@ -567,6 +567,8 @@ var TableContainer = createReactClass({
 
     return {
       editedRow: null,
+      selectedRow: null,
+      selectedRowData: null,
       lockRow: false,
       sendData: {},
       data: this.props.data,
@@ -891,6 +893,13 @@ var TableContainer = createReactClass({
     this.setState({ systemFilter: value.system });
   },
 
+  onClickRow: function(rowIndex, rowData) {
+    this.setState({
+      selectedRow: rowIndex,
+      selectedRowData: rowData
+    });
+  },
+
   render: function() {
     var data = this.state.data || [];
     var pagination = this.state.pagination || {};
@@ -979,6 +988,15 @@ var TableContainer = createReactClass({
     const paginated = paginate(pagination)(data);
     var pages = paginated.amount;
     //const data2 = resolver(paginated.rows);
+    var selectedRow = null;
+    var selectedRowData = this.state.selectedRowData;
+    if (selectedRowData) {
+      paginated.rows.forEach(function(item, i) {
+        if (selectedRowData.id == item.id) {
+          selectedRow = i;
+        }
+      });
+    }
 
     return (
       <div className="main-container-inner" key={'main-table'}>
@@ -1102,7 +1120,12 @@ var TableContainer = createReactClass({
             row={(d, rowIndex) => {
               var rowClass = rowIndex % 2 ? 'odd-row' : 'even-row';
               if (rowIndex == this.state.editedRow) rowClass = 'edited-row';
-              return { className: rowClass };
+              if (rowIndex == selectedRow) rowClass = 'edited-row';
+              return {
+                className: rowClass,
+                onClick: () =>
+                  this.onClickRow(rowIndex, paginated.rows[rowIndex])
+              };
             }}
             rowKey="id"
           />
