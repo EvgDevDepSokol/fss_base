@@ -27,11 +27,11 @@ class PdsRf < ApplicationRecord
 
   def self.plucked
     pluck(:rfID, :name, :Ptag, :tag_RU, :Desc, :Desc_EN, :range, :type, :range_FB,
-      :Type_FB,
-      'pds_syslist.SystemID', 'pds_syslist.System',
-      'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
-      'psa_project_units_pds_rf.ProjUnitID', 'units_pds_project_unit.UnitID', 'units_pds_project_unit.Unit_RU',
-      'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link').map do |e|
+          :Type_FB,
+          'pds_syslist.SystemID', 'pds_syslist.System',
+          'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU',
+          'psa_project_units_pds_rf.ProjUnitID', 'units_pds_project_unit.UnitID', 'units_pds_project_unit.Unit_RU',
+          'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link').map do |e|
       {
         id: e[0],
         name: e[1],

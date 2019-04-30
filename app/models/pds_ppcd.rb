@@ -9,9 +9,9 @@ class PdsPpcd < ApplicationRecord
 
   def self.plucked
     pluck('ppcdID', 'pds_syslist.SystemID', 'pds_syslist.System',
-      'Shifr', 'Key', 'identif',
-      'Description', 'Description_EN',
-      'pds_detectors.DetID', 'pds_detectors.tag').map do |e|
+          'Shifr', 'Key', 'identif',
+          'Description', 'Description_EN',
+          'pds_detectors.DetID', 'pds_detectors.tag').map do |e|
       {
         'id' => e[0],
         'system' => { System: e[2], id: e[1] },

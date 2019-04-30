@@ -18,9 +18,9 @@ class ProjectSettingsController < BaseController
                            .includes(:pds_documentation).where(pds_documentation: { Project: project.ProjectID })
                            .includes(:system)
                            .pluck(:id,
-                             'pds_syslist.SystemID', 'pds_syslist.System',
-                             'pds_documentation.DocID', 'pds_documentation.DocTitle',
-                             'pds_documentation.Type', 'pds_documentation.NPP_Number')
+                                  'pds_syslist.SystemID', 'pds_syslist.System',
+                                  'pds_documentation.DocID', 'pds_documentation.DocTitle',
+                                  'pds_documentation.Type', 'pds_documentation.NPP_Number')
     @data_list = @data_list.each.map do |e|
       e1 = {}
       e1['id']               = e[0]

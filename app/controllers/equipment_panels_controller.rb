@@ -182,14 +182,14 @@ class EquipmentPanelsController < BaseController
   def pds_meters_digitals
     @data_list = PdsMetersDigital.where(Project: project.ProjectID)
                                  .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system,
-                                   :pds_section_assembler)
+                                           :pds_section_assembler)
                                  .pluck(:MetDigID,
-                                   'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
-                                   'hw_peds.ped_N', 'hw_peds.ped',
-                                   'pds_syslist.SystemID', 'pds_syslist.System',
-                                   'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
-                                   'hw_ic.scaleMin', 'hw_ic.scaleMax',
-                                   'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU').each.map do |e|
+                                        'hw_ic.icID', 'hw_ic.ref', 'hw_ic.tag_no', 'hw_ic.Description',
+                                        'hw_peds.ped_N', 'hw_peds.ped',
+                                        'pds_syslist.SystemID', 'pds_syslist.System',
+                                        'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
+                                        'hw_ic.scaleMin', 'hw_ic.scaleMax',
+                                        'pds_project_unit.ProjUnitID', 'pds_unit.UnitID', 'pds_unit.Unit_RU').each.map do |e|
       e1 = {}
       e1['id']                    = e[0]
       e1['hw_ic']                 = { id: e[1], ref: e[2], tag_no: e[3], Description: e[4],
@@ -240,6 +240,6 @@ class EquipmentPanelsController < BaseController
   def pds_meters_channels
     @data_list = PdsMetersChannel.where(Project: project.ProjectID)
                                  .includes({ hw_ic: [:hw_ped, pds_project_unit: :unit] }, :system,
-                                   :pds_section_assembler)
+                                           :pds_section_assembler)
   end
 end

@@ -8,7 +8,7 @@ class PdsMalfunctionDim < ApplicationRecord
 
   scope :ordered, lambda {
     includes(:pds_malfunction).order('pds_malfunction.sys', 'pds_malfunction.Numb',
-      "lpad(pds_malfunction_dim.Character, 5, '*')")
+                                     "lpad(pds_malfunction_dim.Character, 5, '*')")
   }
 
   def self.plucked

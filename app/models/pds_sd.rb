@@ -21,8 +21,8 @@ class PdsSd < ApplicationRecord
 
   def self.plucked
     pluck(:id, :SdTitle, :BlobObj, :Numb,
-      :title_EN,
-      'pds_syslist.SystemID', 'pds_syslist.System')
+          :title_EN,
+          'pds_syslist.SystemID', 'pds_syslist.System')
       .map do |e|
       {
         id: e[0],

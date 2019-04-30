@@ -24,10 +24,10 @@ class PdsDr < ApplicationRecord
     # end
     # 'pds_engineer_closeds_pds_dr.engineer_N', 'pds_engineer_closeds_pds_dr.name', :closedDate
     pluck(:id,
-      'pds_syslist.SystemID', 'pds_syslist.System',
-      'pds_engineers.Engineer_N', 'pds_engineers.name',
-      :query,
-      :drNum, :Priority, :openedDate)
+          'pds_syslist.SystemID', 'pds_syslist.System',
+          'pds_engineers.Engineer_N', 'pds_engineers.name',
+          :query,
+          :drNum, :Priority, :openedDate)
       .each.map do |e|
       e1 = {}
       e1['id'] = e[0]
@@ -51,7 +51,7 @@ class PdsDr < ApplicationRecord
 
   def self.list_of_comments(dr_id)
     PdsDrComment.where(pds_dr_id: dr_id).includes(:pds_engineer).order(comment_date: :asc).pluck(:id,
-      'pds_engineers.engineer_N', 'pds_engineers.name', :comment_date, :comment_text, :status).each.map do |e|
+                                                                                                 'pds_engineers.engineer_N', 'pds_engineers.name', :comment_date, :comment_text, :status).each.map do |e|
       e1 = {}
       e1['id'] = e[0]
       e1['pds_engineer'] = { id: e[1], name: e[2] }

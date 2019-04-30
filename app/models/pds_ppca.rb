@@ -20,10 +20,10 @@ class PdsPpca < ApplicationRecord
 
   def self.plucked
     pluck('ppcID', 'pds_syslist.SystemID', 'pds_syslist.System',
-      'Shifr', 'Key', 'identif',
-      'Description', 'Description_EN',
-      'L_lim', 'U_lim', 'Unit', 'nom',
-      'pds_detectors.DetID', 'pds_detectors.tag').map do |e|
+          'Shifr', 'Key', 'identif',
+          'Description', 'Description_EN',
+          'L_lim', 'U_lim', 'Unit', 'nom',
+          'pds_detectors.DetID', 'pds_detectors.tag').map do |e|
       {
         id: e[0],
         system: { id: e[1], System: e[2] },
