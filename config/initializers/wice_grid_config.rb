@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 if defined?(Wice::Defaults)
 
   # Default number of rows to show per page.
   Wice::Defaults::PER_PAGE = 20
 
   # Default order direction
-  Wice::Defaults::ORDER_DIRECTION = 'asc'.freeze
+  Wice::Defaults::ORDER_DIRECTION = 'asc'
 
   # Default name for a grid. A grid name is the basis for a lot of
   # names including parameter names, DOM IDs, etc
   # The shorter the name is the shorter the request URI will be.
-  Wice::Defaults::GRID_NAME = 'grid'.freeze
+  Wice::Defaults::GRID_NAME = 'grid'
 
   # If REUSE_LAST_COLUMN_FOR_FILTER_ICONS is true and the last column doesn't have any filter and column name, it will be used
   # for filter related icons (filter icon, reset icon, show/hide icon), otherwise an additional table column is added.
   Wice::Defaults::REUSE_LAST_COLUMN_FOR_FILTER_ICONS = false
 
   # The label of the first option of a custom dropdown list meaning 'All items'
-  Wice::Defaults::CUSTOM_FILTER_ALL_LABEL = '--'.freeze
+  Wice::Defaults::CUSTOM_FILTER_ALL_LABEL = '--'
 
   # A list of classes for the table tag of the grid
   Wice::Defaults::DEFAULT_TABLE_CLASSES = ['table', 'table-bordered', 'table-striped'].freeze
@@ -31,7 +33,7 @@ if defined?(Wice::Defaults)
   Wice::Defaults::ENABLE_EXPORT_TO_CSV = true
 
   # Default CSV field separator
-  Wice::Defaults::CSV_FIELD_SEPARATOR = ';'.freeze
+  Wice::Defaults::CSV_FIELD_SEPARATOR = ';'
 
   # The strategy when to show the filter.
   # * <tt>:when_filtered</tt> - when the table is the result of filtering
@@ -43,7 +45,7 @@ if defined?(Wice::Defaults)
   Wice::Defaults::AUTO_RELOAD = true
 
   # SQL operator used for matching strings in string filters.
-  Wice::Defaults::STRING_MATCHING_OPERATOR = 'LIKE'.freeze
+  Wice::Defaults::STRING_MATCHING_OPERATOR = 'LIKE'
   # STRING_MATCHING_OPERATOR = 'ILIKE' # Use this for Postgresql case-insensitive matching.
 
   # Defining one string matching operator globally for the whole application turns is not enough
@@ -74,7 +76,7 @@ if defined?(Wice::Defaults)
 
   # ActiveRecord model to store queries. Read the documentation for details
   # QUERY_STORE_MODEL = 'WiceGridSerializedQuery'
-  Wice::Defaults::QUERY_STORE_MODEL = 'WiceGridSerializedQuery'.freeze
+  Wice::Defaults::QUERY_STORE_MODEL = 'WiceGridSerializedQuery'
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   #            Here go settings related to the calendar helpers               #
@@ -86,15 +88,15 @@ if defined?(Wice::Defaults)
 
   # Format of the datetime displayed.
   # If you change the format, make sure to check if +DATETIME_PARSER+ can still parse this string.
-  Wice::Defaults::DATETIME_FORMAT = '%Y-%m-%d %H:%M'.freeze
+  Wice::Defaults::DATETIME_FORMAT = '%Y-%m-%d %H:%M'
 
   # Format of the date displayed.
   # If you change the format, make sure to check if +DATE_PARSER+ can still parse this string.
-  Wice::Defaults::DATE_FORMAT = '%Y-%m-%d'.freeze
+  Wice::Defaults::DATE_FORMAT = '%Y-%m-%d'
 
   # Format of the date displayed in jQuery's Datepicker
   # If you change the format, make sure to check if +DATE_PARSER+ can still parse this string.
-  Wice::Defaults::DATE_FORMAT_JQUERY = 'yy-mm-dd'.freeze
+  Wice::Defaults::DATE_FORMAT_JQUERY = 'yy-mm-dd'
 
   # With Calendar helpers enabled the parameter sent is the string displayed. This lambda will be given a date string in the
   # format defined by +DATETIME_FORMAT+ and must generate a DateTime object.
@@ -128,7 +130,7 @@ if defined?(Wice::Defaults)
   end
 
   # Icon to popup the calendar.
-  Wice::Defaults::CALENDAR_ICON = '/assets/icons/grid/calendar_view_month.png'.freeze
+  Wice::Defaults::CALENDAR_ICON = '/assets/icons/grid/calendar_view_month.png'
 
   # popup calendar will be shown relative to the popup trigger element or to the mouse pointer
   Wice::Defaults::POPUP_PLACEMENT_STRATEGY = :trigger # :pointer

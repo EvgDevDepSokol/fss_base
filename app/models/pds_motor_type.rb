@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsMotorType < ApplicationRecord
   self.table_name = 'pds_motor_type'
   alias_attribute :id, primary_key

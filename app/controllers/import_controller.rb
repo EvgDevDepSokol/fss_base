@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Import data from excel module
 class ImportController < ApplicationController
   include GeneralControllerHelper

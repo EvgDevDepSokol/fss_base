@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsMalfunctionDim < ApplicationRecord
   self.table_name = 'pds_malfunction_dim'
   alias_attribute :id, primary_key

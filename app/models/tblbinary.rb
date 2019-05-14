@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Tblbinary < ApplicationRecord
   self.table_name = 'tblbinaries'
   alias_attribute :id, primary_key

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProjectSettingsController < BaseController
   # Project settings controller
   ACTIONS = %i[pds_eng_on_sys pds_project_unit

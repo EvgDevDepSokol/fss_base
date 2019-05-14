@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # commetn to pds_dr
 class PdsDrComment < ApplicationRecord
   self.table_name = 'pds_dr_comment'

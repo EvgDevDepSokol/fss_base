@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WeekReport < ApplicationRecord
   self.table_name = 'week_report'
   alias_attribute :id, primary_key

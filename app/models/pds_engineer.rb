@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsEngineer < ApplicationRecord
   # attr_accessible :login_project
   # Include default devise modules. Others available are:

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ElectricEquipmentController < BaseController
   # Controller for electric equipment
   ACTIONS = %i[pds_breakers pds_equipments pds_section_assemblers].freeze

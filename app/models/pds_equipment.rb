@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsEquipment < ApplicationRecord
   alias_attribute :id, primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'

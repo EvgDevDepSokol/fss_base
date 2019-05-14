@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SdSysNumb < ApplicationRecord
   self.primary_key = 'sd_N'
   self.table_name = 'sd_sys_numb'

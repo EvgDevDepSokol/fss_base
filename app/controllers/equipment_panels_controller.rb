@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EquipmentPanelsController < BaseController
   # Controller for Equipment panels
   ACTIONS = %i[hw_ic pds_bru pds_misc pds_set pds_switch_nofix pds_switch_fix

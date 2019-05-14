@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # SchemaValidations.setup do |config|
 # config.auto_create = false
 # config.except << :t

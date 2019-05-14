@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsPpca < ApplicationRecord
   self.table_name = 'pds_ppca'
   include DbmGeneratorHelper

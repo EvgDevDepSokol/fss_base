@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 wb = xlsx_package.workbook
 wb.add_worksheet(name: @model.to_s) do |sheet|
   sheet.add_row @model.column_names

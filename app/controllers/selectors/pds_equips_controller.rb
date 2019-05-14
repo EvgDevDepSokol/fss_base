@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Selectors::PdsEquipsController < ApplicationController
   include SelectorControllerHelper
 

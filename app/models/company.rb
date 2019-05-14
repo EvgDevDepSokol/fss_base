@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Company < ApplicationRecord
   self.table_name = 'company'
   alias_attribute :id, primary_key

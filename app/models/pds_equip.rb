@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsEquip < ApplicationRecord
   self.primary_key = 'TEquipID'
   alias_attribute :id, primary_key

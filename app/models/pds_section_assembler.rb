@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsSectionAssembler < ApplicationRecord
   self.table_name = 'pds_section_assembler'
   alias_attribute :id, primary_key

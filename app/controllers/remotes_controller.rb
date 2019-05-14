@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemotesController < BaseController
   # Remotes controller
   ACTIONS = %i[pds_malfunction pds_malfunction_dim pds_rf].freeze

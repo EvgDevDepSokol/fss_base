@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 0. acc
 1. acc_ic
 2. as

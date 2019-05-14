@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsHex < ApplicationRecord
   self.table_name = 'pds_hex'
   alias_attribute :id, primary_key

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # table with project news
 class Article < ApplicationRecord
   self.table_name = 'news'

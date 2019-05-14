@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsMeter < ApplicationRecord
   include EquipmentPanelsHelper
   schema_validations except: :hw_ic

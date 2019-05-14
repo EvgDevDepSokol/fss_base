@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsButton < ApplicationRecord
   include EquipmentPanelsHelper
   alias_attribute :id, primary_key

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ViewHelper
   def edit_button(object)
     content_tag(:button,

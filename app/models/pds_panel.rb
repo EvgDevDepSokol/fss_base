@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsPanel < ApplicationRecord
   self.table_name = 'pds_panel'
   alias_attribute :id, primary_key

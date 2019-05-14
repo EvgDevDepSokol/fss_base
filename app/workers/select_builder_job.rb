@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SelectBuilderJob
   include ActiveRecord::Validations
   include ActiveRecord::AutosaveAssociation
@@ -9,7 +11,7 @@ class SelectBuilderJob
   require 'net/scp'
 
   TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
-  FILE_PATH = '/home/shared/'.freeze
+  FILE_PATH = '/home/shared/'
 
   def self.render_sel_rf(dbm_generator)
     write_log('Инициализация...')

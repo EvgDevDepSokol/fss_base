@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsMnemo < ApplicationRecord
   self.table_name = 'pds_mnemo'
   self.inheritance_column = nil

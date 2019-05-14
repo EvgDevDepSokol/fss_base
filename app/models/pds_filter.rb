@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsFilter < ApplicationRecord
   self.table_name = 'pds_filter'
   alias_attribute :id, primary_key

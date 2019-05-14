@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HwWirelist < ApplicationRecord
   self.table_name = 'hw_wirelist'
   alias_attribute :id, primary_key

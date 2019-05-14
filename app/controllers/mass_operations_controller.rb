@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MassOperationsController < ApplicationController
   # Replace some values using web-interface
   include GeneralControllerHelper

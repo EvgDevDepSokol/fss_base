@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsLamp < ApplicationRecord
   include EquipmentPanelsHelper
   self.primary_key = 'LampID'

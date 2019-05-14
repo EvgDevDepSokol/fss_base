@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class DbmGeneratorController < ApplicationController
   require 'net/ssh'
   require 'net/scp'
   layout false
 
   TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
-  FILE_PATH = '/home/shared/'.freeze
+  FILE_PATH = '/home/shared/'
   REMOTE_FOLDER = ['gen_rf/', 'gen_mf/', 'gen_peds/', 'gen_ppc/', 'gen_ann/'].freeze
 
   def prepare_hash

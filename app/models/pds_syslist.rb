@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsSyslist < ApplicationRecord
   self.table_name = 'pds_syslist'
   alias_attribute :id, primary_key

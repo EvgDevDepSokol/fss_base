@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsMisc < ApplicationRecord
   include EquipmentPanelsHelper
   self.table_name = 'pds_misc'

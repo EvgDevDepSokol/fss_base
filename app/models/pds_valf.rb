@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsValf < ApplicationRecord
   self.inheritance_column = :_type_disabled
   alias_attribute :id, primary_key

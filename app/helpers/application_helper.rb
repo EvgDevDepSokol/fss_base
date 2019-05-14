@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def get_tables_list
     YAML.load_file('public/data/tables.yml')

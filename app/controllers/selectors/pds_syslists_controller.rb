@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Selectors::PdsSyslistsController < ApplicationController
   include SelectorControllerHelper
 

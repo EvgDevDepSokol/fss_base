@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ServiceController < BaseController
   # Service controller
   ACTIONS = [:tablelist, # :table_role_rights, :roles,

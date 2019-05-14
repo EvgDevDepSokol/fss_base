@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GeneralControllerHelper
   PROJECT_LIST = [90, 87, 83, 80_000_001, 80_000_002, 80_000_003, 88].freeze
   def model

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsAlarm < ApplicationRecord
   include EquipmentPanelsHelper
   self.table_name = 'pds_alarm'

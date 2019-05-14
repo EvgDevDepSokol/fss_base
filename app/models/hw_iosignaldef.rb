@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HwIosignaldef < ApplicationRecord
   self.table_name = 'hw_iosignaldef'
   alias_attribute :id, primary_key

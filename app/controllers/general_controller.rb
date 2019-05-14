@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # General controller
 class GeneralController < ApplicationController
   include GeneralControllerHelper

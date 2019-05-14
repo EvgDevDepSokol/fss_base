@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsRf < ApplicationRecord
   # self.inheritance_column = nil
   self.inheritance_column = :_type_disabled

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # I&C table
 class HwIc < ApplicationRecord
   self.table_name = 'hw_ic'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsProjectProperty < ApplicationRecord
   belongs_to :pds_project, foreign_key: 'ProjectID'
   alias_attribute :id, primary_key

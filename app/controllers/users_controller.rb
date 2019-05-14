@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   # Users controller
   before_action :set_pds_engineer, only: %i[show edit update destroy]

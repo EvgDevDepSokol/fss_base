@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsValvesController < ApplicationController
   before_action :set_pds_valf, only: [:show]
 

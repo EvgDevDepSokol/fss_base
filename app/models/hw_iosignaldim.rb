@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HwIosignaldim < ApplicationRecord
   self.table_name = 'hw_iosignaldim'
   self.inheritance_column = nil

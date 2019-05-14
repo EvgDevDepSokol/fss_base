@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsProjectUnit < ApplicationRecord
   self.table_name = 'pds_project_unit'
   alias_attribute :id, primary_key

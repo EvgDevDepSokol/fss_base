@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsSd < ApplicationRecord
   self.table_name = 'pds_sd'
   alias_attribute :id, primary_key

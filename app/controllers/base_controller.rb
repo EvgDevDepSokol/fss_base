@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BaseController < ApplicationController
   # Base controller, methods for all models defined here
   include GeneralControllerHelper

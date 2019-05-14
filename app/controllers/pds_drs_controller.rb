@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Discrepancy reports
 class PdsDrsController < BaseController
   layout nil # resets layouts/table

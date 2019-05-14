@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsEjector < ApplicationRecord
   self.table_name = 'pds_ejector'
   alias_attribute :id, primary_key

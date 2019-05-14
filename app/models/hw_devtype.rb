@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HwDevtype < ApplicationRecord
   self.table_name = 'hw_devtype'
   alias_attribute :id, primary_key

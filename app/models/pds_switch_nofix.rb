@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsSwitchNofix < ApplicationRecord
   include EquipmentPanelsHelper
   self.table_name = 'pds_switch_nofix'

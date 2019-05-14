@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DbmGenerator
   include ActiveRecord::Validations
   include ActiveRecord::AutosaveAssociation

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveSupport::JSON::Encoding
   Oj.default_options = { mode: :compat }
   class Oj < JSONGemEncoder

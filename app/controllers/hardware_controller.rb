@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HardwareController < BaseController
   # Hardware controller
   ACTIONS = %i[hw_peds hw_wirelist pds_iomap hw_iosignaldefs

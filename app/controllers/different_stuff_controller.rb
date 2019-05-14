@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DifferentStuffController < ApplicationController
   layout false
 

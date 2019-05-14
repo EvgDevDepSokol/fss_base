@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DisplaySystemsController < BaseController
   # Controller for display systems
   ACTIONS = %i[pds_ppca pds_ppcd pds_sd].freeze

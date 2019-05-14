@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EquipmentPanelsHelper
   # Helper for equipment panels tables
   EQUIPMENT_TABLES = %i[pds_bru pds_misc pds_set pds_switch_nofix pds_switch_fix

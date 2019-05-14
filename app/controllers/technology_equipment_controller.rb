@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TechnologyEquipmentController < BaseController
   # Technology equipment controller
   ACTIONS = %i[pds_detectors pds_motors pds_valves pds_regulators

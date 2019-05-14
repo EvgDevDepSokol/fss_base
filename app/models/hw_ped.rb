@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HwPed < ApplicationRecord
   self.inheritance_column = nil
   self.table_name = 'hw_peds'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsVolume < ApplicationRecord
   self.table_name = 'pds_volume'
   alias_attribute :id, primary_key

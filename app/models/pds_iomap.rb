@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsIomap < ApplicationRecord
   self.table_name = 'pds_iomap'
   alias_attribute :id, primary_key

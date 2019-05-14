@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Project. Contains copy/destroy all project objets procedures
 class PdsProject < ApplicationRecord
   self.table_name = 'pds_project'

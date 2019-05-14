@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PdsRegulator < ApplicationRecord
   alias_attribute :id, primary_key
   # belongs_to :det

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Role < ApplicationRecord
   self.table_name = 'roles'
   self.primary_key = 'roleID'

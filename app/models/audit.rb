@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Audit < ApplicationRecord
   self.table_name = 'audit'
   alias_attribute :id, primary_key
