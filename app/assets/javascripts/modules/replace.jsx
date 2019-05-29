@@ -14,11 +14,15 @@ var DetectorSelector = require('../selectors/detector.jsx');
 var PdsManEquipSelector = require('../selectors/pds_man_equips.jsx');
 var PdsSectionAssemblerSelector = require('../selectors/pds_section_assembler.jsx');
 var HwPedSelector = require('../selectors/hw_ped.jsx');
+var HwIosignaldefSelector = require('../selectors/hw_iosignaldef.jsx');
 var PdsPanelSelector = require('../selectors/pds_panels.jsx');
 var HwDevTypesSelector = require('../selectors/hw_dev_types.jsx');
+var PdsEquipSelector = require('../selectors/pds_equip.jsx');
 
 var PdsMotorTypeSelector = require('../selectors/pds_motor_types.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
+
+//some static selectors
 var MalfunctionTypeSelector = require('../selectors/static_selectors.jsx')
   .MalfunctionTypeSelector;
 var RFTypeSelector = require('../selectors/static_selectors.jsx')
@@ -48,6 +52,7 @@ var SyslistCategorySelector = require('../selectors/static_selectors.jsx')
 
 var SdSelector = require('../selectors/pds_sds.jsx');
 var UnitSelector = require('../selectors/pds_project_units.jsx');
+var UnitAllSelector = require('../selectors/pds_units.jsx');
 var PdsEngineersSelector = require('../selectors/pds_engineers.jsx');
 var PdsDocumentationsSelector = require('../selectors/pds_documentation.jsx');
 var PdsValvesSelector = require('../selectors/pds_valves.jsx');

@@ -30,6 +30,7 @@ const DATA_SYSLIST_CATEGORY = [
 ];
 
 class StaticSelector extends React.Component {
+  static displayName = 'SomeStaticSelector';
   static propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
@@ -57,7 +58,7 @@ class StaticSelector extends React.Component {
     };
   }
 
-  setValue = (value) => {
+  setValue = value => {
     this.setState({ value: value });
     var h = {};
     h[this.props.attribute] = value;
@@ -68,7 +69,6 @@ class StaticSelector extends React.Component {
     var clearable = this.props.clearable ? this.props.clearable : false;
     return (
       <Select
-        displayName={this.props.displayName}
         name={this.props.name}
         options={this.props.options}
         onChange={this.setValue}
@@ -82,6 +82,7 @@ class StaticSelector extends React.Component {
 }
 
 class ValveTypeSelector extends React.Component {
+  static displayName = 'ValveTypeSelector';
   render() {
     return (
       <StaticSelector
@@ -89,7 +90,6 @@ class ValveTypeSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_VALVE_TYPES}
-        displayName="ValveTypeSelector"
         name="ValveType"
       />
     );
@@ -97,6 +97,7 @@ class ValveTypeSelector extends React.Component {
 }
 
 class MalfunctionTypeSelector extends React.Component {
+  static displayName = 'MalfunctionTypeSelector';
   render() {
     return (
       <StaticSelector
@@ -104,7 +105,6 @@ class MalfunctionTypeSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_MALFUNCTION_TYPES}
-        displayName="MalfunctionTypeSelector"
         name="MalfunctionType"
       />
     );
@@ -112,6 +112,7 @@ class MalfunctionTypeSelector extends React.Component {
 }
 
 class BooleanSelector extends React.Component {
+  static displayName = 'BooleanSelector';
   render() {
     return (
       <StaticSelector
@@ -119,7 +120,6 @@ class BooleanSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_BOOLEAN}
-        displayName="BooleanSelector"
         name="Boolean"
       />
     );
@@ -127,6 +127,7 @@ class BooleanSelector extends React.Component {
 }
 
 class BooleanYNSelector extends React.Component {
+  static displayName = 'BooleanYNSelector';
   render() {
     return (
       <StaticSelector
@@ -134,7 +135,6 @@ class BooleanYNSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_BOOLEANYN}
-        displayName="BooleanYNSelector"
         name="BooleanYN"
       />
     );
@@ -142,6 +142,7 @@ class BooleanYNSelector extends React.Component {
 }
 
 class BooleanNumbSelector extends React.Component {
+  static displayName = 'BooleanNumbSelector';
   render() {
     return (
       <StaticSelector
@@ -149,7 +150,6 @@ class BooleanNumbSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_BOOLEANNUMB}
-        displayName="BooleanNumbSelector"
         name="BooleanNumb"
       />
     );
@@ -157,6 +157,7 @@ class BooleanNumbSelector extends React.Component {
 }
 
 class RFTypeSelector extends React.Component {
+  static displayName = 'RFTypeSelector';
   render() {
     return (
       <StaticSelector
@@ -164,7 +165,6 @@ class RFTypeSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_RF_TYPES}
-        displayName="RFTypeSelector"
         name="RFType"
       />
     );
@@ -172,6 +172,7 @@ class RFTypeSelector extends React.Component {
 }
 
 class MotorZmnSelector extends React.Component {
+  static displayName = 'MotorZmnSelector';
   render() {
     return (
       <StaticSelector
@@ -179,7 +180,6 @@ class MotorZmnSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_MOTOR_ZMNS}
-        displayName="MotorZmnSelector"
         name="MotorZmn"
       />
     );
@@ -187,6 +187,7 @@ class MotorZmnSelector extends React.Component {
 }
 
 class UserRightsSelector extends React.Component {
+  static displayName = 'UserRightsSelector';
   render() {
     return (
       <StaticSelector
@@ -194,7 +195,6 @@ class UserRightsSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_USER_RIGHTS}
-        displayName="UserRightsSelector"
         name="UserRights"
       />
     );
@@ -202,6 +202,7 @@ class UserRightsSelector extends React.Component {
 }
 
 class RegidityUnitSelector extends React.Component {
+  static displayName = 'RegidityUnitSelector';
   render() {
     return (
       <StaticSelector
@@ -209,7 +210,6 @@ class RegidityUnitSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_REGIDITY_UNIT}
-        displayName="RegidityUnitSelector"
         name="RegidityUnit"
       />
     );
@@ -217,6 +217,7 @@ class RegidityUnitSelector extends React.Component {
 }
 
 class AnnounciatorTypeSelector extends React.Component {
+  static displayName = 'AnnounciatorTypeSelector';
   render() {
     return (
       <StaticSelector
@@ -224,7 +225,6 @@ class AnnounciatorTypeSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_ANNOUNCIATOR_TYPE}
-        displayName="AnnounciatorTypeSelector"
         name="AnnounciatorType"
         clearable={true}
       />
@@ -233,6 +233,7 @@ class AnnounciatorTypeSelector extends React.Component {
 }
 
 class AnnounciatorSignSelector extends React.Component {
+  static displayName = 'AnnounciatorSignSelector';
   render() {
     return (
       <StaticSelector
@@ -240,7 +241,6 @@ class AnnounciatorSignSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_ANNOUNCIATOR_SIGN}
-        displayName="AnnounciatorSignSelector"
         name="AnnounciatorSign"
         clearable={true}
       />
@@ -249,6 +249,7 @@ class AnnounciatorSignSelector extends React.Component {
 }
 
 class SyslistDescriptorSelector extends React.Component {
+  static displayName = 'SyslistDescriptorSelector';
   render() {
     return (
       <StaticSelector
@@ -256,7 +257,6 @@ class SyslistDescriptorSelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_SYSLIST_DESCRIPTOR}
-        displayName="SyslistDescriptorSelector"
         name="SyslistDescriptor"
         clearable={true}
       />
@@ -265,6 +265,7 @@ class SyslistDescriptorSelector extends React.Component {
 }
 
 class SyslistCategorySelector extends React.Component {
+  static displayName = 'SyslistCategorySelector';
   render() {
     return (
       <StaticSelector
@@ -272,7 +273,6 @@ class SyslistCategorySelector extends React.Component {
         attribute={this.props.attribute}
         onValue={this.props.onValue}
         options={DATA_SYSLIST_CATEGORY}
-        displayName="SyslistCategorySelector"
         name="SyslistCategory"
         clearable={true}
       />
