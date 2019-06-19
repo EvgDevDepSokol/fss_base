@@ -97,7 +97,7 @@ class GeneralController < ApplicationController
     if true
       render json: {}, head: :no_content
     else
-      render json: { errors: [] }, status: 403
+      render json: { errors: [] }, status: :forbidden
     end
   end
 

@@ -1,4 +1,5 @@
 require: rubocop-performance
+require: rubocop-rails
 inherit_from: ./.rubocop_todo.yml
 
 AlignParameters:

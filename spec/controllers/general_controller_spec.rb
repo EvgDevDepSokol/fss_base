@@ -10,7 +10,7 @@ describe GeneralController, type: :controller do
 
     TableList.each do |table_name, _title|
       it "responds successfully with an HTTP 200 status code for #{table_name}" do
-        get :index, model: table_name, pds_project_id: project.id
+        get :index, params: { model: table_name, pds_project_id: project.id }
         expect(response).to be_success
         expect(response).to have_http_status(200)
       end

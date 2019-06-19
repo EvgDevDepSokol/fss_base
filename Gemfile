@@ -139,6 +139,7 @@ group :development do
   gem 'rails_best_practices'
   gem 'rubocop', require: false
   gem 'rubocop-performance'
+  gem 'rubocop-rails'
   gem 'rubycritic', require: false
   gem 'stackprof'
   gem 'traceroute'

@@ -19,8 +19,8 @@ class PdsAnnounciator < ApplicationRecord
   alias_attribute :pds_section_assembler_id, :ctrl_power
   alias_attribute :pds_detector_id, :Detector
 
-  validates :Type, inclusion: %w[AN YC], allow_nil: true, allow_blank: true
-  validates :sign, inclusion: %w[предупр. авар.], allow_nil: true, allow_blank: true
+  validates :Type, inclusion: %w[AN YC], allow_blank: true
+  validates :sign, inclusion: %w[предупр. авар.], allow_blank: true
 
   def self.plucked
     true

@@ -21,7 +21,7 @@ class BaseController < ApplicationController
 
   def update
     extra_extract
-    if !params[model.to_s.underscore].present?
+    if params[model.to_s.underscore].blank?
       render json: { status: :ok, data: data }
     elsif current_object.update permit_params
       render json: { status: :ok, data: data }
@@ -40,7 +40,7 @@ class BaseController < ApplicationController
     if current_object.destroy
       render json: {}, head: :no_content
     else
-      render json: { errors: current_object.errors.full_messages }, status: 403
+      render json: { errors: current_object.errors.full_messages }, status: :forbidden
       Rails.logger.info(@current_object.errors.full_messages)
     end
   end

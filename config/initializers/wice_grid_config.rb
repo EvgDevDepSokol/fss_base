@@ -108,7 +108,7 @@ if defined?(Wice::Defaults)
     elsif Time.zone
       Time.zone.parse(datetime_string)
     else
-      Time.parse(datetime_string)
+      Time.zone.parse(datetime_string)
     end
   end
 

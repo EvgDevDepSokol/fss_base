@@ -356,7 +356,7 @@ class DbmGeneratorController < ApplicationController
   end
 
   def write_log(string)
-    current_user.message += Time.now.strftime('%Y.%m.%d %H:%M:%S ') + string + '\n'
+    current_user.message += Time.zone.now.strftime('%Y.%m.%d %H:%M:%S ') + string + '\n'
     current_user.save
   end
 
