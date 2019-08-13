@@ -13,7 +13,7 @@ const DRSTATUS = {
     links: [{ val: 1, label: 'Уточнить и открыть' }]
   },
   1: {
-    label: 'Открыт',
+    label: 'Новый',
     tr_classname: 'tec',
     links: [
       { val: 0, label: 'Вернуть на уточнение' },
@@ -21,7 +21,7 @@ const DRSTATUS = {
     ]
   },
   2: {
-    label: 'Принят в работу',
+    label: 'Открыт',
     tr_classname: 'eng',
     links: [{ val: 3, label: 'Готов к проверке' }]
   },
