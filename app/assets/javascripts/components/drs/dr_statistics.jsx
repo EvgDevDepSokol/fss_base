@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+import domtoimage from 'dom-to-image';
+import fileDownload from 'js-file-download';
 
 //import DatePicker from 'react-datepicker';
 //import 'react-datepicker/dist/react-datepicker.css';
@@ -299,6 +301,18 @@ class DrStatisticsModal extends React.Component {
       data: null,
       initialized: false
     });
+  };
+
+  exportChart = () => {
+    var chart_id = this.state.chart_id;
+    domtoimage
+      .toBlob(document.getElementById('node-to-convert'))
+      .then(function(blob) {
+        fileDownload(
+          blob,
+          'DR.' + CHART_SELECTOR[chart_id]['label'].split(' ').join('') + 'png'
+        );
+      });
   };
 
   onSysChange = function(event) {
@@ -684,7 +698,16 @@ class DrStatisticsModal extends React.Component {
           >
             <span aria-hidden="true">&times;</span>
           </button>
-          <div className="dr-statistics">
+          <button
+            className="modal-print-button"
+            onClick={this.exportChart}
+            /*disabled={this.state.isProcessing}*/
+            title="Экспорт"
+          >
+            Экспорт
+          </button>
+
+          <div className="dr-statistics" id="node-to-convert">
             <h4>Статистика рассогласований</h4>
             <div className="dr-stat-list">
               {chart_selector}
@@ -700,8 +723,8 @@ class DrStatisticsModal extends React.Component {
               {line_chart_sys}
               {line_chart_eng}
             </div>
-            {/*<button onClick={this.onExport}>Экспорт</button>*/}
-            {/*<button onClick={this.closeModal}>Отмена</button>*/}
+            {/*<button onClick={this.closeModal}>Отмена</button>
+              <button onClick={this.onExport}>Экспорт</button>*/}
           </div>
         </Modal>
       </div>

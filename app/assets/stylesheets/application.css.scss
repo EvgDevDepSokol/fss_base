@@ -1249,13 +1249,16 @@ footer {
 
 .dr-statistics {
   height: 95%;
+  background: white;
+  position: relative;
+  top: 20px;
 
   .dr-stat-list {
-    left: 10px;
+    left: 1px;
     right: 80%;
     position: absolute;
     overflow: auto;
-    height: 90%;
+    height: 100%;
     padding-left: 3px;
     padding-right: 3px;
 
@@ -1278,10 +1281,10 @@ footer {
 
   .dr-stat-draw {
     left: 20%;
-    right: 10px;
+    right: 1px;
     position: absolute;
     overflow: auto;
-    height: 90%;
+    height: 100%;
     padding-left: 3px;
     padding-right: 3px;
   }
@@ -1322,7 +1325,7 @@ footer {
   }
 
   .bar-chart-container {
-    height: 95%;
+    height: 98%;
     h4 {
       text-align: center;
     }
@@ -1463,6 +1466,14 @@ footer {
   right: 1%;
   border-style: none;
   font-size: 2.5em;
+  background: white;
+  width: 50px;
+}
+.modal-print-button {
+  position: absolute;
+  right: 10%;
+  border-style: none;
+  font-size: 1.5em;
   background: white;
   width: 50px;
 }
