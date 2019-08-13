@@ -41,9 +41,7 @@ class HwIc < ApplicationRecord
   end
 
   def duplicate_exists
-    if HwIc.where(ref: ref, Project: self.Project).count > 0
-      errors.add(:hw_ic, ' Запись с таким "REF" в этом проекте уже существует.')
-    end
+    errors.add(:hw_ic, ' Запись с таким "REF" в этом проекте уже существует.') if HwIc.where(ref: ref, Project: self.Project).count > 0
   end
 
   after_save do |hw_ic|

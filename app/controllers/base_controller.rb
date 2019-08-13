@@ -70,9 +70,7 @@ class BaseController < ApplicationController
   end
 
   def extra_extract
-    if (!model.attribute_names.include? 'Project') && params[model.to_s.underscore].key?('Project')
-      params[model.to_s.underscore].delete :Project
-    end
+    params[model.to_s.underscore].delete :Project if (!model.attribute_names.include? 'Project') && params[model.to_s.underscore].key?('Project')
     if params[model.to_s.underscore].key?('extra_data')
       @extra_extract = params[model.to_s.underscore]['extra_data']
       params[model.to_s.underscore].delete :extra_data

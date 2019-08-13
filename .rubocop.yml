@@ -1,5 +1,6 @@
-require: rubocop-performance
-require: rubocop-rails
+require:
+  - rubocop-performance
+  - rubocop-rails
 inherit_from: ./.rubocop_todo.yml
 
 AlignParameters:
@@ -10,11 +11,10 @@ Encoding:
 
 LineLength:
   Enabled: true
-  Max: 120
+  Max: 180
 
 AllCops:
   Exclude:
-    - 'db/**/*'   
-    - 'lib/**/*'   
-    - 'garbage/**/*'  
- 
+    - "db/**/*"
+    - "lib/**/*"
+    - "garbage/**/*"
