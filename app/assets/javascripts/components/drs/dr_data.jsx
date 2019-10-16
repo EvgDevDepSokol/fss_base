@@ -16,8 +16,8 @@ const DRSTATUS = {
     label: 'Новый',
     tr_classname: 'tec',
     links: [
-      { val: 0, label: 'Вернуть на уточнение' },
-      { val: 2, label: 'Принять в работу' }
+      { val: 2, label: 'Принять в работу' },
+      { val: 0, label: 'Вернуть на уточнение' }
     ]
   },
   2: {

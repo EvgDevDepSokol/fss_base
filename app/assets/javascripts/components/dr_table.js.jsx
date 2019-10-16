@@ -751,15 +751,13 @@ var TableContainer = createReactClass({
                           : 'icon-filter info-buttons'
                       }
                       onClick={this.onIconFilterClick}
-                    >
-                      Фильтр
-                    </div>
+                      title="Фильтр"
+                    />
                     <div
                       className={'add-row info-buttons'}
                       onClick={this.onAddRowClick}
-                    >
-                      Добавить DR
-                    </div>
+                      title="Добавить DR"
+                    />
                     <DrStatisticsModal
                       data={this.state.data}
                       onExport={this.onExportClick}

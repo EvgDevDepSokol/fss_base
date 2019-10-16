@@ -637,7 +637,7 @@ class DrStatisticsModal extends React.Component {
         </select>
       );
     }
-    if (this.state.initialized && ['4', '5', '6'].includes(chart_id)) {
+    if (this.state.initialized && ['4', '5', '6'].indexOf(chart_id) !== -1) {
       date_selector = (
         <div className="date-selector">
           <label>Начало диапазона:</label>
@@ -678,8 +678,8 @@ class DrStatisticsModal extends React.Component {
       <div
         className="dr-statistics-modal info-buttons"
         onClick={this.openModal}
+        title="Статистика по DR"
       >
-        Статистика
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

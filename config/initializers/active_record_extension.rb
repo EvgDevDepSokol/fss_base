@@ -16,4 +16,4 @@ module ActiveRecordExtension
 end
 
 # include the extension
-ActiveRecord::Base.send(:include, ActiveRecordExtension)
+ActiveRecord::Base.include ActiveRecordExtension
