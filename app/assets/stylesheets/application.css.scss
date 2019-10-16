@@ -566,7 +566,6 @@ body {
         .info-buttons {
           background-size: contain;
           background-repeat: no-repeat;
-          width: 120px;
           display: inline-block;
           height: 40px;
           padding-top: 10px;
@@ -575,12 +574,17 @@ body {
           color: #0044cc;
           font-size: 13px;
           margin-top: 8px;
+          .orig {
+            width: 120px;
+          }
+          .dr {
+            width: 60px;
+          }
         }
 
         .icon-filter {
           background-image: asset_data_url("icons/filter.png");
           padding-left: 45px;
-          margin-left: 20%;
         }
 
         .icon-replace {
@@ -1192,6 +1196,18 @@ footer {
   border-style: inset;
 }
 
+.width-120 {
+  width: 120px;
+}
+
+.width-80 {
+  width: 80px;
+}
+
+.width-300 {
+  width: 300px;
+}
+
 .border-outset {
   border-style: outset;
 }
@@ -1475,7 +1491,21 @@ footer {
   border-style: none;
   font-size: 1.5em;
   background: white;
-  width: 50px;
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-image: asset_data_url("icons/excel.png");
+}
+.modal-save-button {
+  position: absolute;
+  right: 8%;
+  border-style: none;
+  font-size: 1.5em;
+  background: white;
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-image: asset_data_url("icons/floppy-disc.png");
 }
 
 .dr_view_form {
@@ -1630,6 +1660,13 @@ footer {
       }
     }
   }
+}
+.margin-left-5 {
+  margin-left: 5%;
+}
+
+.margin-left-20 {
+  margin-left: 20%;
 }
 
 button:disabled,

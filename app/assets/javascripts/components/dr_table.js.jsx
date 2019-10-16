@@ -703,7 +703,7 @@ var TableContainer = createReactClass({
         <div className="col main-container dr_table">
           <div className="main-container-inner" key={'main-table'}>
             <div className="table-info" key={'table-info'}>
-              <div className="title">{this.props.title}</div>
+              <div className="title width-300">Протоколы рассогласований</div>
               <div className="info">
                 <div className="left">
                   <div className="left-left">
@@ -747,14 +747,14 @@ var TableContainer = createReactClass({
                     <div
                       className={
                         this.state.showFilters
-                          ? 'icon-filter info-buttons border-inset'
-                          : 'icon-filter info-buttons'
+                          ? 'icon-filter margin-left-5 info-buttons width-80 border-inset'
+                          : 'icon-filter margin-left-5 info-buttons width-80'
                       }
                       onClick={this.onIconFilterClick}
                       title="Фильтр"
                     />
                     <div
-                      className={'add-row info-buttons'}
+                      className={'add-row info-buttons width-80'}
                       onClick={this.onAddRowClick}
                       title="Добавить DR"
                     />

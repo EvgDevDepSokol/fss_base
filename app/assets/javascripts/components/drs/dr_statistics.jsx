@@ -160,6 +160,7 @@ class DrStatisticsModal extends React.Component {
       var row = [eng_name].concat(eng_table);
       stat_eng_table.push(row);
     });
+    stat_eng_table = stat_eng_table.sort(this.sortList);
     stat_eng_chart = this.tableToChart(stat_eng_table);
 
     /*Таблица и столбчатый график по системам*/
@@ -504,8 +505,8 @@ class DrStatisticsModal extends React.Component {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <Tooltip />
-              <Bar dataKey="opn" fill="#8884d8" name="Открытых" />
-              {/*<Bar dataKey="cls" fill="#82ca9d" name="Закрытых" />*/}
+              <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых" />
+              <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" />
               <XAxis
                 dataKey="name"
                 height={100}
@@ -699,13 +700,10 @@ class DrStatisticsModal extends React.Component {
             <span aria-hidden="true">&times;</span>
           </button>
           <button
-            className="modal-print-button"
+            className="modal-save-button"
             onClick={this.exportChart}
-            /*disabled={this.state.isProcessing}*/
-            title="Экспорт"
-          >
-            Экспорт
-          </button>
+            title="Сохранить в PNG"
+          />
 
           <div className="dr-statistics" id="node-to-convert">
             <h4>Статистика рассогласований</h4>

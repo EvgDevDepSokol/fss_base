@@ -1045,8 +1045,8 @@ var TableContainer = createReactClass({
                 <div
                   className={
                     this.state.showFilters
-                      ? 'icon-filter info-buttons border-inset'
-                      : 'icon-filter info-buttons'
+                      ? 'margin-left-20 icon-filter info-buttons width-120 border-inset'
+                      : 'margin-left-20 icon-filter info-buttons width-120'
                   }
                   onClick={this.onIconFilterClick}
                 >
@@ -1055,15 +1055,15 @@ var TableContainer = createReactClass({
                 <div
                   className={
                     this.state.showReplace
-                      ? 'icon-replace info-buttons border-inset'
-                      : 'icon-replace info-buttons'
+                      ? 'icon-replace info-buttons width-120 border-inset'
+                      : 'icon-replace info-buttons width-120'
                   }
                   onClick={this.onIconReplaceClick}
                 >
                   Замена
                 </div>
                 <div
-                  className={'add-row info-buttons'}
+                  className={'add-row info-buttons width-120'}
                   onClick={this.onAddRowClick}
                 >
                   Добавить запись
