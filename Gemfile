@@ -15,8 +15,8 @@ gem 'mysql2'
 # gem 'sassc-rails'
 gem 'therubyracer'
 # gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-# gem 'sprockets', '3.7.1'
-gem 'sprockets'
+gem 'sprockets', '~> 3.7.2'
+# gem 'sprockets'
 gem 'twitter-bootstrap-rails'
 # gem "font-awesome-rails"
 # gem 'font-awesome-less'
