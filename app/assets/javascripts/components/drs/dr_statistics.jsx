@@ -23,12 +23,27 @@ import {
   ResponsiveContainer
 } from 'recharts';
 const HEADERS = {
+  nopn: 'На уточнении',
+  new: 'Новых',
   opn: 'Открытых',
   cls: 'Закрытых',
   rdy: 'Готовых к проверке',
+  rtn: 'Возвращенных',
   ovd: 'Просроченных',
   tot: 'Всего'
 };
+
+const HEADER_COLORS = {
+  nopn: '#173F5F',
+  rdy: '#20639B',
+  opn: '#ED553B',
+  cls: '#d33682',
+  new: '#3CAEA3',
+  rtn: '#F6D55C',
+  ovd: '#2aa198',
+  tot: '#cb4b16'
+};
+
 const CHART_SELECTOR = [
   { value: 0, label: 'Таблица. Системы.' },
   { value: 1, label: 'Таблица. Инженеры.' },
@@ -104,9 +119,12 @@ class DrStatisticsModal extends React.Component {
     var dateToArrayIndex = this.dateToArrayIndex;
     Object.keys(sys_eng_list).forEach(function(key) {
       stat_sys[key] = {
+        nopn: 0,
+        new: 0,
         opn: 0,
         cls: 0,
         rdy: 0,
+        rtn: 0,
         ovd: 0,
         tot: 0
       };
@@ -119,19 +137,31 @@ class DrStatisticsModal extends React.Component {
         stat_sys[sys_id]['tot']++;
       } else {
         stat_sys[sys_id] = {
+          nopn: 0,
+          new: 0,
           opn: 0,
           cls: 0,
           rdy: 0,
+          rtn: 0,
           ovd: 0,
-          tot: 1
+          tot: 0
         };
       }
       var last_status = row['comments'].slice(-1)[0].status;
       if (last_status == 4) {
         stat_sys[sys_id]['cls']++;
       } else {
-        stat_sys[sys_id]['opn']++;
-        if (last_status == 3) stat_sys[sys_id]['rdy']++;
+        if (last_status == 5) {
+          stat_sys[sys_id]['rtn']++;
+        } else if (last_status == 1) {
+          stat_sys[sys_id]['new']++;
+        } else if (last_status == 3) {
+          stat_sys[sys_id]['rdy']++;
+        } else if (last_status == 2) {
+          stat_sys[sys_id]['opn']++;
+        } else if (last_status == 0) {
+          stat_sys[sys_id]['nopn']++;
+        }
         if (row['time_left_val'] < 0) stat_sys[sys_id]['ovd']++;
       }
     });
@@ -178,9 +208,9 @@ class DrStatisticsModal extends React.Component {
     });
     stat_sys_table = stat_sys_table.sort(this.sortList);
     stat_sys_chart = this.tableToChart(stat_sys_table);
-    var last_row = ['Всего', 0, 0, 0, 0, 0];
+    var last_row = ['Всего', 0, 0, 0, 0, 0, 0, 0, 0];
     stat_sys_table.forEach(function(row) {
-      for (var i = 1; i < 6; i++) {
+      for (var i = 1; i < 9; i++) {
         last_row[i] += row[i];
       }
     });
@@ -331,7 +361,15 @@ class DrStatisticsModal extends React.Component {
 
   tableToChart = table => {
     return table.map(function(row, i) {
-      return { name: row[0], opn: row[1], cls: row[2] };
+      return {
+        name: row[0],
+        nopn: row[1],
+        new: row[2],
+        opn: row[3],
+        cls: row[4],
+        rdy: row[5],
+        rtn: row[6]
+      };
     });
   };
 
@@ -415,11 +453,14 @@ class DrStatisticsModal extends React.Component {
       var stat_sys_header = (
         <tr className="stat_sys_header">
           <td>Система</td>
-          <td>Открытых</td>
-          <td>Закрытых</td>
-          <td>Готовых к проверке</td>
-          <td>Просроченных</td>
-          <td>Всего</td>
+          <td>{HEADERS['nopn']}</td>
+          <td>{HEADERS['new']}</td>
+          <td>{HEADERS['opn']}</td>
+          <td>{HEADERS['cls']}</td>
+          <td>{HEADERS['rdy']}</td>
+          <td>{HEADERS['rtn']}</td>
+          <td>{HEADERS['ovd']}</td>
+          <td>{HEADERS['tot']}</td>
         </tr>
       );
       stat_sys_table = stat_sys_table.map(function(row, i) {
@@ -441,11 +482,14 @@ class DrStatisticsModal extends React.Component {
       var stat_eng_header = (
         <tr className="stat_eng_header">
           <td>Инженер</td>
-          <td>Открытых</td>
-          <td>Закрытых</td>
-          <td>Готовых к проверке</td>
-          <td>Просроченных</td>
-          <td>Всего</td>
+          <td>{HEADERS['nopn']}</td>
+          <td>{HEADERS['new']}</td>
+          <td>{HEADERS['opn']}</td>
+          <td>{HEADERS['cls']}</td>
+          <td>{HEADERS['rdy']}</td>
+          <td>{HEADERS['rtn']}</td>
+          <td>{HEADERS['ovd']}</td>
+          <td>{HEADERS['tot']}</td>
         </tr>
       );
       stat_eng_table = stat_eng_table.map(function(row, i) {
@@ -481,10 +525,40 @@ class DrStatisticsModal extends React.Component {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых">
-                {/*<LabelList dataKey="opn" position="Top" />*/}
+              <Bar dataKey="cls" fill="#82ca9d" name={HEADERS['cls']} />
+              <Bar
+                dataKey="opn"
+                stackId="a"
+                fill={HEADER_COLORS['opn']}
+                name={HEADERS['opn']}
+              />
+              <Bar
+                dataKey="rdy"
+                stackId="a"
+                fill={HEADER_COLORS['rdy']}
+                name={HEADERS['rdy']}
+              />
+              <Bar
+                dataKey="rtn"
+                stackId="a"
+                fill={HEADER_COLORS['rtn']}
+                name={HEADERS['rtn']}
+              />
+              <Bar
+                dataKey="nopn"
+                stackId="a"
+                fill={HEADER_COLORS['nopn']}
+                name={HEADERS['nopn']}
+              />
+              <Bar
+                dataKey="new"
+                stackId="a"
+                fill={HEADER_COLORS['new']}
+                name={HEADERS['new']}
+              />
+              {/* <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых">
               </Bar>
-              <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" />
+              <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" /> */}
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -505,8 +579,38 @@ class DrStatisticsModal extends React.Component {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <Tooltip />
-              <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых" />
-              <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" />
+              <Bar dataKey="cls" fill="#82ca9d" name={HEADERS['cls']} />
+              <Bar
+                dataKey="opn"
+                stackId="a"
+                fill={HEADER_COLORS['opn']}
+                name={HEADERS['opn']}
+              />
+              <Bar
+                dataKey="rdy"
+                stackId="a"
+                fill={HEADER_COLORS['rdy']}
+                name={HEADERS['rdy']}
+              />
+              <Bar
+                dataKey="rtn"
+                stackId="a"
+                fill={HEADER_COLORS['rtn']}
+                name={HEADERS['rtn']}
+              />
+              <Bar
+                dataKey="nopn"
+                stackId="a"
+                fill={HEADER_COLORS['nopn']}
+                name={HEADERS['nopn']}
+              />
+              <Bar
+                dataKey="new"
+                stackId="a"
+                fill={HEADER_COLORS['new']}
+                name={HEADERS['new']}
+              />
+
               <XAxis
                 dataKey="name"
                 height={100}
@@ -522,7 +626,6 @@ class DrStatisticsModal extends React.Component {
     }
     if (this.state.modalIsOpen && stat_sys_date_tot && chart_id == 4) {
       chart_data = this.getChartData(stat_sys_date_tot[this.state.sys_id]);
-      debugger;
       line_chart_sys = (
         <div className="bar-chart-container">
           <h4>{sys_eng_list[this.state.sys_id].sys_name}</h4>
