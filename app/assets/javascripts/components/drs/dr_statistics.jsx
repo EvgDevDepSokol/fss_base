@@ -658,7 +658,7 @@ class DrStatisticsModal extends React.Component {
               />
               <Line
                 dataKey="cls"
-                stroke={HEADER_COLORS['cls']}
+                stroke={HEADER_COLORS['rdy']}
                 name={HEADERS['cls']}
                 isAnimationActive={false}
               />
@@ -714,14 +714,14 @@ class DrStatisticsModal extends React.Component {
               <Tooltip isAnimationActive={false} />
               <Line
                 dataKey="opn"
-                stroke="#8884d8"
-                name="Открытых"
+                stroke={HEADER_COLORS['opn']}
+                name={HEADERS['opn']}
                 isAnimationActive={false}
               />
               <Line
                 dataKey="cls"
-                stroke="#82ca9d"
-                name="Закрытых"
+                stroke={HEADER_COLORS['rdy']}
+                name={HEADERS['cls']}
                 isAnimationActive={false}
               />
               <XAxis
