@@ -450,6 +450,9 @@ class DrStatisticsModal extends React.Component {
     var date_selector = null;
     var chart_id = this.state.chart_id;
     var chart_data = [];
+    var maxopn = 0;
+    var maxcls = 0;
+
     if (this.state.modalIsOpen && stat_sys_table && chart_id == 0) {
       var stat_sys_header = (
         <tr className="stat_sys_header">
@@ -669,7 +672,7 @@ class DrStatisticsModal extends React.Component {
                 tick={<CustomizedAxisTick />}
               />
 
-              <YAxis />
+              <YAxis type="number" domain={[0, 100]} allowDecimals={false} />
               <Legend />
             </LineChart>
           </ResponsiveContainer>
@@ -695,8 +698,13 @@ class DrStatisticsModal extends React.Component {
       );
     }
 
+    line_chart_eng = null;
     if (this.state.modalIsOpen && stat_eng_date_tot && chart_id == 5) {
       chart_data = this.getChartData(stat_eng_date_tot[this.state.eng_id]);
+      chart_data.forEach(function(day) {
+        if (maxopn < day['opn']) maxopn = day['opn'];
+        if (maxcls < day['cls']) maxcls = day['cls'];
+      });
       line_chart_eng = (
         <div className="bar-chart-container">
           <h4>{eng_sys_list[this.state.eng_id].eng_name}</h4>
@@ -730,8 +738,7 @@ class DrStatisticsModal extends React.Component {
                 interval={5}
                 tick={<CustomizedAxisTick />}
               />
-
-              <YAxis />
+              <YAxis type="number" domain={[0, 100]} allowDecimals={false} />
               <Legend />
             </LineChart>
           </ResponsiveContainer>
