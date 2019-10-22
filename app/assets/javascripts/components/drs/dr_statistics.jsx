@@ -24,12 +24,12 @@ import {
 } from 'recharts';
 const HEADERS = {
   nopn: 'На уточнении',
-  new: 'Новых',
-  opn: 'Открытых',
-  cls: 'Закрытых',
-  rdy: 'Готовых к проверке',
-  rtn: 'Возвращенных',
-  ovd: 'Просроченных',
+  new: 'Новые',
+  opn: 'Открыто',
+  cls: 'Закрыто',
+  rdy: 'Готово к проверке',
+  rtn: 'Возвращено',
+  ovd: 'Просрочено',
   tot: 'Всего'
 };
 
@@ -37,13 +37,14 @@ const HEADER_COLORS = {
   nopn: '#173F5F',
   rdy: '#20639B',
   opn: '#ED553B',
-  cls: '#d33682',
+  cls: '#abd2e6',
   new: '#3CAEA3',
   rtn: '#F6D55C',
   ovd: '#2aa198',
   tot: '#cb4b16'
 };
 
+//cls: '#d33682',
 const CHART_SELECTOR = [
   { value: 0, label: 'Таблица. Системы.' },
   { value: 1, label: 'Таблица. Инженеры.' },
@@ -523,9 +524,13 @@ class DrStatisticsModal extends React.Component {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Legend />
-              <Bar dataKey="cls" fill="#82ca9d" name={HEADERS['cls']} />
+              <Bar
+                dataKey="cls"
+                fill={HEADER_COLORS['cls']}
+                name={HEADERS['cls']}
+              />
               <Bar
                 dataKey="opn"
                 stackId="a"
@@ -578,8 +583,12 @@ class DrStatisticsModal extends React.Component {
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <Tooltip />
-              <Bar dataKey="cls" fill="#82ca9d" name={HEADERS['cls']} />
+              <Tooltip isAnimationActive={false} />
+              <Bar
+                dataKey="cls"
+                fill={HEADER_COLORS['cls']}
+                name={HEADERS['cls']}
+              />
               <Bar
                 dataKey="opn"
                 stackId="a"
@@ -640,17 +649,17 @@ class DrStatisticsModal extends React.Component {
               }}
             >
               <CartesianGrid />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Line
                 dataKey="opn"
-                stroke="#8884d8"
-                name="Открытых"
+                stroke={HEADER_COLORS['opn']}
+                name={HEADERS['opn']}
                 isAnimationActive={false}
               />
               <Line
                 dataKey="cls"
-                stroke="#82ca9d"
-                name="Закрытых"
+                stroke={HEADER_COLORS['cls']}
+                name={HEADERS['cls']}
                 isAnimationActive={false}
               />
               <XAxis
@@ -702,7 +711,7 @@ class DrStatisticsModal extends React.Component {
               }}
             >
               <CartesianGrid />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Line
                 dataKey="opn"
                 stroke="#8884d8"
