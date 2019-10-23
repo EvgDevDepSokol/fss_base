@@ -54,7 +54,10 @@ const DRPRIORITY = {
 };
 
 var prepareRow = function(row, date_now) {
-  row['status'] = row['status'] ? row['status'] : 6;
+  //if (row['status'] == 0) {
+  //  debugger;
+  //}
+  //row['status'] = row['status'] ? row['status'] : 6;
   row['status_desc'] = DRSTATUS[row['status']].label;
   row['Priority'] = row['Priority'] ? row['Priority'] : 0;
   row['priority_desc'] = DRPRIORITY[row['Priority']].label;
