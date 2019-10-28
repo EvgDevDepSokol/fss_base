@@ -40,7 +40,7 @@
 <%= hw_ic.desc2 %> 
 <%= "@SID(#{hw_ic.ref.downcase}) @PANEL(#{hw_ic.pds_panel.panel.upcase}) @PED(#{hw_ped.ped})" %> 
 <%= "@PTAG(#{(gen_tag_b ? hw_ic.tag_no : hw_ic.ref).upcase})" %> 
-<%= (global == 'ai') ? "@IDX(#{hw_iosignal.diapason})" : '' %> 
+<%= (global == 'ai') ? "@IDX(#{hw_iosignal.diapason})" : "@LIM(#{hw_iosignal.limits})" %> 
 .UNIT <%= hw_ic.unit_for_dbm(is_rus) %> 
 .SYS <%= obj.system.System.downcase %> 
 .TYPE R,4 
