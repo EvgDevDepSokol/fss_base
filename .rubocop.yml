@@ -3,13 +3,13 @@ require:
   - rubocop-rails
 inherit_from: ./.rubocop_todo.yml
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Style/Encoding:
   Enabled: true
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: true
   Max: 180
 

@@ -20,7 +20,7 @@ import { paginate } from '../helpers';
 var LocalStorageMixin = require('react-localstorage');
 var findIndex = require('lodash').findIndex;
 var orderBy = require('lodash').orderBy;
-var titleCase = require('title-case');
+import { titleCase } from 'title-case';
 var SystemFilterSelector = require('../selectors/system_filter.jsx');
 var ProjectSelector = require('../selectors/project.jsx');
 var Search = require('../modules/search.jsx');

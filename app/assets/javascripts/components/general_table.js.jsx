@@ -31,7 +31,7 @@ var LocalStorageMixin = require('react-localstorage');
 var findIndex = require('lodash').findIndex;
 var orderBy = require('lodash').orderBy;
 
-var titleCase = require('title-case');
+import { titleCase } from 'title-case';
 
 var SystemSelector = require('../selectors/system.jsx');
 var SystemDocSelector = require('../selectors/system_doc.jsx');

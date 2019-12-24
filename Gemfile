@@ -48,7 +48,7 @@ gem 'turbolinks'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'axlsx_rails'
+gem 'caxlsx_rails'
 gem 'pry'
 gem 'pry-rails'
 
