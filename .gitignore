@@ -67,6 +67,8 @@ bower.json
 # Ignore Byebug command history file.
 .byebug_history
 
+yarn.lock
+
 /xx
 Gemfile.lock
 package-lock.json
