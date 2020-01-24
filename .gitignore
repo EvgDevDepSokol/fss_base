@@ -79,3 +79,5 @@ app/assets/javascripts/*/*/*-cache.json
 app/assets/javascripts/*/*/*/*-cache.json
 app/assets/javascripts/*/*/*/*/*-cache.json
 app/assets/javascripts/*/*/*/*/*/*-cache.json
+
+yarn.lock
