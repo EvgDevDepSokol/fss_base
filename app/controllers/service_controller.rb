@@ -6,7 +6,7 @@ class ServiceController < BaseController
              :pds_project_properties, :pds_engineers, :pds_project,
              :pds_syslist, :tblbinaries, :pds_unit, :pds_blocks,
              :pds_customers, :pds_negotiators, :sign_rpt,
-             :audit, :company, :pds_equips, :articles].freeze
+             :audit, :pds_equips, :articles].freeze
 
   # helper_method :table_data, :table_header, :editable_properties, :model_class
 

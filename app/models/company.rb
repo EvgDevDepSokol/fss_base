@@ -9,4 +9,8 @@ class Company < ApplicationRecord
   def serializable_hash(_options = {})
     super(except: :Logo, methods: :id)
   end
+
+  def custom_hash
+    serializable_hash.merge(id: id)
+  end
 end
