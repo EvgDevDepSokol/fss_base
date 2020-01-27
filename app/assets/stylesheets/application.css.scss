@@ -30,12 +30,14 @@
     page-break-before: always;
   }
 }
+
 .recharts-wrapper,
 .recharts-surface {
   @media print {
     width: calc(100%);
   }
 }
+
 table {
   thead {
     background-color: #ccc;
@@ -191,6 +193,7 @@ body {
     }
 
     .navbar-nav {
+
       div,
       li {
         a {
@@ -574,9 +577,11 @@ body {
           color: #0044cc;
           font-size: 13px;
           margin-top: 8px;
+
           .orig {
             width: 120px;
           }
+
           .dr {
             width: 60px;
           }
@@ -601,6 +606,7 @@ body {
           background-image: asset_data_url("icons/statistics.png");
           padding-left: 45px;
         }
+
         .dr-print {
           background-image: asset_data_url("icons/dr_print.png");
           padding-left: 45px;
@@ -1176,9 +1182,9 @@ footer {
       display: block;
       overflow-y: auto;
 
-      span {
-        display: unset;
-      }
+      //span {
+      //display: unset;
+      //}
     }
   }
 }
@@ -1283,11 +1289,13 @@ footer {
       padding-right: 3px;
       width: 100%;
     }
+
     .chart-selector {
       select {
         overflow: hidden;
       }
     }
+
     input {
       line-height: normal;
       width: 100%;
@@ -1342,6 +1350,7 @@ footer {
 
   .bar-chart-container {
     height: 98%;
+
     h4 {
       text-align: center;
     }
@@ -1485,6 +1494,7 @@ footer {
   background: white;
   width: 50px;
 }
+
 .modal-print-button {
   position: absolute;
   right: 10%;
@@ -1496,6 +1506,7 @@ footer {
   background-size: contain;
   background-image: asset_data_url("icons/excel.png");
 }
+
 .modal-save-button {
   position: absolute;
   right: 8%;
@@ -1661,6 +1672,7 @@ footer {
     }
   }
 }
+
 .margin-left-5 {
   margin-left: 5%;
 }
