@@ -11,7 +11,7 @@ namespace :duplicate_project do
       project_n.ProjectID = project_n_id
       project_n.project_name = project_n_id.to_s
       project_n.project_number = project_n_id.to_s
-      project_n.Contractor = 4
+      project_n.Contractor = 'ВНИИАЭС'
       project_n.save
     else
       puts 'Project with such id is present in DB already'
