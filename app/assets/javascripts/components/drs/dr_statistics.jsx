@@ -672,7 +672,7 @@ class DrStatisticsModal extends React.Component {
                 tick={<CustomizedAxisTick />}
               />
 
-              <YAxis type="number" domain={[0, 100]} allowDecimals={false} />
+              <YAxis type="number" domain={[0, 50]} allowDecimals={false} />
               <Legend />
             </LineChart>
           </ResponsiveContainer>
@@ -738,7 +738,7 @@ class DrStatisticsModal extends React.Component {
                 interval={5}
                 tick={<CustomizedAxisTick />}
               />
-              <YAxis type="number" domain={[0, 100]} allowDecimals={false} />
+              <YAxis type="number" domain={[0, 50]} allowDecimals={false} />
               <Legend />
             </LineChart>
           </ResponsiveContainer>
