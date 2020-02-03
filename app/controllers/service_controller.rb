@@ -4,7 +4,8 @@ class ServiceController < BaseController
   # Service controller
   ACTIONS = [:tablelist, # :table_role_rights, :roles,
              :pds_project_properties, :pds_engineers, :pds_project,
-             :pds_syslist, :tblbinaries, :pds_unit, :pds_blocks,
+             :pds_syslist, #:tblbinaries,
+             :pds_unit, :pds_blocks,
              :pds_customers, :pds_negotiators, :sign_rpt,
              :audit, :pds_equips, :articles].freeze
 
