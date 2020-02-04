@@ -22,6 +22,7 @@ import {
   LabelList,
   ResponsiveContainer
 } from 'recharts';
+
 const HEADERS = {
   nopn: 'На уточнении',
   new: 'Новые',
@@ -44,14 +45,14 @@ const HEADER_COLORS = {
   tot: '#cb4b16'
 };
 
-//cls: '#d33682',
 const CHART_SELECTOR = [
   { value: 0, label: 'Таблица. Системы.' },
   { value: 1, label: 'Таблица. Инженеры.' },
   { value: 2, label: 'Гистограмма. Системы.' },
   { value: 3, label: 'Гистограмма. Инженеры.' },
   { value: 4, label: 'График. Системы.' },
-  { value: 5, label: 'График. Инженеры.' }
+  { value: 5, label: 'График. Инженеры.' },
+  { value: 6, label: 'График. Инженеры. Открытые.' }
 ];
 
 const customStyles = {
@@ -118,6 +119,7 @@ class DrStatisticsModal extends React.Component {
     var sys_id;
     var this_ = this;
     var dateToArrayIndex = this.dateToArrayIndex;
+    var getRandomColor = this.getRandomColor;
     Object.keys(sys_eng_list).forEach(function(key) {
       stat_sys[key] = {
         nopn: 0,
@@ -288,10 +290,10 @@ class DrStatisticsModal extends React.Component {
     Object.keys(eng_sys_list).forEach(function(eng_id) {
       var eng_name = eng_sys_list[eng_id]['eng_name'];
       var eng_table = [];
-      eng_sys_list[eng_id]['systems'].forEach(function(system, i) {
+      eng_sys_list[eng_id]['systems'].forEach(function(system) {
         var key;
         if (stat_eng_date_tot[eng_id]) {
-          for (i = 0; i < stat_sys_date_tot[system.sys_id].length; i++) {
+          for (var i = 0; i < stat_sys_date_tot[system.sys_id].length; i++) {
             stat_eng_date_tot[eng_id][i].opn +=
               stat_sys_date_tot[system.sys_id][i].opn;
             stat_eng_date_tot[eng_id][i].cls +=
@@ -307,6 +309,25 @@ class DrStatisticsModal extends React.Component {
         }
       });
     });
+    var stat_eng_date_opn = [];
+    var linit = true;
+    Object.keys(eng_sys_list).forEach(function(eng_id) {
+      if (linit) {
+        for (var i = 0; i < stat_eng_date_tot[eng_id].length; i++) {
+          stat_eng_date_opn.push({});
+          stat_eng_date_opn[i]['date'] = stat_eng_date_tot[eng_id][i]['date'];
+        }
+        linit = false;
+      }
+      for (i = 0; i < stat_eng_date_tot[eng_id].length; i++) {
+        stat_eng_date_opn[i][eng_id] = stat_eng_date_tot[eng_id][i]['opn'];
+      }
+    });
+    var eng_colors = {};
+    Object.keys(eng_sys_list).forEach(function(eng_id) {
+      eng_colors[eng_id] = getRandomColor();
+    });
+
     this.setState({
       stat_sys_table,
       stat_eng_table,
@@ -317,6 +338,8 @@ class DrStatisticsModal extends React.Component {
       stat_sys_date_tot,
       stat_eng_date_dif,
       stat_eng_date_tot,
+      stat_eng_date_opn,
+      eng_colors,
       startDate: new Date(time_period.date_min).toISOString().substr(0, 10),
       minDate: new Date(time_period.date_min).toISOString().substr(0, 10),
       endDate: new Date(time_period.date_max).toISOString().substr(0, 10),
@@ -385,6 +408,15 @@ class DrStatisticsModal extends React.Component {
     return Math.floor((t_max - t_min) / 1000 / 60 / 60 / 24);
   };
 
+  getRandomColor = () => {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
   startDateChange = event => {
     if (
       event.target.value >= this.state.minDate &&
@@ -439,6 +471,7 @@ class DrStatisticsModal extends React.Component {
     var stat_sys_date_dif = this.state.stat_sys_date_dif;
     var stat_eng_date_tot = this.state.stat_eng_date_tot;
     var stat_eng_date_dif = this.state.stat_eng_date_dif;
+    var stat_eng_date_opn = this.state.stat_eng_date_opn;
     var table_sys = null;
     var table_eng = null;
     var bar_chart_sys = null;
@@ -452,6 +485,7 @@ class DrStatisticsModal extends React.Component {
     var chart_data = [];
     var maxopn = 0;
     var maxcls = 0;
+    var eng_colors = this.state.eng_colors;
 
     if (this.state.modalIsOpen && stat_sys_table && chart_id == 0) {
       var stat_sys_header = (
@@ -534,39 +568,17 @@ class DrStatisticsModal extends React.Component {
                 fill={HEADER_COLORS['cls']}
                 name={HEADERS['cls']}
               />
-              <Bar
-                dataKey="opn"
-                stackId="a"
-                fill={HEADER_COLORS['opn']}
-                name={HEADERS['opn']}
-              />
-              <Bar
-                dataKey="rdy"
-                stackId="a"
-                fill={HEADER_COLORS['rdy']}
-                name={HEADERS['rdy']}
-              />
-              <Bar
-                dataKey="rtn"
-                stackId="a"
-                fill={HEADER_COLORS['rtn']}
-                name={HEADERS['rtn']}
-              />
-              <Bar
-                dataKey="nopn"
-                stackId="a"
-                fill={HEADER_COLORS['nopn']}
-                name={HEADERS['nopn']}
-              />
-              <Bar
-                dataKey="new"
-                stackId="a"
-                fill={HEADER_COLORS['new']}
-                name={HEADERS['new']}
-              />
-              {/* <Bar dataKey="opn" stackId="a" fill="#8884d8" name="Открытых">
-              </Bar>
-              <Bar dataKey="cls" stackId="a" fill="#82ca9d" name="Закрытых" /> */}
+              {['opn', 'rdy', 'rtn', 'nopn', 'new'].map(function(lbl, i) {
+                return (
+                  <Bar
+                    key={i}
+                    dataKey={lbl}
+                    stackId="a"
+                    fill={HEADER_COLORS[lbl]}
+                    name={HEADERS[lbl]}
+                  />
+                );
+              })}
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -592,37 +604,17 @@ class DrStatisticsModal extends React.Component {
                 fill={HEADER_COLORS['cls']}
                 name={HEADERS['cls']}
               />
-              <Bar
-                dataKey="opn"
-                stackId="a"
-                fill={HEADER_COLORS['opn']}
-                name={HEADERS['opn']}
-              />
-              <Bar
-                dataKey="rdy"
-                stackId="a"
-                fill={HEADER_COLORS['rdy']}
-                name={HEADERS['rdy']}
-              />
-              <Bar
-                dataKey="rtn"
-                stackId="a"
-                fill={HEADER_COLORS['rtn']}
-                name={HEADERS['rtn']}
-              />
-              <Bar
-                dataKey="nopn"
-                stackId="a"
-                fill={HEADER_COLORS['nopn']}
-                name={HEADERS['nopn']}
-              />
-              <Bar
-                dataKey="new"
-                stackId="a"
-                fill={HEADER_COLORS['new']}
-                name={HEADERS['new']}
-              />
-
+              {['opn', 'rdy', 'rtn', 'nopn', 'new'].map(function(lbl, i) {
+                return (
+                  <Bar
+                    key={i}
+                    dataKey={lbl}
+                    stackId="a"
+                    fill={HEADER_COLORS[lbl]}
+                    name={HEADERS[lbl]}
+                  />
+                );
+              })}
               <XAxis
                 dataKey="name"
                 height={100}
@@ -698,8 +690,8 @@ class DrStatisticsModal extends React.Component {
       );
     }
 
-    line_chart_eng = null;
     if (this.state.modalIsOpen && stat_eng_date_tot && chart_id == 5) {
+      line_chart_eng = null;
       chart_data = this.getChartData(stat_eng_date_tot[this.state.eng_id]);
       chart_data.forEach(function(day) {
         if (maxopn < day['opn']) maxopn = day['opn'];
@@ -757,6 +749,57 @@ class DrStatisticsModal extends React.Component {
         </select>
       );
     }
+
+    if (this.state.modalIsOpen && stat_eng_date_opn && chart_id == 6) {
+      line_chart_eng = null;
+      chart_data = this.getChartData(stat_eng_date_opn);
+      chart_data.forEach(function(day) {
+        if (maxopn < day['opn']) maxopn = day['opn'];
+        if (maxcls < day['cls']) maxcls = day['cls'];
+      });
+      var lines = [];
+      Object.keys(eng_sys_list).forEach(function(key) {
+        lines.push(
+          <Line
+            dataKey={key}
+            key={key}
+            stroke={eng_colors[key]}
+            name={eng_sys_list[key].eng_name}
+            isAnimationActive={false}
+          />
+        );
+      });
+      line_chart_eng = (
+        <div className="bar-chart-container">
+          <h4>Открытые DR</h4>
+          <ResponsiveContainer height="90%" width="100%">
+            <LineChart
+              data={chart_data}
+              margin={{
+                top: 5,
+                right: 5,
+                left: 5,
+                bottom: 10
+              }}
+            >
+              <CartesianGrid />
+              <Tooltip isAnimationActive={false} />
+
+              {lines}
+              <XAxis
+                dataKey="date"
+                height={100}
+                interval={5}
+                tick={<CustomizedAxisTick />}
+              />
+              <YAxis type="number" domain={[0, 50]} allowDecimals={false} />
+              <Legend />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      );
+    }
+
     if (this.state.initialized && ['4', '5', '6'].indexOf(chart_id) !== -1) {
       date_selector = (
         <div className="date-selector">
@@ -785,7 +828,7 @@ class DrStatisticsModal extends React.Component {
     var chart_selector = (
       <div className="chart-selector">
         <select
-          size={6}
+          size={7}
           value={this.state.chart_id}
           onChange={this.onChartChange}
         >
