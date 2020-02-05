@@ -150,7 +150,9 @@ class DrStatisticsModal extends React.Component {
           tot: 0
         };
       }
-      var last_status = row['comments'].slice(-1)[0].status;
+      var last_status = row['comments'].slice(-1)[0]
+        ? row['comments'].slice(-1)[0].status
+        : 0;
       if (last_status == 4) {
         stat_sys[sys_id]['cls']++;
       } else {
@@ -264,7 +266,7 @@ class DrStatisticsModal extends React.Component {
         for (i = 0; i < len; i++) {
           com_arr[i]['i_finish'] = com_arr[i + 1]['i_start'];
         }
-        com_arr[len]['i_finish'] = numDays;
+        if (len > 0) com_arr[len]['i_finish'] = numDays;
         com_arr.forEach(function(com) {
           var st = com.status;
           if (st == 4) {
@@ -483,8 +485,6 @@ class DrStatisticsModal extends React.Component {
     var date_selector = null;
     var chart_id = this.state.chart_id;
     var chart_data = [];
-    var maxopn = 0;
-    var maxcls = 0;
     var eng_colors = this.state.eng_colors;
 
     if (this.state.modalIsOpen && stat_sys_table && chart_id == 0) {
@@ -693,10 +693,6 @@ class DrStatisticsModal extends React.Component {
     if (this.state.modalIsOpen && stat_eng_date_tot && chart_id == 5) {
       line_chart_eng = null;
       chart_data = this.getChartData(stat_eng_date_tot[this.state.eng_id]);
-      chart_data.forEach(function(day) {
-        if (maxopn < day['opn']) maxopn = day['opn'];
-        if (maxcls < day['cls']) maxcls = day['cls'];
-      });
       line_chart_eng = (
         <div className="bar-chart-container">
           <h4>{eng_sys_list[this.state.eng_id].eng_name}</h4>
@@ -753,10 +749,6 @@ class DrStatisticsModal extends React.Component {
     if (this.state.modalIsOpen && stat_eng_date_opn && chart_id == 6) {
       line_chart_eng = null;
       chart_data = this.getChartData(stat_eng_date_opn);
-      chart_data.forEach(function(day) {
-        if (maxopn < day['opn']) maxopn = day['opn'];
-        if (maxcls < day['cls']) maxcls = day['cls'];
-      });
       var lines = [];
       Object.keys(eng_sys_list).forEach(function(key) {
         lines.push(
