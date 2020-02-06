@@ -24,7 +24,8 @@ module.exports = class extends React.Component {
       { value: 80000001, label: 'ПМТ КуАЭС-4' },
       { value: 80000003, label: 'ПМТ КуАЭС-4 2016' },
       { value: 88, label: 'ПМТ БалАЭС-1' },
-      { value: 80000006, label: 'ПМТ РостАЭС-1' }
+      { value: 80000006, label: 'ПМТ РостАЭС-1' },
+      { value: 80000007, label: 'ПМТ СмАЭС-3 2020' }
     ];
 
     return (
