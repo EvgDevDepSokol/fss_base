@@ -51,9 +51,9 @@ class HwPed < ApplicationRecord
       sig_id = HwIosignaldef.where(ioname: sig_name).first.id
       hw_iosignals = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).order(:id).to_a
       icnt = hw_ped[sig_name] - hw_iosignals.size
-      icnt = 0 if hw_ped[sig_name] < 0
-      if icnt > 0
-        while icnt > 0
+      icnt = 0 if hw_ped[sig_name].negative?
+      if icnt.positive?
+        while icnt.positive?
           hw_iosignal = HwIosignal.new
           hw_iosignal.Project = hw_ped.Project
           hw_iosignal.pedID = hw_ped.id
@@ -62,8 +62,8 @@ class HwPed < ApplicationRecord
           hw_iosignal.save
           icnt -= 1
         end
-      elsif icnt < 0
-        while icnt < 0
+      elsif icnt.negative?
+        while icnt.negative?
           hw_iosignal = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).order(:id).last
           hw_iosignal.skip_check_ped
           hw_iosignal.destroy

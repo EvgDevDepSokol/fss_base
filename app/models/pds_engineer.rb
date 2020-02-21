@@ -8,18 +8,18 @@ class PdsEngineer < ApplicationRecord
          :rememberable, :trackable
 
   alias_attribute :id, primary_key
-  has_many :pds_documents, dependent: :restrict_with_error, foreign_key: 'Author'
-  has_many :pds_documents, dependent: :restrict_with_error, foreign_key: 'CheckOutEn'
-  has_many :pds_documents, dependent: :restrict_with_error, foreign_key: 'CheckOutRu'
-  has_many :pds_dr, dependent: :restrict_with_error, foreign_key: 'closedBy'
-  has_many :pds_dr, dependent: :restrict_with_error, foreign_key: 'drAuthor'
-  has_many :pds_dr, dependent: :restrict_with_error, foreign_key: 'replyAuthor'
-  has_many :pds_eng_on_sys, dependent: :restrict_with_error, foreign_key: 'engineer_N'
-  has_many :pds_eng_on_sys, dependent: :restrict_with_error, foreign_key: 'TestOperator_N'
-  has_many :pds_project, dependent: :restrict_with_error, foreign_key: 'HWManager'
-  has_many :pds_project, dependent: :restrict_with_error, foreign_key: 'SWManager'
-  has_many :pds_project, dependent: :restrict_with_error, foreign_key: 'ProjectManager'
-  has_many :pds_queries, dependent: :restrict_with_error, foreign_key: 'engineer_N'
+  has_many :pds_documents, dependent: :restrict_with_error, foreign_key: 'Author', inverse_of: :pds_engineer
+  has_many :pds_documents, dependent: :restrict_with_error, foreign_key: 'CheckOutEn', inverse_of: :pds_engineer
+  has_many :pds_documents, dependent: :restrict_with_error, foreign_key: 'CheckOutRu', inverse_of: :pds_engineer
+  has_many :pds_dr, dependent: :restrict_with_error, foreign_key: 'closedBy', inverse_of: :pds_engineer
+  has_many :pds_dr, dependent: :restrict_with_error, foreign_key: 'drAuthor', inverse_of: :pds_engineer
+  has_many :pds_dr, dependent: :restrict_with_error, foreign_key: 'replyAuthor', inverse_of: :pds_engineer
+  has_many :pds_eng_on_sys, dependent: :restrict_with_error, foreign_key: 'engineer_N', inverse_of: :pds_engineer
+  has_many :pds_eng_on_sys, dependent: :restrict_with_error, foreign_key: 'TestOperator_N', inverse_of: :pds_engineer
+  has_many :pds_project, dependent: :restrict_with_error, foreign_key: 'HWManager', inverse_of: :pds_engineer
+  has_many :pds_project, dependent: :restrict_with_error, foreign_key: 'SWManager', inverse_of: :pds_engineer
+  has_many :pds_project, dependent: :restrict_with_error, foreign_key: 'ProjectManager', inverse_of: :pds_engineer
+  has_many :pds_queries, dependent: :restrict_with_error, foreign_key: 'engineer_N', inverse_of: :pds_engineer
 
   attr_reader :login_project
 
