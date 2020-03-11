@@ -5,9 +5,9 @@ class HwPed < ApplicationRecord
   self.table_name = 'hw_peds'
   alias_attribute :id, primary_key
 
-  belongs_to :hw_devtype, foreign_key: :type
-  has_many :hw_ic, dependent: :restrict_with_error, foreign_key: 'ped'
-  has_many :hw_wirelist, dependent: :restrict_with_error, foreign_key: 'pedID'
+  belongs_to :hw_devtype, foreign_key: :type, inverse_of: :hw_peds
+  has_many :hw_ics, dependent: :restrict_with_error, foreign_key: 'ped', inverse_of: :hw_ped
+  has_many :hw_wirelist, dependent: :restrict_with_error, foreign_key: 'pedID', inverse_of: :hw_ped
 
   validates :AI, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :AO, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -28,7 +28,7 @@ class HwPed < ApplicationRecord
     end
   end
 
-  has_many :hw_iosignal, dependent: :restrict_with_error, foreign_key: 'pedID'
+  has_many :hw_iosignal, dependent: :restrict_with_error, foreign_key: 'pedID', inverse_of: :hw_ped
 
   alias_attribute :hw_devtype_id, :type
 
@@ -48,7 +48,7 @@ class HwPed < ApplicationRecord
 
   after_save do |hw_ped|
     SIGNAL_ARRAY.each do |sig_name|
-      sig_id = HwIosignaldef.where(ioname: sig_name).first.id
+      sig_id = HwIosignaldef.find_by(ioname: sig_name).id
       hw_iosignals = HwIosignal.where(pedID: hw_ped.id, signID: sig_id).order(:id).to_a
       icnt = hw_ped[sig_name] - hw_iosignals.size
       icnt = 0 if hw_ped[sig_name].negative?

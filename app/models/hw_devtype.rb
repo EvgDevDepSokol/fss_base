@@ -7,7 +7,7 @@ class HwDevtype < ApplicationRecord
   belongs_to :tablelist, foreign_key: :typetable, class_name: 'Tablelist'
   alias_attribute :tablelist_id, :typetable
 
-  has_many :hw_peds, dependent: :restrict_with_error, foreign_key: 'type'
+  has_many :hw_peds, dependent: :restrict_with_error, foreign_key: 'type', inverse_of: :hw_devtype
 
   def custom_hash
     serializable_hash(include: {

@@ -5,9 +5,10 @@ class PdsProject < ApplicationRecord
   self.table_name = 'pds_project'
   include EquipmentPanelsHelper
   alias_attribute :id, primary_key
-  belongs_to :company, foreign_key: :companyID, inverse_of: :pds_project
+  belongs_to :company, foreign_key: :companyID, inverse_of: :pds_projects
   has_one :project_properties, foreign_key: :ProjectID, class_name: 'PdsProjectProperty', inverse_of: :pds_project
-  has_many :hw_ic, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
+  has_many :hw_ics, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
+  has_many :pds_buttons, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :system
 
   def name
     project_name

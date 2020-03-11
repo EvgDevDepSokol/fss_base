@@ -4,9 +4,9 @@ class PdsButton < ApplicationRecord
   include EquipmentPanelsHelper
   alias_attribute :id, primary_key
   schema_validations except: :hw_ic
-  belongs_to :hw_ic, foreign_key: 'IC'
-  belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
-  belongs_to :pds_project, foreign_key: 'Project'
+  belongs_to :hw_ic, foreign_key: 'IC', inverse_of: :pds_buttons
+  belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist', inverse_of: :pds_buttons
+  belongs_to :pds_project, foreign_key: 'Project', inverse_of: :pds_buttons
 
   alias_attribute :hw_ic_id, :IC
   alias_attribute :system_id, :sys

@@ -6,7 +6,7 @@ class PdsSyslist < ApplicationRecord
 
   alias_attribute :title, :System
 
-  has_many :hw_ic, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
+  has_many :hw_ics, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_air_valves, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_alarm, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_algorithms, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system

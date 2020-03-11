@@ -8,7 +8,7 @@ class PdsProjectUnit < ApplicationRecord
 
   alias_attribute :pds_unit_id, :Unit
 
-  has_many :hw_ic, dependent: :restrict_with_error, foreign_key: 'Unit'
+  has_many :hw_ics, dependent: :restrict_with_error, foreign_key: 'Unit', inverse_of: :pds_project_unit
   has_many :hw_wirelist, dependent: :restrict_with_error, foreign_key: 'Unit'
   # has_many :pds_algo_inputs, dependent: :restrict_with_error, foreign_key: 'Unit'
   # has_many :pds_algo_outs, dependent: :restrict_with_error, foreign_key: 'Unit'

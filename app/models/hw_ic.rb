@@ -8,22 +8,17 @@ class HwIc < ApplicationRecord
   attr_accessor :skip_callbacks
   alias_attribute :id, primary_key
 
-  belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
-  belongs_to :hw_ped, foreign_key: :ped, class_name: 'HwPed'
-  belongs_to :pds_project_unit, foreign_key: :Unit, class_name: 'PdsProjectUnit'
-  belongs_to :pds_panel, foreign_key: :panel_id
-  belongs_to :pds_project, foreign_key: 'Project'
-  # delegate :unit, to: :pds_project_unit
+  belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist', inverse_of: :hw_ics
+  belongs_to :hw_ped, foreign_key: :ped, class_name: 'HwPed', inverse_of: :hw_ics
+  belongs_to :pds_project_unit, foreign_key: :Unit, class_name: 'PdsProjectUnit', inverse_of: :hw_ics
+  belongs_to :pds_panel, foreign_key: :panel_id, inverse_of: :hw_ics
+  belongs_to :pds_project, foreign_key: 'Project', inverse_of: :hw_ics
+  has_many :pds_buttons, dependent: :restrict_with_error, foreign_key: 'IC', inverse_of: :hw_ic
 
   alias_attribute :system_id, :sys
   alias_attribute :hw_ped_id, :ped
   alias_attribute :pds_project_unit_id, :Unit
   alias_attribute :pds_panel_id, :panel_id
-
-  # validates_length_of :ref, maximum: 128
-  # validates_length_of :rev, maximum: 1
-  # validates_length_of :tag_no, maximum: 330
-  # validates_presence_of :ref, :ped
 
   validate :duplicate_exists, on: :create
 
