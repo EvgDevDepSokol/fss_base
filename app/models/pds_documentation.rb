@@ -12,7 +12,7 @@ class PdsDocumentation < ApplicationRecord
   has_many :pds_doc_on_sys, dependent: :delete_all, foreign_key: 'Doc'
 
   def self.plucked
-    pluck(:id, :DocTitle, :Type, :NPP_Number, :Revision, :reg_ID, :getting_date)
+    pluck(:id, :DocTitle, :Type, :NPP_Number, :Revision, :reg_ID, :getting_date, :Hyperlink)
       .each.map do |e|
       x1 = list_of_sys(e[0])
       e1 = {}
@@ -23,6 +23,7 @@ class PdsDocumentation < ApplicationRecord
       e1['Revision']               = e[4]
       e1['reg_ID']                 = e[5]
       e1['getting_date']           = e[6]
+      e1['Hyperlink']              = e[7]
       e1['doc_arr']                = x1
       e = e1
     end

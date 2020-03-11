@@ -41,8 +41,8 @@ class PdsMalfunction < ApplicationRecord
     pds_malfunction_dims = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).to_a
     icnt = pds_malfunction.Dimension - pds_malfunction_dims.size
     icnt = 0 if pds_malfunction.Dimension < 1
-    if icnt > 0
-      while icnt > 0
+    if icnt.positive?
+      while icnt.positive?
         pds_malfunction_dim = PdsMalfunctionDim.new
         pds_malfunction_dim.Project = pds_malfunction.Project
         pds_malfunction_dim.Malfunction = pds_malfunction.id
@@ -51,18 +51,18 @@ class PdsMalfunction < ApplicationRecord
         pds_malfunction_dim.save
         icnt -= 1
       end
-    elsif icnt < 0
-      while icnt < 0
+    elsif icnt.nagative?
+      while icnt.nagative?
         pds_malfunction_dim = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).last
         pds_malfunction_dim.destroy
         icnt += 1
       end
     end
-    if pds_malfunction.Dimension == 1
-      pds_malfunction_dim = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).last
-      pds_malfunction_dim.Character = ''
-      pds_malfunction_dim.save
-    end
+    return unless pds_malfunction.Dimension == 1
+
+    pds_malfunction_dim = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).last
+    pds_malfunction_dim.Character = ''
+    pds_malfunction_dim.save
   end
 
   before_destroy do |pds_malfunction|
