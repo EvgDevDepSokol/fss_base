@@ -27,7 +27,7 @@ namespace :duplicate_project do
              Tablelist.where.not(table: nil).order(:table).pluck(:table).to_a
            else
              # ProjectSettingsController::ACTIONS
-             %w[pds_eng_on_sys pds_project_unit pds_project_sys week_report pds_documents pds_documentation pds_simplifications pds_sys_description]
+             %w[pds_eng_on_sys pds_project_unit pds_project_sys pds_simplifications pds_sys_description]
            end
     tbls_with_prj = []
     old2new = {}
@@ -96,5 +96,35 @@ namespace :duplicate_project do
       num_new = tbl_class.where(Project: project_n_id).count
       printf '%s: было %i, стало %i', tbl_name, num_old, num_new if num_new != num_old
     end
+  end
+
+  desc 'Delete old project'
+  task :delete_old, %i[project_o_id] => [:environment] do |_task, args|
+    project_o_id = args[:project_o_id]
+    tbls = Tablelist.where.not(table: nil).order(:table).pluck(:table).to_a
+    tbls_with_prj = []
+    # create list of tables with 'project' attribute
+    skip_tables = %w[news pds_algo_input]
+    tbls.each do |tbl_name|
+      next if skip_tables.include?(tbl_name)
+
+      tbl_class = tbl_name.classify.constantize
+      next unless tbl_class.column_names.include? 'Project'
+
+      tbls_with_prj.push(tbl_name.classify)
+    end
+    # clean old project items
+    begin
+      repeat = false
+      tbls_with_prj.each do |tbl_name|
+        tbl_class = tbl_name.constantize
+        begin
+          tbl_class.where(Project: project_o_id).delete_all
+        rescue StandardError
+          puts tbl_class
+          repeat = true
+        end
+      end
+    end while repeat == true
   end
 end
