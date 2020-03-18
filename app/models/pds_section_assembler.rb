@@ -21,7 +21,7 @@ class PdsSectionAssembler < ApplicationRecord
   has_many :pds_motors, dependent: :restrict_with_error, foreign_key: 'power_section', class_name: 'PdsMotor'
   has_many :pds_motors_anc, dependent: :restrict_with_error, foreign_key: 'anc_power', class_name: 'PdsMotor'
   has_many :pds_motors_ctrl, dependent: :restrict_with_error, foreign_key: 'ctrl_power', class_name: 'PdsMotor'
-  has_many :pds_recorders, dependent: :restrict_with_error, foreign_key: 'ctrl_power'
+  has_many :pds_recorders, dependent: :restrict_with_error, foreign_key: 'ctrl_power', inverse_of: :pds_section_assembler
   has_many :pds_regulators_ed, dependent: :restrict_with_error, foreign_key: 'ed_power', class_name: 'PdsRegulator'
   has_many :pds_regulators_ctrl, dependent: :restrict_with_error, foreign_key: 'ctrl_power', class_name: 'PdsRegulator'
   has_many :pds_regulators_anc, dependent: :restrict_with_error, foreign_key: 'anc_power', class_name: 'PdsRegulator'

@@ -4,7 +4,7 @@ class PdsProjectUnit < ApplicationRecord
   self.table_name = 'pds_project_unit'
   alias_attribute :id, primary_key
   belongs_to :pds_project, foreign_key: 'Project'
-  belongs_to :unit, foreign_key: 'Unit', class_name: 'PdsUnit'
+  belongs_to :unit, foreign_key: 'Unit', class_name: 'PdsUnit', inverse_of: :pds_project_units
 
   alias_attribute :pds_unit_id, :Unit
 

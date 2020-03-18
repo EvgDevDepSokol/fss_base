@@ -14,6 +14,7 @@ class HwIc < ApplicationRecord
   belongs_to :pds_panel, foreign_key: :panel_id, inverse_of: :hw_ics
   belongs_to :pds_project, foreign_key: 'Project', inverse_of: :hw_ics
   has_many :pds_buttons, dependent: :restrict_with_error, foreign_key: 'IC', inverse_of: :hw_ic
+  has_many :pds_recorders, dependent: :restrict_with_error, foreign_key: 'IC', inverse_of: :hw_ic
 
   alias_attribute :system_id, :sys
   alias_attribute :hw_ped_id, :ped

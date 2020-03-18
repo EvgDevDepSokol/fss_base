@@ -12,6 +12,7 @@ class PdsProject < ApplicationRecord
   has_many :pds_buttons, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
   has_many :pds_detectors, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
   has_many :pds_sys_descriptions, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
+  has_many :pds_recorders, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
 
   def name
     project_name
