@@ -6,7 +6,7 @@ class PdsVolume < ApplicationRecord
   belongs_to :pds_project, foreign_key: 'Project'
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_man_equip, foreign_key: 'eq_type'
-  belongs_to :sd_sys_numb, foreign_key: 'sd_N'
+  belongs_to :sd_sys_numb, foreign_key: 'sd_N', inverse_of: :pds_volumes
 
   alias_attribute :system_id, :sys
   alias_attribute :pds_man_equip_id, :eq_type

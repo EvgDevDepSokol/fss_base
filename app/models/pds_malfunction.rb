@@ -11,7 +11,7 @@ class PdsMalfunction < ApplicationRecord
   alias_attribute :id, primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
   belongs_to :pds_project_unit, foreign_key: 'regidity_unitid'
-  belongs_to :sd_sys_numb, foreign_key: 'sd_N'
+  belongs_to :sd_sys_numb, foreign_key: 'sd_N', inverse_of: :pds_malfunctions
 
   alias_attribute :system_id, :sys
   alias_attribute :pds_project_unit_id, :regidity_unitid

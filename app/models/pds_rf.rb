@@ -13,7 +13,7 @@ class PdsRf < ApplicationRecord
   belongs_to :pds_project_unit, foreign_key: 'Unit', class_name: 'PdsProjectUnit'
   belongs_to :psa_project_unit, foreign_key: 'unit_FB', class_name: 'PdsProjectUnit'
   belongs_to :pds_project, foreign_key: 'Project'
-  belongs_to :sd_sys_numb, foreign_key: 'sd_N'
+  belongs_to :sd_sys_numb, foreign_key: 'sd_N', inverse_of: :pds_rf
 
   alias_attribute :system_id, :sys
   alias_attribute :pds_project_unit_id, :Unit

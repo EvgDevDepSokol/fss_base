@@ -12,14 +12,14 @@ class TechnologyEquipmentController < BaseController
 
   def pds_detectors
     @data_list = PdsDetector.where(Project: project.ProjectID)
-                            .includes(
-                              :system, :pds_section_assembler,
-                              pds_project_unit: [:unit]
-                            )
+                            .includes(:system)
+                            .includes(:pds_section_assembler,
+                                      pds_project_unit: [:unit])
                             .includes(:sd_sys_numb)
                             .pluck(
                               :DetID,
-                              'pds_syslist.SystemID', 'pds_syslist.System',
+                              :sys, # 'pds_syslist.SystemID',
+                              'pds_syslist.System',
                               :tag, :tag_RU, :Desc, :Desc_EN,
                               'pds_section_assembler.section_N', 'pds_section_assembler.section_name',
                               :low_lim, :up_lim, :LA, :HA, :LW, :HW, :LT, :HT,
@@ -27,40 +27,12 @@ class TechnologyEquipmentController < BaseController
                               :'1coef_shift', :'2coef_scale', :Type, :TypeDetec, :Room, :SCK_input,
                               :mod,
                               'sd_sys_numb.sd_N', 'sd_sys_numb.sd_link'
-                            ).map do |det_id, sys_id, system, tag, tag_ru, desc, desc_en, psa_id, psa_n, low_lim, up_lim, la, ha, lw, hw, lt, ht, ppu_id, u_id, u_n, coef_shift, coef_scale, type, typedetec, room, sck_input, mod, ssn_id, ssn_l|
-      { id: det_id, system: { id: sys_id, System: system }, tag: tag, tag_RU: tag_ru, Desc: desc, Desc_EN: desc_en, pds_section_assembler: { id: psa_id, section_name: psa_n },
+                            ).map do |det_id, sys_id, syst, tag, tag_ru, desc, desc_en, psa_id, psa_n, low_lim, up_lim, la, ha, lw, hw, lt, ht, ppu_id, u_id, u_n, coef_shift, coef_scale, type, typedetec, room, sck_input, mod, ssn_id, ssn_l|
+      { id: det_id, system: { id: sys_id, System: syst }, tag: tag, tag_RU: tag_ru, Desc: desc, Desc_EN: desc_en, pds_section_assembler: { id: psa_id, section_name: psa_n },
         low_lim: low_lim, up_lim: up_lim, LA: la, HA: ha, LW: lw, HW: hw, LT: lt, HT: ht, pds_project_unit: { id: ppu_id, unit: { id: u_id, Unit_RU: u_n } },
         '1coef_shift': coef_shift, '2coef_scale': coef_scale, Type: type, TypeDetec: typedetec, Room: room, SCK_input: sck_input, mod: mod,
         sd_sys_numb: { id: ssn_id, sd_link: ssn_l } }
     end
-    # e1 = {}
-    # e1['id']               = e[0]
-    # e1['system']           = { id: e[1], System: e[2] }
-    # e1['tag']              = e[3]
-    # e1['tag_RU']           = e[4]
-    # e1['Desc']             = e[5]
-    # e1['Desc_EN']          = e[6]
-    # e1['pds_section_assembler'] = { id: e[7], section_name: e[8] }
-    # e1['low_lim']          = e[9]
-    # e1['up_lim']           = e[10]
-    # e1['LA']               = e[11]
-    # e1['HA']               = e[12]
-    # e1['LW']               = e[13]
-    # e1['HW']               = e[14]
-    # e1['LT']               = e[15]
-    # e1['HT']               = e[16]
-    # e1['pds_project_unit'] = { id: e[17], unit: { id: e[18], Unit_RU: e[19] } }
-    # e1['1coef_shift']      = e[20]
-    # e1['2coef_scale']      = e[21]
-    # e1['Type']             = e[22]
-    # e1['TypeDetec']        = e[23]
-    # e1['Room']             = e[24]
-    # e1['SCK_input']        = e[25]
-    # e1['mod']              = e[26]
-    # e1['sd_sys_numb']      = { id: e[27], sd_link: e[28] }
-    #
-    #     e = e1
-    # end
   end
 
   def pds_ejectors

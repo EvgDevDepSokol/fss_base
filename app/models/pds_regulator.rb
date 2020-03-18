@@ -13,7 +13,7 @@ class PdsRegulator < ApplicationRecord
   #  belongs_to :value_1, foreign_key: 'vlv_1', class_name: 'PdsValf'
   #  belongs_to :value_2, foreign_key: 'vlv_2', class_name: 'PdsValf'
   belongs_to :pds_detector, foreign_key: :det_id
-  belongs_to :sd_sys_numb, foreign_key: 'sd_N'
+  belongs_to :sd_sys_numb, foreign_key: 'sd_N', inverse_of: :pds_regulators
 
   alias_attribute :system_id, :sys
   alias_attribute :psa_ctrl_power_id, :ctrl_power

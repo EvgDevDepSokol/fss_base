@@ -4,8 +4,8 @@ class PdsSysDescription < ApplicationRecord
   self.table_name = 'pds_sys_description'
   alias_attribute :id, primary_key
 
-  belongs_to :pds_project, foreign_key: 'Project', inverse_of: :pds_sys_description
-  belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist', inverse_of: :pds_sys_description
+  belongs_to :pds_project, foreign_key: 'Project', inverse_of: :pds_sys_descriptions
+  belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist', inverse_of: :pds_sys_descriptions
 
   alias_attribute :system_id, :sys
 

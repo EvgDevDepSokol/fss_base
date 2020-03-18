@@ -113,23 +113,25 @@ class MassOperationsController < ApplicationController
     new_data = params[:new_data]
     # column = params[:column]
     ids = []
+    update_hash = {}
+    column = model_class.attribute_aliases[params[:column]] || params[:column]
     new_data.each do |_i, row|
       ids.push(row[:id].to_i)
+      update_hash[row[:id].to_i] = { params[:column] => row[column] }
     end
 
-    # querry = model_class.find(ids)
     querry = model_class
-    # querry = querry.find(ids)
-    column = model_class.attribute_aliases[params[:column]] || params[:column]
+    model_class.update(update_hash.keys, update_hash.values)
+    # new_data.each do |_i, row|
+    #   byebug
+    #   querry_row = querry.find(row[:id])
+    #   querry_row[column] = row[column]
+    #   # querry_row.attributes.each do |attr_name, _attr_value|
+    #   #  querry_row[attr_name] = row[attr_name]
+    #   # end
+    #   querry_row.save
+    # end
 
-    new_data.each do |_i, row|
-      querry_row = querry.find(row[:id])
-      querry_row[column] = row[column]
-      # querry_row.attributes.each do |attr_name, _attr_value|
-      #  querry_row[attr_name] = row[attr_name]
-      # end
-      querry_row.save
-    end
     querry = querry.find(ids)
 
     render json: { status: :ok, data: table_data(querry) }

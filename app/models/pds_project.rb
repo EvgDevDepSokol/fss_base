@@ -6,9 +6,12 @@ class PdsProject < ApplicationRecord
   include EquipmentPanelsHelper
   alias_attribute :id, primary_key
   belongs_to :company, foreign_key: :companyID, inverse_of: :pds_projects
-  has_one :project_properties, foreign_key: :ProjectID, class_name: 'PdsProjectProperty', inverse_of: :pds_project
+  has_one :project_properties, foreign_key: :ProjectID, class_name: 'PdsProjectProperty',  dependent: :restrict_with_error, inverse_of: :pds_project
   has_many :hw_ics, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
-  has_many :pds_buttons, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :system
+  has_many :hw_peds, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
+  has_many :pds_buttons, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
+  has_many :pds_detectors, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
+  has_many :pds_sys_descriptions, dependent: :restrict_with_error, foreign_key: 'Project', inverse_of: :pds_project
 
   def name
     project_name

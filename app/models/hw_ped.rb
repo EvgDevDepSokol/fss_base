@@ -6,6 +6,7 @@ class HwPed < ApplicationRecord
   alias_attribute :id, primary_key
 
   belongs_to :hw_devtype, foreign_key: :type, inverse_of: :hw_peds
+  belongs_to :pds_project, foreign_key: :Project, inverse_of: :hw_peds
   has_many :hw_ics, dependent: :restrict_with_error, foreign_key: 'ped', inverse_of: :hw_ped
   has_many :hw_wirelist, dependent: :restrict_with_error, foreign_key: 'pedID', inverse_of: :hw_ped
 
@@ -28,7 +29,8 @@ class HwPed < ApplicationRecord
     end
   end
 
-  has_many :hw_iosignal, dependent: :restrict_with_error, foreign_key: 'pedID', inverse_of: :hw_ped
+  # has_many :hw_iosignal, dependent: :restrict_with_error, foreign_key: 'pedID', inverse_of: :hw_ped
+  has_many :hw_iosignal, foreign_key: 'pedID', inverse_of: :hw_ped
 
   alias_attribute :hw_devtype_id, :type
 

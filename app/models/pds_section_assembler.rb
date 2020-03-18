@@ -11,7 +11,7 @@ class PdsSectionAssembler < ApplicationRecord
   has_many :pds_breakers_anc, dependent: :restrict_with_error, foreign_key: 'anc_power', class_name: 'PdsBreaker'
   has_many :pds_bru, dependent: :restrict_with_error, foreign_key: 'ctrl_power'
   has_many :pds_buttons_lights, dependent: :restrict_with_error, foreign_key: 'ctrl_power'
-  has_many :pds_detectors, dependent: :restrict_with_error, foreign_key: 'ctrl_power'
+  has_many :pds_detectors, dependent: :restrict_with_error, foreign_key: 'ctrl_power', inverse_of: :pds_section_assembler
   has_many :pds_lamps, dependent: :restrict_with_error, foreign_key: 'ctrl_power'
   has_many :pds_meters, dependent: :restrict_with_error, foreign_key: 'ctrl_power'
   has_many :pds_meters_channels, dependent: :restrict_with_error, foreign_key: 'ctrl_power'

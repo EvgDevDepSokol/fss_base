@@ -11,7 +11,7 @@ class PdsMotor < ApplicationRecord
   belongs_to :pds_man_equip, foreign_key: 'eq_type'
   belongs_to :pds_documentation, foreign_key: 'doc_reg_N'
   belongs_to :pds_motor_type, foreign_key: 'MotorType', primary_key: 'MotorTypeID', class_name: 'PdsMotorType'
-  belongs_to :sd_sys_numb, foreign_key: 'sd_N'
+  belongs_to :sd_sys_numb, foreign_key: 'sd_N', inverse_of: :pds_motors
 
   alias_attribute :system_id, :sys
   alias_attribute :psa_ctrl_power_id, :ctrl_power

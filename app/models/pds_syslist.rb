@@ -4,7 +4,7 @@ class PdsSyslist < ApplicationRecord
   self.table_name = 'pds_syslist'
   alias_attribute :id, primary_key
 
-  alias_attribute :title, :System
+  alias_attribute :title, :system
 
   has_many :hw_ics, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_air_valves, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
@@ -17,7 +17,7 @@ class PdsSyslist < ApplicationRecord
   has_many :pds_bru, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_buttons, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_buttons_lights, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
-  has_many :pds_detectors, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
+  has_many :pds_detectors, dependent: :restrict_with_error, foreign_key: :sys, inverse_of: :system
   has_many :pds_doc_on_sys, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_dr, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_dr_stats, dependent: :restrict_with_error, foreign_key: 'sys_id', inverse_of: :system
@@ -47,7 +47,7 @@ class PdsSyslist < ApplicationRecord
   has_many :pds_simplifications, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_switch_fix, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_switch_nofix, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
-  has_many :pds_sys_description, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
+  has_many :pds_sys_descriptions, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_valves, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :pds_volume, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system
   has_many :week_report, dependent: :restrict_with_error, foreign_key: 'sys', inverse_of: :system

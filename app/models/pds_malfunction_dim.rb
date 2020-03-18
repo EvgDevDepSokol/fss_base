@@ -4,7 +4,7 @@ class PdsMalfunctionDim < ApplicationRecord
   self.table_name = 'pds_malfunction_dim'
   alias_attribute :id, primary_key
   belongs_to :pds_malfunction, foreign_key: :Malfunction, class_name: 'PdsMalfunction'
-  belongs_to :sd_sys_numb, foreign_key: 'sd_N'
+  belongs_to :sd_sys_numb, foreign_key: 'sd_N', inverse_of: :pds_malfunction_dims
   alias_attribute :pds_malfunction_id, :Malfunction
   alias_attribute :sd_sys_numb_id, :sd_N
 

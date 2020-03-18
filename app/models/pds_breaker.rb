@@ -7,7 +7,7 @@ class PdsBreaker < ApplicationRecord
   belongs_to :psa_ctrl_power, foreign_key: 'ctrl_power', class_name: 'PdsSectionAssembler'
   belongs_to :psa_anc_power, foreign_key: 'anc_power', class_name: 'PdsSectionAssembler'
   belongs_to :pds_man_equip, foreign_key: 'eq_type'
-  belongs_to :sd_sys_numb, foreign_key: 'sd_N'
+  belongs_to :sd_sys_numb, foreign_key: 'sd_N', inverse_of: :pds_breakers
 
   alias_attribute :system_id, :sys
   alias_attribute :psa_ctrl_power_id, :ctrl_power
