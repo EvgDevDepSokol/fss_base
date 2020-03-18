@@ -205,6 +205,7 @@ module.exports = class extends React.Component {
                     cols.forEach(function(col) {
                       var idx = findIndex(data, { id: col.id });
                       data[idx][column] = col[column];
+                      data[idx].checked = false;
                     });
                     this.props.onReplaceDone(data);
                   }.bind(_this),
