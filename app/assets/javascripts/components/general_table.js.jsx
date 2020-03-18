@@ -96,6 +96,7 @@ var stringEditor = require('../inputs/input.jsx')();
 //import { input as stringEditor } from 'react-edit';
 var TextEditor = require('../inputs/text_editor.jsx')();
 var WideTextEditor = require('../inputs/wide_text_editor.jsx')();
+var HyperlinkEditor = require('../inputs/hyperlink_editor.jsx')();
 
 import Modal from 'react-modal';
 
@@ -289,6 +290,9 @@ var TableContainer = createReactClass({
       } else if (column.editor == 'TextEditor') {
         column.headerClassStyle = 'header-text-col';
       } else if (column.editor == 'WideTextEditor') {
+        column.headerClassStyle = 'header-wide_text-col';
+      } else if (column.editor == 'HyperlinkEditor') {
+        debugger;
         column.headerClassStyle = 'header-wide_text-col';
       } else if (column.property == 'system.System') {
         column.headerClassStyle = 'header-sys_sys-col';

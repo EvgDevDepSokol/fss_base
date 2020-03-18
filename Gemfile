@@ -5,8 +5,10 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails','4.2.7'
 # gem 'rails', '5.0.0'
+# gem 'rails', '>= 6.0.0'
+gem 'executable-hooks'
+gem 'gem-wrappers'
 gem 'rails'
-# gem 'rails'
 # Use sqlite3 as the database for Active Record
 # gem 'mysql2', '~> 0.3.18'
 gem 'mysql2'
@@ -15,8 +17,8 @@ gem 'mysql2'
 # gem 'sassc-rails'
 gem 'therubyracer'
 # gem 'less-rails' # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-gem 'sprockets', '~> 3.7.2'
-# gem 'sprockets'
+# gem 'sprockets', '~> 3.7.2'
+gem 'sprockets'
 gem 'twitter-bootstrap-rails'
 # gem "font-awesome-rails"
 # gem 'font-awesome-less'
@@ -52,7 +54,8 @@ gem 'caxlsx_rails'
 gem 'pry'
 gem 'pry-rails'
 
-gem 'kaminari'
+# gem 'kaminari'
+#
 # gem 'passenger'
 # gem 'localtunnel'
 
@@ -73,9 +76,9 @@ gem 'web-console',    group: :development
 # gem 'rails-i18n', :github => 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
 
 # gem 'puma'
-
 gem 'net-scp'
 gem 'net-ssh'
+gem 'rails-i18n'
 
 # group :development do
 #   gem 'capistrano'
@@ -102,6 +105,7 @@ gem 'byebug', group: %i[development test]
 
 gem 'schema_to_scaffold'
 
+gem 'fast_jsonapi'
 gem 'oj'
 
 gem 'jquery-ui-rails'
@@ -119,7 +123,7 @@ gem 'react-rails'
 # gem 'lodash-rails'
 
 # custom validations
-gem 'schema_validations', '2.3.0'
+gem 'schema_validations', '>=2.3.0'
 
 # workers for select exports
 gem 'flay'
@@ -133,7 +137,7 @@ gem 'simple_form'
 group :development do
   # gem 'better_errors'
   # gem 'binding_of_caller'
-  # gem 'bullet'
+  gem 'bullet'
   # gem 'flamegraph'
   # gem 'rack-mini-profiler'
   gem 'rails_best_practices'

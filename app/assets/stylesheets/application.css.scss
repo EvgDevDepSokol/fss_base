@@ -193,7 +193,6 @@ body {
     }
 
     .navbar-nav {
-
       div,
       li {
         a {
@@ -1526,6 +1525,7 @@ footer {
   background: white;
   border-radius: 10px;
   border: 1px solid #6da3bd;
+  overflow-y: auto;
 
   button {
     width: 200px;
