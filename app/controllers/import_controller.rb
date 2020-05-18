@@ -13,11 +13,7 @@ class ImportController < ApplicationController
       params[:data].each do |_i, row|
         msg = { add: false, result: '', err: [], warn: '' }
         current_object = get_current_object(row[key_column])
-        if !!!current_object
-          msg[:add] = true
-          current_object = model.new
-          row['id'] = nil
-        elsif current_object.Project != @current_project
+        if !!!current_object || (@current_project && current_object.Project != @current_project)
           msg[:add] = true
           current_object = model.new
           row['id'] = nil
@@ -48,11 +44,7 @@ class ImportController < ApplicationController
     params[:data].each do |_i, row|
       msg = { add: false, result: '', err: [], warn: '' }
       current_object = get_current_object(row[key_column])
-      if !!!current_object
-        msg[:add] = true
-        current_object = model.new
-        row['id'] = nil
-      elsif current_object.Project != @current_project
+      if !!!current_object || (@current_project && current_object.Project != @current_project)
         msg[:add] = true
         current_object = model.new
         row['id'] = nil
@@ -84,7 +76,7 @@ class ImportController < ApplicationController
   end
 
   def get_current_object(val)
-    if !!@current_project
+    if @current_project
       model.find_by(key_column => val, Project: @current_project)
     else
       model.find_by(key_column => val)
@@ -98,7 +90,7 @@ class ImportController < ApplicationController
   def key_column_unique?
     column_name = params[:keyColumn]
     column_name = model.attribute_alias?(column_name) ? model.attribute_alias(column_name) : column_name
-    if !!@current_project
+    if @current_project
       cnt_all  = model.where(Project: @current_project).count(column_name)
       cnt_dist = model.where(Project: @current_project).distinct.count(column_name)
     else
