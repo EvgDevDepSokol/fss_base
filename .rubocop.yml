@@ -6,6 +6,21 @@ inherit_from: ./.rubocop_todo.yml
 Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+Style/ExponentialNotation:
+  Enabled: true
+Style/SlicingWithRange:
+  Enabled: true
+  
+
+
 Style/Encoding:
   Enabled: true
 Style/HashEachMethods:

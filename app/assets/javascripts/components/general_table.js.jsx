@@ -192,6 +192,7 @@ var TableContainer = createReactClass({
           if (editor == UserRightsSelector) {
             value = labelFromSelectorList(editor.options, value);
           }
+
           if (editor == SystemDocSelector) {
             id = [];
             value = [];
@@ -249,6 +250,12 @@ var TableContainer = createReactClass({
           };
         }
         if (editor) {
+          if (editor == HyperlinkEditor) {
+            value = (
+              //<a href={'file:///' + value}>{value ? 'Открыть документ' : ''}</a>
+              <a href={value}>{value ? 'Открыть документ' : ''}</a>
+            );
+          }
           return {
             value: value,
             props: {
@@ -292,8 +299,7 @@ var TableContainer = createReactClass({
       } else if (column.editor == 'WideTextEditor') {
         column.headerClassStyle = 'header-wide_text-col';
       } else if (column.editor == 'HyperlinkEditor') {
-        debugger;
-        column.headerClassStyle = 'header-wide_text-col';
+        column.headerClassStyle = 'header-text-col';
       } else if (column.property == 'system.System') {
         column.headerClassStyle = 'header-sys_sys-col';
       } else if (!column.nested) {

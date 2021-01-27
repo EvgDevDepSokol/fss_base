@@ -20,6 +20,7 @@ module FSS_database
     config.autoload_paths << "#{config.root}/lib"
 
     # config.web_console.whitelisted_ips = '10.0.226.8'
+    #config.web_console.whitelisted_ips = '192.168.0.0/16'
 
     # config.browserify_rails.commandline_options = ['--fast']
     config.browserify_rails.commandline_options =

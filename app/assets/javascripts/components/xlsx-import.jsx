@@ -170,6 +170,7 @@ var ImportXlsxModal = createReactClass({
       var msg = this.state.msg;
       if (filter_uoi === 1) {
         parsedData = parsedData.map(function(row, i) {
+          debugger;
           if (!msg[i].add) {
             row[HEADER_ERR0].push('Обновление запрещено пользователем');
           }
@@ -215,8 +216,12 @@ var ImportXlsxModal = createReactClass({
             msg = context.state.msg;
             i1 = Number(response.i1);
             i2 = Number(response.i2);
-            for (var j = i1; j < i2; j++) {
-              msg[j] = response.message[j - i1];
+            if (response.message[0].not_unique) {
+              msg = response.message;
+            } else {
+              for (var j = i1; j < i2; j++) {
+                msg[j] = response.message[j - i1];
+              }
             }
             context.setState({
               msg: msg,

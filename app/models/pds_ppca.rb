@@ -5,7 +5,7 @@ class PdsPpca < ApplicationRecord
   include DbmGeneratorHelper
   alias_attribute :id, primary_key
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist'
-  belongs_to :pds_detector, foreign_key: :Detector
+  belongs_to :pds_detector, foreign_key: :Detector, inverse_of: :pds_ppca
   alias_attribute :system_id, :sys
   alias_attribute :pds_detector_id, :Detector
 

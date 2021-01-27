@@ -13,7 +13,7 @@ class DbmGenerator
   VARIABLES = ['remote function', 'malfunctions', 'detectors',
                'peds', 'ppc', 'announcicator', 'time step', 'valves', 'power sections'].freeze
 
-  attr_accessor *ATTRIBUTE_LIST
+  attr_accessor(*ATTRIBUTE_LIST)
 
   def initialize(attributes = {})
     attributes.each do |name, value|
@@ -54,6 +54,7 @@ class DbmGenerator
 
   def project_ssh(_project_id)
     { ip: properties.HostIP, pass: properties.LoadPass,
-      remote_path: '/home/' + (properties.SimDir || '') + 'load/pds_sel_test/' }
+    #  remote_path: '/media/sf_shared/pds_sel_test/' }
+     remote_path: '/home/' + (properties.SimDir || '') + 'load/pds_sel_test/' }
   end
 end

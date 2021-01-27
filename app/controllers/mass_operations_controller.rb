@@ -123,7 +123,6 @@ class MassOperationsController < ApplicationController
     querry = model_class
     model_class.update(update_hash.keys, update_hash.values)
     # new_data.each do |_i, row|
-    #   byebug
     #   querry_row = querry.find(row[:id])
     #   querry_row[column] = row[column]
     #   # querry_row.attributes.each do |attr_name, _attr_value|

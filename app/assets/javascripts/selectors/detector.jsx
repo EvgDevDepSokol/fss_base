@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 var path = '/selectors/pds_detectors';
 
 module.exports = class extends React.Component {
-  static displayName = 'PdsDetectorSelector';
+  static displayName = 'DetectorSelector';
   static propTypes = { label: PropTypes.string };
 
   state = {
@@ -61,4 +61,5 @@ module.exports.options = function() {
     { pds_project_id: project.ProjectID },
     this
   );
+  return options;
 };

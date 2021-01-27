@@ -110,7 +110,7 @@ class ImportStep4 extends React.Component {
     var isProcessing = this.props.isProcessing;
 
     if (this.props.isOpen) {
-      if (msg.length == 1 && msg[0].not_unique) {
+      if (msg.length >= 1 && msg[0].not_unique) {
         filters = <div> Файл обработан. </div>;
         message = (
           <p>

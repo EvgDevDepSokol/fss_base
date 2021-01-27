@@ -8,6 +8,7 @@ source 'https://rubygems.org'
 # gem 'rails', '>= 6.0.0'
 gem 'executable-hooks'
 gem 'gem-wrappers'
+# gem 'rails', '~> 5.2.0'
 gem 'rails'
 # Use sqlite3 as the database for Active Record
 # gem 'mysql2', '~> 0.3.18'
@@ -139,7 +140,7 @@ group :development do
   # gem 'binding_of_caller'
   gem 'bullet'
   # gem 'flamegraph'
-  # gem 'rack-mini-profiler'
+  gem 'rack-mini-profiler'
   gem 'rails_best_practices'
   gem 'rubocop', require: false
   gem 'rubocop-performance'

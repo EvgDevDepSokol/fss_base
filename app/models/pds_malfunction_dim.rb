@@ -31,6 +31,7 @@ class PdsMalfunctionDim < ApplicationRecord
         system: { id: e[6], System: e[7] }
       }
     end
+
   end
 
   def custom_hash

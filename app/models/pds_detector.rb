@@ -11,6 +11,9 @@ class PdsDetector < ApplicationRecord
   belongs_to :pds_documentation, foreign_key: 'doc_reg_N', inverse_of: :pds_detectors
   belongs_to :pds_project_unit, foreign_key: 'Unit', inverse_of: :pds_detectors
   belongs_to :sd_sys_numb, foreign_key: 'sd_N', inverse_of: :pds_detectors
+  has_many :pds_ppca, foreign_key: :Detector, inverse_of: :pds_detector
+
+  before_save :normalize_blank_values
 
   alias_attribute :system_id, :sys
   alias_attribute :pds_section_assembler_id, :ctrl_power
@@ -18,6 +21,8 @@ class PdsDetector < ApplicationRecord
   alias_attribute :pds_documentation_id, :doc_reg_N
   alias_attribute :pds_project_unit_id, :Unit
   alias_attribute :sd_sys_numb_id, :sd_N
+
+  validates :Type, inclusion: %w[AI BI], allow_blank: true
 
   has_many :pds_mnemo, dependent: :restrict_with_error, foreign_key: 'Detector'
   has_many :pds_ppca, dependent: :restrict_with_error, foreign_key: 'Detector'
@@ -36,5 +41,11 @@ class PdsDetector < ApplicationRecord
                         pds_man_equip: { only: :Type },
                         sd_sys_numb: { only: [:sd_link] }
                       })
+  end
+
+  def normalize_blank_values
+    attributes.each do |column, _value|
+      self[column].present? || self[column] = nil
+    end
   end
 end

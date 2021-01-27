@@ -6,6 +6,7 @@ class HwIc < ApplicationRecord
   include DbmGeneratorHelper
   include EquipmentPanelsHelper
   attr_accessor :skip_callbacks
+
   alias_attribute :id, primary_key
 
   belongs_to :system, foreign_key: :sys, class_name: 'PdsSyslist', inverse_of: :hw_ics

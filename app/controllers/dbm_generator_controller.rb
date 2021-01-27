@@ -6,6 +6,7 @@ class DbmGeneratorController < ApplicationController
   layout false
 
   TEMPLATE_PATH = Rails.root.join('app', 'views', 'workers', 'dbm_generator')
+  #FILE_PATH = '/shared/'
   FILE_PATH = '/home/shared/'
   REMOTE_FOLDER = ['gen_rf/', 'gen_mf/', 'gen_peds/', 'gen_ppc/', 'gen_ann/'].freeze
 
@@ -160,6 +161,11 @@ class DbmGeneratorController < ApplicationController
         objects.each do |obj|
           hw_ic = obj.hw_ic
           hw_ped = hw_ic.hw_ped
+          panel = if hw_ic.pds_panel.blank?
+                    ''
+                  else
+                    hw_ic.pds_panel.panel.upcase
+                  end
           data_obj = ''
           if table_id.to_i == 4 # announciators
             path = if dbm_generator.gen_type == '2'
@@ -168,7 +174,7 @@ class DbmGeneratorController < ApplicationController
                      'sel_ped_announciators2.sel.erb'
                    end
             data_obj = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
-              ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, is_rus: is_rus)
+              ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, is_rus: is_rus, panel: panel)
             )
           else
             hw_ped.signals.each do |sig_name|
@@ -191,7 +197,7 @@ class DbmGeneratorController < ApplicationController
                 write_log("Пропуск! Таблица: #{tbl_name}, I&C: #{hw_ic.ref}, PED: #{hw_ped.ped}, сигнал: #{sig_name}")
               else
                 data = Tilt.new(TEMPLATE_PATH.join(path).to_s).render(
-                  ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus, dim: hw_ped[sig_name].to_i, hw_iosignals: hw_iosignals, gen_tag_b: gen_tag_b)
+                  ActionView::Base.new, dbm_generator.as_json.merge(hw_ic: hw_ic, hw_ped: hw_ped, obj: obj, global: global, is_rus: is_rus, dim: hw_ped[sig_name].to_i, hw_iosignals: hw_iosignals, gen_tag_b: gen_tag_b, panel: panel)
                 )
                 data_obj += data
               end
@@ -362,6 +368,7 @@ class DbmGeneratorController < ApplicationController
 
   def start_session(ssh)
     Net::SSH.start(ssh[:ip], 'load', password: ssh[:pass])
+    # Net::SSH.start(ssh[:ip], 'developer', password: ',tkmdtlth')
   rescue StandardError
     write_log('НЕ УДАЛОСЬ подключиться к серверу: ' + ssh[:ip] + '!')
     false

@@ -19,7 +19,7 @@
 <%= pds_rf.desc12(is_rus) %><%= pds_rf.desc0 %> 
 <%= pds_rf.desc1 %> 
 <%= pds_rf.desc2 %> 
-@<%= pds_rf.type_r?(pds_rf.Type_FB) ? 'LIM' : 'IDX' %>(<%= pds_rf.range.tr(';', ',') %>)
+@<%= pds_rf.type_r?(pds_rf.Type_FB) ? 'LIM' : 'IDX' %>(<%= pds_rf.range_FB.tr(';', ',') %>)
 @PTAG(<%= (pds_rf.Ptag? ? pds_rf.Ptag : pds_rf.name).upcase %>) 
 .UNIT <%= pds_rf.unit_for_dbm(is_rus) %> 
 .SYS <%= pds_rf.system.System.tr('/', '_').downcase %> 

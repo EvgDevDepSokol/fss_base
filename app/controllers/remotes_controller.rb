@@ -19,6 +19,7 @@ class RemotesController < BaseController
   end
 
   def pds_malfunction_dims
+#byebug
     @data_list = PdsMalfunctionDim.where(Project: project.ProjectID)
                                   .includes(pds_malfunction: [:system]).ordered
                                   .includes(:sd_sys_numb)

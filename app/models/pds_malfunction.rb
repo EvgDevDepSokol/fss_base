@@ -51,8 +51,8 @@ class PdsMalfunction < ApplicationRecord
         pds_malfunction_dim.save
         icnt -= 1
       end
-    elsif icnt.nagative?
-      while icnt.nagative?
+    elsif icnt.negative?
+      while icnt.negative?
         pds_malfunction_dim = PdsMalfunctionDim.where(Malfunction: pds_malfunction.id).order(:Character).last
         pds_malfunction_dim.destroy
         icnt += 1
